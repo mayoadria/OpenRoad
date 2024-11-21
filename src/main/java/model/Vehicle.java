@@ -86,7 +86,10 @@ public class Vehicle {
 
     // Relació ManyToOne amb taula - Localització
     @ManyToOne
-    @JoinTable(name = "vehicle_localitzacio", joinColumns = @JoinColumn(name = "Matricula", referencedColumnName = "Matricula"), inverseJoinColumns = @JoinColumn(name = "CodiPostal", referencedColumnName = "CodiPostal"))
+    @JoinTable(name = "vehicle_localitzacio", 
+        joinColumns = @JoinColumn(name = "Matricula", referencedColumnName = "Matricula"), 
+        inverseJoinColumns = @JoinColumn(name = "CodiPostal", referencedColumnName = "CodiPostal")
+    )
     @ToString.Exclude // Evita bucles infinits en el mètode toString()
     @EqualsAndHashCode.Exclude // Evita problemes d'igualtat basats en referències circulars
     private Localitzacio localitzacio;
