@@ -50,6 +50,10 @@ public class Vehicle {
     private String combustible;
     @Column(nullable = false)
     private String color;
+    @Column(nullable = false, name = "preu_hora")
+    private Float preuHora;
+    @Column(nullable = false)
+    private Float fianca;
 
     // Enums
     @Column(nullable = false)
@@ -66,10 +70,14 @@ public class Vehicle {
     private Marxes marxes;
 
     // Camps Opcionals
-    @Column(nullable = true)
-    private LocalDate any;
+    @Column(nullable = true, name = "any_vehicle")
+    private LocalDate anyVehicle;
     @Column(nullable = true)
     private int km;
+    @Column(nullable = true, name = "dies_lloguer_minim")
+    private int diesLloguerMinim;
+    @Column(nullable = true, name = "dies_lloguer_maxim")
+    private int diesLloguerMaxim;
 
     // Relació OneToOne amb taula - Reserva
     @OneToOne
