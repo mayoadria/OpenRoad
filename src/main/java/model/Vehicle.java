@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-//Jakarta
+// Jakarta
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,14 +18,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-//Lombok
+// Lombok
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-//Enums
+// Enums
 import model.enums.CaixaCanvis;
 import model.enums.Marxes;
 import model.enums.Places;
@@ -33,12 +33,12 @@ import model.enums.Portes;
 
 @Entity
 @Table(name = "vehicle")
-@Data 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Vehicle {
 
-    //PK MATRICULA - Identificador de vehicle.
+    // PK MATRICULA - Identificador de Vehicle.
     @Id
     private String Matricula;
 
@@ -51,7 +51,7 @@ public class Vehicle {
     @Column(nullable = false)
     private String color;
 
-    //Enums
+    // Enums
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Places places;
@@ -65,32 +65,29 @@ public class Vehicle {
     @Enumerated(EnumType.STRING)
     private Marxes marxes;
 
-    //Camps Opcionals
+    // Camps Opcionals
     @Column(nullable = true)
     private LocalDate any;
     @Column(nullable = true)
     private int km;
 
-    //Relació OneToOne amb taula - Reserva 
+    // Relació OneToOne amb taula - Reserva
     @OneToOne
     @JoinColumn(name = "IdReserva", foreignKey = @ForeignKey(name = "fk_vehicle_reserva"))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Reserva reserva;
 
-    //Relació OneToMany amb taula - Incidencia
+    // Relació OneToMany amb taula - Incidencia
     @OneToMany(mappedBy = "vehicle")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<Incidencia> incidencia = new ArrayList<>();
+    private List<Incidencia> incidencies = new ArrayList<>();
 
-    //Relació ManyToOne amb taula - Localització
+    // Relació ManyToOne amb taula - Localització
     @ManyToOne
-    @JoinTable(name = "vehicle_localitzacio",
-        joinColumns = @JoinColumn(name = "Matricula", referencedColumnName = "Matricula"),
-        inverseJoinColumns = @JoinColumn(name = "CodiPostal", referencedColumnName = "CodiPostal")
-    )
+    @JoinTable(name = "vehicle_localitzacio", joinColumns = @JoinColumn(name = "Matricula", referencedColumnName = "Matricula"), inverseJoinColumns = @JoinColumn(name = "CodiPostal", referencedColumnName = "CodiPostal"))
     @ToString.Exclude // Evita bucles infinits en el mètode toString()
     @EqualsAndHashCode.Exclude // Evita problemes d'igualtat basats en referències circulars
     private Localitzacio localitzacio;
-}  
+}
