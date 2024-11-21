@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +34,15 @@ public class Localitzacio {
 
     @Column(nullable = false)
     private String poblacio;
+    @Column(nullable = false)
+    private String direccio;
 
     // Camps Opcionals
-    @Column(nullable = true)
-    private String direccio;
+    @Column(nullable = false)
+    private String condicions;
+    @Column(nullable = false)
+    private LocalDateTime horari;
+
 
     // Relació OneToMany amb taula - Vehicle
     @OneToMany(mappedBy = "localitzacio")
