@@ -33,7 +33,8 @@ public class Incidencia {
     // PK ID_INCIDENCIA - Identificador de Incidencia.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long IdIncidencia;
+    @Column(name = "id_incidencia")
+    private Long idIncidencia;
 
     @Column(nullable = false, name = "estat_incidencia")
     private EstatIncidencia estat;
@@ -52,8 +53,8 @@ public class Incidencia {
 
     @ManyToOne
     @JoinTable(name = "incidencia_vehicle", 
-        joinColumns = @JoinColumn(name = "IdIncidencia", referencedColumnName = "IdIncidencia"), 
-        inverseJoinColumns = @JoinColumn(name = "Matricula", referencedColumnName = "Matricula")
+        joinColumns = @JoinColumn(name = "id_incidencia", referencedColumnName = "id_incidencia"), 
+        inverseJoinColumns = @JoinColumn(name = "matricula", referencedColumnName = "matricula")
     )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

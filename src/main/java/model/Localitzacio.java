@@ -30,7 +30,8 @@ public class Localitzacio {
 
     // PK CODIPOSTAL - Identificador de Localització.
     @Id
-    private String CodiPostal;
+    @Column(nullable = false, name = "codi_postal")
+    private String codiPostal;
 
     @Column(nullable = false)
     private String poblacio;
@@ -50,9 +51,9 @@ public class Localitzacio {
     @EqualsAndHashCode.Exclude
     private List<Vehicle> vehicles = new ArrayList<>();
 
-    // Relació OneToOne amb taula - Agent
+    // Relació OneToOne amb taula - Agent (Bidireccional)
     @OneToOne
-    @JoinColumn(name = "DNI", foreignKey = @ForeignKey(name = "fk_localitat_agent"))
+    @JoinColumn(name = "dni_agent", foreignKey = @ForeignKey(name = "fk_localitat_agent"))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Agent agent;

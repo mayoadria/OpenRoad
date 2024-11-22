@@ -40,7 +40,7 @@ public class Vehicle {
 
     // PK MATRICULA - Identificador de Vehicle.
     @Id
-    private String Matricula;
+    private String matricula;
 
     @Column(nullable = false)
     private String marca;
@@ -52,7 +52,7 @@ public class Vehicle {
     private String color;
     @Column(nullable = false, name = "preu_hora")
     private Float preuHora;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "fiança")
     private Float fianca;
 
     // Enums
@@ -79,9 +79,8 @@ public class Vehicle {
     @Column(nullable = true, name = "dies_lloguer_maxim")
     private int diesLloguerMaxim;
 
-    // Relació OneToOne amb taula - Reserva
-    @OneToOne
-    @JoinColumn(name = "IdReserva", foreignKey = @ForeignKey(name = "fk_vehicle_reserva"))
+    // Relació OneToOne amb taula - Reserva (Bidireccional)
+    @OneToOne(mappedBy = "vehicle")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Reserva reserva;
@@ -95,10 +94,10 @@ public class Vehicle {
     // Relació ManyToOne amb taula - Localització
     @ManyToOne
     @JoinTable(name = "vehicle_localitzacio", 
-        joinColumns = @JoinColumn(name = "Matricula", referencedColumnName = "Matricula"), 
-        inverseJoinColumns = @JoinColumn(name = "CodiPostal", referencedColumnName = "CodiPostal")
+        joinColumns = @JoinColumn(name = "matricula", referencedColumnName = "matricula"), 
+        inverseJoinColumns = @JoinColumn(name = "codi_postal", referencedColumnName = "codi_postal")
     )
-    @ToString.Exclude // Evita bucles infinits en el mètode toString()
-    @EqualsAndHashCode.Exclude // Evita problemes d'igualtat basats en referències circulars
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude 
     private Localitzacio localitzacio;
 }
