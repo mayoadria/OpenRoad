@@ -1,5 +1,6 @@
 package model;
 
+// Java
 import java.time.LocalDate;
 
 // Jakarta
@@ -30,6 +31,7 @@ public class Reserva {
     @Column(name = "id_reserva")
     private Long idReserva;
 
+    // Camps Generals
     @Column(nullable = false, name = "data_inici")
     private LocalDate dataInici;
     @Column(nullable = false, name = "data_final")

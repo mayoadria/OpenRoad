@@ -1,5 +1,6 @@
 package model;
 
+// Java
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class Vehicle {
     @Id
     private String matricula;
 
+    // Camps Generals
     @Column(nullable = false)
     private String marca;
     @Column(nullable = false)
@@ -92,11 +94,8 @@ public class Vehicle {
 
     // Relació ManyToOne amb taula - Localització
     @ManyToOne
-    @JoinTable(name = "vehicle_localitzacio", 
-        joinColumns = @JoinColumn(name = "matricula", referencedColumnName = "matricula"), 
-        inverseJoinColumns = @JoinColumn(name = "codi_postal", referencedColumnName = "codi_postal")
-    )
+    @JoinTable(name = "vehicle_localitzacio", joinColumns = @JoinColumn(name = "matricula", referencedColumnName = "matricula"), inverseJoinColumns = @JoinColumn(name = "codi_postal", referencedColumnName = "codi_postal"))
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude 
-    private Localitzacio localitzacio;
+    @EqualsAndHashCode.Exclude
+    private Localitat localitzacio;
 }
