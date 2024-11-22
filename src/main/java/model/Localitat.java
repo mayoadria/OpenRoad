@@ -1,5 +1,6 @@
 package model;
 
+// Java
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +8,7 @@ import java.util.List;
 // Jakarta
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -26,13 +25,14 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Localitzacio {
+public class Localitat {
 
     // PK CODIPOSTAL - Identificador de Localització.
     @Id
-    @Column(nullable = false, name = "codi_postal")
-    private String codiPostal;
+    @Column(nullable = false, name = "codi_postal_loc")
+    private String codiPostalLoc;
 
+    // Camps Generals
     @Column(nullable = false)
     private String poblacio;
     @Column(nullable = false)
@@ -44,7 +44,6 @@ public class Localitzacio {
     @Column(nullable = false)
     private LocalDateTime horari;
 
-
     // Relació OneToMany amb taula - Vehicle
     @OneToMany(mappedBy = "localitzacio")
     @ToString.Exclude
@@ -52,8 +51,7 @@ public class Localitzacio {
     private List<Vehicle> vehicles = new ArrayList<>();
 
     // Relació OneToOne amb taula - Agent (Bidireccional)
-    @OneToOne
-    @JoinColumn(name = "dni_agent", foreignKey = @ForeignKey(name = "fk_localitat_agent"))
+    @OneToOne(mappedBy = "localitat")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Agent agent;

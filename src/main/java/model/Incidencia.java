@@ -1,5 +1,6 @@
 package model;
 
+// Java
 import java.time.LocalDate;
 
 // Jakarta
@@ -36,6 +37,7 @@ public class Incidencia {
     @Column(name = "id_incidencia")
     private Long idIncidencia;
 
+    // Camps Generals
     @Column(nullable = false, name = "estat_incidencia")
     private EstatIncidencia estatIncidencia;
     @Column(nullable = false)
@@ -48,14 +50,12 @@ public class Incidencia {
     // Camps Opcionals
     @Column(nullable = true, name = "data_final")
     private LocalDate dataFinal;
-    @Column(nullable = true, name = "documents_link")
-    private String linkDocuments;
+    @Column(nullable = true, name = "incidencia_doc")
+    private String incidenciaDoc;
 
+    // Relació ManyToOne amb taula - Vehicle
     @ManyToOne
-    @JoinTable(name = "incidencia_vehicle", 
-        joinColumns = @JoinColumn(name = "id_incidencia", referencedColumnName = "id_incidencia"), 
-        inverseJoinColumns = @JoinColumn(name = "matricula", referencedColumnName = "matricula")
-    )
+    @JoinTable(name = "incidencia_vehicle", joinColumns = @JoinColumn(name = "id_incidencia", referencedColumnName = "id_incidencia"), inverseJoinColumns = @JoinColumn(name = "matricula", referencedColumnName = "matricula"))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Vehicle vehicle;

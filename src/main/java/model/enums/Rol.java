@@ -1,11 +1,11 @@
 package model.enums;
 
-public enum EstatIncidencia {
-    OBERTA("Oberta"), TANCADA("Tancada");
+public enum Rol {
+    AGENT("Agent"), ADMINISTRADOR("Administrador");
 
     private final String valor;
 
-    EstatIncidencia(String valor) {
+    Rol(String valor) {
         this.valor = valor;
     }
 
