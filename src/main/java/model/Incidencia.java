@@ -37,7 +37,7 @@ public class Incidencia {
     private Long idIncidencia;
 
     @Column(nullable = false, name = "estat_incidencia")
-    private EstatIncidencia estat;
+    private EstatIncidencia estatIncidencia;
     @Column(nullable = false)
     private String motiu;
     @Column(nullable = false)
@@ -48,7 +48,7 @@ public class Incidencia {
     // Camps Opcionals
     @Column(nullable = true, name = "data_final")
     private LocalDate dataFinal;
-    @Column(nullable = true, name = "documents")
+    @Column(nullable = true, name = "documents_link")
     private String linkDocuments;
 
     @ManyToOne

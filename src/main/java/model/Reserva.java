@@ -30,15 +30,15 @@ public class Reserva {
     @Column(name = "id_reserva")
     private Long idReserva;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "data_inici")
     private LocalDate dataInici;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "data_final")
     private LocalDate dataFinal;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "preu_complet")
     private Float preuComplet;
 
     // Enums
-    @Column(nullable = false)
+    @Column(nullable = false, name = "estat_reserva")
     private EstatReserva estatReserva;
 
     // Relació OneToOne amb taula - Client (Bidireccional)

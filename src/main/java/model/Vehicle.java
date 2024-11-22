@@ -51,7 +51,7 @@ public class Vehicle {
     private String color;
     @Column(nullable = false, name = "preu_hora")
     private Float preuHora;
-    @Column(nullable = false, name = "fiança")
+    @Column(nullable = false)
     private Float fianca;
 
     // Enums
