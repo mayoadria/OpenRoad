@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
+// Jakarta
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -11,8 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+// Lombok
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
+// Enums
 import model.enums.EstatReserva;
 
 @Entity
