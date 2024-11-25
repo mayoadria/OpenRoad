@@ -1,4 +1,0 @@
-package service.Mongo;
-
-public class ClientServiceMongo {
-}
