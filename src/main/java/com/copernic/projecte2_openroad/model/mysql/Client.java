@@ -4,6 +4,8 @@ package com.copernic.projecte2_openroad.model.mysql;
 // Jakarta
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -13,6 +15,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 // Enums
 import com.copernic.projecte2_openroad.model.enums.Reputacio;
@@ -22,11 +25,14 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Client extends Usuari {
 
-    // Camps Generals
+    // Enums
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Reputacio reputacio;
 
     // Camps Documentació
