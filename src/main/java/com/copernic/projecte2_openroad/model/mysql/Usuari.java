@@ -9,11 +9,13 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public abstract class Usuari {
 
     // PK DNI - Identificador de Usuari (Client i Agent).
@@ -35,7 +37,7 @@ public abstract class Usuari {
     private String email;
     @Column(nullable = false)
     private String contrasenya;
-    @Column(nullable = true, name = "nom_usuari")
+    @Column(nullable = false, name = "nom_usuari")
     private String nomUsuari;
 
     // Camps Opcionals

@@ -6,11 +6,12 @@ import java.time.LocalDate;
 // Jakarta
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -37,9 +38,12 @@ public class Incidencia {
     @Column(name = "id_incidencia")
     private Long idIncidencia;
 
-    // Camps Generals
+    // Enums
     @Column(nullable = false, name = "estat_incidencia")
+    @Enumerated(EnumType.STRING)
     private EstatIncidencia estatIncidencia;
+
+    // Camps Generals
     @Column(nullable = false)
     private String motiu;
     @Column(nullable = false)
@@ -55,7 +59,7 @@ public class Incidencia {
 
     // Relació ManyToOne amb taula - Vehicle
     @ManyToOne
-    @JoinTable(name = "incidencia_vehicle", joinColumns = @JoinColumn(name = "id_incidencia", referencedColumnName = "id_incidencia"), inverseJoinColumns = @JoinColumn(name = "matricula", referencedColumnName = "matricula"))
+    @JoinColumn(name = "vehicle", referencedColumnName = "matricula")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Vehicle vehicle;

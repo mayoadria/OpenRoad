@@ -12,7 +12,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -95,8 +94,8 @@ public class Vehicle {
 
     // Relació ManyToOne amb taula - Localització
     @ManyToOne
-    @JoinTable(name = "vehicle_localitzacio", joinColumns = @JoinColumn(name = "matricula", referencedColumnName = "matricula"), inverseJoinColumns = @JoinColumn(name = "codi_postal", referencedColumnName = "codi_postal"))
+    @JoinColumn(name = "localitat", referencedColumnName = "codi_postal_loc")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Localitat localitzacio;
+    private Localitat localitat;
 }

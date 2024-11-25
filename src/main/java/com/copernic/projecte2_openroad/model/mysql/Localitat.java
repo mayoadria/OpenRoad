@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "localitzacio")
+@Table(name = "localitat")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,7 +46,7 @@ public class Localitat {
     private LocalDateTime horari;
 
     // Relació OneToMany amb taula - Vehicle
-    @OneToMany(mappedBy = "localitzacio")
+    @OneToMany(mappedBy = "localitat")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Vehicle> vehicles = new ArrayList<>();
