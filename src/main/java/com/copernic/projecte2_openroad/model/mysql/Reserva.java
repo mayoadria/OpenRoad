@@ -15,9 +15,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 // Lombok
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 // Enums
@@ -25,6 +28,9 @@ import com.copernic.projecte2_openroad.model.enums.EstatReserva;
 
 @Entity
 @Table(name = "reserva")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reserva {
 
     // PK ID_RESERVA - Identificador de Reserva.
