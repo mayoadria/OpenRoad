@@ -45,7 +45,7 @@ public class Reserva {
     @Column(nullable = false, name = "data_final")
     private LocalDate dataFinal;
     @Column(nullable = false, name = "preu_complet")
-    private Float preuComplet;
+    private Double preuComplet;
 
     // Enums
     @Column(nullable = false, name = "estat_reserva")

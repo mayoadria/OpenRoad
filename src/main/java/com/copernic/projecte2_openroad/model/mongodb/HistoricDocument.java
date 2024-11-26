@@ -7,16 +7,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document
+@Document(collection = "documents")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistoricDocumentacio {
+public class HistoricDocument {
 
     @Id
-    private Long idDocument;
+    private String idDocument;
 
+    private String nomDocument;
     private String tipusDocument;
-
     private String documentLink;
 }

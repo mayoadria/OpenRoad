@@ -12,18 +12,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document
+@Document(collection = "incidencies")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoricIncidencia {
 
     @Id
-    private Long idIncidencia;
+    private String idIncidencia;
 
     private EstatIncidencia estatIncidencia;
     private String motiu;
-    private Float cost;
+    private Double cost;
     private LocalDate dataInici;
     private LocalDate dataFinal;
     private String incidenciaDoc;
