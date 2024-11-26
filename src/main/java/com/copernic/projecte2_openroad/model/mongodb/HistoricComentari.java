@@ -11,18 +11,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document
+@Document(collection = "comentaris")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoricComentari {
 
     @Id
-    private Long idComentari;
+    private String idComentari;
 
     private Client client;
     private LocalDate dataComentari;
-    private Float valoracio;
+    private Double valoracio;
     private Boolean recomanacio;
     private String missatgeComentari;
     private int like;

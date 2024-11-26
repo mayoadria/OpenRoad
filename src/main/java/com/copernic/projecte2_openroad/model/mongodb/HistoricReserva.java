@@ -19,18 +19,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document
+@Document(collection = "reserves")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoricReserva {
 
     @Id
-    private Long idReserva;
+    private String idReserva;
 
     private LocalDate dataInici;
     private LocalDate dataFinal;
-    private Float preuComplet;
+    private Double preuComplet;
     private EstatReserva estatReserva;
     private Client client;
     private Vehicle vehicle;
