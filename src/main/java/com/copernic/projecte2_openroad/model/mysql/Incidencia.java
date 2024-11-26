@@ -47,7 +47,7 @@ public class Incidencia {
     @Column(nullable = false)
     private String motiu;
     @Column(nullable = false)
-    private Float cost;
+    private Double cost;
     @Column(nullable = false, name = "data_inici")
     private LocalDate dataInici;
 
