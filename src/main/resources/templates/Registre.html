@@ -3,45 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulario de Registro</title>
-    <link rel="stylesheet" href="../static/login">
+    <link rel="stylesheet" href="../static/css/registre.css">
 </head>
 <body>
-<form class="row g-3" th:action="@{/registro}" method="post">
+<form class="row g-3" th:action="@{/registre/new}" th:object="${client}" method="post">
     <div class="col-md-6">
         <label for="dni" class="form-label">DNI</label>
         <input type="text" class="form-control" id="dni" name="dni">
     </div>
     <div class="col-md-6">
-        <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="nombre" name="nombre">
+        <label for="nom" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nom" name="nom">
     </div>
     <div class="col-md-6">
-        <label for="apellidos" class="form-label">Apellidos</label>
-        <input type="text" class="form-control" id="apellidos" name="apellidos">
+        <label for="cognom1" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" id="cognom1" name="cognom1">
     </div>
     <div class="col-md-6">
-        <label for="telefono" class="form-label">Teléfono</label>
-        <input type="text" class="form-control" id="telefono" name="telefono">
+        <label for="cognom2" class="form-label">Segundo Apellido</label>
+        <input type="text" class="form-control" id="cognom2" name="cognom2">
+    </div>
+    <div class="col-md-6">
+        <label for="numContacte1" class="form-label">Teléfono</label>
+        <input type="text" class="form-control" id="numContacte1" name="numContacte1">
     </div>
     <div class="col-12">
-        <label for="direccion" class="form-label">Dirección</label>
-        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="1234 Main St">
+        <label for="adreca" class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="adreca" name="adreca" placeholder="1234 Main St" >
     </div>
     <div class="col-md-6">
-        <label for="usuario" class="form-label">Nombre de Usuario</label>
-        <input type="text" class="form-control" id="usuario" name="usuario">
+        <label for="nomUsuari" class="form-label">Nombre de Usuario</label>
+        <input type="text" class="form-control" id="nomUsuari" name="nomUsuari">
     </div>
     <div class="col-md-6">
-        <label for="contraseña" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" id="contraseña" name="contraseña">
+        <label for="contrasenya" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="contrasenya" name="contrasenya">
     </div>
     <div class="col-md-12">
-        <label for="correo" class="form-label">Correo Electrónico</label>
-        <input type="email" class="form-control" id="correo" name="correo">
+        <label for="email" class="form-label">Correo Electrónico</label>
+        <input type="email" class="form-control" id="email" name="email">
     </div>
     <div class="col-md-6">
-        <label for="estado" class="form-label">Estado</label>
-        <select id="estado" name="estado" class="form-select">
+        <label for="reputacio" class="form-label">Estado</label>
+        <select id="reputacio" name="reputacio" class="form-select">
             <option value="" selected>Selecciona tu estado...</option>
             <option th:each="estado : ${estados}"
                     th:value="${estado}"
