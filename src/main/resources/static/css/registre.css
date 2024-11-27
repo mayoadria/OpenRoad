@@ -1,0 +1,97 @@
+/* Estilo general */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+form {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para las etiquetas */
+.form-label {
+    font-weight: bold;
+    color: #495057;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Estilo para los campos de entrada */
+.form-control, .form-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #ffffff;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+/* Estilo para el checkbox */
+.form-check-input {
+    margin-right: 10px;
+}
+
+.form-check-label {
+    color: #495057;
+    font-size: 14px;
+}
+
+/* Estilo para el botón */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para los contenedores de columnas */
+.col-md-6, .col-md-12, .col-12 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo de placeholder */
+.form-control::placeholder {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+    }
+
+    .col-md-6 {
+        width: 100%;
+    }
+}
