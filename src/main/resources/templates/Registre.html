@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Registro</title>
+    <link rel="stylesheet" href="../static/login">
+</head>
+<body>
+<form class="row g-3" th:action="@{/registro}" method="post">
+    <div class="col-md-6">
+        <label for="dni" class="form-label">DNI</label>
+        <input type="text" class="form-control" id="dni" name="dni">
+    </div>
+    <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre">
+    </div>
+    <div class="col-md-6">
+        <label for="apellidos" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" id="apellidos" name="apellidos">
+    </div>
+    <div class="col-md-6">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <input type="text" class="form-control" id="telefono" name="telefono">
+    </div>
+    <div class="col-12">
+        <label for="direccion" class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="1234 Main St">
+    </div>
+    <div class="col-md-6">
+        <label for="usuario" class="form-label">Nombre de Usuario</label>
+        <input type="text" class="form-control" id="usuario" name="usuario">
+    </div>
+    <div class="col-md-6">
+        <label for="contraseña" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="contraseña" name="contraseña">
+    </div>
+    <div class="col-md-12">
+        <label for="correo" class="form-label">Correo Electrónico</label>
+        <input type="email" class="form-control" id="correo" name="correo">
+    </div>
+    <div class="col-md-6">
+        <label for="estado" class="form-label">Estado</label>
+        <select id="estado" name="estado" class="form-select">
+            <option value="" selected>Selecciona tu estado...</option>
+            <option th:each="estado : ${estados}"
+                    th:value="${estado}"
+                    th:text="${estado.valor}"></option>
+        </select>
+    </div>
+    <div class="col-12">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="recuerdame" name="recuerdame">
+            <label class="form-check-label" for="recuerdame">
+                Recuérdame
+            </label>
+        </div>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </div>
+</form>
+</body>
+</html>
