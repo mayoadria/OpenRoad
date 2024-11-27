@@ -55,18 +55,19 @@ public class ClientServiceSQL {
     }
 
     // Eliminar Client.
-    public String eliminarClient(Client client) {
+    public String eliminarClientPerId(String dni) {
+        Client client = llistarClientPerId(dni);
         try {
-            if (llistarClientPerId(client.getDni()) != null) {
+            if (client != null) {
                 clientRepoSQL.delete(client);
                 String msg = "Client: " + client.getNom() + " amb DNI(" + client.getDni() + ") esborrat correctament!";
                 return msg;
             } else {
-                String msg = "Client: " + client.getNom() + " amb DNI(" + client.getDni() + ") no s'ha trobat a la BD MySQL!";
+                String msg = "Client: DNI(" + dni + ") no s'ha trobat a la BD MySQL!";
                 return msg;
             }
         } catch (Exception e) {
-            String msg = "Error amb Client: " + client.getNom() + " amb DNI(" + client.getDni() + "). Excepció: " + e.getMessage();
+            String msg = "Error amb Client: DNI(" + dni + "). Excepció: " + e.getMessage();
             return msg;
         }
         

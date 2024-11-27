@@ -53,18 +53,19 @@ public class AgentServiceSQL {
     }
 
     // Eliminar Agent.
-    public String eliminarAgent(Agent agent) {
+    public String eliminarAgentPerId(String dni) {
+        Agent agent = llistarAgentPerId(dni);
         try {
-            if (llistarAgentPerId(agent.getDni()) != null) {
+            if (agent != null) {
                 agentRepoSQL.delete(agent);
                 String msg = "Agent: " + agent.getNom() + " amb DNI(" + agent.getDni() + ") esborrat correctament!";
                 return msg;
             } else {
-                String msg = "Agent: " + agent.getNom() + " amb DNI(" + agent.getDni() + ") no s'ha trobat a la BD MySQL!";
+                String msg = "Agent: DNI(" + dni + ") no s'ha trobat a la BD MySQL!";
                 return msg;
             }
         } catch (Exception e) {
-            String msg = "Error amb Agent: " + agent.getNom() + " amb DNI(" + agent.getDni() + "). Excepció: " + e.getMessage();
+            String msg = "Error amb Agent: DNI(" + dni + "). Excepció: " + e.getMessage();
             return msg;
         }
     }
