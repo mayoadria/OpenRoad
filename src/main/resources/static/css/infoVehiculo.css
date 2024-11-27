@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.header {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header img {
+    height: 40px;
+}
+
+.header input {
+    width: 40%;
+    padding: 5px;
+}
+
+.header .login {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    padding: 20px;
+}
+
+.left-panel {
+
+    width: 30%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+.left-panel img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.left-panel .details {
+    margin-top: 10px;
+}
+
+.left-panel .details p {
+    margin: 5px 0;
+}
+
+.left-panel .rating {
+    margin-top: 10px;
+}
+
+.left-panel .alquilarButton {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.right-panel {
+    width: 70%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.right-panel .section {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+.right-panel .section h3 {
+    margin: 0;
+    padding: 5px 0;
+}
