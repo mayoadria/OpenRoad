@@ -4,6 +4,7 @@ package com.copernic.projecte2_openroad;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /*
 import org.springframework.context.ApplicationContext;
 
@@ -11,7 +12,7 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 import com.copernic.projecte2_openroad.model.mongodb.HistoricComentari;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.repository.mongodb.ComentarisRepositoryMongo;
-import com.copernic.projecte2_openroad.repository.mysql.ClientRepositorySQL;
+import com.copernic.projecte2_openroad.service.mysql.ClientServiceSQL;
 */
 
 @SpringBootApplication
@@ -25,31 +26,32 @@ public class Projecte2OpenRoadApplication {
 
         var comentarisRepo = context.getBean(ComentarisRepositoryMongo.class);
 
-        var clientRepo = context.getBean(ClientRepositorySQL.class);
+        var clientServiceSQL = context.getBean(ClientServiceSQL.class);
 
         var client = Client.builder()
-                .dni("45884552N")
-                .nom("Marc")
-                .cognom1("Botana")
-                .cognom2("Martínez")
-                .numContacte1(620016600)
-                .email("marc.botana@gmail.com")
+                .dni("12345678A")
+                .nom("Paco")
+                .cognom1("Lopez")
+                .cognom2("Garriga")
+                .numContacte1(630288174)
+                .email("paco@gmail.com")
                 .contrasenya("Hola1234")
-                .nomUsuari("marc1234")
+                .nomUsuari("paco1234")
                 .reputacio(Reputacio.NORMAL)
                 .build();
 
-        LocalDate dataCom = LocalDate.parse("2002-03-24");
+        LocalDate dataCom = LocalDate.parse("2022-03-22");
         Double val = 9.30;
         Boolean rec = true;
         String miss = "Muy buen coche!";
 
         var comentari = new HistoricComentari(null, client, dataCom, val, rec, miss, 8);
 
-        clientRepo.save(client);
+        clientServiceSQL.modificarClient(client);
 
         comentarisRepo.save(comentari);
         */
+        
     }
 
 }
