@@ -1,11 +1,16 @@
 package com.copernic.projecte2_openroad.service.mysql;
 
+// Java
 import java.util.List;
 
+// Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+// Model
 import com.copernic.projecte2_openroad.model.mysql.Reserva;
+
+// Repository
 import com.copernic.projecte2_openroad.repository.mysql.ReservaRepositorySQL;
 
 @Service
@@ -37,7 +42,7 @@ public class ReservaServiceSQL {
     }
 
     // Modificar Reserva.
-    public String modificarreserva(Reserva reserva) {
+    public String modificarReserva(Reserva reserva) {
         try {
             if (llistarReservaPerId(reserva.getIdReserva()) != null) {
                 reservaRepoSQL.save(reserva);

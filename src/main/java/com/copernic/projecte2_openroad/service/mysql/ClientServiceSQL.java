@@ -1,11 +1,16 @@
 package com.copernic.projecte2_openroad.service.mysql;
 
+// Java
 import java.util.List;
 
+// Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+// Model
 import com.copernic.projecte2_openroad.model.mysql.Client;
+
+// Repository
 import com.copernic.projecte2_openroad.repository.mysql.ClientRepositorySQL;
 
 @Service
