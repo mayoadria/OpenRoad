@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/infoVehiculo.css">
     <title>OpenRoad</title>
 </head>
@@ -17,11 +18,21 @@
 <div class="container">
     <div class="left-panel">
         <img src="../static/images/vehiculos/rangeRover.jpg" alt="Range Rover">
+        <h3 class="nombre-coche">Range Rover Suv Blanco</h3>
         <div class="details">
-            <h3>Range Rover Suv Blanco</h3>
-            <p><i class="material-icons" style="font-size:30px">face</i> 7</p>
-            <p>Puertas: 5</p>
-            <p>Transmisión: Automática</p>
+            <p><i class="fa-solid fa-user"></i> 7</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="30" height="30">
+                <!-- Contorno de la puerta -->
+                <path d="M40 100 Q40 50 100 40 H160 Q180 40 180 60 V150 Q180 170 160 170 H60 Q40 170 40 150 Z" fill="black" stroke="black" stroke-width="2"/>
+
+                <!-- Ventana -->
+                <path d="M50 100 Q50 70 100 60 H150 Q160 60 160 80 V100 H50 Z" fill="white"/>
+
+                <!-- Manija -->
+                <rect x="130" y="120" width="20" height="6" rx="3" ry="3" fill="white"/>
+            </svg> 5</p>
+            <p><i class="fa-solid fa-gear"></i> Automática</p>
+            <p><i class="fa-solid fa-gas-pump"></i> Gasolina</p>
         </div>
         <div class="rating">
             <p>Comentarios / Valoración:</p>
