@@ -4,6 +4,7 @@ package com.copernic.projecte2_openroad;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /*
 import org.springframework.context.ApplicationContext;
 
@@ -11,7 +12,7 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 import com.copernic.projecte2_openroad.model.mongodb.HistoricComentari;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.repository.mongodb.ComentarisRepositoryMongo;
-import com.copernic.projecte2_openroad.repository.mysql.ClientRepositorySQL;
+import com.copernic.projecte2_openroad.service.mysql.ClientServiceSQL;
 */
 
 @SpringBootApplication
@@ -25,7 +26,7 @@ public class Projecte2OpenRoadApplication {
 
         var comentarisRepo = context.getBean(ComentarisRepositoryMongo.class);
 
-        var clientRepo = context.getBean(ClientRepositorySQL.class);
+        var clientServiceSQL = context.getBean(ClientServiceSQL.class);
 
         var client = Client.builder()
                 .dni("12345678A")
@@ -46,10 +47,11 @@ public class Projecte2OpenRoadApplication {
 
         var comentari = new HistoricComentari(null, client, dataCom, val, rec, miss, 8);
 
-        clientRepo.save(client);
+        clientServiceSQL.modificarClient(client);
 
         comentarisRepo.save(comentari);
         */
+        
     }
 
 }
