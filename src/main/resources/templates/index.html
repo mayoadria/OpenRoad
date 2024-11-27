@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenRoad - Renta de Coches</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa; /* Gris claro */
+      color: #343a40; /* Gris oscuro */
+    }
+    .navbar {
+      background-color: #343a40; /* Gris oscuro */
+    }
+    .navbar-brand, .nav-link {
+      color: #ffffff !important;
+    }
+    .hero-section {
+      background-color: #6c757d; /* Gris intermedio */
+      color: #ffffff;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    .hero-section h1 {
+      font-size: 3rem;
+    }
+    .card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card:hover {
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+    footer {
+      background-color: #343a40;
+      color: #ffffff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" th:href="@{/}">OpenRoad</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" th:href="@{/index}">Inici</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/cataleg}">Catàleg</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contacte</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <h1>Renta el coche perfecto con OpenRoad</h1>
+    <p>Encuentra coches modernos, seguros y al mejor precio.</p>
+    <a class="btn btn-light btn-lg mt-3" th:href="@{/cars}">Ver coches</a>
+  </div>
+</section>
+
+<!-- Cars Section -->
+<section class="my-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Coches destacados</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4" th:each="car : ${cars}">
+        <div class="card">
+          <img src="../static/images/vehiculos/fiatpanda.jpg" class="card-img-top" alt="Imagen del coche">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${car.name}">Nombre del coche</h5>
+            <p class="card-text" th:text="${car.description}">Descripción breve del coche.</p>
+            <a th:href="@{'/cars/' + ${car.id}}" class="btn btn-dark">Ver detalles</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2024 OpenRoad. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
