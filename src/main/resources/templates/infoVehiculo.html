@@ -47,17 +47,17 @@
                 <!-- Grupo de fechas -->
                 <div class="column">
                     <p>Recollida</p>
-                    <input type="date">
+                    <input type="date" id="fechaRecogida">
                 </div>
                 <div class="column">
                     <p>Entrega</p>
-                    <input type="date">
+                    <input type="date" id="fechaEntrega">
                 </div>
 
                 <!-- Grupo de horas -->
                 <div class="column">
                     <p>Hora recollida</p>
-                    <select>
+                    <select id="horaRecogida">
                         <option value="" disabled selected>Selecciona una hora</option>
                         <option value="08:30">08:30</option>
                         <option value="09:00">09:00</option>
@@ -113,12 +113,13 @@
             <h3>PREU LLOGUER + SEGUR</h3>
             <div class="price-details">
                 <p><strong>Precio por día:</strong> 75 €</p>
-                <p><strong>Número de días:</strong> 3</p>
-                <p><strong>Subtotal:</strong> 225 €</p>
-                <p><strong>Seguro incluido:</strong> 30 €</p>
-                <p><strong>Total:</strong> 255 €</p>
+                <p><strong>Número de días:</strong> <span id="diasReserva">0</span></p>
+                <p><strong>Preu del segur:</strong> <span id="precioSeguro">30 €</span></p>
+                <p><strong>Total:</strong> <span id="precioTotal">0 €</span></p>
             </div>
         </div>
+        <script src="../static/scripts/infoVehiculo.js"></script>
+
         <div class="section">
             <h3>ALTRES DADES DE LA RESERVA</h3>
             <p>Més informació</p>
