@@ -1,3 +1,7 @@
+
+
+
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,27 +9,108 @@ body {
     background-color: #f0f0f0;
 }
 
-.header {
-    background-color: #ffffff;
+/* Estilos del Navbar */
+.nav-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    transition: background-color 0.3s ease;
+}
+
+.navbar {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    padding: 1rem 2rem;
+    background: transparent;
 }
 
-.header img {
-    height: 40px;
+.navbar.scrolled {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
 }
 
-.header input {
-    width: 40%;
-    padding: 5px;
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin-left: 40px;
 }
 
-.header .login {
-    font-size: 14px;
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.icono_user {
+    background: transparent;
+    border: none;
     cursor: pointer;
+    font-size: 1.5rem; /* Ajusta el tamaño del icono */
+    color: white; /* Cambia el color del icono */
+    margin-left: auto;
+    outline: none;
+    transition: transform 0.3s ease;
+}
+
+.icono_user:hover {
+    color: #00b4d8; /* Cambia el color al pasar el cursor */
+    transform: scale(1.1); /* Efecto de agrandamiento */
+}
+
+/* Menú desplegable (oculto por defecto) */
+.user-menu-container {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px; /* Ajusta según sea necesario */
+    right: 0;
+    background-color: #00b4d8;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 150px; /* Ajusta el ancho del menú */
+}
+
+.dropdown-item {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    text-align: left;
+    font-weight: bold;
+}
+.dropdown-item svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Añadir un espacio entre el ícono y el texto */
+    vertical-align: middle; /* Alinear el ícono verticalmente con el texto */
+}
+
+
+.dropdown-item:hover {
+    background-color: white;
+}
+
+/* Para mostrar el menú cuando está activo */
+.user-menu-container.active .dropdown-menu {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Ocultar menú en móviles si es necesario */
+    }
+}
+
+.nav-links a:hover {
+    color: #00b4d8;
 }
 
 .container {

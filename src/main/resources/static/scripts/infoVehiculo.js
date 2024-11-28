@@ -9,7 +9,25 @@ const fechaEntrega = document.getElementById('fechaEntrega');
 const diasReserva = document.getElementById('diasReserva');
 const precioTotal = document.getElementById('precioTotal');
 
-// Función para obtener la hora actual en formato HH:MM
+// Función para obtener la fecha actual en formato ISO (YYYY-MM-DD)
+const obtenerFechaActual = () => {
+    const hoy = new Date();
+    const anio = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // Meses de 0 a 11
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    return `${anio}-${mes}-${dia}`;
+};
+
+// Función para inicializar las fechas predeterminadas
+const establecerFechaHoy = () => {
+    const fechaActual = obtenerFechaActual();
+    fechaRecogida.value = fechaActual; // Fecha actual como valor predeterminado
+    fechaEntrega.value = fechaActual; // Fecha actual como valor predeterminado
+    fechaRecogida.min = fechaActual; // Fecha mínima es hoy para recogida
+    fechaEntrega.min = fechaActual; // Fecha mínima es hoy para entrega
+};
+
+// Función para limitar las horas disponibles en "Hora recogida"
 const obtenerHoraActual = () => {
     const ahora = new Date();
     const horas = String(ahora.getHours()).padStart(2, '0');
@@ -17,10 +35,9 @@ const obtenerHoraActual = () => {
     return `${horas}:${minutos}`;
 };
 
-// Función para limitar las horas disponibles en "Hora recogida"
 const limitarHoraRecogida = () => {
     const horaActual = obtenerHoraActual();
-    const hoy = new Date().toISOString().split('T')[0];
+    const hoy = obtenerFechaActual();
     if (fechaRecogida.value === hoy) {
         // Si la fecha de recogida es hoy, limita las horas disponibles
         for (const opcion of horaRecogida.options) {
@@ -56,15 +73,6 @@ const actualizarPrecio = () => {
     const dias = calcularDias(inicio, fin);
     diasReserva.textContent = dias > 0 ? dias : '0';
     precioTotal.textContent = dias > 0 ? `${dias * precioPorDia + precioSeguro} €` : `${precioSeguro} €`;
-};
-
-// Inicializar fecha actual
-const establecerFechaHoy = () => {
-    const hoy = new Date();
-    const fechaISO = hoy.toISOString().split('T')[0];
-    fechaRecogida.value = fechaISO;
-    fechaEntrega.value = fechaISO;
-    fechaEntrega.min = fechaISO; // La fecha de entrega no puede ser anterior a hoy
 };
 
 // Escuchar eventos
