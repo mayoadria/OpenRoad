@@ -19,7 +19,7 @@ public class ClientServiceSQL {
     @Autowired
     private ClientRepositorySQL clientRepoSQL;
 
-    // Crear Client.
+// Crear Client.
     public String guardarClient(Client client) {
         try {
             clientRepoSQL.save(client);
@@ -35,6 +35,8 @@ public class ClientServiceSQL {
     public Client llistarClientPerId(String id) {
         return clientRepoSQL.findById(id).get();
     }
+
+    public Client llistarClientPerNomUsuari(String nomUsuari) { return clientRepoSQL.findByNomUsuari(nomUsuari).get();}
 
     // Llistar tots els Clients.
     public List<Client> llistarClients() {

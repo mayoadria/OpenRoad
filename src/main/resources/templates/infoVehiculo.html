@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/infoVehiculo.css">
     <title>OpenRoad</title>
 </head>
@@ -11,37 +12,149 @@
     <div class="logo">
         <img src="logo.png" alt="OpenRoad">
     </div>
-    <input type="text" placeholder="Search">
+    <input type="text" placeholder="Busca">
     <div class="login">Login/Sign Up</div>
 </header>
 <div class="container">
     <div class="left-panel">
         <img src="../static/images/vehiculos/rangeRover.jpg" alt="Range Rover">
+        <h3 class="nombre-coche">Range Rover Suv Blanc</h3>
         <div class="details">
-            <h3>Range Rover Suv Blanco</h3>
-            <p><i class="material-icons" style="font-size:30px">face</i> 7</p>
-            <p>Puertas: 5</p>
-            <p>Transmisión: Automática</p>
+            <p><i class="fa-solid fa-user"></i> 7</p>
+            <p>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="30" height="30">
+                    <!-- Contorno de la puerta -->
+                    <path d="M40 100 Q40 50 100 40 H160 Q180 40 180 60 V150 Q180 170 160 170 H60 Q40 170 40 150 Z"
+                          fill="black" stroke="black" stroke-width="2"/>
+
+                    <!-- Ventana -->
+                    <path d="M50 100 Q50 70 100 60 H150 Q160 60 160 80 V100 H50 Z" fill="white"/>
+
+                    <!-- Manija -->
+                    <rect x="130" y="120" width="20" height="6" rx="3" ry="3" fill="white"/>
+                </svg>
+                5
+            </p>
+            <p><i class="fa-solid fa-gear"></i> Automàtic</p>
+            <p><i class="fa-solid fa-gas-pump"></i> Benzina</p>
         </div>
         <div class="rating">
-            <p>Comentarios / Valoración:</p>
+            <p>Valoracións:</p>
             <p>⭐⭐⭐⭐⭐</p>
         </div>
         <button class="alquilarButton">Alquilar</button>
     </div>
     <div class="right-panel">
         <div class="section">
-            <h3>Dades de reserva</h3>
-            <p>Información</p>
+            <h3>DADES RESERVA</h3>
+            <div class="fechas">
+                <!-- Grupo de fechas -->
+                <div class="column">
+                    <p>Recollida</p>
+                    <input type="date" id="fechaRecogida">
+                </div>
+                <div class="column">
+                    <p>Entrega</p>
+                    <input type="date" id="fechaEntrega">
+                </div>
+
+                <!-- Grupo de horas -->
+                <div class="column">
+                    <p>Hora recollida</p>
+                    <select id="horaRecogida">
+                        <option value="" disabled selected>Selecciona una hora</option>
+                        <option value="08:30">08:30</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                        <option value="21:00">21:00</option>
+                        <option value="21:30">21:30</option>
+                    </select>
+                </div>
+                <div class="column">
+                    <p>Hora entrega</p>
+                    <select>
+                        <option value="" disabled selected>Selecciona una hora</option>
+                        <option value="07:00">07:00</option>
+                        <option value="07:30">07:30</option>
+                        <option value="08:00">08:00</option>
+                        <option value="08:30">08:30</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                    </select>
+                </div>
+            </div>
+
         </div>
         <div class="section">
-            <h3>Preu lloguer + segur</h3>
-            <p>Otros detalles</p>
+            <h3>PREU LLOGUER + SEGUR</h3>
+            <div class="price-details">
+                <p><strong>Precio por día:</strong> 75 €</p>
+                <p><strong>Número de días:</strong> <span id="diasReserva">0</span></p>
+                <p><strong>Preu del segur:</strong> <span id="precioSeguro">30 €</span></p>
+                <p><strong>Total:</strong> <span id="precioTotal">0 €</span></p>
+            </div>
         </div>
+        <script src="../static/scripts/infoVehiculo.js"></script>
+
         <div class="section">
-            <h3>Altres dades de la reserva</h3>
-            <p>Más información</p>
+            <h3>ALTRES DADES DE LA RESERVA</h3>
+            <div class="additional-info">
+                <p><strong>Tipo:</strong> SUV</p>
+                <p><strong>Consumo medio:</strong> 7.8 L/100 km</p>
+                <p><strong>Autonomía:</strong> 650 km</p>
+                <p><strong>Equipamiento adicional:</strong> GPS, cámara trasera, climatizador</p>
+                <p><strong>Dirección de recogida:</strong> Calle Gran Vía 123, Barcelona</p>
+                <p><strong>Horario de atención:</strong> Lunes a Domingo, de 8:00 a 20:00</p>
+                <p><strong>Instrucciones:</strong> Preséntese con su documento de identidad y el número de reserva.</p>
+                <p><strong>Contacto:</strong> +34 900 123 456</p>
+                <p><strong>Correo electrónico:</strong> soporte@openroad.com</p>
+                <p><strong>Asistencia en carretera:</strong> Llame al +34 800 654 321 en caso de emergencia.</p>
+                <p><strong>Política de cancelación:</strong> Cancelación gratuita hasta 24 horas antes del inicio de la
+                    reserva.</p>
+                <p><strong>Condiciones:</strong> No fumar en el interior del vehículo. Devolver con al menos 1/4 del
+                    tanque de combustible.</p>
+                <p><strong>Requisitos del conductor:</strong> Edad mínima de 20 años y licencia válida en la UE.</p>
+            </div>
+
+            <!-- Mapa insertado -->
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2451.479677640707!2d2.16725808704597!3d41.39001347854073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a2f21c924c1d%3A0x8d3ae28f4b4230a9!2sGran%20Via%20de%20les%20Corts%20Catalanes%2C%20123%2C%20L&#39;Eixample%2C%2008007%20Barcelona!5e1!3m2!1ses!2ses!4v1732794721187!5m2!1ses!2ses"
+                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+
         </div>
+
+
     </div>
 </div>
 </body>
