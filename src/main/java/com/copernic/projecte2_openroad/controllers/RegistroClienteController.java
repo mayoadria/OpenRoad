@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/registre")
 public class RegistroClienteController {
@@ -22,7 +20,7 @@ public class RegistroClienteController {
     ClientServiceSQL clientServiceSQL;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("")
     public String Registre(Model model) {
@@ -33,6 +31,7 @@ public class RegistroClienteController {
 
     @PostMapping("/new")
     public String save(@ModelAttribute("client") Client cli){
+        cli.setContrasenya(passwordEncoder.encode(cli.getContrasenya()));
 
         clientServiceSQL.guardarClient(cli);
 
