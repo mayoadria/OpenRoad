@@ -12,13 +12,13 @@
     <div class="logo">
         <img src="logo.png" alt="OpenRoad">
     </div>
-    <input type="text" placeholder="Search">
+    <input type="text" placeholder="Busca">
     <div class="login">Login/Sign Up</div>
 </header>
 <div class="container">
     <div class="left-panel">
         <img src="../static/images/vehiculos/rangeRover.jpg" alt="Range Rover">
-        <h3 class="nombre-coche">Range Rover Suv Blanco</h3>
+        <h3 class="nombre-coche">Range Rover Suv Blanc</h3>
         <div class="details">
             <p><i class="fa-solid fa-user"></i> 7</p>
             <p><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="30" height="30">
@@ -31,27 +31,97 @@
                 <!-- Manija -->
                 <rect x="130" y="120" width="20" height="6" rx="3" ry="3" fill="white"/>
             </svg> 5</p>
-            <p><i class="fa-solid fa-gear"></i> Automática</p>
-            <p><i class="fa-solid fa-gas-pump"></i> Gasolina</p>
+            <p><i class="fa-solid fa-gear"></i> Automàtic</p>
+            <p><i class="fa-solid fa-gas-pump"></i> Benzina</p>
         </div>
         <div class="rating">
-            <p>Comentarios / Valoración:</p>
+            <p>Valoracións:</p>
             <p>⭐⭐⭐⭐⭐</p>
         </div>
         <button class="alquilarButton">Alquilar</button>
     </div>
     <div class="right-panel">
         <div class="section">
-            <h3>Dades de reserva</h3>
-            <p>Información</p>
+            <h3>DADES RESERVA</h3>
+            <div class="fechas">
+                <!-- Grupo de fechas -->
+                <div class="column">
+                    <p>Recollida</p>
+                    <input type="date">
+                </div>
+                <div class="column">
+                    <p>Entrega</p>
+                    <input type="date">
+                </div>
+
+                <!-- Grupo de horas -->
+                <div class="column">
+                    <p>Hora recollida</p>
+                    <select>
+                        <option value="" disabled selected>Selecciona una hora</option>
+                        <option value="08:30">08:30</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                        <option value="21:00">21:00</option>
+                        <option value="21:30">21:30</option>
+                    </select>
+                </div>
+                <div class="column">
+                    <p>Hora entrega</p>
+                    <select>
+                        <option value="" disabled selected>Selecciona una hora</option>
+                        <option value="07:00">07:00</option>
+                        <option value="07:30">07:30</option>
+                        <option value="08:00">08:00</option>
+                        <option value="08:30">08:30</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                    </select>
+                </div>
+            </div>
+
         </div>
         <div class="section">
-            <h3>Preu lloguer + segur</h3>
-            <p>Otros detalles</p>
+            <h3>PREU LLOGUER + SEGUR</h3>
+            <div class="price-details">
+                <p><strong>Precio por día:</strong> 75 €</p>
+                <p><strong>Número de días:</strong> 3</p>
+                <p><strong>Subtotal:</strong> 225 €</p>
+                <p><strong>Seguro incluido:</strong> 30 €</p>
+                <p><strong>Total:</strong> 255 €</p>
+            </div>
         </div>
         <div class="section">
-            <h3>Altres dades de la reserva</h3>
-            <p>Más información</p>
+            <h3>ALTRES DADES DE LA RESERVA</h3>
+            <p>Més informació</p>
         </div>
     </div>
 </div>
