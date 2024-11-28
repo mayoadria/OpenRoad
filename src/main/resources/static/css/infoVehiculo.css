@@ -162,3 +162,29 @@ body {
     border-color: #007bff; /* Cambia el color del borde al enfocarse */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul */
 }
+
+.additional-info {
+    line-height: 1.5; /* Espaciado entre líneas */
+    font-size: 14px; /* Tamaño del texto */
+    color: #333; /* Color del texto */
+}
+
+.additional-info p {
+    margin: 5px 0; /* Espaciado entre párrafos */
+}
+
+.additional-info strong {
+    font-weight: bold; /* Resalta los títulos */
+    color: #000; /* Color negro para los títulos */
+}
+
+/* Mapa */
+.map-container {
+    margin-top: 20px;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
