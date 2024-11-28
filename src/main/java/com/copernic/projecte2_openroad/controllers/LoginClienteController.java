@@ -33,24 +33,21 @@ public class LoginClienteController {
         return "login"; // Devuelve la vista login.html
     }
 
-    /*
+
     // Método para verificar las credenciales del usuario
     @PostMapping("/user")
     public String loginSubmit(@RequestParam("nomUsuari") String username,
                               @RequestParam("contrasenya") String password, Model model) {
 
         // Verifica las credenciales en la base de datos
-        var user = clientServiceSQL.findByNomUsuari(username);
+        var user = clientServiceSQL.llistarClientPerNomUsuari(username);
 
-        if (user.isPresent() && user.get().getContrasenya().equals(password)) {
+
             // Si las credenciales son correctas, redirige a la página de inicio (por ejemplo, "index.html")
-            return "redirect:/index";
-        } else {
-            // Si las credenciales son incorrectas, muestra un mensaje de error
-            //model.addAttribute("error", "Usuario o contraseña incorrectos.");
-            return "index";  // Vuelve a la página de login
-        }
+            return "redirect:/";
+
+
     }
-    */
+
 
 }

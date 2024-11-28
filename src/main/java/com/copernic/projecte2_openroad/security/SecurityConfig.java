@@ -1,6 +1,7 @@
 package com.copernic.projecte2_openroad.security;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,10 +31,10 @@ public class SecurityConfig
                 .and()
                 .formLogin(form -> form
                         .loginPage("/login")  // Página personalizada de login
-                        .loginProcessingUrl("/login/user")
+                        .loginProcessingUrl("/login")
                         .usernameParameter("nomUsuari") // Nombre personalizado para el campo de usuario
                         .passwordParameter("contrasenya")// URL para procesar el login
-                        .defaultSuccessUrl("/index", true)  // Redirige a /index después de un login exitoso
+                        .defaultSuccessUrl("/", true)  // Redirige a /index después de un login exitoso
                         .failureUrl("/login?error=true")   // Redirige a login con error si las credenciales son incorrectas
                 );
         return http.build();

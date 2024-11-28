@@ -21,10 +21,9 @@ public class ValidadorUsuaris implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String nomUsuari) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String nomUsuari) {
         // Busca al usuario en la base de datos
-        Client client = clientService.findByNomUsuari(nomUsuari)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + nomUsuari));
+        Client client = clientService.llistarClientPerNomUsuari(nomUsuari);
 
         // Aquí, el CustomUserDetails encapsula el usuario y la contraseña, además de los roles (si se aplican)
         return new CustomerDetails(
