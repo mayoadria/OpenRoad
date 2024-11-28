@@ -22,6 +22,7 @@ public class HistoricIncidencia {
     private String idIncidencia;
 
     private EstatIncidencia estatIncidencia;
+    private String titolInc;
     private String motiu;
     private Double cost;
     private LocalDate dataInici;

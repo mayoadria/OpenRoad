@@ -24,6 +24,7 @@ public class HistoricComentari {
     private LocalDate dataComentari;
     private Double valoracio;
     private Boolean recomanacio;
+    private String titolComent;
     private String missatgeComentari;
     private int like;
 }
