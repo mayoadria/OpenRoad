@@ -1,7 +1,9 @@
 package com.copernic.projecte2_openroad.service.mysql;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,15 @@ public class ClientServiceSQL {
     @Autowired
     private ClientRepositorySQL clientRepoSQL;
 
+
+    @Autowired
+    public ClientServiceSQL(ClientRepositorySQL userRepository) {
+        this.clientRepoSQL = userRepository;
+    }
+
+    public Optional<Client> findByNomUsuari(String nomUsuari) {
+        return clientRepoSQL.findByNomUsuari(nomUsuari);
+    }
     // Crear Client.
     public String guardarClient(Client client) {
         try {
