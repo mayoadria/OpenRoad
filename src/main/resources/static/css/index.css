@@ -139,7 +139,7 @@ body {
     height: 100%; /* La imagen ocupará toda la altura */
     object-fit: cover; /* Ajusta la imagen para que cubra el contenedor manteniendo su proporción */
     z-index: -1; /* Coloca la imagen detrás del resto del contenido */
-  }
+}
 
 
 .hero::before {
@@ -149,6 +149,7 @@ body {
     background: rgba(0, 0, 0, 0.15); /* Iluminació de l'imatge de fons */
     z-index: 1;
 }
+
 
 .text_presentacio {
     margin-top: 15px;
