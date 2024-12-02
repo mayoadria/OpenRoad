@@ -2,6 +2,7 @@ package com.copernic.projecte2_openroad.service.mysql;
 
 // Java
 import java.util.List;
+import java.util.Optional;
 
 // Spring
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,56 +24,51 @@ public class VehicleServiceSQL {
     public String guardarVehicle(Vehicle vehicle) {
         try {
             vehicleRepoSQL.save(vehicle);
-            String msg = "Vehicle: " + vehicle.getMarca() + " " + vehicle.getModel() + " amb ID(" + vehicle.getMatricula() + ") s'ha creat correctament!";
-            return msg;
+            return "Vehicle: " + vehicle.getMarca() + " " + vehicle.getModel() + " amb ID(" + vehicle.getMatricula() + ") s'ha creat correctament!";
         } catch (Exception e) {
-            String msg = "Error amb Vehicle: ID(" + vehicle.getMatricula() + "). Excepció: " + e.getMessage();
-            return msg;
+            return "Error amb Vehicle: ID(" + vehicle.getMatricula() + "). Excepció: " + e.getMessage();
         }
     }
 
-    // Llistar Vehicle.
-    public Vehicle llistarVehiclePerId(String id) {
-        return vehicleRepoSQL.findById(id).get();
+    // Listar todos los vehículos
+    public List<Vehicle> listarTodosLosVehiculos() {
+        return vehicleRepoSQL.findAll();
     }
 
-    // Llistar totes les Vehicles.
-    public List<Vehicle> llistarReserves() {
-        return vehicleRepoSQL.findAll();
+    // Buscar un vehículo por matrícula
+    public Optional<Vehicle> findByMatricula(String matricula) {
+        return vehicleRepoSQL.findById(matricula); // Asumiendo que la matrícula es la PK
     }
 
     // Modificar Vehicle.
     public String modificarVehicle(Vehicle vehicle) {
         try {
-            if (llistarVehiclePerId(vehicle.getMatricula()) != null) {
+            // Verificar si el vehículo existe
+            Optional<Vehicle> vehicleExistente = findByMatricula(vehicle.getMatricula());
+
+            if (vehicleExistente.isPresent()) {
                 vehicleRepoSQL.save(vehicle);
-                String msg = "Vehicle: " + vehicle.getMarca() + " " + vehicle.getModel() + " amb ID(" + vehicle.getMatricula() + ") modificat correctament!";
-                return msg;
+                return "Vehicle: " + vehicle.getMarca() + " " + vehicle.getModel() + " amb ID(" + vehicle.getMatricula() + ") modificat correctament!";
             } else {
-                String msg = "Vehicle: ID(" + vehicle.getMatricula() + ") no s'ha trobat a la BD MySQL!";
-                return msg;
+                return "Vehicle: ID(" + vehicle.getMatricula() + ") no s'ha trobat a la BD MySQL!";
             }
         } catch (Exception e) {
-            String msg = "Error amb Vehicle: ID(" + vehicle.getMatricula() + "). Excepció: " + e.getMessage();
-            return msg;
+            return "Error amb Vehicle: ID(" + vehicle.getMatricula() + "). Excepció: " + e.getMessage();
         }
     }
 
-    // Eliminar Vehicle.
+    // Eliminar Vehicle por ID
     public String eliminarVehiclePerId(String id) {
-        Vehicle vehicle = llistarVehiclePerId(id);
+        Optional<Vehicle> vehicle = findByMatricula(id);
         try {
-            if (vehicle != null) {
-                vehicleRepoSQL.delete(vehicle);
-                String msg = "Vehicle: " + vehicle.getMarca() + " " + vehicle.getModel() + " amb ID(" + vehicle.getMatricula() + ") esborrat correctament!";
-                return msg;
+            if (vehicle.isPresent()) {
+                vehicleRepoSQL.delete(vehicle.get());
+                return "Vehicle: " + vehicle.get().getMarca() + " " + vehicle.get().getModel() + " amb ID(" + id + ") esborrat correctament!";
             } else {
-                String msg = "Vehicle: ID(" + id + ") no s'ha trobat a la BD MySQL!";
-                return msg;
+                return "Vehicle: ID(" + id + ") no s'ha trobat a la BD MySQL!";
             }
         } catch (Exception e) {
-            String msg = "Error amb Vehicle: ID(" + id + "). Excepció: " + e.getMessage();
-            return msg;
+            return "Error amb Vehicle: ID(" + id + "). Excepció: " + e.getMessage();
         }
     }
 }
