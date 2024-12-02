@@ -26,7 +26,7 @@ public class SecurityConfig
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .requestMatchers("/login", "/css/**","/images/**", "/registre/**", "/").permitAll()  // Permite acceso público a login y recursos estáticos
+                .requestMatchers("/login", "/css/**","/images/**", "/scripts/**", "/registre/**", "/cataleg","/").permitAll()  // Permite acceso público a login y recursos estáticos
                 .anyRequest().authenticated()  // Requiere autenticación para cualquier otra ruta
                 .and()
                 .formLogin(form -> form
