@@ -18,4 +18,3 @@ window.addEventListener('scroll', () => {
         content.classList.add('visible');
     }
 });
-
