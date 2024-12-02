@@ -128,19 +128,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("/static/images/otros/hero.jpg");
-    background-size: cover;
-    background-position: center;
     position: relative;
 }
+
+.hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* La imagen ocupará todo el ancho */
+    height: 100%; /* La imagen ocupará toda la altura */
+    object-fit: cover; /* Ajusta la imagen para que cubra el contenedor manteniendo su proporción */
+    z-index: -1; /* Coloca la imagen detrás del resto del contenido */
+}
+
 
 .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.15); /* Iluminació de l'imatge de fons */
     z-index: 1;
 }
+
 
 .text_presentacio {
     margin-top: 15px;
