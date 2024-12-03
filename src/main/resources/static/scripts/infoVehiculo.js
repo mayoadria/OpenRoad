@@ -21,10 +21,14 @@ const obtenerFechaActual = () => {
 // Función para inicializar las fechas predeterminadas
 const establecerFechaHoy = () => {
     const fechaActual = obtenerFechaActual();
+    const mañana = new Date();
+    mañana.setDate(mañana.getDate() + 1); // Suma 1 día para la fecha mínima de entrega
+    const fechaMañanaISO = mañana.toISOString().split('T')[0];
+
     fechaRecogida.value = fechaActual; // Fecha actual como valor predeterminado
-    fechaEntrega.value = fechaActual; // Fecha actual como valor predeterminado
+    fechaEntrega.value = fechaMañanaISO; // Mínimo un día de diferencia para entrega
     fechaRecogida.min = fechaActual; // Fecha mínima es hoy para recogida
-    fechaEntrega.min = fechaActual; // Fecha mínima es hoy para entrega
+    fechaEntrega.min = fechaMañanaISO; // Fecha mínima es mañana para entrega
 };
 
 // Función para limitar las horas disponibles en "Hora recogida"
@@ -71,15 +75,28 @@ const actualizarPrecio = () => {
     const inicio = fechaRecogida.value;
     const fin = fechaEntrega.value;
     const dias = calcularDias(inicio, fin);
-    diasReserva.textContent = dias > 0 ? dias : '0';
-    precioTotal.textContent = dias > 0 ? `${dias * precioPorDia + precioSeguro} €` : `${precioSeguro} €`;
+
+    // Validación para garantizar un día mínimo de reserva
+    if (dias < 1) {
+        const fechaMinEntrega = new Date(inicio);
+        fechaMinEntrega.setDate(fechaMinEntrega.getDate() + 1); // Fecha mínima: día siguiente a la recogida
+        fechaEntrega.value = fechaMinEntrega.toISOString().split('T')[0];
+        diasReserva.textContent = 1; // Mínimo un día
+        precioTotal.textContent = `${precioPorDia + precioSeguro} €`; // Precio para un día
+    } else {
+        diasReserva.textContent = dias;
+        precioTotal.textContent = `${dias * precioPorDia + precioSeguro} €`;
+    }
 };
 
 // Escuchar eventos
 fechaRecogida.addEventListener('input', () => {
+    const nuevaFechaEntregaMin = new Date(fechaRecogida.value);
+    nuevaFechaEntregaMin.setDate(nuevaFechaEntregaMin.getDate() + 1); // Mínimo un día después de la recogida
+    fechaEntrega.min = nuevaFechaEntregaMin.toISOString().split('T')[0];
+
     limitarHoraRecogida(); // Limita las horas si es necesario
-    fechaEntrega.min = fechaRecogida.value; // Asegura que la fecha de entrega no sea anterior
-    actualizarPrecio();
+    actualizarPrecio(); // Actualiza el precio
 });
 
 fechaEntrega.addEventListener('input', actualizarPrecio);
