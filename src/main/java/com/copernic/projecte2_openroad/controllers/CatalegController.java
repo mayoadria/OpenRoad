@@ -49,6 +49,6 @@ public class CatalegController {
         vehicleServiceSQL.guardarVehicle(vehicle);
 
         // Después de crear el vehículo, redirigimos a la lista de vehículos
-        return "redirect:/menuVehicles";  // Redirige a la lista de vehículos
+        return "redirect:/cataleg";  // Redirige a la lista de vehículos
     }
 }
