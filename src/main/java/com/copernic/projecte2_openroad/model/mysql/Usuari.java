@@ -1,5 +1,7 @@
 package com.copernic.projecte2_openroad.model.mysql;
 
+import com.copernic.projecte2_openroad.model.enums.Pais;
+
 // Jakarta
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
@@ -36,7 +38,7 @@ public abstract class Usuari {
     @Column(nullable = false)
     private String adreca;
     @Column(nullable = false)
-    private String pais;
+    private Pais pais;
 
     // Inici Sessió General
     @Column(nullable = false)
