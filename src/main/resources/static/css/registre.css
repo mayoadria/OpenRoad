@@ -76,11 +76,6 @@ body {
     transition: 0.3s ease;
 }
 
-.form label .input:-moz-placeholder-shown + span {
-    top: 12.5px;
-    font-size: 0.9em;
-}
-
 .form label .input:-ms-input-placeholder + span {
     top: 12.5px;
     font-size: 0.9em;
@@ -93,7 +88,7 @@ body {
 
 .form label .input:focus + span,
 .form label .input:valid + span {
-    color: black;
+    color: white;
     top: 0px;
     font-size: 0.7em;
     font-weight: 600;
