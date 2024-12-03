@@ -1,10 +1,5 @@
 package com.copernic.projecte2_openroad.controllers;
 
-import com.copernic.projecte2_openroad.model.enums.CaixaCanvis;
-import com.copernic.projecte2_openroad.model.enums.Marxes;
-import com.copernic.projecte2_openroad.model.enums.Places;
-import com.copernic.projecte2_openroad.model.enums.Portes;
-import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class LlistaVehiclesController {
+public class CatalegController {
     @Autowired
     private VehicleServiceSQL vehicleServiceSQL;
 
     // 1. Listar vehículos
-    @GetMapping("/vehiculos")
+    @GetMapping("/cataleg")
     public String listarVehiculos(Model model) {
         // Recuperamos la lista de vehículos desde el servicio
         List<Vehicle> cars = vehicleServiceSQL.listarTodosLosVehiculos();
@@ -33,7 +26,7 @@ public class LlistaVehiclesController {
         model.addAttribute("cars", cars);
 
         // Devolvemos el nombre de la vista donde se mostrarán los vehículos (HTML)
-        return "menuVehicles";  // Asegúrate de tener una vista llamada menuVehicles.html
+        return "cataleg";  // Asegúrate de tener una vista llamada menuVehicles.html
     }
 
     // 2. Mostrar formulario de creación de vehículo (GET)
@@ -56,6 +49,6 @@ public class LlistaVehiclesController {
         vehicleServiceSQL.guardarVehicle(vehicle);
 
         // Después de crear el vehículo, redirigimos a la lista de vehículos
-        return "redirect:/menuVehicles";  // Redirige a la lista de vehículos
+        return "redirect:/cataleg";  // Redirige a la lista de vehículos
     }
 }

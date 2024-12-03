@@ -25,8 +25,14 @@ public class SecurityConfig
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                )
                 .authorizeRequests()
-                .requestMatchers("/login", "/css/**","/images/**", "/registre/**", "/").permitAll()  // Permite acceso público a login y recursos estáticos
+                .requestMatchers("/login", "/logout", "/css/**","/images/**", "/registre/**", "/").permitAll()  // Permite acceso público a login y recursos estáticos
                 .anyRequest().authenticated()  // Requiere autenticación para cualquier otra ruta
                 .and()
                 .formLogin(form -> form
