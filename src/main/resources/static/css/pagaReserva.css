@@ -199,7 +199,7 @@ form input {
 }
 
 .cost-summary .imagen img {
-    width: 100%; /* Imagen ocupará todo el ancho disponible del contenedor */
+    width: 100%; /* Imagen ocupará el ancho disponible del contenedor */
     max-width: 300px; /* Aumentar tamaño máximo de la imagen */
     height: auto; /* Mantener proporción */
     border-radius: 10px; /* Bordes redondeados */
