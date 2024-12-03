@@ -9,7 +9,29 @@ const fechaEntrega = document.getElementById('fechaEntrega');
 const diasReserva = document.getElementById('diasReserva');
 const precioTotal = document.getElementById('precioTotal');
 
-// Función para obtener la hora actual en formato HH:MM
+// Función para obtener la fecha actual en formato ISO (YYYY-MM-DD)
+const obtenerFechaActual = () => {
+    const hoy = new Date();
+    const anio = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // Meses de 0 a 11
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    return `${anio}-${mes}-${dia}`;
+};
+
+// Función para inicializar las fechas predeterminadas
+const establecerFechaHoy = () => {
+    const fechaActual = obtenerFechaActual();
+    const manana = new Date();
+    manana.setDate(manana.getDate() + 1); // Suma 1 día para la fecha mínima de entrega
+    const fechaMananaISO = manana.toISOString().split('T')[0];
+
+    fechaRecogida.value = fechaActual; // Fecha actual como valor predeterminado
+    fechaEntrega.value = fechaMananaISO; // Mínimo un día de diferencia para entrega
+    fechaRecogida.min = fechaActual; // Fecha mínima es hoy para recogida
+    fechaEntrega.min = fechaMananaISO; // Fecha mínima es mañana para entrega
+};
+
+// Función para limitar las horas disponibles en "Hora recogida"
 const obtenerHoraActual = () => {
     const ahora = new Date();
     const horas = String(ahora.getHours()).padStart(2, '0');
@@ -17,10 +39,9 @@ const obtenerHoraActual = () => {
     return `${horas}:${minutos}`;
 };
 
-// Función para limitar las horas disponibles en "Hora recogida"
 const limitarHoraRecogida = () => {
     const horaActual = obtenerHoraActual();
-    const hoy = new Date().toISOString().split('T')[0];
+    const hoy = obtenerFechaActual();
     if (fechaRecogida.value === hoy) {
         // Si la fecha de recogida es hoy, limita las horas disponibles
         for (const opcion of horaRecogida.options) {
@@ -54,24 +75,28 @@ const actualizarPrecio = () => {
     const inicio = fechaRecogida.value;
     const fin = fechaEntrega.value;
     const dias = calcularDias(inicio, fin);
-    diasReserva.textContent = dias > 0 ? dias : '0';
-    precioTotal.textContent = dias > 0 ? `${dias * precioPorDia + precioSeguro} €` : `${precioSeguro} €`;
-};
 
-// Inicializar fecha actual
-const establecerFechaHoy = () => {
-    const hoy = new Date();
-    const fechaISO = hoy.toISOString().split('T')[0];
-    fechaRecogida.value = fechaISO;
-    fechaEntrega.value = fechaISO;
-    fechaEntrega.min = fechaISO; // La fecha de entrega no puede ser anterior a hoy
+    // Validación para garantizar un día mínimo de reserva
+    if (dias < 1) {
+        const fechaMinEntrega = new Date(inicio);
+        fechaMinEntrega.setDate(fechaMinEntrega.getDate() + 1); // Fecha mínima: día siguiente a la recogida
+        fechaEntrega.value = fechaMinEntrega.toISOString().split('T')[0];
+        diasReserva.textContent = 1; // Mínimo un día
+        precioTotal.textContent = `${precioPorDia + precioSeguro} €`; // Precio para un día
+    } else {
+        diasReserva.textContent = dias;
+        precioTotal.textContent = `${dias * precioPorDia + precioSeguro} €`;
+    }
 };
 
 // Escuchar eventos
 fechaRecogida.addEventListener('input', () => {
+    const nuevaFechaEntregaMin = new Date(fechaRecogida.value);
+    nuevaFechaEntregaMin.setDate(nuevaFechaEntregaMin.getDate() + 1); // Mínimo un día después de la recogida
+    fechaEntrega.min = nuevaFechaEntregaMin.toISOString().split('T')[0];
+
     limitarHoraRecogida(); // Limita las horas si es necesario
-    fechaEntrega.min = fechaRecogida.value; // Asegura que la fecha de entrega no sea anterior
-    actualizarPrecio();
+    actualizarPrecio(); // Actualiza el precio
 });
 
 fechaEntrega.addEventListener('input', actualizarPrecio);
@@ -83,3 +108,10 @@ window.addEventListener('DOMContentLoaded', () => {
     limitarHoraRecogida();
     actualizarPrecio();
 });
+
+document.querySelector('.alquilarButton').addEventListener('click', () => {
+    const precioTotal = document.getElementById('precioTotal').textContent; // Obtiene el total
+    localStorage.setItem('totalReserva', precioTotal); // Guarda el total en localStorage
+    window.location.href = 'pagaReserva.html'; // Redirige a la página de pago
+});
+
