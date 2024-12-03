@@ -21,14 +21,14 @@ const obtenerFechaActual = () => {
 // Función para inicializar las fechas predeterminadas
 const establecerFechaHoy = () => {
     const fechaActual = obtenerFechaActual();
-    const mañana = new Date();
-    mañana.setDate(mañana.getDate() + 1); // Suma 1 día para la fecha mínima de entrega
-    const fechaMañanaISO = mañana.toISOString().split('T')[0];
+    const manana = new Date();
+    manana.setDate(manana.getDate() + 1); // Suma 1 día para la fecha mínima de entrega
+    const fechaMananaISO = manana.toISOString().split('T')[0];
 
     fechaRecogida.value = fechaActual; // Fecha actual como valor predeterminado
-    fechaEntrega.value = fechaMañanaISO; // Mínimo un día de diferencia para entrega
+    fechaEntrega.value = fechaMananaISO; // Mínimo un día de diferencia para entrega
     fechaRecogida.min = fechaActual; // Fecha mínima es hoy para recogida
-    fechaEntrega.min = fechaMañanaISO; // Fecha mínima es mañana para entrega
+    fechaEntrega.min = fechaMananaISO; // Fecha mínima es mañana para entrega
 };
 
 // Función para limitar las horas disponibles en "Hora recogida"
