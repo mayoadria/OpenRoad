@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 // Model
-import com.copernic.projecte2_openroad.model.mongodb.HistoricDocument;
+import com.copernic.projecte2_openroad.model.mongodb.DocumentClient;
 
 // Repository
 import com.copernic.projecte2_openroad.repository.mongodb.DocumentRepositoryMongo;
@@ -20,51 +20,51 @@ public class DocumentServiceMongo {
     private DocumentRepositoryMongo documentRepoMongo;
 
     // Crear Document.
-    public String guardarDocument(HistoricDocument Document) {
+    public String guardarDocument(DocumentClient Document) {
         try {
             documentRepoMongo.save(Document);
-            String msg = "Document: " + Document.getNomDocument() + " amb ID(" + Document.getIdDocument() + ") s'ha creat correctament!";
+            String msg = "Document: " + Document.getNomDocument() + " amb ID(" + Document.getIdClient() + ") s'ha creat correctament!";
             return msg;
         } catch (Exception e) {
-            String msg = "Error amb Document: ID(" + Document.getIdDocument() + "). Excepció: " + e.getMessage();
+            String msg = "Error amb Document: ID(" + Document.getIdClient() + "). Excepció: " + e.getMessage();
             return msg;     
         }
     }
 
     // Llistar Document.
-    public HistoricDocument llistarDocumentPerId(String id) {
+    public DocumentClient llistarDocumentPerId(String id) {
         return documentRepoMongo.findById(id).get();
     }
 
     // Llistar tots els Documents.
-    public List<HistoricDocument> llistarDocuments() {
+    public List<DocumentClient> llistarDocuments() {
         return documentRepoMongo.findAll();
     }
 
     // Modificar Document.
-    public String modificarDocument(HistoricDocument Document) {
+    public String modificarDocument(DocumentClient Document) {
         try {
             if (llistarDocumentPerId(Document.getNomDocument()) != null) {
                 documentRepoMongo.save(Document);
-                String msg = "Document: " + Document.getNomDocument() + " amb ID(" + Document.getIdDocument() + ") modificat correctament!";
+                String msg = "Document: " + Document.getNomDocument() + " amb ID(" + Document.getIdClient() + ") modificat correctament!";
                 return msg;
             } else {
-                String msg = "Document: ID(" + Document.getIdDocument() + ") no s'ha trobat a la BD MySQL!";
+                String msg = "Document: ID(" + Document.getIdClient() + ") no s'ha trobat a la BD MySQL!";
                 return msg;
             }
         } catch (Exception e) {
-            String msg = "Error amb Document: ID(" + Document.getIdDocument() + "). Excepció: " + e.getMessage();
+            String msg = "Error amb Document: ID(" + Document.getIdClient() + "). Excepció: " + e.getMessage();
             return msg;
         }
     }
 
     // Eliminar Document.
     public String eliminarDocumentPerId(String id) {
-        HistoricDocument Document = llistarDocumentPerId(id);
+        DocumentClient Document = llistarDocumentPerId(id);
         try {
             if (Document != null) {
                 documentRepoMongo.delete(Document);
-                String msg = "Document: " + Document.getNomDocument() + " amb ID(" + Document.getIdDocument() + ") esborrat correctament!";
+                String msg = "Document: " + Document.getNomDocument() + " amb ID(" + Document.getIdClient() + ") esborrat correctament!";
                 return msg;
             } else {
                 String msg = "Document: ID(" + id + ") no s'ha trobat a la BD MySQL!";

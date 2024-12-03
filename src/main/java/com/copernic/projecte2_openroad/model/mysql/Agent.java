@@ -29,7 +29,7 @@ import com.copernic.projecte2_openroad.model.enums.Rol;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Agent extends Usuari {
+public class Agent extends Client {
 
     // Enums
     @Column(nullable = false)

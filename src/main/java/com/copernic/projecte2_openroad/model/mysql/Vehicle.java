@@ -14,7 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 // Lombok
@@ -80,11 +79,11 @@ public class Vehicle {
     @Column(nullable = true, name = "dies_lloguer_maxim")
     private int diesLloguerMaxim;
 
-    // Relació OneToOne amb taula - Reserva (Bidireccional)
-    @OneToOne(mappedBy = "vehicle")
+    // Relació OneToMany amb taula - Reserva (Bidireccional)
+    @OneToMany(mappedBy = "vehicle")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Reserva reserva;
+    private List<Reserva> reserva;
 
     // Relació OneToMany amb taula - Incidencia
     @OneToMany(mappedBy = "vehicle")
