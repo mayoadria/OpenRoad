@@ -247,3 +247,24 @@ form input {
 .pay-button button:hover {
     background: #0056b3;
 }
+
+
+/*---------------------------------------------------------------------*/
+
+footer {
+    background-color: #343a40; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    text-align: center; /* Centrar texto dentro del footer */
+    padding: 1rem 0; /* Espaciado vertical */
+    width: 100%; /* Asegura que ocupe todo el ancho de la página */
+    position: relative; /* Para que esté dentro del flujo normal de la página */
+    bottom: 0;
+}
+
+footer .container {
+    background-color: transparent !important; /* Elimina cualquier fondo */
+    padding: 0 !important; /* Elimina el padding */
+    margin: 0 auto; /* Centra horizontalmente */
+    width: auto; /* Permite que se ajuste al contenido */
+    box-shadow: none !important; /* Elimina sombras */
+}

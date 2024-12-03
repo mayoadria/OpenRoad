@@ -274,3 +274,20 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/*---------------------------------------------------------------------*/
+footer {
+    background-color: #343a40; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    text-align: center; /* Centrar texto dentro del footer */
+    padding: 1rem 0; /* Espaciado vertical */
+    width: 100%; /* Asegura que ocupe todo el ancho de la página */
+    position: relative; /* Para que esté dentro del flujo normal de la página */
+    bottom: 0;
+}
+
+footer .container {
+    justify-content: center;
+    max-width: 1200px; /* Tamaño máximo del contenido */
+    margin: 0 auto; /* Centra horizontalmente el contenido del footer */
+    padding: 0 1rem; /* Espaciado interno */
+}
