@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/menuVehicles.css">
+    <title>OpenRoad</title>
+</head>
+<body>
+<header class="header">
+    <div class="logo">
+        <img src="logo.png" alt="OpenRoad">
+    </div>
+    <input type="text" placeholder="Busca">
+    <div class="login">Login/Sign Up</div>
+</header>
+<h1>Listado de Vehículos</h1>
+<table>
+    <thead >
+    <tr>
+        <th>Matrícula</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Combustible</th>
+        <th>Color</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <td th:text="${car.matricula}"></td>
+        <td th:text="${car.marca}"></td>
+        <td th:text="${car.model}"></td>
+        <td th:text="${car.combustible}"></td>
+        <td th:text="${car.color}"></td>
+    </tr>
+    </tbody>
+</table>
+<!-- Botón o enlace para redirigir a la página de creación de vehículos -->
+<div class="mt-5 text-center">
+    <form th:action="@{/CrearVehicle}" method="get">
+        <button type="submit" class="btn_explora">Crear un vehicle</button>
+    </form>
+</div>
+
+</body>
+</html>
