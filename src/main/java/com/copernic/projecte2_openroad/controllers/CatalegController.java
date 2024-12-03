@@ -54,13 +54,4 @@ public class CatalegController {
         vehicleServiceSQL.guardarVehicle(vehicle);
         return "redirect:/cataleg";
     }
-
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
-        }
-        return "redirect:/";
-    }
 }
