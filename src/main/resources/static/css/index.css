@@ -50,6 +50,7 @@ body {
     transition: color 0.3s ease;
 }
 
+
 .icono_user {
     background: transparent;
     border: none;
@@ -80,7 +81,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    width: 150px; /* Ajusta el ancho del menú */
+    width: 165px; /* Ajusta el ancho del menú */
 }
 
 .dropdown-item {
