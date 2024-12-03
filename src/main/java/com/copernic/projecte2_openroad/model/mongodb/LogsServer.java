@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "logs")
+@Document(collection = "logs_server")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

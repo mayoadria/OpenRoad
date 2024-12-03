@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.copernic.projecte2_openroad.model.mysql.Client;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +14,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistoricComentari {
+public class Comentari {
 
     @Id
     private String idComentari;
 
-    private Client client;
+    private String nomClient;
+    private String cognom1Client;
+    private String nomUsuariClient;
+    private String matriculaVehicle; 
+
     private LocalDate dataComentari;
     private Double valoracio;
     private Boolean recomanacio;

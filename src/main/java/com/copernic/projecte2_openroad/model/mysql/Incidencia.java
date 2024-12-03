@@ -56,8 +56,6 @@ public class Incidencia {
     // Camps Opcionals
     @Column(nullable = true, name = "data_final")
     private LocalDate dataFinal;
-    @Column(nullable = true, name = "incidencia_doc")
-    private String incidenciaDoc;
 
     // Relació ManyToOne amb taula - Vehicle
     @ManyToOne

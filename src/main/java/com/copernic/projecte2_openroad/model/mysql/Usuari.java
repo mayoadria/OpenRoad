@@ -31,6 +31,12 @@ public abstract class Usuari {
     private String cognom2;
     @Column(nullable = false, name = "num_contacte_1")
     private int numContacte1;
+    @Column(nullable = false, name = "codi_postal")
+    private String codiPostal;
+    @Column(nullable = false)
+    private String adreca;
+    @Column(nullable = false)
+    private String pais;
 
     // Inici Sessió General
     @Column(nullable = false)
@@ -39,12 +45,5 @@ public abstract class Usuari {
     private String contrasenya;
     @Column(nullable = false, name = "nom_usuari")
     private String nomUsuari;
-
-    // Camps Opcionals
-    @Column(nullable = true, name = "num_contacte_2")
-    private int numContacte2;
-    @Column(nullable = true, name = "codi_postal")
-    private String codiPostal;
-    @Column(nullable = true)
-    private String adreca;
+    
 }

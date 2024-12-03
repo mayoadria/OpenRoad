@@ -6,7 +6,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 // Lombok
@@ -17,11 +19,14 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 // Enums
 import com.copernic.projecte2_openroad.model.enums.Reputacio;
 
 @Entity
 @Table(name = "client")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,15 +40,9 @@ public class Client extends Usuari {
     @Enumerated(EnumType.STRING)
     private Reputacio reputacio;
 
-    // Camps Documentació
-    @Column(nullable = true, name = "carnet_conduir_doc")
-    private String carnetConduirDoc;
-    @Column(nullable = true, name = "tarjeta_credit_doc")
-    private String tarjetaCreditDoc;
-
-    // Relació OneToOne amb taula - Reserva (Bidireccional)
-    @OneToOne(mappedBy = "client")
+    // Relació OneToMany amb taula - Reserva (Bidireccional)
+    @OneToMany(mappedBy = "client")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Reserva reserva;
+    private List<Reserva> reserva;
 }

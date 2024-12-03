@@ -8,12 +8,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,16 +51,16 @@ public class Reserva {
     @Enumerated(EnumType.STRING)
     private EstatReserva estatReserva;
 
-    // Relació OneToOne amb taula - Client (Bidireccional)
-    @OneToOne
-    @JoinColumn(name = "dni_client", foreignKey = @ForeignKey(name = "fk_reserva_agent"))
+    // Relació ManyToOne amb taula - Client (Bidireccional)
+    @ManyToOne
+    @JoinColumn(name = "client", referencedColumnName = "dni")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Client client;
 
-    // Relació OneToOne amb taula - Vehicle (Bidireccional)
-    @OneToOne
-    @JoinColumn(name = "matricula", foreignKey = @ForeignKey(name = "fk_vehicle_reserva"))
+    // Relació ManyToOne amb taula - Vehicle (Bidireccional)
+    @ManyToOne
+    @JoinColumn(name = "vehicle", referencedColumnName = "matricula")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Vehicle vehicle;
