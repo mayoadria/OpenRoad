@@ -108,3 +108,10 @@ window.addEventListener('DOMContentLoaded', () => {
     limitarHoraRecogida();
     actualizarPrecio();
 });
+
+document.querySelector('.alquilarButton').addEventListener('click', () => {
+    const precioTotal = document.getElementById('precioTotal').textContent; // Obtiene el total
+    localStorage.setItem('totalReserva', precioTotal); // Guarda el total en localStorage
+    window.location.href = 'pagaReserva.html'; // Redirige a la página de pago
+});
+

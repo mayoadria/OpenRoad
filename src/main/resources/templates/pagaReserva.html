@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/pagaReserva.css">
+    <link rel="stylesheet" href="/static/css/pagaReserva.css">
     <title>OpenRoad</title>
+    <script src="/static/scripts/pagaReserva.js" defer></script>
 
 </head>
 <body>
@@ -73,7 +74,63 @@
         </ul>
     </nav>
 </header>
+<main>
+    <div class="container">
+        <!-- Datos del conductor -->
+        <section class="conductor-section">
+            <h3>Dades del conductor</h3>
+            <div class="conductor-details">
+                <form>
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" placeholder="Nom" required>
+                    <label for="cognom">Cognom</label>
+                    <input type="text" id="cognom" placeholder="Cognom" required>
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="E-mail" required>
+                    <label for="telefono">Número de telèfon</label>
+                    <input type="tel" id="telefono" placeholder="Número de teléfono" required>
+                    <div class="terms">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            He leído y acepto los <a href="/static/docs/terminos_y_condiciones.txt" target="_blank">Términos y Condiciones</a> de la reserva, nota legal y privacidad.
+                        </label>
+                    </div>
 
+                </form>
+                <!-- Costos -->
+                <div class="cost-summary">
+                    <h4>COSTOS TOTALS</h4>
+                    <p><strong>80€</strong></p>
+                    <div class="imagen">
+                        <img src="/static/images/vehiculos/rangeRoverSubBlanco.png" alt="Range Rover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Métodos de pago -->
+        <section class="payment-section">
+            <h3>Metodes de pagament</h3>
+            <div class="payment-details">
+                <form>
+                    <label for="nombre-tarjeta">Nom Tarjeta</label>
+                    <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez" required>
+                    <label for="numero-tarjeta">Nº tarjeta</label>
+                    <input type="text" id="numero-tarjeta" placeholder="1234 1234 1234 1234" maxlength="19" required>
+                    <label for="fecha-caducidad">Data caducitat</label>
+                    <input type="text" id="fecha-caducidad" placeholder="05/2025" required>
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                </form>
+            </div>
+        </section>
+
+        <!-- Botón de pago -->
+        <div class="pay-button">
+            <button>Pagar</button>
+        </div>
+    </div>
+</main>
 
 </body>
 </html>

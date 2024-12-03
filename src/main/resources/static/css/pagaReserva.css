@@ -109,3 +109,141 @@ body {
 .nav-links a:hover {
     color: #00b4d8;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 70%;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+h3 {
+    background: #bcbcbc;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin: 0 0 10px 0;
+}
+
+.conductor-section, .payment-section {
+    padding: 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+}
+
+.conductor-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+form {
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+form label {
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f7f7f7;
+    font-size: 14px;
+}
+
+.cost-summary {
+    background-color: #e0e0e0; /* Fondo gris claro */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center; /* Centrar texto e imagen */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin-top: 20px;
+    width: 50%;
+}
+
+.cost-summary h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333; /* Color del texto */
+}
+
+.cost-summary p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #000; /* Color del texto */
+}
+
+.cost-summary .imagen {
+    margin-top: 40px;
+}
+
+.cost-summary .imagen img {
+    width: 100%; /* Imagen ocupará todo el ancho disponible del contenedor */
+    max-width: 300px; /* Aumentar tamaño máximo de la imagen */
+    height: auto; /* Mantener proporción */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para la imagen */
+    display: block; /* Asegura que la imagen esté centrada */
+    margin: 0 auto; /* Centra horizontalmente */
+}
+
+
+
+.terms {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.payment-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.payment-details form input {
+    margin-bottom: 10px;
+}
+
+.pay-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pay-button button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.pay-button button:hover {
+    background: #0056b3;
+}
