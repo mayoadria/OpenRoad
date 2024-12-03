@@ -10,10 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 // Enums
 import com.copernic.projecte2_openroad.model.enums.EstatReserva;
 
-// Models
-import com.copernic.projecte2_openroad.model.mysql.Client;
-import com.copernic.projecte2_openroad.model.mysql.Vehicle;
-
 // Lombok
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +28,6 @@ public class HistoricReserva {
     private LocalDate dataFinal;
     private Double preuComplet;
     private EstatReserva estatReserva;
-    private Client client;
-    private Vehicle vehicle;
+    private String dniClient;
+    private String matriculaVehicle;
 }

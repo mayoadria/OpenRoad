@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 // Model
-import com.copernic.projecte2_openroad.model.mongodb.HistoricComentari;
+import com.copernic.projecte2_openroad.model.mongodb.Comentari;
 
 // Repository
 import com.copernic.projecte2_openroad.repository.mongodb.ComentariRepositoryMongo;
@@ -20,7 +20,7 @@ public class ComentarisServiceMongo {
     private ComentariRepositoryMongo comentariRepoMongo;
 
     // Crear Comentari.
-    public String guardarComentari(HistoricComentari comentari) {
+    public String guardarComentari(Comentari comentari) {
         try {
             comentariRepoMongo.save(comentari);
             String msg = "Comentari: " + comentari.getTitolComent() + " amb ID(" + comentari.getIdComentari() + ") s'ha creat correctament!";
@@ -32,17 +32,17 @@ public class ComentarisServiceMongo {
     }
 
     // Llistar Comentari.
-    public HistoricComentari llistarComentariPerId(String id) {
+    public Comentari llistarComentariPerId(String id) {
         return comentariRepoMongo.findById(id).get();
     }
 
     // Llistar tots els Comentaris.
-    public List<HistoricComentari> llistarComentaris() {
+    public List<Comentari> llistarComentaris() {
         return comentariRepoMongo.findAll();
     }
 
     // Modificar Comentari.
-    public String modificarComentari(HistoricComentari comentari) {
+    public String modificarComentari(Comentari comentari) {
         try {
             if (llistarComentariPerId(comentari.getTitolComent()) != null) {
                 comentariRepoMongo.save(comentari);
@@ -60,7 +60,7 @@ public class ComentarisServiceMongo {
 
     // Eliminar Comentari.
     public String eliminarComentariPerId(String id) {
-        HistoricComentari Comentari = llistarComentariPerId(id);
+        Comentari Comentari = llistarComentariPerId(id);
         try {
             if (Comentari != null) {
                 comentariRepoMongo.delete(Comentari);
