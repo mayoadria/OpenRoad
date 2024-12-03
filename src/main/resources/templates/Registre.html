@@ -8,35 +8,35 @@
 </head>
 <body>
 
-<form class="form">
-    <p class="title">Registre client </p>
+<form class="form" th:action="@{/registre/new}" th:object="${client}" method="post">
+    <p class="title">Registre client</p>
     <div class="flex">
         <label>
-            <input class="input" type="text" placeholder="" required="">
+            <input class="input" type="text" placeholder="" id="nom" name="nom" required="">
             <span>Nom</span>
         </label>
 
         <label>
-            <input class="input" type="text" placeholder="" required="">
+            <input class="input" type="text" placeholder="" id="cognom1" name="cognom1" required="">
             <span>Cognom</span>
         </label>
     </div>
 
     <div class="flex">
         <label>
-            <input class="input" type="email" placeholder="" required="">
+            <input class="input" type="email" placeholder="" id="email" name="email" required="">
             <span>Correu</span>
         </label>
 
         <label>
-            <input class="input" type="password" placeholder="" required="">
+            <input class="input" type="password" placeholder="" id="contrasenya" name="contrasenya" required="">
             <span>Contrasenya</span>
         </label>
     </div>
 
     <div class="flex">
         <label>
-            <input class="input" type="text" placeholder="" required="">
+            <input class="input" type="text" placeholder="" id="dni" name="dni" required="">
             <span>DNI/NIE</span>
         </label>
 
@@ -48,18 +48,18 @@
 
     <div class="flex">
         <label>
-            <input class="input" type="text" placeholder="" required="">
+            <input class="input" type="text" placeholder="" id="numContacte1" name="numContacte1" required="">
             <span>Nº Telefon</span>
         </label>
 
         <label>
-            <input class="input" type="text" placeholder="" required="">
+            <input class="input" type="text" placeholder="" id="codiPostal" name="codiPostal" required="">
             <span>Codi Postal</span>
         </label>
     </div>
 
     <label class="flex">
-        <input class="input" type="text" required>
+        <input class="input" type="text" id="adreca" name="adreca" required>
         <span>Adreça</span>
     </label>
 
@@ -72,7 +72,7 @@
         <input type="file" id="carnetFile" name="carnetFile" accept="image/*">
     </div>
 
-    <button class="submit" th:href="@{/login}">Submit</button>
+    <button class="submit">Registra</button>
     <p class="signin">Ja estàs registrat? <a th:href="@{/login}">Inicia sessió</a> </p>
 
 </form>
