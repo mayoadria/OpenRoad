@@ -1,0 +1,257 @@
+/* Reseteo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*border-style: solid;*/
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+
+/*-----------------------------------------------------------------------------------------------*/
+
+/* Estilos del Navbar */
+.nav-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    transition: background-color 0.3s ease;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: grey;
+}
+
+.navbar.scrolled {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin-left: 40px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+
+.icono_user {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem; /* Ajusta el tamaño del icono */
+    color: white; /* Cambia el color del icono */
+    margin-left: auto;
+    outline: none;
+    transition: transform 0.3s ease;
+}
+
+.icono_user:hover {
+    color: #00b4d8; /* Cambia el color al pasar el cursor */
+    transform: scale(1.1); /* Efecto de agrandamiento */
+}
+
+/* Menú desplegable (oculto por defecto) */
+.user-menu-container {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px; /* Ajusta según sea necesario */
+    right: 0;
+    background-color: #00b4d8;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 165px; /* Ajusta el ancho del menú */
+}
+
+.dropdown-item {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    text-align: left;
+    font-weight: bold;
+}
+.dropdown-item svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Añadir un espacio entre el ícono y el texto */
+    vertical-align: middle; /* Alinear el ícono verticalmente con el texto */
+}
+
+
+.dropdown-item:hover {
+    background-color: white;
+}
+
+/* Para mostrar el menú cuando está activo */
+.user-menu-container.active .dropdown-menu {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Ocultar menú en móviles si es necesario */
+    }
+}
+
+.nav-links a:hover {
+    color: #00b4d8;
+}
+
+
+/*---------------------------------------------------------------------*/
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.cars-section {
+    padding: 15px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+
+}
+
+.card-text {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.card-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.car-details {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.car-details .icon {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.car-details i {
+    color: #007bff;
+}
+
+.reservation {
+    margin-top: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.reservation label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.reservation input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+/*---------------------------------------------------------------------*/
+
+footer {
+    background-color: #343a40;
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem 0;
+}

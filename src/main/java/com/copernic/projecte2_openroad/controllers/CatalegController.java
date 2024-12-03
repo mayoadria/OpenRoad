@@ -3,13 +3,9 @@ package com.copernic.projecte2_openroad.controllers;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,16 +33,16 @@ public class CatalegController {
             model.addAttribute("isLogged", false);
         }
 
-        List<Vehicle> cars = vehicleServiceSQL.listarTodosLosVehiculos();
-        model.addAttribute("cars", cars);
+        List<Vehicle> vehicles = vehicleServiceSQL.listarTodosLosVehiculos();
+        model.addAttribute("vehicles", vehicles);
         return "cataleg";
     }
 
-    @GetMapping("/CrearVehicle")
+    @GetMapping("/crear_vehicle")
     public String mostrarFormularioCreacion(Model model) {
         Vehicle vehicle = new Vehicle();
         model.addAttribute("vehicle", vehicle);
-        return "CrearVehicles";
+        return "crearVehicle";
     }
 
     @PostMapping("/crear")

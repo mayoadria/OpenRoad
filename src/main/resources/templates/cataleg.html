@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>OpenRoad · Catàleg</title>
-        <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="css/cataleg.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
       </head>
 
@@ -98,13 +98,30 @@
             <h2 class="titulo text-center mb-4">Catàleg</h2>
             <div class="cars-grid">
 
-                <div th:each="car : ${cars}" class="card">
+                <div th:each="vehicle : ${vehicles}" class="card">
                     <img src="images/vehiculos/mercedes.jpg" class="card-img-top" alt="Mercedes CLA">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${car.marca}">Mercedes</h5>
-                        <h6 class="card-title" th:text="${car.model}">Mercedes</h6>
-                        <a href="#" class="btn btn-dark">Veure detalls</a>
-                    </div>
+                      <h5 class="card-title" th:text="${vehicle.marca} + ' ' + ${vehicle.model}">Mercedes Benz</h5>
+                      <div class="car-details">
+                        <p class="card-price" th:text="${vehicle.preuHora} + ' € / dia'">Preu/hora: 25€ + Fiança: 200€</p>
+                        <p class="card-price" th:text="${vehicle.fianca} + ' € fiança'"></p>
+
+                      </div>
+                      <div class="car-details">
+                          <div class="icon">
+                              <a class="fas fa-palette" th:text="${vehicle.color}"></a>
+                          </div>
+                          <div class="icon">
+                              <a class="fas fa-gas-pump" th:text="${vehicle.combustible}"></a>
+                          </div>
+                          <div class="icon">
+                              <a class="fas fa-cogs" th:text="${vehicle.caixaCanvis.getValor}"></a> 
+                          </div>
+                      </div>
+                      <p class="card-text">Dies lloguer</p>
+                      <p class="card-text " th:text="'De: ' + ${vehicle.diesLloguerMinim} + ' - ' + ${vehicle.diesLloguerMaxim} + ' dies'"></div>
+                      <a href="#" class="btn btn-dark">Veure detalls</a>
+                  </div>
                 </div>
                 
             </div>
@@ -114,7 +131,7 @@
 
 <!-- Botón o enlace para redirigir a la página de creación de vehículos -->
 <div class="mt-5 text-center">
-    <form th:action="@{/CrearVehicle}" method="get">
+    <form th:action="@{/crear_vehicle}" method="get">
         <button type="submit" class="btn_explora">Crear un vehicle</button>
     </form>
 </div>
