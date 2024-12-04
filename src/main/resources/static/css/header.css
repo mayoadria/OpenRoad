@@ -3,9 +3,14 @@
     top: 0;
     width: 100%;
     z-index: 100;
-    background: #343a40; /* Oscuro para todas las páginas excepto index.html */
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Transición suave */
+    background: #343a40; /* Fondo oscuro */
+    transition: transform 0.3s ease; /* Transición suave */
 }
+
+.nav-container.hidden {
+    transform: translateY(-100%); /* Oculta el header fuera de la vista */
+}
+
 
 .navbar {
     display: flex;
