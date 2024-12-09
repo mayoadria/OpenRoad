@@ -32,6 +32,9 @@ public class RegistroClienteController {
     @PostMapping("/new")
     public String save(@ModelAttribute("client") Client cli){
         cli.setContrasenya(passwordEncoder.encode(cli.getContrasenya()));
+        String[] part = cli.getEmail().split("@");
+        String username = part[0];
+        cli.setNomUsuari(username);
 
         clientServiceSQL.guardarClient(cli);
 

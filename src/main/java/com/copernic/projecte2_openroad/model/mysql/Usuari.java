@@ -29,15 +29,15 @@ public abstract class Usuari {
     private String nom;
     @Column(nullable = false, name = "cognom_1")
     private String cognom1;
-    @Column(nullable = false, name = "cognom_2")
+    @Column(nullable = true, name = "cognom_2")
     private String cognom2;
     @Column(nullable = false, name = "num_contacte_1")
     private int numContacte1;
-    @Column(nullable = false, name = "codi_postal")
+    @Column(nullable = true, name = "codi_postal")
     private String codiPostal;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String adreca;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Pais pais;
 
     // Inici Sessió General

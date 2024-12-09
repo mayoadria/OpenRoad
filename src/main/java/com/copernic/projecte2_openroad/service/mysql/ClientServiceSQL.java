@@ -35,30 +35,20 @@ public class ClientServiceSQL {
     public Client llistarClientPerId(String id) {
         return clientRepoSQL.findById(id).get();
     }
-
-    public Client llistarClientPerNomUsuari(String nomUsuari) { return clientRepoSQL.findByNomUsuari(nomUsuari).get();}
+    public Client obtenerClientePorNombreUsuario(String username) {
+        return clientRepoSQL.findByNomUsuari(username); // Busca al cliente por nombre de usuario
+    }
+    public Client llistarClientPerNomUsuari(String nomUsuari) {
+        return clientRepoSQL.findByNomUsuari(nomUsuari);}
 
     // Llistar tots els Clients.
     public List<Client> llistarClients() {
         return clientRepoSQL.findAll();
     }
 
-    // Modificar Client.
-    public String modificarClient(Client client) {
-        try {
-            if (llistarClientPerId(client.getDni()) != null) {
-                clientRepoSQL.save(client);
-                String msg = "Client: " + client.getNom() + " amb DNI(" + client.getDni() + ") modificat correctament!";
-                return msg;
-            } else {
-                String msg = "Client: DNI(" + client.getDni() + ") no s'ha trobat a la BD MySQL!";
-                return msg;
-            }
-        } catch (Exception e) {
-            String msg = "Error amb Client: DNI(" + client.getDni() + "). Excepció: " + e.getMessage();
-            return msg;  
-        }
-       
+    // Actualizar al cliente
+    public void modificarClient(Client cliente) {
+        clientRepoSQL.save(cliente);  // Guarda los cambios en la base de datos
     }
 
     // Eliminar Client.
@@ -78,4 +68,7 @@ public class ClientServiceSQL {
             return msg;  
         }
     }
+
+
+
 }

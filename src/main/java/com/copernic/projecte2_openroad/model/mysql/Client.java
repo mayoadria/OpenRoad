@@ -36,7 +36,7 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 public class Client extends Usuari {
 
     // Enums
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private Reputacio reputacio;
 
