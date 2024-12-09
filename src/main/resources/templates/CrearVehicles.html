@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="/static/css/header.css">
     <script src="/static/scripts/header.js" defer></script>
     <title>OpenRoad · Crear Vehículo</title>
+    <script src="/static/scripts/selectorCiudades.js" defer></script>
+    <!-- CSS de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+    <!-- Script de Leaflet -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 </head>
 <body>
@@ -202,6 +208,17 @@
             <label for="diesLloguerMaxim" class="form-label">Días de Alquiler Máximo</label>
             <input type="number" class="form-control" id="diesLloguerMaxim" name="diesLloguerMaxim" >
         </div>
+
+        <!-- Localización -->
+        <div class="map-container">
+            <label for="direccion">Introduce una dirección:</label>
+            <input type="text" id="direccion" placeholder="Ejemplo: Gran Via, Madrid, España" />
+            <button id="buscar">Buscar</button>
+            <p id="error" style="color: red; display: none;">No se pudo encontrar la dirección.</p>
+            <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
+        </div>
+
+
 
         <button type="submit" class="btn btn-primary">Crear Vehículo</button>
     </form>
