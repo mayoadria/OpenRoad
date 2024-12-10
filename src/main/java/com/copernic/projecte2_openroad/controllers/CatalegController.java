@@ -30,7 +30,7 @@ public class CatalegController {
     }
 
     // 2. Mostrar formulario de creación de vehículo (GET)
-    @GetMapping("/CrearVehicle") // Cambié la URL a "/CrearVehicle" para evitar mayúsculas
+    @GetMapping("/CrearVehicles") // Cambié la URL a "/CrearVehicle" para evitar mayúsculas
     public String mostrarFormularioCreacion(Model model) {
         // Creamos un objeto Vehicle vacío para mostrarlo en el formulario
         Vehicle vehicle = new Vehicle();

@@ -32,7 +32,7 @@ public class SecurityConfig
                     .clearAuthentication(true)
                 )
                 .authorizeRequests()
-                .requestMatchers("/login", "/logout", "/css/**","/images/**", "/registre/**", "/").permitAll()  // Permite acceso público a login y recursos estáticos
+                .requestMatchers("/login", "/logout", "/css/**","/images/**", "/registre/**", "/", "cataleg").permitAll()  // Permite acceso público a login y recursos estáticos
                 .anyRequest().authenticated()  // Requiere autenticación para cualquier otra ruta
                 .and()
                 .formLogin(form -> form

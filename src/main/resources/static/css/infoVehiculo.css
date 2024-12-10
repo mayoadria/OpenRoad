@@ -264,33 +264,12 @@ body {
     color: #000; /* Color negro para los títulos */
 }
 
+/*---------------------------------------------------------------------*/
+
 .map-container {
     width: 100%;
-    max-width: 800px;
     margin: 0 auto;
     text-align: center;
-}
-
-#direccion {
-    width: 60%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#buscar {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#buscar:hover {
-    background-color: #0056b3;
 }
 
 #map {
