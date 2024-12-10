@@ -30,7 +30,7 @@ public class CatalegController {
     }
 
     // 2. Mostrar formulario de creación de vehículo (GET)
-    @GetMapping("/CrearVehicles") // Cambié la URL a "/CrearVehicle" para evitar mayúsculas
+    @GetMapping("/CrearVehicle") // Cambié la URL a "/CrearVehicle" para evitar mayúsculas
     public String mostrarFormularioCreacion(Model model) {
         // Creamos un objeto Vehicle vacío para mostrarlo en el formulario
         Vehicle vehicle = new Vehicle();
@@ -38,9 +38,21 @@ public class CatalegController {
         // Añadimos el objeto vehicle al modelo
         model.addAttribute("vehicle", vehicle);
 
+        model.addAttribute("isLogged", false); // Inicializar variable isLogged
+
         // Devolvemos el nombre de la vista del formulario (HTML)
         return "CrearVehicles";  // Asegúrate de tener una vista llamada crearVehiculo.html
     }
+
+    /*
+    @GetMapping("/CrearVehicle")
+    public String mostrarFormularioCreacion(Model model) {
+    Vehicle vehicle = new Vehicle();
+    model.addAttribute("vehicle", vehicle);
+    model.addAttribute("isLogged", false); // Inicializar variable isLogged
+    return "CrearVehicles";
+    }
+*/
 
     // 3. Procesar la creación del vehículo (POST)
     @PostMapping("/crear") // Confirmamos que la ruta sea consistente
