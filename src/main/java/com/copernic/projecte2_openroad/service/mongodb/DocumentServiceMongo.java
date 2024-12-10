@@ -1,5 +1,6 @@
 package com.copernic.projecte2_openroad.service.mongodb;
 
+import com.copernic.projecte2_openroad.model.mongodb.DocumentClient;
 import com.copernic.projecte2_openroad.model.mongodb.DocumentMongo;
 import com.copernic.projecte2_openroad.repository.mongodb.DocumentRepositoryMongo;
 import org.bson.types.Binary;
@@ -13,18 +14,8 @@ public class DocumentServiceMongo {
     @Autowired
     private DocumentRepositoryMongo documentRepositoryMongo;
 
-    public void guardarDocuments(String dni, MultipartFile dniFile, MultipartFile carnetFile) throws Exception {
-        DocumentMongo document = new DocumentMongo();
-        document.setDni(dni);
+    public void guardarDocuments(DocumentClient documentClient) throws Exception {
 
-        // Convertir les imatges a format binari
-        document.setDniImatge(new Binary(dniFile.getBytes()));
-        document.setDniContentType(dniFile.getContentType());
-
-        document.setCarnetImatge(new Binary(carnetFile.getBytes()));
-        document.setCarnetContentType(carnetFile.getContentType());
-
-        // Guardar a MongoDB
-        documentRepositoryMongo.save(document);
+        documentRepositoryMongo.save(documentClient);
     }
 }

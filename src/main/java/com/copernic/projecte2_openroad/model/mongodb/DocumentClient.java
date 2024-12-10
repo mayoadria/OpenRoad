@@ -2,6 +2,7 @@ package com.copernic.projecte2_openroad.model.mongodb;
 
 import java.util.List;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,8 +18,5 @@ public class DocumentClient {
 
     @Id
     private String idClient;
-
-    private String nomDocument;
-    private String tipusDocument;
-    private List<Byte> clientDoc;
+    private List<Binary> clientDoc;
 }

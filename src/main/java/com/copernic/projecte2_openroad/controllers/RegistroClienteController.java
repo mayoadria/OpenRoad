@@ -1,15 +1,22 @@
 package com.copernic.projecte2_openroad.controllers;
 
+import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.enums.Reputacio;
+import com.copernic.projecte2_openroad.model.mongodb.DocumentClient;
+import com.copernic.projecte2_openroad.model.mongodb.DocumentMongo;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.service.mysql.ClientServiceSQL;
 import com.copernic.projecte2_openroad.service.mongodb.DocumentServiceMongo;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/registre")
@@ -26,7 +33,7 @@ public class RegistroClienteController {
 
     @GetMapping("")
     public String Registre(Model model) {
-        model.addAttribute("estados", Reputacio.values());
+        model.addAttribute("paisos", Pais.values());
         return "Registre";
     }
 
@@ -46,7 +53,20 @@ public class RegistroClienteController {
             clientServiceSQL.guardarClient(cli);
 
             // Processar i guardar imatges a MongoDB
-            documentServiceMongo.guardarDocuments(cli.getDni(), dniFile, carnetFile);
+            DocumentClient document = new DocumentClient();
+            document.setIdClient(cli.getDni());
+
+            //
+            Binary dniImatge = new Binary(dniFile.getBytes());
+            Binary carnetImatge = new Binary(carnetFile.getBytes());
+            List<Binary> docList = new ArrayList<>();
+            docList.add(dniImatge);
+            docList.add(carnetImatge);
+
+            document.setClientDoc(docList);
+
+            // Guardar a MongoDB
+            documentServiceMongo.guardarDocuments(document);
 
             return "redirect:/login";
 
