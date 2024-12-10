@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.bson.types.Binary;
 
 @MappedSuperclass
 @Data
@@ -20,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class Usuari {
 
-    // PK DNI - Identificador de Usuari (Client i Agent).
+    // PK DNI - Identificador d'Usuari (Client i Agent).
     @Id
     private String dni;
 
