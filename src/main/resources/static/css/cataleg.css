@@ -148,102 +148,97 @@ body {
 }
 
 .card {
-    background-color: #f9f9f9;
+    border: none;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%; /* Limita la expansión de las tarjetas */
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Imágenes dinámicas */
 .card-img-top {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+    width: 100%; /* Se adapta al ancho de la tarjeta */
+    height: 200px; /* Altura fija para mantener consistencia */
+    object-fit: cover; /* Recorta para mantener proporción */
+    display: block;
 }
 
+/* Contenido de la tarjeta */
 .card-body {
-    padding: 10px;
+    padding: 1rem;
+    text-align: center;
+    flex-grow: 1;
 }
 
 .card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center;
-
-}
-
-.card-text {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-.card-price {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 1.25rem;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
 }
 
 .car-details {
+    border-style: solid;
+    border-color: black;
+    border-radius: 0.5px;
     display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-    font-size: 14px;
-    color: #555;
+    align-content: center;
+    justify-content: space-evenly;
 }
 
-.car-details .icon {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.icon {
+    border-style: solid;
+    border-color: black;
+    border-radius: 0.5px;
+    display: inline-block;
+    padding: 1%;
 }
 
-.car-details i {
-    color: #007bff;
+
+
+.days {
+    border-style: solid;
+    border-color: black;
+    border-radius: 0.5px;
+} 
+
+    
+.days-text {
+
 }
 
-.reservation {
-    margin-top: 10px;
-    text-align: left;
-    font-size: 14px;
+.price {
+    border-style: solid;
+    border-color: black;
+    border-radius: 0.5px;
 }
 
-.reservation label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
+.price-text {
 
-.reservation input {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+} 
 
 .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background: #00b4d8;
+    color: white;
+    padding: 0.5rem 1.25rem;
     border: none;
     border-radius: 5px;
     text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    font-weight: bold;
+    transition: background 0.3s ease;
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background: #0096c7;
 }
-
 
 
 
