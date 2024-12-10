@@ -20,6 +20,7 @@ public class CatalegController {
     @Autowired
     private VehicleServiceSQL vehicleServiceSQL;
 
+    // 1. Listar vehículos
     @GetMapping("/cataleg")
     public String listarVehiculos(Model model) {
 
@@ -43,10 +44,25 @@ public class CatalegController {
     public String mostrarFormularioCreacion(Model model) {
         Vehicle vehicle = new Vehicle();
         model.addAttribute("vehicle", vehicle);
-        return "crearVehicle";
+
+        model.addAttribute("isLogged", false); // Inicializar variable isLogged
+
+        // Devolvemos el nombre de la vista del formulario (HTML)
+        return "crearVehicle";  // Asegúrate de tener una vista llamada crearVehiculo.html
     }
 
-    @PostMapping("/crear")
+    /*
+    @GetMapping("/CrearVehicle")
+    public String mostrarFormularioCreacion(Model model) {
+    Vehicle vehicle = new Vehicle();
+    model.addAttribute("vehicle", vehicle);
+    model.addAttribute("isLogged", false); // Inicializar variable isLogged
+    return "CrearVehicles";
+    }
+*/
+
+    // 3. Procesar la creación del vehículo (POST)
+    @PostMapping("/crear") // Confirmamos que la ruta sea consistente
     public String crearVehiculo(@ModelAttribute Vehicle vehicle) {
         vehicleServiceSQL.guardarVehicle(vehicle);
         return "redirect:/cataleg";
@@ -59,5 +75,5 @@ public class CatalegController {
         model.addAttribute("vehicle", vehicle);
         return "infoVehiculo";
     }
-    
+
 }
