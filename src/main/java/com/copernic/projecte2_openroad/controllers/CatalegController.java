@@ -68,7 +68,7 @@ public class CatalegController {
         return "redirect:/cataleg";
     }
 
-    @GetMapping("/{matricula}")
+    @GetMapping("vehicle/{matricula}")
     public String detallsVehicle(@PathVariable("matricula") String matricula, Model model) {
         Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 

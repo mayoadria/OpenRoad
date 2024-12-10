@@ -146,7 +146,7 @@
           <p class="price-text">Fiança: </p>
           <p class="price" th:text="' ' + ${vehicle.fianca} + ' €'"></p>
         </div>
-        <a th:href="${vehicle.matricula}" class="btn btn-dark">Veure detalls</a>
+        <a th:href="@{/vehicle/{matricula}(matricula=${vehicle.matricula})}" class="btn btn-dark">Veure detalls</a>
       </div>
     </div>
 
