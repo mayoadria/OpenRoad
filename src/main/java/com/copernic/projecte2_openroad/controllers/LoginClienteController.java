@@ -34,7 +34,6 @@ public class LoginClienteController {
     }
 
 
-    // Método para verificar las credenciales del usuario
     @PostMapping("/user")
     public String loginSubmit(@RequestParam("nomUsuari") String username,
                               @RequestParam("contrasenya") String password, Model model) {
@@ -46,11 +45,7 @@ public class LoginClienteController {
             // Si las credenciales son incorrectas, redirige al login con el parámetro de error
             return "redirect:/login?error=true";
         }
-
-            // Si las credenciales son correctas, redirige a la página de inicio (por ejemplo, "index.html")
-            return "redirect:/";
-
-
+        return "redirect:/";
     }
 
 

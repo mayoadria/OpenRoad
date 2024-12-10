@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class ValidadorUsuaris implements UserDetailsService {
     private final ClientServiceSQL clientService;
 
+
     @Autowired
     public ValidadorUsuaris(ClientServiceSQL clientService) {
         this.clientService = clientService;

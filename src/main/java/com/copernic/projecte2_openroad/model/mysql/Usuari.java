@@ -3,9 +3,7 @@ package com.copernic.projecte2_openroad.model.mysql;
 import com.copernic.projecte2_openroad.model.enums.Pais;
 
 // Jakarta
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
 // Lombok
 import lombok.AllArgsConstructor;
@@ -47,5 +45,9 @@ public abstract class Usuari {
     private String contrasenya;
     @Column(nullable = false, name = "nom_usuari")
     private String nomUsuari;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Roles role;
     
 }

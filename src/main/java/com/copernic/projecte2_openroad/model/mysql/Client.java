@@ -35,10 +35,10 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 @ToString(callSuper = true)
 public class Client extends Usuari {
 
-    // Enums
-    @Column(nullable = true)
-    @Enumerated(EnumType.STRING)
-    private Reputacio reputacio;
+//    // Enums
+//    @Column(nullable = true)
+//    @Enumerated(EnumType.STRING)
+//    private Reputacio reputacio;
 
     // Relació OneToMany amb taula - Reserva (Bidireccional)
     @OneToMany(mappedBy = "client")
