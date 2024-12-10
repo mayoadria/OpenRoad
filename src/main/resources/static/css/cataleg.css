@@ -142,9 +142,10 @@ body {
 
 .cars-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(4,1fr);
     gap: 20px;
-    justify-content: center;
+    padding: 20px;
+
 }
 
 .card {
@@ -157,6 +158,24 @@ body {
     display: flex;
     flex-direction: column;
     max-width: 100%; /* Limita la expansión de las tarjetas */
+}
+
+@media (max-width: 1200px) {
+    .cars-grid {
+        grid-template-columns: repeat(3,1fr);
+    }
+} 
+
+@media (max-width: 800px) {
+    .cars-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .cars-grid {
+        grid-template-columns: repeat(1,1fr);
+    }
 }
 
 .card:hover {
@@ -174,7 +193,8 @@ body {
 
 /* Contenido de la tarjeta */
 .card-body {
-    padding: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     text-align: center;
     flex-grow: 1;
 }
@@ -186,44 +206,46 @@ body {
 }
 
 .car-details {
-    border-style: solid;
-    border-color: black;
-    border-radius: 0.5px;
     display: flex;
     align-content: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
 .icon {
-    border-style: solid;
-    border-color: black;
-    border-radius: 0.5px;
     display: inline-block;
     padding: 1%;
 }
 
 
 
-.days {
-    border-style: solid;
-    border-color: black;
-    border-radius: 0.5px;
+.dades {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.dies-text {
 } 
 
-    
-.days-text {
+.loc-text {
+}
 
+
+.price-box {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    justify-content: space-between;
+   }
+
+.price-text {
+    color: darkgrey;
+    
 }
 
 .price {
-    border-style: solid;
-    border-color: black;
-    border-radius: 0.5px;
+    font-size: larger;
+    font-weight: bold;
 }
-
-.price-text {
-
-} 
 
 .btn {
     background: #00b4d8;

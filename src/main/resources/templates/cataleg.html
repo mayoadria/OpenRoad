@@ -128,19 +128,23 @@
               </div>
               <div class="icon">
                 <a class="fas fa-cogs" th:text="${vehicle.caixaCanvis.getValor}"></a>
-
               </div>
             </div>
-            <div class="days">
-              <p class="days-text">Dies lloguer</p>
-              <p class="days-text "
-                th:text="${vehicle.diesLloguerMinim} + ' - ' + ${vehicle.diesLloguerMaxim} + ' dies'">
+            <div class="dades">
+              <p class="dies-text"
+              th:text="'Lloguer: ' + ${vehicle.diesLloguerMinim} + ' - ' + ${vehicle.diesLloguerMaxim} + ' dies'">
+               <!--th:text="${vehicle.localitat}"-->
+              <p class="loc-text">Terrassa</p>
             </div>
+            <hr></hr>
           </div>
-
-          <div class="price">
-            <p class="price-text" th:text="${vehicle.preuHora} + ' € / dia'"></p>
-            <p class="price-text" th:text="${vehicle.fianca} + ' € fiança'"></p>
+          <div class="price-box">
+            <p class="price-text">Dia: </p>
+            <p class="price" th:text="' ' + ${vehicle.preuHora} + ' €'"></p>
+          </div>
+          <div class="price-box">
+            <p class="price-text">Fiança: </p>
+            <p class="price" th:text="' ' + ${vehicle.fianca} + ' €'"></p>
           </div>
           <a href="#" class="btn btn-dark">Veure detalls</a>
         </div>
