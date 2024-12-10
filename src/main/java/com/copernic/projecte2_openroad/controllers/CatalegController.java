@@ -50,7 +50,7 @@ public class CatalegController {
         model.addAttribute("isLogged", false); // Inicializar variable isLogged
 
         // Devolvemos el nombre de la vista del formulario (HTML)
-        return "CrearVehicles";  // Asegúrate de tener una vista llamada crearVehiculo.html
+        return "crearVehicle";  // Asegúrate de tener una vista llamada crearVehiculo.html
     }
 
     /*
