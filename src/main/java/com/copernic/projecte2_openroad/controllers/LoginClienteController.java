@@ -41,7 +41,11 @@ public class LoginClienteController {
 
         // Verifica las credenciales en la base de datos
         var user = clientServiceSQL.llistarClientPerNomUsuari(username);
-
+// Verifica si el usuario existe y la contraseña es correcta
+        if (user == null || !user.getContrasenya().equals(password)) {
+            // Si las credenciales son incorrectas, redirige al login con el parámetro de error
+            return "redirect:/login?error=true";
+        }
 
             // Si las credenciales son correctas, redirige a la página de inicio (por ejemplo, "index.html")
             return "redirect:/";

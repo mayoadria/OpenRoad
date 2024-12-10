@@ -35,7 +35,7 @@ public abstract class Usuari {
     private int numContacte1;
     @Column(nullable = true, name = "codi_postal")
     private String codiPostal;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String adreca;
     @Column(nullable = true)
     private Pais pais;

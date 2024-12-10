@@ -10,6 +10,5 @@ import com.copernic.projecte2_openroad.model.mysql.Client;
 import java.util.Optional;
 
 @Repository
-public interface ClientRepositorySQL extends JpaRepository<Client, String>{
-    Optional<Client> findByNomUsuari(String nomUsuari);
+public interface ClientRepositorySQL extends JpaRepository<Client, String>{ Client findByNomUsuari(String nomUsuari);
 }
