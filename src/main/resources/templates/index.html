@@ -109,30 +109,11 @@
     <h2 class="titulo text-center mb-4">Cotxes destacats</h2>
     <div class="cars-grid">
 
-      <div class="card">
+      <div th:each="vehicle : ${vehicles}" class="card">
         <img src="images/vehiculos/mercedes.jpg" class="card-img-top" alt="Mercedes CLA">
         <div class="card-body">
-          <h5 class="card-title">Mercedes</h5>
-          <p class="card-text">Descripción breve del coche.</p>
-          <a href="#" class="btn btn-dark">Veure detalls</a>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <img src="images/vehiculos/porsche.jpg" class="card-img-top" alt="Range Rover">
-        <div class="card-body">
-          <h5 class="card-title">Porsche 911</h5>
-          <p class="card-text">Un coche compacto, perfecto para la ciudad.</p>
-          <a href="#" class="btn btn-dark">Veure detalls</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="images/vehiculos/cupra.jpg" class="card-img-top" alt="Citroë">
-        <div class="card-body">
-          <h5 class="card-title">Cupra Tavascan</h5>
-          <p class="card-text">Un coche versátil y confiable para cualquier ocasión.</p>
+          <h5 class="card-title" th:text="${vehicle.marca + ' ' + vehicle.model}">Mercedes</h5>
+          <p class="card-text" th:text="${vehicle.descVehicle}">Descripción breve del coche.</p>
           <a href="#" class="btn btn-dark">Veure detalls</a>
         </div>
       </div>

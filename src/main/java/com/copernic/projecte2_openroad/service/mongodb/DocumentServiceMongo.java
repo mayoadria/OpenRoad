@@ -20,13 +20,13 @@ public class DocumentServiceMongo {
     private DocumentRepositoryMongo documentRepoMongo;
 
     // Crear Document.
-    public String guardarDocument(DocumentClient Document) {
+    public String guardarDocument(DocumentClient document) {
         try {
-            documentRepoMongo.save(Document);
-            String msg = "Document: " + Document.getNomDocument() + " amb ID(" + Document.getIdClient() + ") s'ha creat correctament!";
+            documentRepoMongo.save(document);
+            String msg = "Document: " + document.getNomDocument() + " amb ID(" + document.getIdClient() + ") s'ha creat correctament!";
             return msg;
         } catch (Exception e) {
-            String msg = "Error amb Document: ID(" + Document.getIdClient() + "). Excepció: " + e.getMessage();
+            String msg = "Error amb Document: ID(" + document.getIdClient() + "). Excepció: " + e.getMessage();
             return msg;     
         }
     }
