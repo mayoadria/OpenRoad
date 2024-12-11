@@ -1,35 +1,37 @@
 
-TÉRMINOS Y CONDICIONES DE LA RESERVA
+TERMES I CONDICIONS DE LA RESERVA
 
-1. Generalidades:
-   - La reserva realizada a través de nuestra plataforma está sujeta a los términos y condiciones aquí expuestos.
-   - Al confirmar la reserva, usted acepta estos términos y condiciones en su totalidad.
+Troba'ns al Carrer Periodista Francesc Escanellas, 10, 07800 Eivissa, Illes Balears.
 
-2. Política de Cancelación:
-   - Las cancelaciones realizadas con al menos 24 horas de antelación recibirán un reembolso completo.
-   - Las cancelaciones realizadas con menos de 24 horas de antelación no serán reembolsables.
+1. Generalitats:
+   - La reserva realitzada a través de la nostra plataforma està subjecta als termes i condicions aquí exposats.
+   - En confirmar la reserva, vostè accepta aquests termes i condicions íntegrament.
 
-3. Responsabilidades del Cliente:
-   - El cliente debe presentar una licencia de conducir válida en el momento de recoger el vehículo.
-   - El cliente es responsable de devolver el vehículo en las mismas condiciones en las que fue entregado.
+2. Política de Cancel·lació:
+   - Les cancel·lacions realitzades amb almenys 24 hores d'antelació rebran un reemborsament complet.
+   - Les cancel·lacions realitzades amb menys de 24 hores d'antelació no seran reemborsables.
 
-4. Condiciones de Pago:
-   - El pago debe realizarse en su totalidad al momento de confirmar la reserva.
-   - Aceptamos tarjetas de crédito y débito como métodos de pago.
+3. Responsabilitats del Client:
+   - El client ha de presentar una llicència de conduir vàlida a l'hora de recollir el vehicle.
+   - El client és responsable de tornar el vehicle en les mateixes condicions en què va ser lliurat.
 
-5. Seguro:
-   - El seguro cubre daños al vehículo y terceros, con un deducible según lo especificado en el contrato.
-   - No incluye daños por negligencia o mal uso del vehículo.
+4. Condicions de Pagament:
+   - El pagament s'ha de fer totalment en el moment de confirmar la reserva.
+   - Acceptem targetes de crèdit i dèbit com a mètodes de pagament.
+
+5. Segur:
+   - L'assegurança cobreix danys al vehicle i tercers, amb un deduïble segons el que especifica el contracte.
+   - No inclou danys per negligència o mal ús del vehicle.
 
 6. Nota Legal:
-   - OpenRoad no se hace responsable por retrasos o inconvenientes causados por factores externos, como tráfico o clima.
-   - OpenRoad se reserva el derecho de modificar o cancelar la reserva en casos excepcionales.
+   - OpenRoad no es fa responsable per retards o inconvenients causats per factors externs, com ara trànsit o clima.
+   - OpenRoad es reserva el dret de modificar o cancel·lar la reserva en casos excepcionals.(Subir nota a Marc en Sprint 3)
 
-7. Privacidad:
-   - Los datos personales proporcionados por el cliente serán utilizados exclusivamente para la gestión de la reserva.
-   - No compartiremos sus datos personales con terceros sin su consentimiento.
+7. Privadesa:
+   - Les dades personals proporcionades pel client seran utilitzades exclusivament per a la gestió de la reserva.
+   - No compartirem les vostres dades personals amb tercers sense el vostre consentiment.
 
-8. Contacto:
-   - Si tiene alguna pregunta o problema con su reserva, puede contactarnos al +34 900 123 456 o a través de soporte@openroad.com.
+8. Contacte:
+   - Si teniu alguna pregunta o problema amb la vostra reserva, podeu contactar amb nosaltres al 971 30 73 52 o a @unaireyes__ / @mayoadria / @marc.b_24 / @omarbencc
 
-Estos términos y condiciones están sujetos a cambios sin previo aviso. Por favor, revise esta sección antes de realizar una nueva reserva.
+Aquests termes i condicions estan subjectes a canvis sense avís previ. Reviseu aquesta secció abans de fer una reserva nova.
