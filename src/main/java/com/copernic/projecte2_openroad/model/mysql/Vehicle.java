@@ -51,7 +51,7 @@ public class Vehicle {
     @Column(nullable = false)
     private String color;
     @Column(nullable = false, name = "preu_hora")
-    private Double preuHora;
+    private Double preuDia;
     @Column(nullable = false)
     private Double fianca;
     @Column(nullable = false, name = "dies_lloguer_minim")
