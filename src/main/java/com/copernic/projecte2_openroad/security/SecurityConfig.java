@@ -1,12 +1,10 @@
 package com.copernic.projecte2_openroad.security;
 
-import com.copernic.projecte2_openroad.model.enums.Rol;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
 import com.copernic.projecte2_openroad.model.mysql.Roles;
-import com.copernic.projecte2_openroad.repository.mysql.AdminRepositorySQL;
+import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.repository.mysql.RolRepositorySQL;
-import com.copernic.projecte2_openroad.service.mysql.AdminServiceSQL;
-import com.copernic.projecte2_openroad.service.mysql.ClientServiceSQL;
+import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,19 +18,15 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final ValidadorAdmin validadorAdmin;
     private final ValidadorUsuaris validadorUsuaris;
-    private final AdminServiceSQL adminServiceSQL;
-    private final RolRepositorySQL rolRepositorySQL;
-    private final ClientServiceSQL clientServiceSQL; // Añadido para validar clientes
+    private final RolRepositorySQL rolRepositorySQL; // Añadido para validar clientes
+    private final UsuariServiceSQL usuariServiceSQL;
 
     @Autowired
-    public SecurityConfig(ValidadorAdmin validadorAdmin, ValidadorUsuaris validadorUsuaris, AdminServiceSQL adminServiceSQL, RolRepositorySQL rolRepositorySQL, ClientServiceSQL clientServiceSQL) {
-        this.validadorAdmin = validadorAdmin;
+    public SecurityConfig(ValidadorUsuaris validadorUsuaris, RolRepositorySQL rolRepositorySQL, UsuariServiceSQL usuariServiceSQL) {
         this.validadorUsuaris = validadorUsuaris;
-        this.adminServiceSQL = adminServiceSQL;
         this.rolRepositorySQL = rolRepositorySQL;
-        this.clientServiceSQL = clientServiceSQL;
+        this.usuariServiceSQL = usuariServiceSQL;
     }
 
     @Bean
@@ -47,27 +41,17 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/registre/**", "/", "/admin/loginAdmin").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/client/**").hasRole("CLIENT") // Autorización para clientes
+                .requestMatchers("/client/**").hasRole("CLIENT")     // Autorización para clientes
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(form -> form
-                        .loginPage("/admin/loginAdmin")
-                        .loginProcessingUrl("/admin/loginAdmin")
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
                         .usernameParameter("nomUsuari")
                         .passwordParameter("contrasenya")
-                        .defaultSuccessUrl("/admin/dashboard", true)
-                        .failureUrl("/admin/login?error=true")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")
                 )
-
-//                .formLogin(form -> form
-//                        .loginPage("/client/loginClient")
-//                        .loginProcessingUrl("/client/loginClient")
-//                        .usernameParameter("nomUsuari")
-//                        .passwordParameter("contrasenya")
-//                        .defaultSuccessUrl("/client/dashboard", true)
-//                        .failureUrl("/client/login?error=true")
-//                )
-                .userDetailsService(validadorAdmin) // Registro del validador de administradores
                 .userDetailsService(validadorUsuaris); // Registro del validador de clientes
 
         crearRolSiNoExiste();
@@ -93,21 +77,38 @@ public class SecurityConfig {
     }
 
     private void crearAdminSiNoExiste() {
-        if (adminServiceSQL.llistarClientPerNomUsuari("admin") == null) {
-            Roles rol = rolRepositorySQL.findByName("ROLE_ADMIN");
-            if (rol != null) {
-                Admin admin = new Admin();
-                admin.setNomUsuari("admin");
-                admin.setContrasenya(passwordEncoder().encode("admin"));
-                admin.setRole(rol);
-                adminServiceSQL.crearAdmin(admin);
-                System.out.println("Administrador creado automáticamente.");
-            } else {
-                System.out.println("No se encontró el rol 'ADMIN'.");
-            }
-        } else {
-            System.out.println("El administrador ya existe.");
+        // Verificar si existe el rol 'ROLE_ADMIN'
+        Roles rol = rolRepositorySQL.findByName("ROLE_ADMIN");
+        if (rol == null) {
+            System.out.println("No se encontró el rol 'ROLE_ADMIN'.");
+            return;
         }
+
+        // Verificar si ya existe un administrador
+        Usuari adminExistente = usuariServiceSQL.findByNomUsuari("admin");
+        if (adminExistente != null) {
+            System.out.println("El administrador ya existe.");
+            return;
+        }
+
+        // Crear administrador si no existe
+        Admin admin = new Admin();
+        admin.setContrasenya(passwordEncoder().encode("admin"));
+        admin.setDni("12345678A");
+        admin.setNom("admin");
+        admin.setAdreca("admin");
+        admin.setCognom1("admin");
+        admin.setCognom2("admin");
+        admin.setEmail("admin@admin.com");
+        String[] part = admin.getEmail().split("@");
+        String username = part[0];
+        admin.setNomUsuari(username);
+        admin.setRole(rol);
+
+        // Llama al método correcto de tu servicio para guardar el administrador
+        String resultado = usuariServiceSQL.guardarAdmin(admin);
+        System.out.println(resultado);
     }
+
 }
 

@@ -2,7 +2,9 @@ package com.copernic.projecte2_openroad.controllers;
 
 import com.copernic.projecte2_openroad.model.enums.Reputacio;
 import com.copernic.projecte2_openroad.model.mysql.Client;
-import com.copernic.projecte2_openroad.service.mysql.ClientServiceSQL;
+import com.copernic.projecte2_openroad.model.mysql.Roles;
+import com.copernic.projecte2_openroad.repository.mysql.RolRepositorySQL;
+import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegistroClienteController {
 
     @Autowired
-    ClientServiceSQL clientServiceSQL;
+    UsuariServiceSQL usuariServiceSQL;
+
+    @Autowired
+    RolRepositorySQL rolRepositorySQL;// Añadido para validar clientes
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -35,8 +40,9 @@ public class RegistroClienteController {
         String[] part = cli.getEmail().split("@");
         String username = part[0];
         cli.setNomUsuari(username);
-
-        clientServiceSQL.guardarClient(cli);
+        Roles rol = rolRepositorySQL.findByName("ROLE_CLIENT");
+        cli.setRole(rol);
+        usuariServiceSQL.guardarClient(cli);
 
         return "redirect:/login";
 

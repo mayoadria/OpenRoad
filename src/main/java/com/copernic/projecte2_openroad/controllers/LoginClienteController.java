@@ -1,8 +1,6 @@
 package com.copernic.projecte2_openroad.controllers;
 
-import com.copernic.projecte2_openroad.model.mysql.Client;
-import com.copernic.projecte2_openroad.service.mysql.ClientServiceSQL;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("")
 public class LoginClienteController {
 
-    private final ClientServiceSQL clientServiceSQL;
+    private final UsuariServiceSQL usuariServiceSQL;
 
-    public LoginClienteController(ClientServiceSQL clientServiceSQL) {
-        this.clientServiceSQL = clientServiceSQL;
+    public LoginClienteController(UsuariServiceSQL usuariServiceSQL) {
+        this.usuariServiceSQL = usuariServiceSQL;
     }
 
     // Método para mostrar la página de login
@@ -39,7 +37,7 @@ public class LoginClienteController {
                               @RequestParam("contrasenya") String password, Model model) {
 
         // Verifica las credenciales en la base de datos
-        var user = clientServiceSQL.llistarClientPerNomUsuari(username);
+        var user = usuariServiceSQL.findByNomUsuari(username);
 // Verifica si el usuario existe y la contraseña es correcta
         if (user == null || !user.getContrasenya().equals(password)) {
             // Si las credenciales son incorrectas, redirige al login con el parámetro de error

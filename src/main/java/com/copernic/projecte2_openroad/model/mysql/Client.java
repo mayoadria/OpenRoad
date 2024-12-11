@@ -45,4 +45,5 @@ public class Client extends Usuari {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Reserva> reserva;
+
 }

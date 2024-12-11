@@ -1,5 +1,6 @@
 package com.copernic.projecte2_openroad.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminDashBoardController {
 
     @GetMapping("/dashboard")
+
     public String dashboard() {
         return "dashboard"; // dashboard.html en templates.
     }

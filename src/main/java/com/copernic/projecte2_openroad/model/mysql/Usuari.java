@@ -35,7 +35,8 @@ public abstract class Usuari {
     private String codiPostal;
     @Column(nullable = true)
     private String adreca;
-    @Column(nullable = true)
+
+    @JoinColumn(name = "pais_id", nullable = true)
     private Pais pais;
 
     // Inici Sessió General
@@ -49,5 +50,4 @@ public abstract class Usuari {
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Roles role;
-    
 }
