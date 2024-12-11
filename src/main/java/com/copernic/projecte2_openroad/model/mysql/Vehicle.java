@@ -54,6 +54,11 @@ public class Vehicle {
     private Double preuHora;
     @Column(nullable = false)
     private Double fianca;
+    @Column(nullable = false, name = "dies_lloguer_minim")
+    private int diesLloguerMinim;
+    @Column(nullable = false, name = "dies_lloguer_maxim")
+    private int diesLloguerMaxim;
+    
 
     // Enums
     @Column(nullable = false)
@@ -74,10 +79,9 @@ public class Vehicle {
     private LocalDate anyVehicle;
     @Column(nullable = true)
     private int km;
-    @Column(nullable = true, name = "dies_lloguer_minim")
-    private int diesLloguerMinim;
-    @Column(nullable = true, name = "dies_lloguer_maxim")
-    private int diesLloguerMaxim;
+    @Column(nullable = true, name = "desc_vehicle")
+    private String descVehicle;
+    
 
     // Relació OneToMany amb taula - Reserva (Bidireccional)
     @OneToMany(mappedBy = "vehicle")
