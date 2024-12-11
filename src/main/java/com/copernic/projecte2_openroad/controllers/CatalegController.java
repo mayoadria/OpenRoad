@@ -73,6 +73,8 @@ public class CatalegController {
         Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
         model.addAttribute("vehicle", vehicle);
+        model.addAttribute("isLogged", false);
+
         return "infoVehiculo";
     }
 
