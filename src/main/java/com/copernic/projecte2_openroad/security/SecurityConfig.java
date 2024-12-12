@@ -1,9 +1,7 @@
 package com.copernic.projecte2_openroad.security;
 
 import com.copernic.projecte2_openroad.model.mysql.Admin;
-import com.copernic.projecte2_openroad.model.mysql.Roles;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
-import com.copernic.projecte2_openroad.repository.mysql.RolRepositorySQL;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +19,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final ValidadorUsuaris validadorUsuaris;
-    private final RolRepositorySQL rolRepositorySQL; // Añadido para validar clientes
+
     private final UsuariServiceSQL usuariServiceSQL;
 
     @Autowired
-    public SecurityConfig(ValidadorUsuaris validadorUsuaris, RolRepositorySQL rolRepositorySQL, UsuariServiceSQL usuariServiceSQL) {
+    public SecurityConfig(ValidadorUsuaris validadorUsuaris, UsuariServiceSQL usuariServiceSQL) {
         this.validadorUsuaris = validadorUsuaris;
-        this.rolRepositorySQL = rolRepositorySQL;
         this.usuariServiceSQL = usuariServiceSQL;
     }
 
@@ -55,7 +52,6 @@ public class SecurityConfig {
                 )
                 .userDetailsService(validadorUsuaris); // Registro del validador de clientes
 
-        crearRolSiNoExiste();
         crearAdminSiNoExiste();
 
         return http.build();
@@ -74,24 +70,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    private void crearRolSiNoExiste() {
-        String[] nombresRoles = {"ROLE_ADMIN", "ROLE_AGENT", "ROLE_CLIENT"};
-        for (String nombreRol : nombresRoles) {
-            if (rolRepositorySQL.findByName(nombreRol) == null) {
-                Roles rol = new Roles();
-                rol.setName(nombreRol);
-                rolRepositorySQL.save(rol);
-            }
-        }
-    }
 
     private void crearAdminSiNoExiste() {
-        // Verificar si existe el rol 'ROLE_ADMIN'
-//        Roles rol = rolRepositorySQL.findByName("ROLE_ADMIN");
-//        if (rol == null) {
-//            System.out.println("No se encontró el rol 'ROLE_ADMIN'.");
-//            return;
-//        }
 
         // Verificar si ya existe un administrador
         Usuari adminExistente = usuariServiceSQL.findByNomUsuari("admin");
