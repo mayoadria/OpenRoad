@@ -8,6 +8,8 @@ import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,12 +40,11 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                 )
-                .authorizeRequests()
-                .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/registre/**", "/", "/admin/loginAdmin").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/client/**").hasRole("CLIENT")     // Autorización para clientes
-                .anyRequest().authenticated()
-                .and()
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
+                .requestMatchers("/admin/**").hasAnyAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
+                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString())    // Autorización para clientes
+                .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
@@ -60,6 +61,14 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(new ValidadorUsuaris())
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -78,11 +87,11 @@ public class SecurityConfig {
 
     private void crearAdminSiNoExiste() {
         // Verificar si existe el rol 'ROLE_ADMIN'
-        Roles rol = rolRepositorySQL.findByName("ROLE_ADMIN");
-        if (rol == null) {
-            System.out.println("No se encontró el rol 'ROLE_ADMIN'.");
-            return;
-        }
+//        Roles rol = rolRepositorySQL.findByName("ROLE_ADMIN");
+//        if (rol == null) {
+//            System.out.println("No se encontró el rol 'ROLE_ADMIN'.");
+//            return;
+//        }
 
         // Verificar si ya existe un administrador
         Usuari adminExistente = usuariServiceSQL.findByNomUsuari("admin");
@@ -103,7 +112,8 @@ public class SecurityConfig {
         String[] part = admin.getEmail().split("@");
         String username = part[0];
         admin.setNomUsuari(username);
-        admin.setRole(rol);
+        admin.setPermisos(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString());
+//        admin.setRole(rol);
 
         // Llama al método correcto de tu servicio para guardar el administrador
         String resultado = usuariServiceSQL.guardarAdmin(admin);

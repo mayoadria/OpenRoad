@@ -34,7 +34,7 @@ public class LoginClienteController {
 
     @PostMapping("/user")
     public String loginSubmit(@RequestParam("nomUsuari") String username,
-                              @RequestParam("contrasenya") String password, Model model) {
+                              @RequestParam("contrasenya") String password) {
 
         // Verifica las credenciales en la base de datos
         var user = usuariServiceSQL.findByNomUsuari(username);

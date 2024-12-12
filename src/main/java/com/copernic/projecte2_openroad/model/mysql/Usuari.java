@@ -3,6 +3,7 @@ package com.copernic.projecte2_openroad.model.mysql;
 import com.copernic.projecte2_openroad.model.enums.Pais;
 
 // Jakarta
+import com.copernic.projecte2_openroad.security.TipusPermis;
 import jakarta.persistence.*;
 
 // Lombok
@@ -10,13 +11,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @MappedSuperclass
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public abstract class Usuari {
+public abstract class Usuari implements UserDetails {
 
     // PK DNI - Identificador de Usuari (Client i Agent).
     @Id
@@ -47,7 +54,19 @@ public abstract class Usuari {
     @Column(nullable = false, name = "nom_usuari")
     private String nomUsuari;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Roles role;
+
+
+    @Column(nullable = false)
+    private String permisos;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> ret = new ArrayList<>();
+        String[] llista1 = permisos.split(",");
+
+        for (String p : llista1) {
+            ret.add(new Permisos(TipusPermis.valueOf(p)));
+        }
+        return ret;
+    }
 }

@@ -23,4 +23,13 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 public class Admin extends Usuari{
 
 
+    @Override
+    public String getPassword() {
+        return getContrasenya();
+    }
+
+    @Override
+    public String getUsername() {
+        return getNomUsuari();
+    }
 }

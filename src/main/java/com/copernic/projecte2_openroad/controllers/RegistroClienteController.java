@@ -4,6 +4,7 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Roles;
 import com.copernic.projecte2_openroad.repository.mysql.RolRepositorySQL;
+import com.copernic.projecte2_openroad.security.TipusPermis;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,8 +41,8 @@ public class RegistroClienteController {
         String[] part = cli.getEmail().split("@");
         String username = part[0];
         cli.setNomUsuari(username);
-        Roles rol = rolRepositorySQL.findByName("ROLE_CLIENT");
-        cli.setRole(rol);
+        cli.setPermisos(TipusPermis.MOSTRAR_PEPE.toString());
+
         usuariServiceSQL.guardarClient(cli);
 
         return "redirect:/login";

@@ -46,4 +46,13 @@ public class Client extends Usuari {
     @EqualsAndHashCode.Exclude
     private List<Reserva> reserva;
 
+    @Override
+    public String getPassword() {
+        return getContrasenya();
+    }
+
+    @Override
+    public String getUsername() {
+        return getNomUsuari();
+    }
 }
