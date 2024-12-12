@@ -117,30 +117,11 @@ form button[type="submit"] {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
 form button[type="submit"]:hover {
     background-color: #0056b3;
-}
-
-/* Localización: Provincias y Ciudades */
-.selectorCiudades {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.selectorCiudades label {
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.selectorCiudades select {
-    padding: 5px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
 }
 
 /*-----------------------------------------------------------------------------------------------*/

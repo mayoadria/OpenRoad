@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/CrearVehicle.css">
     <link rel="stylesheet" href="/css/header.css">
-    <title>OpenRoad · Crear Vehículo</title>
+    <title>OpenRoad · Crear Vehícle</title>
 
     <!-- JS HEADER -->
     <script src="/scripts/header.js" defer></script>
@@ -46,7 +46,7 @@
 </header>
 
 <div class="container mt-5">
-    <h2>Crear Vehículo</h2>
+    <h2>Crear Vehicle</h2>
     <form th:action="@{/crear}" th:object="${vehicle}" method="post" enctype="multipart/form-data">
         <!-- Matricula -->
         <div class="mb-3">
@@ -62,7 +62,7 @@
 
         <!-- Modelo -->
         <div class="mb-3">
-            <label for="model" class="form-label">Modelo</label>
+            <label for="model" class="form-label">Model</label>
             <input type="text" class="form-control" id="model" name="model" required>
         </div>
 
@@ -80,19 +80,19 @@
 
         <!-- Precio por hora -->
         <div class="mb-3">
-            <label for="preuHora" class="form-label">Precio por Hora</label>
-            <input type="number" step="0.01" class="form-control" id="preuHora" name="preuHora" required>
+            <label for="preuDia" class="form-label">Preu per dia</label>
+            <input type="number" step="0.01" class="form-control" id="preuDia" name="preuDia" required>
         </div>
 
         <!-- Fianza -->
         <div class="mb-3">
-            <label for="fianca" class="form-label">Fianza</label>
+            <label for="fianca" class="form-label">Fiança</label>
             <input type="number" step="0.01" class="form-control" id="fianca" name="fianca" required>
         </div>
 
         <!-- Lugares -->
         <div class="mb-3">
-            <label for="places" class="form-label">Plaçes</label>
+            <label for="places" class="form-label">Places</label>
             <select class="form-control" id="places" name="places" required>
                 <option value="DOS">2</option>
                 <option value="TRES">3</option>
@@ -131,44 +131,44 @@
 
         <!-- Año del vehículo -->
         <div class="mb-3">
-            <label for="anyVehicle" class="form-label">Año del vehículo</label>
-            <input type="date" class="form-control" id="anyVehicle" name="anyVehicle" required>
+            <label for="anyVehicle" class="form-label">Any de matriculació</label>
+            <input type="number" max="2024" class="form-control" id="anyVehicle" name="anyVehicle" required>
         </div>
 
         <!-- Kilómetros -->
         <div class="mb-3">
-            <label for="km" class="form-label">Kilómetros</label>
+            <label for="km" class="form-label">Quilòmetre</label>
             <input type="number" class="form-control" id="km" name="km">
         </div>
 
         <!-- Días de alquiler mínimo -->
         <div class="mb-3">
-            <label for="diesLloguerMinim" class="form-label">Días de Alquiler Mínimo</label>
+            <label for="diesLloguerMinim" class="form-label">Dies de lloguer mínim</label>
             <input type="number" class="form-control" id="diesLloguerMinim" name="diesLloguerMinim">
         </div>
 
         <!-- Días de alquiler máximo -->
         <div class="mb-3">
-            <label for="diesLloguerMaxim" class="form-label">Días de Alquiler Máximo</label>
+            <label for="diesLloguerMaxim" class="form-label">Dies de lloguer màxim</label>
             <input type="number" class="form-control" id="diesLloguerMaxim" name="diesLloguerMaxim">
         </div>
 
         <!-- Campo para subir imagen -->
         <div class="mb-3">
-            <label for="imagen" class="form-label">Imagen del Vehículo</label>
+            <label for="imagen" class="form-label">Imatge del vehicle</label>
             <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
         </div>
 
         <!-- Localización -->
         <div class="map-container">
-            <label for="direccion">Introduce una dirección:</label>
-            <input type="text" id="direccion" placeholder="Ejemplo: Gran Via, Madrid, España" />
+            <label for="direccion">Introdueix una adreça:</label>
+            <input type="text" id="direccion" placeholder="Exemple: Gran Via, Madrid, Espanya" />
             <button id="buscar">Buscar</button>
-            <p id="error" style="color: red; display: none;">No se pudo encontrar la dirección.</p>
+            <p id="error" style="color: red; display: none;">No s'ha pogut trobar l'adreça.</p>
             <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Crear Vehículo</button>
+        <button type="submit" class="btn btn-primary">Crear Vehicle</button>
     </form>
 </div>
 
@@ -179,6 +179,6 @@
 <!-- Footer -->
 <footer>
     <div class="container">
-        <p>&copy; 2024 OpenRoad. Todos los derechos reservados.</p>
+        <p>&copy; 2024 OpenRoad. Tots els drets reservats.</p>
     </div>
 </footer>
