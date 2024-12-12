@@ -50,7 +50,7 @@ public class Vehicle {
     private String combustible;
     @Column(nullable = false)
     private String color;
-    @Column(nullable = false, name = "preu_hora")
+    @Column(nullable = false, name = "preu_dia")
     private Double preuDia;
     @Column(nullable = false)
     private Double fianca;
@@ -76,7 +76,7 @@ public class Vehicle {
 
     // Camps Opcionals
     @Column(nullable = true, name = "any_vehicle")
-    private LocalDate anyVehicle;
+    private int anyVehicle;
     @Column(nullable = true)
     private int km;
     @Column(nullable = true, name = "desc_vehicle")
