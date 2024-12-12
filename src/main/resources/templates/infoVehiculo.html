@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/infoVehiculo.css">
-    <title>OpenRoad</title>
+    <link rel="stylesheet" href="/css/infoVehiculo.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <script src="/scripts/infoVehiculo.js" defer></script>
+    <script src="/scripts/header.js" defer></script>
+    <title>OpenRoad . Vehicle</title>
 </head>
 <body>
-<header class="header">
+<header class="nav-container">
     <nav class="navbar">
         <div class="logo">
             <a class="logo">
-                <img src="../static/images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
+                <img src="/images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
             </a>
         </div>
 
         <ul class="nav-links">
-            <li><a href="/templates/index.html">Inici</a></li>
-            <li><a href="#section2">Catàleg</a></li>
+            <li><a href="#section1">Inici</a></li>
+            <li><a th:href="@{/cataleg}">Catàleg</a></li>
             <li><a href="#section3">Contacte</a></li>
 
             <li class="user-menu-container">
@@ -26,11 +29,12 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                     </svg>
+                    <a class="username" th:if="${isLogged}" th:text="${nomUsuari}"></a>
                 </button>
 
-                <!-- Menú desplegable -->
-                <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">
+                <!-- Menú desplegable per defecte -->
+                <div th:if="${!isLogged}" class="dropdown-menu">
+                    <a th:href="@{/login}" class="dropdown-item">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
                             <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
@@ -38,14 +42,32 @@
                         Login
                     </a>
 
-                    <a href="#" class="dropdown-item">
+                    <a th:href="@{/registre}" class="dropdown-item">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
                             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
                             <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
                         </svg>
                         Registre
                     </a>
+                </div>
 
+                <!-- Menú desplegable -->
+                <div th:if="${isLogged}" class="dropdown-menu">
+                    <a th:href="@{/}" class="dropdown-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                        </svg>
+                        Perfil
+                    </a>
+
+                    <a th:href="@{/logout}" class="dropdown-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                            <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                        </svg>
+                        Tancar sessió
+                    </a>
                 </div>
 
                 <!-- Script en JS per interactuar amb el botó d'usuari -->
@@ -74,10 +96,10 @@
 </header>
 <div class="container">
     <div class="left-panel">
-        <img src="../static/images/vehiculos/rangeRoverSubBlanco.png" alt="Range Rover">
-        <h3 class="nombre-coche">Range Rover Suv Blanc</h3>
+        <img src="../static/images/vehiculos/rangeRoverSubBlanco.png" alt="No carrega la imatge">
+        <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
         <div class="details">
-            <p><i class="fa-solid fa-user"></i> 7</p>
+            <p class="fa-solid fa-user" th:text="${vehicle.places}"></p>
             <p>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="30" height="30">
                     <!-- Contorno de la puerta -->
@@ -90,10 +112,10 @@
                     <!-- Manija -->
                     <rect x="130" y="120" width="20" height="6" rx="3" ry="3" fill="white"/>
                 </svg>
-                5
+            <p th:text="${vehicle.portes}"></p>
             </p>
-            <p><i class="fa-solid fa-gear"></i> Automàtic</p>
-            <p><i class="fa-solid fa-gas-pump"></i> Benzina</p>
+            <p class="fa-solid fa-gear" th:text="${vehicle.caixaCanvis}"></p>
+            <p class="fa-solid fa-gas-pump" th:text="${vehicle.combustible}"></p>
         </div>
         <div class="rating">
             <p>Valoracións:</p>
@@ -150,10 +172,6 @@
                 <div class="column">
                     <p>Hora entrega</p>
                     <select>
-                        <option value="" disabled selected>Selecciona una hora</option>
-                        <option value="07:00">07:00</option>
-                        <option value="07:30">07:30</option>
-                        <option value="08:00">08:00</option>
                         <option value="08:30">08:30</option>
                         <option value="09:00">09:00</option>
                         <option value="09:30">09:30</option>
@@ -164,8 +182,20 @@
                         <option value="12:00">12:00</option>
                         <option value="12:30">12:30</option>
                         <option value="13:00">13:00</option>
-                        <option value="13:30">13:30</option>
-                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                        <option value="21:00">21:00</option>
+                        <option value="21:30">21:30</option>
                     </select>
                 </div>
             </div>
@@ -180,13 +210,18 @@
                 <p><strong>Total:</strong> <span id="precioTotal">0 €</span></p>
             </div>
         </div>
-        <script src="../static/scripts/infoVehiculo.js"></script>
+
 
         <div class="section">
             <h3>ALTRES DADES DE LA RESERVA</h3>
             <div class="additional-info">
-                <p><strong>Tipo:</strong> SUV</p>
-                <p><strong>Consumo medio:</strong> 7.8 L/100 km</p>
+                <p><strong>Tipus:</strong>Borrar si no hace falta</p>
+
+                <p>
+                    <span></span>
+                    <span th:text="${vehicle.combustible}"></span>
+                </p>
+
                 <p><strong>Autonomía:</strong> 650 km</p>
                 <p><strong>Equipamiento adicional:</strong> GPS, cámara trasera, climatizador</p>
                 <p><strong>Dirección de recogida:</strong> Calle Gran Vía 123, Barcelona</p>
@@ -204,10 +239,10 @@
 
             <!-- Mapa insertado -->
             <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2451.479677640707!2d2.16725808704597!3d41.39001347854073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a2f21c924c1d%3A0x8d3ae28f4b4230a9!2sGran%20Via%20de%20les%20Corts%20Catalanes%2C%20123%2C%20L&#39;Eixample%2C%2008007%20Barcelona!5e1!3m2!1ses!2ses!4v1732794721187!5m2!1ses!2ses"
-                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <p id="error" style="color: red; display: none;">No se pudo encontrar la dirección.</p>
+                <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
             </div>
+
 
 
         </div>

@@ -35,14 +35,24 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 @ToString(callSuper = true)
 public class Client extends Usuari {
 
-    // Enums
-    @Column(nullable = true)
-    @Enumerated(EnumType.STRING)
-    private Reputacio reputacio;
+//    // Enums
+//    @Column(nullable = true)
+//    @Enumerated(EnumType.STRING)
+//    private Reputacio reputacio;
 
     // Relació OneToMany amb taula - Reserva (Bidireccional)
     @OneToMany(mappedBy = "client")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Reserva> reserva;
+
+    @Override
+    public String getPassword() {
+        return getContrasenya();
+    }
+
+    @Override
+    public String getUsername() {
+        return getNomUsuari();
+    }
 }

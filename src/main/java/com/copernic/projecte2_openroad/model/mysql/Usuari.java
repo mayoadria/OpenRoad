@@ -3,9 +3,8 @@ package com.copernic.projecte2_openroad.model.mysql;
 import com.copernic.projecte2_openroad.model.enums.Pais;
 
 // Jakarta
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import com.copernic.projecte2_openroad.security.TipusPermis;
+import jakarta.persistence.*;
 
 // Lombok
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ import org.bson.types.Binary;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public abstract class Usuari {
+public abstract class Usuari implements UserDetails {
 
     // PK DNI - Identificador d'Usuari (Client i Agent).
     @Id
@@ -38,7 +37,8 @@ public abstract class Usuari {
     private String codiPostal;
     @Column(nullable = true)
     private String adreca;
-    @Column(nullable = true)
+
+    @JoinColumn(name = "pais_id", nullable = true)
     private Pais pais;
 
     // Inici Sessió General
@@ -48,5 +48,20 @@ public abstract class Usuari {
     private String contrasenya;
     @Column(nullable = false, name = "nom_usuari")
     private String nomUsuari;
-    
+
+
+
+    @Column(nullable = false)
+    private String permisos;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> ret = new ArrayList<>();
+        String[] llista1 = permisos.split(",");
+
+        for (String p : llista1) {
+            ret.add(new Permisos(TipusPermis.valueOf(p)));
+        }
+        return ret;
+    }
 }

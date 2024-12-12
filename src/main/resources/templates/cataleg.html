@@ -5,164 +5,168 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OpenRoad · Catàleg</title>
-  <link rel="stylesheet" href="css/cataleg.css">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="/css/cataleg.css">
+  <link rel="stylesheet" href="/css/header.css">
+
+  <script src="/scripts/header.js" defer></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-  <header class="nav-container">
-    <nav class="navbar">
-      <div class="logo">
-        <a class="logo">
-          <img src="images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
-        </a>
-      </div>
+<header class="nav-container">
+  <nav class="navbar">
+    <div class="logo">
+      <a class="logo">
+        <img src="images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
+      </a>
+    </div>
 
-      <ul class="nav-links">
-        <li><a th:href="@{/}">Inici</a></li>
-        <li><a th:href="@{/cataleg}">Catàleg</a></li>
-        <li><a href="#section3">Contacte</a></li>
+    <ul class="nav-links">
+      <li><a th:href="@{/}">Inici</a></li>
+      <li><a th:href="@{/cataleg}">Catàleg</a></li>
+      <li><a href="#section3">Contacte</a></li>
 
-        <li class="user-menu-container">
-          <button class="icono_user"> <!-- Icono de usuario importado desde Bootstrap -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person"
-              viewBox="0 0 16 16">
-              <path
-                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+      <li class="user-menu-container">
+        <button class="icono_user"> <!-- Icono de usuario importado desde Bootstrap -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person"
+               viewBox="0 0 16 16">
+            <path
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+          </svg>
+          <a class="username" th:if="${isLogged}" th:text="${nomUsuari}"></a>
+        </button>
+
+        <!-- Menú desplegable per defecte -->
+        <div th:if="${!isLogged}" class="dropdown-menu">
+          <a th:href="@{/login}" class="dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+              <path fill-rule="evenodd"
+                    d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
             </svg>
-            <a class="username" th:if="${isLogged}" th:text="${nomUsuari}"></a>
-          </button>
+            Login
+          </a>
 
-          <!-- Menú desplegable per defecte -->
-          <div th:if="${!isLogged}" class="dropdown-menu">
-            <a th:href="@{/login}" class="dropdown-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-                <path fill-rule="evenodd"
-                  d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-              </svg>
-              Login
-            </a>
-
-            <a th:href="@{/registre}" class="dropdown-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-person-add" viewBox="0 0 16 16">
-                <path
-                  d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
-                <path
-                  d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
-              </svg>
-              Registre
-            </a>
-          </div>
-
-          <!-- Menú desplegable -->
-          <div th:if="${isLogged}" class="dropdown-menu">
-            <a th:href="@{/}" class="dropdown-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-                <path fill-rule="evenodd"
-                  d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-              </svg>
-              Perfil
-            </a>
-
-            <a th:href="@{/logout}" class="dropdown-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-person-add" viewBox="0 0 16 16">
-                <path
-                  d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
-                <path
-                  d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
-              </svg>
-              Tancar sessió
-            </a>
-          </div>
-
-          <!-- Script en JS per interactuar amb el botó d'usuari -->
-          <script>
-            // Obtener el contenedor del menú de usuario
-            const userButton = document.querySelector('.icono_user');
-            const userMenu = document.querySelector('.user-menu-container');
-
-            // Agregar evento para mostrar/ocultar el menú al hacer clic en el icono
-            userButton.addEventListener('click', (event) => {
-              userMenu.classList.toggle('active'); // Añadir o quitar la clase 'active'
-              event.stopPropagation(); // Prevenir que el clic se propague y cierre el menú
-            });
-
-            // Cerrar el menú si se hace clic fuera de él
-            document.addEventListener('click', (event) => {
-              if (!userMenu.contains(event.target)) {
-                userMenu.classList.remove('active'); // Cerrar el menú si el clic está fuera
-              }
-            });
-          </script>
-
-        </li>
-      </ul>
-    </nav>
-  </header>
-
-  <section id="cars" class="cars-section">
-    <div class="container2">
-      <h2 class="titulo text-center mb-4">Catàleg</h2>
-      <div class="cars-grid">
-
-        <div th:each="vehicle : ${vehicles}" class="card">
-          <img src="images/vehiculos/mercedes.jpg" class="card-img-top" alt="Mercedes CLA">
-          <div class="card-body">
-            <h5 class="card-title" th:text="${vehicle.marca} + ' ' + ${vehicle.model}">Mercedes Benz</h5>
-            <div class="car-details"></div>
-            <div class="car-details">
-              <div class="icon">
-                <a class="fas fa-palette" th:text="${vehicle.color}"></a>
-              </div>
-              <div class="icon">
-                <a class="fas fa-gas-pump" th:text="${vehicle.combustible}"></a>
-              </div>
-              <div class="icon">
-                <a class="fas fa-cogs" th:text="${vehicle.caixaCanvis.getValor}"></a>
-              </div>
-            </div>
-            <div class="dades">
-              <p class="dies-text"
-              th:text="'Lloguer: ' + ${vehicle.diesLloguerMinim} + ' - ' + ${vehicle.diesLloguerMaxim} + ' dies'">
-               <!--th:text="${vehicle.localitat}"-->
-              <p class="loc-text">Terrassa</p>
-            </div>
-            <hr></hr>
-          </div>
-          <div class="price-box">
-            <p class="price-text">Dia: </p>
-            <p class="price" th:text="' ' + ${vehicle.preuHora} + ' €'"></p>
-          </div>
-          <div class="price-box">
-            <p class="price-text">Fiança: </p>
-            <p class="price" th:text="' ' + ${vehicle.fianca} + ' €'"></p>
-          </div>
-          <a th:href="${vehicle.matricula}" class="btn btn-dark">Veure detalls</a>
+          <a th:href="@{/registre}" class="dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-person-add" viewBox="0 0 16 16">
+              <path
+                      d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+              <path
+                      d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
+            </svg>
+            Registre
+          </a>
         </div>
+
+        <!-- Menú desplegable -->
+        <div th:if="${isLogged}" class="dropdown-menu">
+          <a th:href="@{/}" class="dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+              <path fill-rule="evenodd"
+                    d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+            </svg>
+            Perfil
+          </a>
+
+          <a th:href="@{/logout}" class="dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-person-add" viewBox="0 0 16 16">
+              <path
+                      d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+              <path
+                      d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
+            </svg>
+            Tancar sessió
+          </a>
+        </div>
+
+        <!-- Script en JS per interactuar amb el botó d'usuari -->
+        <script>
+          // Obtener el contenedor del menú de usuario
+          const userButton = document.querySelector('.icono_user');
+          const userMenu = document.querySelector('.user-menu-container');
+
+          // Agregar evento para mostrar/ocultar el menú al hacer clic en el icono
+          userButton.addEventListener('click', (event) => {
+            userMenu.classList.toggle('active'); // Añadir o quitar la clase 'active'
+            event.stopPropagation(); // Prevenir que el clic se propague y cierre el menú
+          });
+
+          // Cerrar el menú si se hace clic fuera de él
+          document.addEventListener('click', (event) => {
+            if (!userMenu.contains(event.target)) {
+              userMenu.classList.remove('active'); // Cerrar el menú si el clic está fuera
+            }
+          });
+        </script>
+
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<section id="cars" class="cars-section">
+  <div class="container2">
+    <h2 class="titulo text-center mb-4">Catàleg</h2>
+    <div class="cars-grid">
+
+      <div th:each="vehicle : ${vehicles}" class="card">
+        <img src="images/vehiculos/mercedes.jpg" class="card-img-top" alt="Mercedes CLA">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${vehicle.marca} + ' ' + ${vehicle.model}">Mercedes Benz</h5>
+          <div class="car-details"></div>
+          <div class="car-details">
+            <div class="icon">
+              <a class="fas fa-palette" th:text="${vehicle.color}"></a>
+            </div>
+            <div class="icon">
+              <a class="fas fa-gas-pump" th:text="${vehicle.combustible}"></a>
+            </div>
+            <div class="icon">
+              <a class="fas fa-cogs" th:text="${vehicle.caixaCanvis.getValor}"></a>
+            </div>
+          </div>
+          <div class="dades">
+            <p class="dies-text"
+               th:text="'Lloguer: ' + ${vehicle.diesLloguerMinim} + ' - ' + ${vehicle.diesLloguerMaxim} + ' dies'">
+              <!--th:text="${vehicle.localitat}"-->
+            <p class="loc-text">Terrassa</p>
+          </div>
+          <hr></hr>
+        </div>
+        <div class="price-box">
+          <p class="price-text">Dia: </p>
+          <p class="price" th:text="' ' + ${vehicle.preuDia} + ' €'"></p>
+        </div>
+        <div class="price-box">
+          <p class="price-text">Fiança: </p>
+          <p class="price" th:text="' ' + ${vehicle.fianca} + ' €'"></p>
+        </div>
+        <a th:href="${vehicle.matricula}" class="btn btn-dark">Veure detalls</a>
       </div>
-
     </div>
-    </div>
-  </section>
 
-
-  <!-- Botón o enlace para redirigir a la página de creación de vehículos -->
-  <div class="mt-5 text-center">
-    <form th:action="@{/crear_vehicle}" method="get">
-      <button type="submit" class="btn_explora">Crear un vehicle</button>
-    </form>
   </div>
+  </div>
+</section>
 
-  <script src="index.js"></script>
+
+<!-- Botón o enlace para redirigir a la página de creación de vehículos -->
+<div class="mt-5 text-center">
+  <form th:action="@{/crear_vehicle}" method="get">
+    <button type="submit" class="btn_explora">Crear un vehicle</button>
+  </form>
+</div>
+
+
 </body>
 
 </html>
@@ -170,6 +174,6 @@
 <!-- Footer -->
 <footer>
   <div class="container">
-    <p>&copy; 2024 OpenRoad. Todos los derechos reservados.</p>
+    <p>&copy; 2024 OpenRoad. Tots els drets reservats.</p>
   </div>
 </footer>

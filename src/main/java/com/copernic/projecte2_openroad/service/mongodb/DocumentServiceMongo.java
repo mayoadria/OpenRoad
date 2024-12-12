@@ -14,7 +14,17 @@ public class DocumentServiceMongo {
     @Autowired
     private DocumentRepositoryMongo documentRepositoryMongo;
 
-    public void guardarDocuments(DocumentClient documentClient) throws Exception {
+    // Crear Document.
+    public String guardarDocument(DocumentClient document) {
+        try {
+            documentRepoMongo.save(document);
+            String msg = "Document: " + document.getNomDocument() + " amb ID(" + document.getIdClient() + ") s'ha creat correctament!";
+            return msg;
+        } catch (Exception e) {
+            String msg = "Error amb Document: ID(" + document.getIdClient() + "). Excepció: " + e.getMessage();
+            return msg;     
+        }
+    }
 
         documentRepositoryMongo.save(documentClient);
     }
