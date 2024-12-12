@@ -1,35 +1,34 @@
 package com.copernic.projecte2_openroad.security;
 
-import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
-import com.copernic.projecte2_openroad.service.mysql.ClientServiceSQL;
+import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.core.userdetails.User;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ValidadorUsuaris implements UserDetailsService {
-    private final ClientServiceSQL clientService;
 
-    @Autowired
-    public ValidadorUsuaris(ClientServiceSQL clientService) {
-        this.clientService = clientService;
+    public ValidadorUsuaris() {
+
     }
+    @Autowired
+    UsuariServiceSQL usuariServiceSQL;
+
+
 
     @Override
-    public UserDetails loadUserByUsername(String nomUsuari) {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Busca al usuario en la base de datos
-        Client client = clientService.llistarClientPerNomUsuari(nomUsuari);
+        Usuari usuari = usuariServiceSQL.findByNomUsuari(username);
 
-        // Aquí, el CustomUserDetails encapsula el usuario y la contraseña, además de los roles (si se aplican)
-        return new CustomerDetails(
-                client.getNomUsuari(),  // El nombre de usuario
-                client.getContrasenya() // La contraseña
-
-        );
+        return usuari;
     }
 }
