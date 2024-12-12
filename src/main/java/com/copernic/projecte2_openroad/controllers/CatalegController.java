@@ -41,8 +41,8 @@ public class CatalegController {
         }
 
         List<Vehicle> vehicles = vehicleServiceSQL.listarTodosLosVehiculos();
-        List<String> colors = vehicleServiceSQL.getAtributsVehicle(Vehicle::getColor, vehicles).stream().map(String::toLowerCase).collect(Collectors.toList());
         List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream().map(String::toLowerCase).collect(Collectors.toList());
+        List<String> colors = vehicleServiceSQL.getAtributsVehicle(Vehicle::getColor, vehicles).stream().map(String::toLowerCase).collect(Collectors.toList());
         List<String> combustibles = vehicleServiceSQL.getAtributsVehicle(Vehicle::getCombustible, vehicles).stream().map(String::toLowerCase).collect(Collectors.toList());
         List<Integer> diesLloguerMin = vehicleServiceSQL.getAtributsVehicle(Vehicle::getDiesLloguerMinim, vehicles);
         List<Integer> diesLloguerMax = vehicleServiceSQL.getAtributsVehicle(Vehicle::getDiesLloguerMaxim, vehicles);
@@ -55,8 +55,8 @@ public class CatalegController {
 
 
         model.addAttribute("vehicles", vehicles);
-        model.addAttribute("colors", colors);
         model.addAttribute("marques", marques);
+        model.addAttribute("colors", colors);
         model.addAttribute("combustibles", combustibles);
         model.addAttribute("diesLloguerMin", diesLloguerMin);
         model.addAttribute("diesLloguerMax", diesLloguerMax);
