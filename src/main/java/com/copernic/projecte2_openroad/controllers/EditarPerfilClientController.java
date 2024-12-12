@@ -2,7 +2,7 @@ package com.copernic.projecte2_openroad.controllers;
 
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
-import com.copernic.projecte2_openroad.service.mysql.ClientServiceSQL;
+import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EditarPerfilClientController {
 
     @Autowired
-    private ClientServiceSQL clienteService;  // Servicio para manejar operaciones con los datos del cliente.
+    private UsuariServiceSQL usuariServiceSQL;  // Servicio para manejar operaciones con los datos del cliente.
 
     @GetMapping("")
     public String mostrarPerfil(Model model, @AuthenticationPrincipal Usuari usuarioLogueado) {
@@ -35,10 +35,10 @@ public class EditarPerfilClientController {
             model.addAttribute("isLogged", true);  // Indicar que el usuario está logueado
 
             // Obtener el cliente logueado desde la base de datos usando el nombre de usuario
-            Client cliente = clienteService.obtenerClientePorNombreUsuario(nomUsuari);
+            Usuari usuari = usuariServiceSQL.findByNomUsuari(nomUsuari);
 
-            if (cliente != null) {
-                model.addAttribute("cliente", cliente);  // Pasar el cliente a la vista
+            if (usuari != null) {
+                model.addAttribute("cliente", usuari);  // Pasar el cliente a la vista
             } else {
                 model.addAttribute("error", "Cliente no encontrado");
             }
@@ -48,10 +48,8 @@ public class EditarPerfilClientController {
         return "Perfil";  // Nombre del archivo HTML para mostrar el perfil
     }
 
-    // Manejar el formulario de edición de perfil
     @PostMapping("/edit")
-    public String guardarCambios(@ModelAttribute Client cliente, @AuthenticationPrincipal Usuari usuarioLogueado, Model model, HttpServletRequest request, HttpServletResponse response) {
-        // Comprobar si el usuario está logueado
+    public String guardarCambios(@ModelAttribute Client cliente, @AuthenticationPrincipal Client usuarioLogueado, Model model, HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() &&
@@ -59,49 +57,51 @@ public class EditarPerfilClientController {
             String nombreUsuarioLogueado = authentication.getName();  // Obtener el nombre de usuario logueado
 
             // Obtener el cliente logueado desde la base de datos
-            Client clienteExistente = clienteService.obtenerClientePorNombreUsuario(nombreUsuarioLogueado);
+            Usuari clienteExistente = usuariServiceSQL.findByNomUsuari(nombreUsuarioLogueado);
 
-            if (clienteExistente != null) {
+            if (clienteExistente != null && clienteExistente instanceof Client) {
+                Client clienteACambiar = (Client) clienteExistente;
+
                 // Actualizar los datos del cliente
-                clienteExistente.setNom(cliente.getNom());
-                clienteExistente.setCognom1(cliente.getCognom1());
-                clienteExistente.setCognom2(cliente.getCognom2());
-                clienteExistente.setNumContacte1(cliente.getNumContacte1());
-                clienteExistente.setCodiPostal(cliente.getCodiPostal());
-                clienteExistente.setAdreca(cliente.getAdreca());
+                clienteACambiar.setNom(cliente.getNom());
+                clienteACambiar.setCognom1(cliente.getCognom1());
+                clienteACambiar.setCognom2(cliente.getCognom2());
+                clienteACambiar.setNumContacte1(cliente.getNumContacte1());
+                clienteACambiar.setCodiPostal(cliente.getCodiPostal());
+                clienteACambiar.setAdreca(cliente.getAdreca());
+
                 // Actualizar email y derivar el nuevo nombre de usuario
                 String nuevoEmail = cliente.getEmail();
-                clienteExistente.setEmail(nuevoEmail);
+                clienteACambiar.setEmail(nuevoEmail);
 
                 // Derivar nuevo nombre de usuario a partir del nuevo email
                 String nuevoNombreUsuario = nuevoEmail.split("@")[0];
 
-                // Comprobar si el nombre de usuario ha cambiado
-                if (!nuevoNombreUsuario.equals(clienteExistente.getNomUsuari())) {
-                    // Validar si el nuevo nombre de usuario está disponible
-                    Client clienteConNuevoNombre = clienteService.obtenerClientePorNombreUsuario(nuevoNombreUsuario);
-                    if (clienteConNuevoNombre != null) {
-                        model.addAttribute("error", "El nombre de usuario derivado del nuevo email ya está en uso.");
-                        return "Perfil";  // Mostrar el error si el nombre de usuario ya está en uso
-                    }
-                    // Si el nombre de usuario es único, actualizarlo
-                    clienteExistente.setNomUsuari(nuevoNombreUsuario);
-                    new SecurityContextLogoutHandler().logout(request, response, authentication);
-
+                // Validar si el nuevo nombre de usuario está disponible y no está en uso
+                Usuari clienteConNuevoNombre = usuariServiceSQL.findByNomUsuari(nuevoNombreUsuario);
+                if (clienteConNuevoNombre != null && !clienteConNuevoNombre.equals(clienteExistente)) {
+                    model.addAttribute("error", "El nombre de usuario derivado del nuevo email ya está en uso.");
+                    return "Perfil";  // Mostrar el error si el nombre de usuario ya está en uso
                 }
 
-                // Guardar los cambios en la base de datos
-                clienteService.modificarClient(clienteExistente);
-                return "redirect:/";
+                // Si el nombre de usuario es único, actualizarlo
+                clienteACambiar.setNomUsuari(nuevoNombreUsuario);
 
+                // Logout el usuario actual para forzar que inicie sesión nuevamente con el nuevo nombre de usuario
+                new SecurityContextLogoutHandler().logout(request, response, authentication);
+
+                // Guardar los cambios en la base de datos
+                usuariServiceSQL.modificarClient(clienteACambiar);
+                return "redirect:/";
             } else {
-                model.addAttribute("error", "Cliente no encontrado.");
-                return "Perfil";  // Redirigir al perfil si el cliente no existe
+                model.addAttribute("error", "Cliente no encontrado o no es de tipo Client.");
+                return "Perfil";  // Redirigir al perfil si el cliente no existe o no es del tipo correcto
             }
         } else {
             return "redirect:/login";  // Redirigir a la página de login si no está autenticado
         }
     }
+
 
 
 
