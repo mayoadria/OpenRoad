@@ -7,6 +7,7 @@
   <title>OpenRoad · Catàleg</title>
 
   <link rel="stylesheet" href="css/cataleg.css">
+  <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 </head>
 
@@ -25,7 +26,7 @@
       <li><a href="#section3">Contacte</a></li>
 
       <li class="user-menu-container">
-        <button class="icono_user"> <!-- Icono de usuario importado desde Bootstrap -->
+        <button class="icono_user"> 
           <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person"
                viewBox="0 0 16 16">
             <path
@@ -34,7 +35,6 @@
           <a class="username" th:if="${isLogged}" th:text="${nomUsuari}"></a>
         </button>
 
-        <!-- Menú desplegable per defecte -->
         <div th:if="${!isLogged}" class="dropdown-menu">
           <a th:href="@{/login}" class="dropdown-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -59,7 +59,6 @@
           </a>
         </div>
 
-        <!-- Menú desplegable -->
         <div th:if="${isLogged}" class="dropdown-menu">
           <a th:href="@{/}" class="dropdown-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -84,7 +83,6 @@
           </a>
         </div>
 
-        <!-- Script en JS per interactuar amb el botó d'usuari -->
         <script>
           // Obtener el contenedor del menú de usuario
           const userButton = document.querySelector('.icono_user');
@@ -107,9 +105,33 @@
       </li>
     </ul>
   </nav>
-</header>
+</header> 
+<button id="openSidebar">Abrir Filtros</button>
 
+<div id="sidebar" class="sidebar">
+  <h3>Filtres</h3>
+  <label for="price">Precio máximo:</label>
+  <input type="number" id="price" name="price" />
+  
+  <label for="fuel">Combustible:</label>
+  <select id="fuel" name="fuel">
+    <option value="">Todos</option>
+    <option value="diesel">Diésel</option>
+    <option value="gasoline">Gasolina</option>
+    <option value="electric">Eléctrico</option>
+  </select>
+  
+  <label for="transmission">Transmisión:</label>
+  <select id="transmission" name="transmission">
+    <option value="">Todas</option>
+    <option value="manual">Manual</option>
+    <option value="automatic">Automática</option>
+  </select>
+
+  <button id="applyFilters">Aplicar Filtros</button>
+</div>
 <section id="cars" class="cars-section">
+
   <div class="container2">
     <h2 class="titulo text-center mb-4">Catàleg</h2>
     <div class="cars-grid">
@@ -162,7 +184,10 @@
   </form>
 </div>
 
-<script src="index.js"></script>
+<script src="scripts/header.js" defer></script>
+<script src="scripts/index.js" defer></script>
+<script src="scripts/filtres.js" defer></script>
+
 </body>
 
 </html>

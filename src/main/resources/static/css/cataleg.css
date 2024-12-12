@@ -120,6 +120,59 @@ body {
     color: #00b4d8;
 }
 
+/*----------------------------Filtres-----------------------------------*/
+
+/* Estilo para el botón de abrir el menú lateral */
+#openSidebar {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #openSidebar:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilo del menú lateral, inicialmente oculto */
+  .sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Ocultado fuera de la pantalla */
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.3s; /* Transición suave al abrirse */
+    padding-top: 60px;
+  }
+  
+  /* Cuando se activa la clase 'open', el menú lateral se mueve a la vista */
+  .sidebar.open {
+    left: 0; /* Muestra el menú */
+  }
+  
+  /* Estilo de los elementos dentro del menú lateral */
+  .sidebar h3, .sidebar label {
+    color: white;
+    padding-left: 15px;
+  }
+  
+  .sidebar select, .sidebar input, .sidebar button {
+    width: 90%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  /* Estilo del contenido de la página */
+   .cars-section{
+    margin-left: 250px; /* Deja espacio para el menú lateral cuando está abierto */
+  }
+  
+  
 
 /*---------------------------------------------------------------------*/
 
