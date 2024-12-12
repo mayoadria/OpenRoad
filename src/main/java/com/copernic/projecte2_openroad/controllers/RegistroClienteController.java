@@ -2,8 +2,6 @@ package com.copernic.projecte2_openroad.controllers;
 
 import com.copernic.projecte2_openroad.model.enums.Reputacio;
 import com.copernic.projecte2_openroad.model.mysql.Client;
-import com.copernic.projecte2_openroad.model.mysql.Roles;
-import com.copernic.projecte2_openroad.repository.mysql.RolRepositorySQL;
 import com.copernic.projecte2_openroad.security.TipusPermis;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +20,6 @@ public class RegistroClienteController {
     @Autowired
     UsuariServiceSQL usuariServiceSQL;
 
-    @Autowired
-    RolRepositorySQL rolRepositorySQL;// Añadido para validar clientes
 
     @Autowired
     PasswordEncoder passwordEncoder;
