@@ -1,4 +1,4 @@
-/* Reseteo básico */
+/* Reseteo bÃ¡sico */
 * {
     margin: 0;
     padding: 0;
@@ -57,7 +57,7 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
-    /* Ajusta el tamaño del icono */
+    /* Ajusta el tamaÃ±o del icono */
     color: white;
     /* Cambia el color del icono */
     margin-left: auto;
@@ -72,7 +72,7 @@ body {
     /* Efecto de agrandamiento */
 }
 
-/* Menú desplegable (oculto por defecto) */
+/* MenÃº desplegable (oculto por defecto) */
 .user-menu-container {
     position: relative;
 }
@@ -81,14 +81,14 @@ body {
     display: none;
     position: absolute;
     top: 40px;
-    /* Ajusta según sea necesario */
+    /* Ajusta segÃºn sea necesario */
     right: 0;
     background-color: #00b4d8;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     width: 165px;
-    /* Ajusta el ancho del menú */
+    /* Ajusta el ancho del menÃº */
 }
 
 .dropdown-item {
@@ -104,9 +104,9 @@ body {
     width: 20px;
     height: 20px;
     margin-right: 8px;
-    /* Añadir un espacio entre el ícono y el texto */
+    /* AÃ±adir un espacio entre el Ã­cono y el texto */
     vertical-align: middle;
-    /* Alinear el ícono verticalmente con el texto */
+    /* Alinear el Ã­cono verticalmente con el texto */
 }
 
 
@@ -114,7 +114,7 @@ body {
     background-color: white;
 }
 
-/* Para mostrar el menú cuando está activo */
+/* Para mostrar el menÃº cuando estÃ¡ activo */
 .user-menu-container.active .dropdown-menu {
     display: block;
 }
@@ -122,7 +122,7 @@ body {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
-        /* Ocultar menú en móviles si es necesario */
+        /* Ocultar menÃº en mÃ³viles si es necesario */
     }
 }
 
@@ -132,7 +132,7 @@ body {
 
 /*----------------------------Filtres-----------------------------------*/
 
-/* Estilo para el botón de abrir el menú lateral */
+/* Estilo para el botÃ³n de abrir el menÃº lateral */
 #openSidebar {
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -146,42 +146,42 @@ body {
     background-color: #45a049;
 }
 
-/* Estilo del menú lateral, inicialmente oculto */
+/* Estilo del menÃº lateral, inicialmente oculto */
 .sidebar {
-    width: 250px;
+    width: 350px;
     height: 100%;
     position: fixed;
     top: 0;
-    left: -250px;
+    left: -350px;
     /* Ocultado fuera de la pantalla */
-    background-color: #111;
+    background-color:#343a40;
     overflow-x: hidden;
     transition: 0.3s;
-    /* Transición suave al abrirse */
+    /* TransiciÃ³n suave al abrirse */
     padding-top: 125px;
 }
 
-/* Cuando se activa la clase 'open', el menú lateral se mueve a la vista */
+/* Cuando se activa la clase 'open', el menÃº lateral se mueve a la vista */
 .sidebar.open {
     left: 0;
-    /* Muestra el menú */
+    /* Muestra el menÃº */
 }
 
-/* Estilo inicial de la sección de vehículos */
-.cars-section {
+/* Estilo inicial de la secciÃ³n de vehÃ­culos */
+.filtres {
     margin-left: 0;
     /* Sin margen inicial */
     transition: margin-left 0.3s ease;
-    /* Transición suave */
+    /* TransiciÃ³n suave */
 }
 
-/* Cuando el menú lateral está abierto */
-.cars-section.open {
-    margin-left: 250px;
-    /* Deja espacio para el menú lateral */
+/* Cuando el menÃº lateral estÃ¡ abierto */
+.filtres.open {
+    margin-left: 350px;
+    /* Deja espacio para el menÃº lateral */
 }
 
-/* Estilo de los elementos dentro del menú lateral */
+/* Estilo de los elementos dentro del menÃº lateral */
 .sidebar h3,
 .sidebar label {
     color: white;
@@ -196,6 +196,114 @@ body {
     padding: 10px;
     border-radius: 5px;
 }
+
+#combustible-radios {
+    display: block;
+    flex-direction: column;
+    gap: 1px;
+}
+
+#combustible-radios label {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+#range-filter {
+    display: block;
+    margin-bottom: 30px;
+  --color-headline: white;
+}
+
+#range-values {
+    color: white;
+    padding-left: 15px;
+}
+/* Range Slider */
+.input-ranges[type='range'] {
+    width: 210px;
+    height: 30px;
+    overflow: hidden;
+    outline: none;
+  }
+  
+  .input-ranges[type='range'],
+  .input-ranges[type='range']::-webkit-slider-runnable-track,
+  .input-ranges[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: none;
+  }
+  
+  .input-ranges[type='range']::-webkit-slider-runnable-track {
+    width: 200px;
+    height: 1px;
+    background: var(--color-headline);
+  }
+  
+  .input-ranges[type='range']:nth-child(2)::-webkit-slider-runnable-track {
+    background: none;
+  }
+  
+  .input-ranges[type='range']::-webkit-slider-thumb {
+    position: relative;
+    height: 15px;
+    width: 15px;
+    margin-top: -7px;
+    background: #fff;
+    border: 1px solid var(--color-headline);
+    border-radius: 25px;
+    cursor: pointer;
+    z-index: 1;
+    transition: .5s;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    -ms-transition: .5s;
+    -o-transition: .5s;
+  }
+  
+  .input-ranges[type='range']::-webkit-slider-thumb:hover {
+    background: #eaefff;
+    border: 1px solid var(--color-primary);
+    outline: .5px solid var(--color-primary);
+  }
+  
+  .input-ranges[type='range']::-webkit-slider-thumb:active {
+    cursor: grabbing;
+  }
+  
+  .input-ranges[type='range']:nth-child(1)::-webkit-slider-thumb {
+    z-index: 2;
+  }
+  
+  .rangeslider {
+    font-family: sans-serif;
+    font-size: 14px;
+    position: relative;
+    height: 20px;
+    width: 210px;
+    display: inline-block;
+    margin-top: -5px;
+  }
+  
+  .rangeslider input {
+    position: absolute;
+  }
+  
+  .rangeslider span {
+    position: absolute;
+    margin-top: 20px;
+    left: 0;
+  }
+  
+  .rangeslider .right {
+    position: relative;
+    float: right;
+    margin-right: -5px;
+  }
+
+
+
+
 
 /*---------------------------------------------------------------------*/
 
@@ -237,7 +345,7 @@ body {
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    /* Limita la expansión de las tarjetas */
+    /* Limita la expansiÃ³n de las tarjetas */
 }
 
 @media (max-width: 1200px) {
@@ -263,14 +371,14 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Imágenes dinámicas */
+/* ImÃ¡genes dinÃ¡micas */
 .card-img-top {
     width: 100%;
     /* Se adapta al ancho de la tarjeta */
     height: 200px;
     /* Altura fija para mantener consistencia */
     object-fit: cover;
-    /* Recorta para mantener proporción */
+    /* Recorta para mantener proporciÃ³n */
     display: block;
 }
 

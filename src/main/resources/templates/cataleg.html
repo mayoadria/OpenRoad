@@ -112,31 +112,69 @@
     </nav>
   </header>
 
-  
+
 
   <section id="cars" class="cars-section">
+    <div id="filtres" class="filtres">
+      <button id="openSidebar">Filtres</button>
+    </div>
 
-    <button id="openSidebar">Abrir Filtros</button>
 
     <div id="sidebar" class="sidebar">
       <h3>Filtres</h3>
 
-      <label for="price">Precio máximo:</label>
-      <input type="number" id="price" name="price" />
-  
+      <label for="dies">Precio máximo:</label>
+      <input type="number" id="dies" name="dies" />
+
       <label for="marques">Marques:</label>
-      <select th:each="marca : ${marques}" id="marques" name="marques">
-        <option value="">Totes</option>
-        <option th:value="marca"></option>
+      <select id="marques" name="marques">
+        <option value="">-</option>
+        <option th:each="marca : ${marques}" th:value="${marca}" th:text="${#strings.capitalize(marca)}"></option>
       </select>
-  
-      <label for="transmission">Transmisión:</label>
-      <select id="transmission" name="transmission">
-        <option value="">Todas</option>
-        <option value="manual">Manual</option>
-        <option value="automatic">Automática</option>
+
+      <label for="colors">Colors:</label>
+      <select id="colors" name="colors">
+        <option value="">-</option>
+        <option th:each="color : ${colors}" th:value="${color}" th:text="${#strings.capitalize(color)}"></option>
       </select>
-  
+
+      <div id="combustible-radios">
+        <div>
+          <label for="combustibles">Combustibles:</label>
+        </div>
+        <label>
+          <input type="radio" name="combustibles" value="" checked>
+          Tots
+        </label>
+        <div th:each="combustible : ${combustibles}">
+          <label>
+            <input type="radio" name="combustibles" th:value="${combustible}"
+              th:text="${#strings.capitalize(combustible)}">
+          </label>
+        </div>
+      </div>
+
+      <div id="range-filter">
+        <label for="dies-range">Dies:</label>
+
+        <!-- Mostrar los valores de precio mínimo y máximo -->
+        <div id="range-values">
+          <span id="min-value" th:text="${diaLloguerMin}">1</span> -
+          <span id="max-value" th:text="${diaLloguerMax}">31</span>
+        </div>
+
+        <!-- Rango de precio -->
+        <div class="rangeslider">
+          <!-- Barra de precio mínimo -->
+          <input class="min input-ranges" type="range" id="min-dies" name="min-dies"
+            th:attr="min=${diaLloguerMin}, max=${diaLloguerMax}, value=${diaLloguerMin}">
+          <!-- Barra de precio máximo -->
+          <input class="max input-ranges" type="range" id="max-dies" name="max-dies"
+            th:attr="min=${diaLloguerMin}, max=${diaLloguerMax}, value=${diaLloguerMax}, step=1">
+        </div>
+      </div>
+
+
       <button id="applyFilters">Aplicar Filtros</button>
     </div>
 
@@ -169,14 +207,14 @@
             <hr>
             </hr>
           </div>
-          <div class="price-box">
-            <p class="price-text">Dia: </p>
-            <p class="price" th:text="' ' + ${vehicle.preuDia} + ' €'"></p>
-            <p class="price" th:text="' ' + ${vehicle.preuDia} + ' €'"></p>
+          <div class="dies-box">
+            <p class="dies-text">Dia: </p>
+            <p class="dies" th:text="' ' + ${vehicle.preuDia} + ' €'"></p>
+            <p class="dies" th:text="' ' + ${vehicle.preuDia} + ' €'"></p>
           </div>
-          <div class="price-box">
-            <p class="price-text">Fiança: </p>
-            <p class="price" th:text="' ' + ${vehicle.fianca} + ' €'"></p>
+          <div class="dies-box">
+            <p class="dies-text">Fiança: </p>
+            <p class="dies" th:text="' ' + ${vehicle.fianca} + ' €'"></p>
           </div>
           <a th:href="@{/vehicle/{matricula}(matricula=${vehicle.matricula})}" class="btn btn-dark">Veure detalls</a>
         </div>

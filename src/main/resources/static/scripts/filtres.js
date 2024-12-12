@@ -1,12 +1,34 @@
 // Obtener el botón y el menú lateral
 const openSidebarButton = document.getElementById('openSidebar');
 const sidebar = document.getElementById('sidebar');
-const cars = document.getElementById('cars')
+const filtres = document.getElementById('filtres')
+
+// Obtener el input tipo range y el span donde se muestra el valor
+const minRange = document.getElementById('min-dies');
+const maxRange = document.getElementById('max-dies');
+const minValue = document.getElementById('min-value');
+const maxValue = document.getElementById('max-value');
+
+// Sincronizar los valores de los rangos
+minRange.addEventListener('input', function() {
+    if (parseInt(minRange.value) > parseInt(maxRange.value)) {
+        minRange.value = maxRange.value;
+    }
+    minValue.textContent = minRange.value;
+});
+
+maxRange.addEventListener('input', function() {
+    if (parseInt(maxRange.value) < parseInt(minRange.value)) {
+        maxRange.value = minRange.value;
+    }
+    maxValue.textContent = maxRange.value;
+});
+
 
 // Añadir evento para abrir el menú lateral cuando se haga clic en el botón
 openSidebarButton.addEventListener('click', function () {
     sidebar.classList.toggle('open'); // Togglear la clase 'open'
-    cars.classList.toggle('open');
+    filtres.classList.toggle('open');
     
   });
 
