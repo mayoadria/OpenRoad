@@ -1,10 +1,13 @@
 // Obtener el botón y el menú lateral
 const openSidebarButton = document.getElementById('openSidebar');
 const sidebar = document.getElementById('sidebar');
+const cars = document.getElementById('cars')
 
 // Añadir evento para abrir el menú lateral cuando se haga clic en el botón
 openSidebarButton.addEventListener('click', function () {
     sidebar.classList.toggle('open'); // Togglear la clase 'open'
+    cars.classList.toggle('open');
+    
   });
 
 // Aplicar filtros automáticamente
