@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/CrearAgente.css} ">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crear Agent</title>
+</head>
+<body>
+<h1>Crear Agent</h1>
+<form th:action="@{/admin/new}" th:object="${agent}" method="POST">
+    <!-- DNI -->
+    <label for="dni">DNI:</label>
+    <input type="text" id="dni" name="dni" required>
+
+    <!-- Nom -->
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" name="nom" required>
+
+    <!-- Cognom 1 -->
+    <label for="cognom1">Primer Cognom:</label>
+    <input type="text" id="cognom1" name="cognom1" required>
+
+    <!-- Cognom 2 -->
+    <label for="cognom2">Segon cognom:</label>
+    <input type="text" id="cognom2" name="cognom2">
+
+    <!-- Num Contacte 1 -->
+    <label for="numContacte1">Numero de contacte:</label>
+    <input type="tel" id="numContacte1" name="numContacte1" required>
+
+    <!-- Codi Postal -->
+    <label for="codiPostal">Codi Postal:</label>
+    <input type="text" id="codiPostal" name="codiPostal">
+
+    <!-- Adreca -->
+    <label for="adreca">Direcció:</label>
+    <input type="text" id="adreca" name="adreca">
+
+    <!-- Pais -->
+    <!--  <label for="pais">Pais:</label>-->
+    <!--  <select id="pais" name="pais">-->
+    <!--    <option value="">Select a country</option>-->
+    <!--    &lt;!&ndash; Add country options dynamically &ndash;&gt;-->
+    <!--    <option value="Spain">Spain</option>-->
+    <!--    <option value="France">France</option>-->
+    <!--    <option value="Germany">Germany</option>-->
+    <!--    &lt;!&ndash; Add more countries as needed &ndash;&gt;-->
+    <!--  </select>-->
+
+    <!-- Email -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <!-- Contrasenya -->
+    <label for="contrasenya">Contrasenya:</label>
+    <input type="text" id="contrasenya" name="contrasenya" required>
+
+
+    <button type="submit">Crear Agent</button>
+</form>
+</body>
+</html>

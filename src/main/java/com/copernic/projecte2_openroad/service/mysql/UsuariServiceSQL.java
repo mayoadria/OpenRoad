@@ -114,7 +114,9 @@ public class UsuariServiceSQL {
     public List<Agent> llistarAgents() {
         return agentRepository.findAll();
     }
-
+    public List<Client> llistarClient() {
+        return clientRepository.findAll();
+    }
     /**
      * Actualiza los datos de un agente.
      */

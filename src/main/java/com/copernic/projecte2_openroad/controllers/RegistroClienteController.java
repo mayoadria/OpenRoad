@@ -5,6 +5,7 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 import com.copernic.projecte2_openroad.model.mongodb.DocumentClient;
 import com.copernic.projecte2_openroad.model.mongodb.DocumentMongo;
 import com.copernic.projecte2_openroad.model.mysql.Client;
+import com.copernic.projecte2_openroad.security.TipusPermis;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mongodb.DocumentServiceMongo;
 import org.bson.types.Binary;
@@ -49,7 +50,7 @@ public class RegistroClienteController {
             String[] part = cli.getEmail().split("@");
             String username = part[0];
             cli.setNomUsuari(username);
-
+            cli.setPermisos(TipusPermis.MOSTRAR_PEPE.toString());
             clientServiceSQL.guardarClient(cli);
 
             // Processar i guardar imatges a MongoDB
