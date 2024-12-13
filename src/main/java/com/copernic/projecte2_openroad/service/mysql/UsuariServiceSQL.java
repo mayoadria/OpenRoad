@@ -79,22 +79,6 @@ public class UsuariServiceSQL {
         adminRepository.save(admin);  // Guarda los cambios en la base de datos
     }
 
-    /**
-     * Elimina un administrador por su nombre de usuario.
-     */
-    public String eliminarAdminPerNomUsuari(String nomUsuari) {
-        Admin admin = adminRepository.findByNomUsuari(nomUsuari);
-        try {
-            if (admin != null) {
-                adminRepository.delete(admin);
-                return "Admin: " + admin.getNom() + " amb DNI(" + admin.getDni() + ") esborrat correctament!";
-            } else {
-                return "Admin: nomUsuari(" + nomUsuari + ") no s'ha trobat a la BD MySQL!";
-            }
-        } catch (Exception e) {
-            return "Error amb Admin: nomUsuari(" + nomUsuari + "). Excepció: " + e.getMessage();
-        }
-    }
 
     /**
      * Guarda un agente en la base de datos.
@@ -137,6 +121,20 @@ public class UsuariServiceSQL {
             if (agent != null) {
                 agentRepository.delete(agent);
                 return "Agent: " + agent.getNom() + " amb DNI(" + agent.getDni() + ") esborrat correctament!";
+            } else {
+                return "Agent: nomUsuari(" + nomUsuari + ") no s'ha trobat a la BD MySQL!";
+            }
+        } catch (Exception e) {
+            return "Error amb Agent: nomUsuari(" + nomUsuari + "). Excepció: " + e.getMessage();
+        }
+    }
+
+    public String eliminarClientPerNomUsuari(String nomUsuari) {
+        Client client = clientRepository.findByNomUsuari(nomUsuari);
+        try {
+            if (client != null) {
+                clientRepository.delete(client);
+                return "Agent: " + client.getNom() + " amb DNI(" + client.getDni() + ") esborrat correctament!";
             } else {
                 return "Agent: nomUsuari(" + nomUsuari + ") no s'ha trobat a la BD MySQL!";
             }
