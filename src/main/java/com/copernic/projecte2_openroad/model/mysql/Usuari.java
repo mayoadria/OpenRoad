@@ -11,12 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import org.bson.types.Binary;
 
 @MappedSuperclass
 @Data
@@ -25,7 +20,7 @@ import java.util.List;
 @SuperBuilder
 public abstract class Usuari implements UserDetails {
 
-    // PK DNI - Identificador de Usuari (Client i Agent).
+    // PK DNI - Identificador d'Usuari (Client i Agent).
     @Id
     private String dni;
 

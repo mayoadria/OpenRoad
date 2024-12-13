@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form class="form" th:action="@{/registre/new}" th:object="${client}" method="post">
+<form class="form" th:action="@{/registre/new}" th:object="${client}" method="post" th:enctype="@{multipart/form-data}">
     <p class="title">Registre client</p>
     <div class="flex">
         <label>
@@ -41,7 +41,12 @@
         </label>
 
         <label>
-            <input class="input" type="" placeholder="" required="">
+            <select class="input" name="pais" id="pais" required>
+                <option value="" disabled selected hidden></option>
+                <option class="inp_pais" th:each="pais : ${paisos}"
+                        th:value="${pais}"
+                        th:text="${pais.getValor()}"></option>
+            </select>
             <span>Nacionalitat</span>
         </label>
     </div>
