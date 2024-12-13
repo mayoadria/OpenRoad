@@ -22,7 +22,7 @@ maxRange.addEventListener('input', function() {
         maxRange.value = minRange.value;
     }
     maxValue.textContent = maxRange.value;
-});
+}); 
 
 
 // Añadir evento para abrir el menú lateral cuando se haga clic en el botón
