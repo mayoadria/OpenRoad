@@ -1,9 +1,6 @@
 package com.copernic.projecte2_openroad.controllers;
 
-import com.copernic.projecte2_openroad.model.enums.CaixaCanvis;
-import com.copernic.projecte2_openroad.model.enums.Marxes;
-import com.copernic.projecte2_openroad.model.enums.Places;
-import com.copernic.projecte2_openroad.model.enums.Portes;
+import com.copernic.projecte2_openroad.model.enums.*;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
 
@@ -33,8 +30,7 @@ public class CatalegController {
     public String listarVehiculos(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.isAuthenticated() &&
-                !(authentication.getPrincipal() instanceof String)) {
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
             String nomUsuari = authentication.getName();
             model.addAttribute("nomUsuari", nomUsuari);
             model.addAttribute("isLogged", true);
@@ -44,8 +40,8 @@ public class CatalegController {
 
         List<Vehicle> vehicles = vehicleServiceSQL.listarTodosLosVehiculos();
         List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream().map(String::toLowerCase).collect(Collectors.toList());
-        List<String> colors = vehicleServiceSQL.getAtributsVehicle(Vehicle::getColor, vehicles).stream().map(String::toLowerCase).collect(Collectors.toList());
-        List<String> combustibles = vehicleServiceSQL.getAtributsVehicle(Vehicle::getCombustible, vehicles).stream().map(String::toLowerCase).collect(Collectors.toList());
+        List<Color> colors = vehicleServiceSQL.getAtributsVehicle(Vehicle::getColor, vehicles);
+        List<Combustible> combustibles = vehicleServiceSQL.getAtributsVehicle(Vehicle::getCombustible, vehicles);
         int diaLloguerMin = Collections.min(vehicleServiceSQL.getAtributsVehicle(Vehicle::getDiesLloguerMinim, vehicles));
         int diaLloguerMax = Collections.max(vehicleServiceSQL.getAtributsVehicle(Vehicle::getDiesLloguerMaxim, vehicles));
         List<Double> preuDies = vehicleServiceSQL.getAtributsVehicle(Vehicle::getPreuDia, vehicles);
@@ -112,40 +108,30 @@ public class CatalegController {
     @PostMapping("/crear") // Confirmamos que la ruta sea consistente
     public String crearVehicle(@ModelAttribute Vehicle vehicle) {
         vehicleServiceSQL.guardarVehicle(vehicle);
-    // Procesar la creación del vehículo (POST)
-    @PostMapping("/crear")
-    public String crearVehiculo(@ModelAttribute Vehicle vehicle, Model model) {
-        try {
-            vehicleServiceSQL.guardarVehicle(vehicle);
-        } catch (Exception e) {
-            model.addAttribute("error", "Error al crear el vehicle. Verifique los datos.");
-            return "crearVehicle";
-        }
         return "redirect:/cataleg";
     }
 
-
     // Mostrar detalles de un vehículo
     @GetMapping("vehicle/{matricula1}")
-    public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
-        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+        public String detallsVehicle (@PathVariable("matricula1") String matricula, Model model){
+            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
 
-        model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
-        return "infoVehiculo";
-    }
+            model.addAttribute("vehicle", vehicle);
+            model.addAttribute("isLogged", false);
+            return "infoVehiculo";
+        }
+
 
     @GetMapping("reserva/{matricula2}")
-    public String mostrarPagaReserva(@PathVariable("matricula2") String matricula, Model model) {
-        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+        public String mostrarPagaReserva (@PathVariable("matricula2") String matricula, Model model){
+            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
 
-        model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
-        return "pagaReserva";
-    }
-
+            model.addAttribute("vehicle", vehicle);
+            model.addAttribute("isLogged", false);
+            return "pagaReserva";
+        }
 
 
 
