@@ -70,7 +70,7 @@ public class CatalegController {
     public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
         Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
-        
+
         model.addAttribute("vehicle", vehicle);
         model.addAttribute("isLogged", false);
         return "infoVehiculo";
