@@ -134,12 +134,17 @@ body {
 
 /* Estilo para el botÃ³n de abrir el menÃº lateral */
 #openSidebar {
+    position: relative;
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     font-size: 16px;
+    margin-left: -35px;
+    z-index: 11;
+    width: 100px;
+    text-align: end;
 }
 
 #openSidebar:hover {
@@ -153,17 +158,17 @@ body {
     position: fixed;
     top: 0;
     left: -350px;
-    /* Ocultado fuera de la pantalla */
     background-color:#343a40;
     overflow-x: hidden;
     transition: 0.3s;
-    /* TransiciÃ³n suave al abrirse */
     padding-top: 125px;
+    z-index: 10;
 }
 
 /* Cuando se activa la clase 'open', el menÃº lateral se mueve a la vista */
 .sidebar.open {
     left: 0;
+
     /* Muestra el menÃº */
 }
 
@@ -208,6 +213,7 @@ body {
     align-items: center;
     gap: 2px;
 }
+
 
 #range-filter {
     display: block;
@@ -300,6 +306,12 @@ body {
     float: right;
     margin-right: -5px;
   }
+
+  .separador {
+    margin-left: 15px;
+    margin-right: 25px;
+
+}
 
 
 
@@ -460,4 +472,10 @@ footer {
     color: #ffffff;
     text-align: center;
     padding: 1rem 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    z-index: 12;
 }

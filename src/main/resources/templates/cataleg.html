@@ -122,21 +122,26 @@
 
     <div id="sidebar" class="sidebar">
       <h3>Filtres</h3>
-
+      <!--
       <label for="dies">Precio máximo:</label>
-      <input type="number" id="dies" name="dies" />
+      <input type="number" id="dies" name="dies" /> -->
+
+      <hr class="separador">
 
       <label for="marques">Marques:</label>
       <select id="marques" name="marques">
-        <option value="">-</option>
+        <option value="">Totes</option>
         <option th:each="marca : ${marques}" th:value="${marca}" th:text="${#strings.capitalize(marca)}"></option>
       </select>
+      <hr class="separador">
 
       <label for="colors">Colors:</label>
       <select id="colors" name="colors">
-        <option value="">-</option>
+        <option value="">Tots</option>
         <option th:each="color : ${colors}" th:value="${color}" th:text="${#strings.capitalize(color)}"></option>
       </select>
+
+      <hr class="separador">
 
       <div id="combustible-radios">
         <div>
@@ -154,25 +159,26 @@
         </div>
       </div>
 
+      <hr class="separador">
+
       <div id="range-filter">
         <label for="dies-range">Dies:</label>
 
-        <!-- Mostrar los valores de precio mínimo y máximo -->
         <div id="range-values">
           <span id="min-value" th:text="${diaLloguerMin}">1</span> -
           <span id="max-value" th:text="${diaLloguerMax}">31</span>
         </div>
 
-        <!-- Rango de precio -->
         <div class="rangeslider">
-          <!-- Barra de precio mínimo -->
           <input class="min input-ranges" type="range" id="min-dies" name="min-dies"
             th:attr="min=${diaLloguerMin}, max=${diaLloguerMax}, value=${diaLloguerMin}">
-          <!-- Barra de precio máximo -->
           <input class="max input-ranges" type="range" id="max-dies" name="max-dies"
             th:attr="min=${diaLloguerMin}, max=${diaLloguerMax}, value=${diaLloguerMax}, step=1">
         </div>
       </div>
+
+      <hr class="separador">
+
 
 
       <button id="applyFilters">Aplicar Filtros</button>
