@@ -14,16 +14,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CatalegController {
+
     @Autowired
     private VehicleServiceSQL vehicleServiceSQL;
 
     // 1. Listar vehículos
     @GetMapping("/cataleg")
     public String listarVehiculos(Model model) {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() &&
@@ -40,36 +41,33 @@ public class CatalegController {
         return "cataleg";
     }
 
+    // Mostrar formulario para crear un vehículo
     @GetMapping("/crear_vehicle")
     public String mostrarFormularioCreacion(Model model) {
         Vehicle vehicle = new Vehicle();
         model.addAttribute("vehicle", vehicle);
-
         model.addAttribute("isLogged", false); // Inicializar variable isLogged
 
         // Devolvemos el nombre de la vista del formulario (HTML)
         return "crearVehicle";  // Asegúrate de tener una vista llamada crearVehiculo.html
     }
 
-    /*
-    @GetMapping("/CrearVehicle")
-    public String mostrarFormularioCreacion(Model model) {
-    Vehicle vehicle = new Vehicle();
-    model.addAttribute("vehicle", vehicle);
-    model.addAttribute("isLogged", false); // Inicializar variable isLogged
-    return "CrearVehicles";
-    }
-*/
-
-    // 3. Procesar la creación del vehículo (POST)
-    @PostMapping("/crear") // Confirmamos que la ruta sea consistente
-    public String crearVehiculo(@ModelAttribute Vehicle vehicle) {
-        vehicleServiceSQL.guardarVehicle(vehicle);
+    // Procesar la creación del vehículo (POST)
+    @PostMapping("/crear")
+    public String crearVehiculo(@ModelAttribute Vehicle vehicle, Model model) {
+        try {
+            vehicleServiceSQL.guardarVehicle(vehicle);
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al crear el vehicle. Verifique los datos.");
+            return "crearVehicle";
+        }
         return "redirect:/cataleg";
     }
 
-    @GetMapping("/{matricula}")
-    public String detallsVehicle(@PathVariable("matricula") String matricula, Model model) {
+
+    // Mostrar detalles de un vehículo
+    @GetMapping("vehicle/{matricula1}")
+    public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
         Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
         
@@ -77,5 +75,18 @@ public class CatalegController {
         model.addAttribute("isLogged", false);
         return "infoVehiculo";
     }
+
+    @GetMapping("reserva/{matricula2}")
+    public String mostrarPagaReserva(@PathVariable("matricula2") String matricula, Model model) {
+        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+
+
+        model.addAttribute("vehicle", vehicle);
+        model.addAttribute("isLogged", false);
+        return "pagaReserva";
+    }
+
+
+
 
 }

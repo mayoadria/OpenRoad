@@ -98,6 +98,10 @@ form input {
     margin: 0 auto; /* Centra horizontalmente */
 }
 
+.nombre-coche{
+    margin-top: 10px;
+}
+
 
 
 .terms {

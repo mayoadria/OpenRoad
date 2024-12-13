@@ -13,10 +13,12 @@
     <!-- JS MAPA -->
     <script src="/scripts/selectorCiudades.js" defer></script>
 
+    <!-- Librería de mapas js -->
     <!-- CSS de Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <!-- Script de Leaflet -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 
 </head>
 <body>
@@ -69,31 +71,31 @@
         <!-- Combustible -->
         <div class="mb-3">
             <label for="combustible" class="form-label">Combustible</label>
-            <input type="text" class="form-control" id="combustible" name="combustible" required>
+            <select class="form-control" id="combustible" name="combustible" required>
+                <option value="" disabled selected>Seleccioneu un combustible</option>
+                <option th:each="combustible : ${T(com.copernic.projecte2_openroad.model.enums.Combustible).values()}"
+                        th:value="${combustible}" th:text="${combustible.valor}"></option>
+            </select>
         </div>
+
 
         <!-- Color -->
         <div class="mb-3">
             <label for="color" class="form-label">Color</label>
-            <input type="text" class="form-control" id="color" name="color" required>
+            <select class="form-control" id="color" name="color" required>
+                <option value="" disabled selected>Seleccioneu un color</option>
+                <option th:each="color : ${T(com.copernic.projecte2_openroad.model.enums.Color).values()}"
+                        th:value="${color}" th:text="${color.valor}"></option>
+            </select>
         </div>
 
-        <!-- Precio por hora -->
-        <div class="mb-3">
-            <label for="preuDia" class="form-label">Preu per dia</label>
-            <input type="number" step="0.01" class="form-control" id="preuDia" name="preuDia" required>
-        </div>
 
-        <!-- Fianza -->
-        <div class="mb-3">
-            <label for="fianca" class="form-label">Fiança</label>
-            <input type="number" step="0.01" class="form-control" id="fianca" name="fianca" required>
-        </div>
 
         <!-- Lugares -->
         <div class="mb-3">
             <label for="places" class="form-label">Places</label>
             <select class="form-control" id="places" name="places" required>
+                <option value="" disabled selected>Seleccioneu les places del vehicle</option>
                 <option value="DOS">2</option>
                 <option value="TRES">3</option>
                 <option value="QUATRE">4</option>
@@ -106,6 +108,7 @@
         <div class="mb-3">
             <label for="portes" class="form-label">Portes</label>
             <select class="form-control" id="portes" name="portes" required>
+                <option value="" disabled selected>Seleccioneu les portes del vehicle</option>
                 <option value="TRES">3</option>
                 <option value="CINC">5</option>
             </select>
@@ -115,6 +118,7 @@
         <div class="mb-3">
             <label for="caixaCanvis" class="form-label">Caixa de canvis</label>
             <select class="form-control" id="caixaCanvis" name="caixaCanvis" required>
+                <option value="" disabled selected>Seleccioneu la caixa de canvis</option>
                 <option value="MANUAL">Manual</option>
                 <option value="AUTOMATIC">Automàtic</option>
             </select>
@@ -124,6 +128,7 @@
         <div class="mb-3">
             <label for="marxes" class="form-label">Marxes</label>
             <select class="form-control" id="marxes" name="marxes" required>
+                <option value="" disabled selected>Seleccioneu marxes del vehicle</option>
                 <option value="CINC">5</option>
                 <option value="SIS">6</option>
             </select>
@@ -132,25 +137,37 @@
         <!-- Año del vehículo -->
         <div class="mb-3">
             <label for="anyVehicle" class="form-label">Any de matriculació</label>
-            <input type="number" max="2024" class="form-control" id="anyVehicle" name="anyVehicle" required>
+            <input type="number" class="form-control" id="anyVehicle" name="anyVehicle" min="1998" max="2024" required>
+        </div>
+
+        <!-- Precio por hora -->
+        <div class="mb-3">
+            <label for="preuDia" class="form-label">Preu per dia</label>
+            <input type="number" step="0.5" class="form-control" id="preuDia" name="preuDia" min="3" required>
+        </div>
+
+        <!-- Fianza -->
+        <div class="mb-3">
+            <label for="fianca" class="form-label">Fiança</label>
+            <input type="number" step="0.5" class="form-control" id="fianca" name="fianca" min="3" required>
         </div>
 
         <!-- Kilómetros -->
         <div class="mb-3">
             <label for="km" class="form-label">Quilòmetre</label>
-            <input type="number" class="form-control" id="km" name="km">
+            <input type="number" class="form-control" id="km" name="km" min="0" max="750000">
         </div>
 
         <!-- Días de alquiler mínimo -->
         <div class="mb-3">
             <label for="diesLloguerMinim" class="form-label">Dies de lloguer mínim</label>
-            <input type="number" class="form-control" id="diesLloguerMinim" name="diesLloguerMinim">
+            <input type="number" class="form-control" id="diesLloguerMinim" name="diesLloguerMinim" min="1" max="31">
         </div>
 
         <!-- Días de alquiler máximo -->
         <div class="mb-3">
             <label for="diesLloguerMaxim" class="form-label">Dies de lloguer màxim</label>
-            <input type="number" class="form-control" id="diesLloguerMaxim" name="diesLloguerMaxim">
+            <input type="number" class="form-control" id="diesLloguerMaxim" name="diesLloguerMaxim" min="1" max="31">
         </div>
 
         <!-- Campo para subir imagen -->
@@ -159,15 +176,16 @@
             <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
         </div>
 
-        <!-- Localización -->
+        <!-- Botón de búsqueda con tipo "button" -->
         <div class="map-container">
             <label for="direccion">Introdueix una adreça:</label>
             <input type="text" id="direccion" placeholder="Exemple: Gran Via, Madrid, Espanya" />
-            <button id="buscar">Buscar</button>
+            <button id="buscar" type="button">Buscar</button>
             <p id="error" style="color: red; display: none;">No s'ha pogut trobar l'adreça.</p>
             <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
         </div>
 
+        <!-- Botón de Crear Vehicle -->
         <button type="submit" class="btn btn-primary">Crear Vehicle</button>
     </form>
 </div>

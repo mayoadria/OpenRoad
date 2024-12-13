@@ -1,4 +1,16 @@
 /* Reseteo básico */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Hace que el contenido principal ocupe todo el espacio disponible */
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -93,6 +105,7 @@ body {
     text-align: left;
     font-weight: bold;
 }
+
 .dropdown-item svg {
     width: 20px;
     height: 20px;
@@ -130,6 +143,10 @@ body {
     padding: 0;
 }
 
+.titulo {
+    margin-top: 30px;
+}
+
 .cars-section {
     padding: 15px;
 }
@@ -142,7 +159,7 @@ body {
 
 .cars-grid {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 20px;
 
@@ -162,19 +179,19 @@ body {
 
 @media (max-width: 1200px) {
     .cars-grid {
-        grid-template-columns: repeat(3,1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
-} 
+}
 
 @media (max-width: 800px) {
     .cars-grid {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 500px) {
     .cars-grid {
-        grid-template-columns: repeat(1,1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 
@@ -217,14 +234,13 @@ body {
 }
 
 
-
 .dades {
     display: flex;
     justify-content: space-evenly;
 }
 
 .dies-text {
-} 
+}
 
 .loc-text {
 }
@@ -235,11 +251,11 @@ body {
     padding-right: 1rem;
     display: flex;
     justify-content: space-between;
-   }
+}
 
 .price-text {
     color: darkgrey;
-    
+
 }
 
 .price {
@@ -263,12 +279,14 @@ body {
 }
 
 
-
 /*---------------------------------------------------------------------*/
 
 footer {
+
     background-color: #343a40;
     color: #ffffff;
     text-align: center;
-    padding: 1rem 0;
 }
+
+
+

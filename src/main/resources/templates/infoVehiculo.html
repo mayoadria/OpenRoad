@@ -121,7 +121,9 @@
             <p>Valoracións:</p>
             <p>⭐⭐⭐⭐⭐</p>
         </div>
-        <button class="alquilarButton" onclick="window.location.href='pagaReserva.html'">ALQUILAR</button>
+
+        <a th:href="@{/reserva/{matricula2}(matricula2=${vehicle.matricula})}" class="alquilarButton">ALQUILAR</a>
+
 
     </div>
     <div class="right-panel">
@@ -215,26 +217,43 @@
         <div class="section">
             <h3>ALTRES DADES DE LA RESERVA</h3>
             <div class="additional-info">
-                <p><strong>Tipus:</strong>Borrar si no hace falta</p>
 
                 <p>
-                    <span></span>
+                    <span><strong>Cotxe:</strong></span>
+                    <span th:text="${vehicle.marca + ' ' + vehicle.model}"></span>
+                </p>
+
+                <p>
+                    <span><strong>Matrícula:</strong></span>
+                    <span th:text="${vehicle.matricula}"></span>
+                </p>
+
+                <p>
+                    <span><strong>Combustible:</strong></span>
                     <span th:text="${vehicle.combustible}"></span>
                 </p>
 
-                <p><strong>Autonomía:</strong> 650 km</p>
-                <p><strong>Equipamiento adicional:</strong> GPS, cámara trasera, climatizador</p>
-                <p><strong>Dirección de recogida:</strong> Calle Gran Vía 123, Barcelona</p>
-                <p><strong>Horario de atención:</strong> Lunes a Domingo, de 8:00 a 20:00</p>
+                <p>
+                    <span><strong>Combustible:</strong></span>
+                    <span th:text="${vehicle.combustible}"></span>
+                </p>
+
+                <p>
+                    <span><strong>Entrega/Recollida:</strong></span>
+                    <span th:text="${vehicle.localitat}"></span>
+                </p>
+
+
+                <p><strong>Horario de atención:</strong> Dilluns a diumenge, de 8:30 a 13:00 / 15:00 a 21:30</p>
                 <p><strong>Instrucciones:</strong> Preséntese con su documento de identidad y el número de reserva.</p>
                 <p><strong>Contacto:</strong> +34 900 123 456</p>
                 <p><strong>Correo electrónico:</strong> soporte@openroad.com</p>
                 <p><strong>Asistencia en carretera:</strong> Llame al +34 800 654 321 en caso de emergencia.</p>
-                <p><strong>Política de cancelación:</strong> Cancelación gratuita hasta 24 horas antes del inicio de la
-                    reserva.</p>
                 <p><strong>Condiciones:</strong> No fumar en el interior del vehículo. Devolver con al menos 1/4 del
                     tanque de combustible.</p>
                 <p><strong>Requisitos del conductor:</strong> Edad mínima de 20 años y licencia válida en la UE.</p>
+                <p><strong>Política de cancelación:</strong> Cancelación gratuita hasta 24 horas antes del inicio de la
+                    reserva.</p>
             </div>
 
             <!-- Mapa insertado -->

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/pagaReserva.css">
-    <link rel="stylesheet" href="/static/css/header.css">
-    <script src="/static/scripts/header.js" defer></script>
-    <script src="/static/scripts/header.js" defer></script>
+    <link rel="stylesheet" href="/css/pagaReserva.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <script src="/scripts/header.js" defer></script>
+    <script src="/scripts/header.js" defer></script>
     <title>OpenRoad · Pagar Reserva</title>
 
 </head>
@@ -16,7 +16,7 @@
     <nav class="navbar">
         <div class="logo">
             <a class="logo">
-                <img src="/static/images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
+                <img src="/images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
             </a>
         </div>
 
@@ -113,7 +113,7 @@
                     <div class="terms">
                         <input type="checkbox" id="terms" required>
                         <label for="terms">
-                            He llegit els <a href="/static/docs/terminos_y_condiciones.txt" target="_blank">Termes y condicions</a> de la reserva, nota legal y privacitat.
+                            He llegit els <a href="/docs/terminos_y_condiciones.txt" target="_blank">Termes y condicions</a> de la reserva, nota legal y privacitat.
                         </label>
                     </div>
 
@@ -123,7 +123,8 @@
                     <h4>COSTOS TOTALS</h4>
                     <p><strong>80€</strong></p>
                     <div class="imagen">
-                        <img src="/static/images/vehiculos/rangeRoverSubBlanco.png" alt="Range Rover">
+                        <img src="/images/vehiculos/rangeRoverSubBlanco.png" alt="No ha carregat la imatge">
+                        <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
                     </div>
                 </div>
             </div>
