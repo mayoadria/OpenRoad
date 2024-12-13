@@ -23,7 +23,7 @@ public class ValidadorUsuaris implements UserDetailsService {
     UsuariServiceSQL usuariServiceSQL;
 
 
-
+    /* */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Busca al usuario en la base de datos
