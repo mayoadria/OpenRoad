@@ -1,8 +1,12 @@
 package com.copernic.projecte2_openroad.service.mysql;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 // Java
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
 
 // Spring
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +74,14 @@ public class VehicleServiceSQL {
         } catch (Exception e) {
             return "Error amb Vehicle: ID(" + id + "). Excepció: " + e.getMessage();
         }
+    }
+
+    // Obtenir llista de atributs dels Vehicles
+    public <T> List<T> getAtributsVehicle(Function<Vehicle, T> getAtribut, List<Vehicle> vehicles) {
+        Set<T> filtres = new HashSet<>();
+        for (Vehicle vehicle : vehicles) {
+            filtres.add(getAtribut.apply(vehicle));
+        }
+        return new ArrayList<>(filtres);
     }
 }
