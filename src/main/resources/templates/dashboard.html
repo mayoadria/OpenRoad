@@ -11,14 +11,14 @@
 
 <!-- Botón para crear un nuevo agente -->
 <form th:action="@{/admin/crearAgente}" method="get">
-    <button type="submit" class="btn_explora">Crear un agente</button>
+    <button type="submit" class="btn btn-primary">Crear un agente</button>
 </form>
 
 <hr>
 
 <!-- Sección para listar agentes -->
 <h2>Lista de Agentes</h2>
-<table border="1">
+<table class="table table-bordered">
     <thead>
     <tr>
         <th>DNI</th>
@@ -30,10 +30,10 @@
         <th>Teléfon</th>
         <th>Codi Postal</th>
         <th>Direcció</th>
+        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Ejemplo dinámico usando Thymeleaf -->
     <tr th:each="agent : ${agents}">
         <td th:text="${agent.dni}"></td>
         <td th:text="${agent.nom}"></td>
@@ -44,11 +44,7 @@
         <td th:text="${agent.numContacte1}"></td>
         <td th:text="${agent.codiPostal}"></td>
         <td th:text="${agent.adreca}"></td>
-
-
         <td>
-            <!-- es genera una url dinàmica on {id} es substitureix per el valor definit a id=${product.id}-->
-            <a class="btn btn-success"th:href="@{/admin/edit/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}" >Editar</a>
             <a class="btn btn-danger" th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Borrar</a>
         </td>
     </tr>
@@ -59,7 +55,7 @@
 
 <!-- Sección para listar clientes -->
 <h2>Lista de Clientes</h2>
-<table border="1">
+<table class="table table-bordered">
     <thead>
     <tr>
         <th>DNI</th>
@@ -71,10 +67,10 @@
         <th>Teléfon</th>
         <th>Codi Postal</th>
         <th>Direcció</th>
+        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Ejemplo dinámico usando Thymeleaf -->
     <tr th:each="client : ${clients}">
         <td th:text="${client.dni}"></td>
         <td th:text="${client.nom}"></td>
@@ -86,8 +82,7 @@
         <td th:text="${client.codiPostal}"></td>
         <td th:text="${client.adreca}"></td>
         <td>
-            <!-- es genera una url dinàmica on {id} es substitureix per el valor definit a id=${product.id}-->
-            <a class="btn btn-success" th:href="@{/admin/edit/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Editar</a>
+            <a class="btn btn-success" th:href="@{/admin/edit/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Editar</a>
             <a class="btn btn-danger" th:href="@{/admin/delete/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Borrar</a>
         </td>
     </tr>
