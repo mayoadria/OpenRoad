@@ -1,7 +1,6 @@
 package com.copernic.projecte2_openroad.model.mysql;
 
 // Java
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
