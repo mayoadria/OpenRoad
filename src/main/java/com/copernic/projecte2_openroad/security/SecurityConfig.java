@@ -112,7 +112,7 @@ public class SecurityConfig {
         vehicle.setMarca("Mercedes");
         vehicle.setModel("GT2-PRO");
         vehicle.setCombustible(Combustible.DIESEL10E);
-        vehicle.setColor(Color.BLAU);
+        vehicle.setColor(Color.NEGRE);
         vehicle.setPreuDia(12.0);
         vehicle.setFianca(10.0);
         vehicle.setDiesLloguerMinim(3);
