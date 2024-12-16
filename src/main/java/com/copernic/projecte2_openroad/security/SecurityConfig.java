@@ -38,9 +38,9 @@ public class SecurityConfig {
                         .clearAuthentication(true)
                 )
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
-                .requestMatchers("/admin/**").hasAnyAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
-                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString())    // Autorización para clientes
+                .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/cataleg","/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
+                .requestMatchers("/admin/**").hasAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
+                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString(),TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())    // Autorización para clientes
                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
