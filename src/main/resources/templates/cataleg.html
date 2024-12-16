@@ -8,8 +8,7 @@
 
     <link rel="stylesheet" href="/css/cataleg.css">
     <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <script src="/scripts/header.js" defer></script>
     <script src="/scripts/filtres.js" defer></script>
@@ -137,7 +136,7 @@
         <label for="colors"><b>Colors:</b></label>
         <select id="colors" name="colors">
           <option value="">Tots</option>
-          <option th:each="color : ${colors}" th:value="${color}" th:text="${#strings.capitalize(color)}"></option>
+          <option th:each="color : ${colors}" th:value="${color}" th:text="${color.getValor}"></option>
         </select>
 
         <hr class="separador">
@@ -207,7 +206,7 @@
           <div th:each="combustible : ${combustibles}">
             <label>
               <input type="radio" name="combustibles" th:value="${combustible}"
-                th:text="${#strings.capitalize(combustible)}">
+                th:text="${combustible.getValor}">
             </label>
           </div>
         </div>
@@ -299,13 +298,16 @@
                         <div class="car-details"></div>
                         <div class="car-details">
                             <div class="icon">
-                                <a class="fas fa-palette" th:text="${vehicle.color.getValor()}"></a>
+                                <i class="fas fa-palette" ></i>
+                                <span th:text="${vehicle.color.getValor()}"></span>
                             </div>
                             <div class="icon">
-                                <a class="fas fa-gas-pump" th:text="${vehicle.combustible.getValor()}"></a>
+                                <i class="fa-solid fa-gas-pump"></i>
+                                <span th:text="${vehicle.combustible.getValor()}"></span>
                             </div>
                             <div class="icon">
-                                <a class="fas fa-cogs" th:text="${vehicle.caixaCanvis.getValor}"></a>
+                                <i class="fa-solid fa-gear"></i>
+                                <span th:text="${vehicle.caixaCanvis.getValor}"></span>
                             </div>
                         </div>
                         <div class="dades">

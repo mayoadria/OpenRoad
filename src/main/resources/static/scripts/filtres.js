@@ -35,7 +35,7 @@ minRangePreu.addEventListener('input', function() {
     if (parseInt(minRangePreu.value) > parseInt(maxRangePreu.value)) {
         minRangePreu.value = maxRangePreu.value;
     }
-    minValuePreu.textContent = "De" + minRangePreu.value;
+    minValuePreu.textContent = "De: " + minRangePreu.value;
 });
 
 maxRangePreu.addEventListener('input', function() {

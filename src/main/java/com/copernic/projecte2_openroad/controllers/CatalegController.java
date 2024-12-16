@@ -58,15 +58,15 @@ public class CatalegController {
 
         List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
-        List<Color> colors = Arrays.asList(Color.values());
-        List<Combustible> combustibles = Arrays.asList(Combustible.values());
+        List<Color> colors = vehicleServiceSQL.getAtributsVehicle(Vehicle::getColor, vehicles);
+        List<Combustible> combustibles = vehicleServiceSQL.getAtributsVehicle(Vehicle::getCombustible, vehicles);
         int diaLloguerMin = 1;
         int diaLloguerMax = 31;
         List<Double> preuDies = vehicleServiceSQL.getAtributsVehicle(Vehicle::getPreuDia, vehicles);
-        int preuDiesMin = Collections.min(preuDies).intValue();
+        int preuDiesMin = 1;
         int preuDiesMax = Collections.max(preuDies).intValue();
         List<Double> fiances = vehicleServiceSQL.getAtributsVehicle(Vehicle::getFianca, vehicles);
-        int fiancaMin = Collections.min(fiances).intValue();
+        int fiancaMin = 1;
         int fiancaMax = Collections.max(fiances).intValue();
         List<Places> places = Arrays.asList(Places.values());
         Collections.sort(places);
