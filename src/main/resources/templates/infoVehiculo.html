@@ -122,7 +122,9 @@
             <p>⭐⭐⭐⭐⭐</p>
         </div>
 
-        <a th:href="@{/reserva/{matricula2}(matricula2=${vehicle.matricula})}" class="alquilarButton">ALQUILAR</a>
+        <div class="alquilarButton">
+            <a th:href="@{/reserva/{matricula2}(matricula2=${vehicle.matricula})}">ALQUILAR</a>
+        </div>
 
 
     </div>
@@ -174,6 +176,7 @@
                 <div class="column">
                     <p>Hora entrega</p>
                     <select>
+                        <option value="" disabled selected>Selecciona una hora</option>
                         <option value="08:30">08:30</option>
                         <option value="09:00">09:00</option>
                         <option value="09:30">09:30</option>

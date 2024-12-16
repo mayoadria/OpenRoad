@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .clearAuthentication(true)
                 )
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
+                .requestMatchers("/login", "/logout", "/cataleg", "/css/**", "/images/**", "/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
                 .requestMatchers("/admin/**").hasAnyAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
                 .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString())    // Autorización para clientes
                 .anyRequest().authenticated())
