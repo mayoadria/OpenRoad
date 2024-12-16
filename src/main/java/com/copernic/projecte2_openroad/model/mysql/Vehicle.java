@@ -1,11 +1,11 @@
 package com.copernic.projecte2_openroad.model.mysql;
 
 // Java
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 // Jakarta
+import com.copernic.projecte2_openroad.model.enums.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,10 +24,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 // Enums
-import com.copernic.projecte2_openroad.model.enums.CaixaCanvis;
-import com.copernic.projecte2_openroad.model.enums.Marxes;
-import com.copernic.projecte2_openroad.model.enums.Places;
-import com.copernic.projecte2_openroad.model.enums.Portes;
 
 
 @Entity
@@ -46,10 +42,6 @@ public class Vehicle {
     private String marca;
     @Column(nullable = false)
     private String model;
-    @Column(nullable = false)
-    private String combustible;
-    @Column(nullable = false)
-    private String color;
     @Column(nullable = false, name = "preu_dia")
     private Double preuDia;
     @Column(nullable = false)
@@ -58,7 +50,7 @@ public class Vehicle {
     private int diesLloguerMinim;
     @Column(nullable = false, name = "dies_lloguer_maxim")
     private int diesLloguerMaxim;
-    
+
 
     // Enums
     @Column(nullable = false)
@@ -73,6 +65,12 @@ public class Vehicle {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Marxes marxes;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "combustible")
+    private Combustible combustible;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "color")
+    private Color color;
 
     // Camps Opcionals
     @Column(nullable = true, name = "any_vehicle")

@@ -1,8 +1,6 @@
 package com.copernic.projecte2_openroad.model.mysql;
 
 import com.copernic.projecte2_openroad.security.TipusPermis;
-import jakarta.persistence.*;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 

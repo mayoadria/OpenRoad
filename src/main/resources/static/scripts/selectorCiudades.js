@@ -4,7 +4,7 @@ let marker;
 
 // Crear y configurar el mapa al cargar la página
 function inicializarMapa() {
-    map = L.map('map').setView([40.416775, -3.703790], 13); // Centrado inicial en Madrid
+    map = L.map('map').setView([40.416775, -3.703790], 5); // Coordenadas de madrid y zoom en España
 
     // Añadir el tile layer de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -57,3 +57,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Asociar el evento de clic al botón de buscar
     document.getElementById('buscar').addEventListener('click', buscarDireccion);
 });
+
+
+document.getElementById('buscar').addEventListener('click', function () {
+    const direccion = document.getElementById('direccion').value;
+    if (direccion) {
+        // Aquí va la lógica para buscar en el mapa.
+        console.log("Buscando dirección:", direccion);
+
+        // Por ejemplo, podrías llamar a tu función que actualiza el mapa
+        actualizarMapa(direccion);
+    } else {
+        const error = document.getElementById('error');
+        error.style.display = 'block';
+        error.textContent = "Introdueix una adreça vàlida.";
+    }
+});
+
+function actualizarMapa(direccion) {
+    // Aquí debes implementar la lógica para interactuar con el mapa Leaflet.
+    console.log("Actualizando mapa con la dirección:", direccion);
+    // Ejemplo: centrar el mapa en una ubicación.
+    // map.setView([lat, lon], zoom);
+}
