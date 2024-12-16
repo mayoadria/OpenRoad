@@ -96,16 +96,6 @@ public class CatalegController {
         return "crearVehicle";  // Asegúrate de tener una vista llamada crearVehiculo.html
     }
 
-    /*
-    @GetMapping("/CrearVehicle")
-    public String mostrarFormularioCreacion(Model model) {
-    Vehicle vehicle = new Vehicle();
-    model.addAttribute("vehicle", vehicle);
-    model.addAttribute("isLogged", false); // Inicializar variable isLogged
-    return "CrearVehicles";
-    }
-*/
-
     // 3. Procesar la creación del vehículo (POST)
     @PostMapping("/crear") // Confirmamos que la ruta sea consistente
     public String crearVehicle(@ModelAttribute Vehicle vehicle) {

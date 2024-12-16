@@ -134,14 +134,15 @@ body {
 
 /* Estilo para el botÃ³n de abrir el menÃº lateral */
 #openSidebar {
-    position: relative;
+    position: fixed;
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     font-size: 16px;
-    margin-left: -50px;
+    margin-top: -25px;
+    margin-left: 315px;
     z-index: 15;
     width: 115px;
     text-align: end;
@@ -182,8 +183,7 @@ body {
 
 /* Cuando el menÃº lateral estÃ¡ abierto */
 .filtres.open {
-    margin-left: 350px;
-    /* Deja espacio para el menÃº lateral */
+    margin-left: -5px;
 }
 
 /* Estilo de los elementos dentro del menÃº lateral */
@@ -327,7 +327,7 @@ body {
 }
 
 .cars-section {
-    padding-top: 35px;
+    padding-top: 70px;
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
