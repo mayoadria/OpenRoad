@@ -1,6 +1,8 @@
 package com.copernic.projecte2_openroad.security;
 
 import com.copernic.projecte2_openroad.model.enums.CaixaCanvis;
+import com.copernic.projecte2_openroad.model.enums.Color;
+import com.copernic.projecte2_openroad.model.enums.Combustible;
 import com.copernic.projecte2_openroad.model.enums.Marxes;
 import com.copernic.projecte2_openroad.model.enums.Places;
 import com.copernic.projecte2_openroad.model.enums.Portes;
@@ -113,8 +115,8 @@ public class SecurityConfig {
         vehicle.setMatricula("ABC-123");
         vehicle.setMarca("Mercedes");
         vehicle.setModel("GT2-PRO");
-        vehicle.setCombustible("Diesel");
-        vehicle.setColor("Azul");
+        vehicle.setCombustible(Combustible.DIESEL10E);
+        vehicle.setColor(Color.GRIS);
         vehicle.setPreuDia(12.0);
         vehicle.setFianca(10.0);
         vehicle.setDiesLloguerMinim(3);
