@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class pepe {
 
     @GetMapping("/pepe")
-    public String pepe() {
+    public String pepeC() {
         return "pepe";
     }
 }

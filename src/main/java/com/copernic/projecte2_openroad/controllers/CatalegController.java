@@ -113,25 +113,25 @@ public class CatalegController {
 
     // Mostrar detalles de un vehículo
     @GetMapping("vehicle/{matricula1}")
-    public String detallsVehicle (@PathVariable("matricula1") String matricula, Model model){
-        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+        public String detallsVehicle (@PathVariable("matricula1") String matricula, Model model){
+            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
 
-        model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
-        return "infoVehiculo";
-    }
+            model.addAttribute("vehicle", vehicle);
+            model.addAttribute("isLogged", false);
+            return "infoVehiculo";
+        }
 
 
     @GetMapping("reserva/{matricula2}")
-    public String mostrarPagaReserva (@PathVariable("matricula2") String matricula, Model model){
-        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+        public String mostrarPagaReserva (@PathVariable("matricula2") String matricula, Model model){
+            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
 
-        model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
-        return "pagaReserva";
-    }
+            model.addAttribute("vehicle", vehicle);
+            model.addAttribute("isLogged", false);
+            return "pagaReserva";
+        }
 
 
 }

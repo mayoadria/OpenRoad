@@ -3,7 +3,6 @@ package com.copernic.projecte2_openroad.security;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +21,6 @@ public class SecurityConfig {
 
     private final UsuariServiceSQL usuariServiceSQL;
 
-    @Autowired
     public SecurityConfig(ValidadorUsuaris validadorUsuaris, UsuariServiceSQL usuariServiceSQL) {
         this.validadorUsuaris = validadorUsuaris;
         this.usuariServiceSQL = usuariServiceSQL;
@@ -38,7 +36,7 @@ public class SecurityConfig {
                         .clearAuthentication(true)
                 )
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
+                .requestMatchers("/login", "/logout", "/cataleg", "/css/**", "/images/**", "/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
                 .requestMatchers("/admin/**").hasAnyAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
                 .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString())    // Autorización para clientes
                 .anyRequest().authenticated())
@@ -57,6 +55,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @SuppressWarnings("removal")
     @Bean
     public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
