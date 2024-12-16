@@ -131,6 +131,7 @@
           <option value="">Totes</option>
           <option th:each="marca : ${marques}" th:value="${marca}" th:text="${#strings.capitalize(marca)}"></option>
         </select>
+        
         <hr class="separador">
 
         <label for="colors"><b>Colors:</b></label>
@@ -252,12 +253,12 @@
             <label for="caixa-canvis">Caixa de canvis:</label>
           </div>
           <label>
-            <input type="radio" name="caixesCanvis" value="" checked>
+            <input type="radio" name="caixes-canvis" value="" checked>
             Tots
           </label>
           <div th:each="caixa : ${caixesCanvis}">
             <label>
-              <input type="radio" name="caixesCanvis" th:value="${caixa}"
+              <input type="radio" name="caixes-canvis" th:value="${caixa}"
                 th:text="${#strings.capitalize(caixa.getValor)}">
             </label>
           </div>

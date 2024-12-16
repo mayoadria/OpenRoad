@@ -40,7 +40,7 @@ public class CatalegController {
             @RequestParam(name = "combustibles",required = false) String combustiblesFilt,
             @RequestParam(name = "portes",required = false) String portesFilt,
             @RequestParam(name = "places",required = false) String placesFilt,
-            @RequestParam(name = "caixa-canvis",required = false) String caixesCanvisFilt,
+            @RequestParam(name = "caixes-canvis",required = false) String caixesCanvisFilt,
             @RequestParam(name = "marxes",required = false) String marxesFilt,
             Model model) {
 
@@ -133,12 +133,12 @@ public class CatalegController {
         } 
         if (caixesCanvisFilt != null && !caixesCanvisFilt.isEmpty()) {
             vehicles = vehicles.stream()
-                    .filter(v -> v.getCaixaCanvis().equals(caixesCanvisFilt))
+                    .filter(v -> v.getCaixaCanvis() == CaixaCanvis.valueOf(caixesCanvisFilt))
                     .collect(Collectors.toList());
         } 
         if (marxesFilt != null && !marxesFilt.isEmpty()) {
             vehicles = vehicles.stream()
-                    .filter(v -> v.getMarxes().equals(marxesFilt))
+                    .filter(v -> v.getMarxes() == Marxes.valueOf(marxesFilt))
                     .collect(Collectors.toList());
         } 
 
