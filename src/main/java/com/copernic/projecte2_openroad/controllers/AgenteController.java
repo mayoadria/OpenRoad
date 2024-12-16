@@ -34,7 +34,7 @@ public class AgenteController
         String username = part[0];
         agent.setNomUsuari(username);
         agent.setPermisos(TipusPermis.MOSTRAR_PEPE.toString());
-
+        agent.setEnabled(true);
         usuariServiceSQL.guardarAgent(agent);
 
         return "redirect:/admin/dashboard";
