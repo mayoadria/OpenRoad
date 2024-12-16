@@ -261,6 +261,11 @@ body {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul */
 }
 
+.fechas :hover{
+    cursor: pointer;
+}
+
+
 .additional-info {
     line-height: 1.5; /* Espaciado entre líneas */
     font-size: 14px; /* Tamaño del texto */
