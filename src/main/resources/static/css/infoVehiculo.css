@@ -167,17 +167,31 @@ body {
     margin-top: 100px;
 }
 
-.left-panel .alquilarButton {
-    width: 100%;
-    margin-top: 10px;
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
+.alquilarButton {
+    display: flex; /* Asegura que el enlace ocupe todo el espacio */
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff; /* Color del fondo */
+    border-radius: 5px; /* Bordes redondeados */
+    height: 50px; /* Altura del botón */
     text-align: center;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
+
+.button-link {
+    color: white;
+    text-decoration: none; /* Quita el subrayado */
+    width: 100%; /* Hace que el enlace ocupe todo el ancho */
+    height: 100%; /* Hace que el enlace ocupe toda la altura */
+    display: flex; /* Flexbox para centrar el texto */
+    justify-content: center;
+    align-items: center;
+}
+
+.button-link:hover {
+    background-color: #0056b3; /* Color al pasar el cursor */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
 
 .right-panel {
     width: 70%;

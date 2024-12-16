@@ -123,9 +123,9 @@ public class CatalegController {
         }
 
 
-    @GetMapping("pagaReserva/{matricula2}")
+    @GetMapping("reserva/{matricula2}")
         public String mostrarPagaReserva (@PathVariable("matricula2") String matricula, Model model){
-            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
 
             model.addAttribute("vehicle", vehicle);

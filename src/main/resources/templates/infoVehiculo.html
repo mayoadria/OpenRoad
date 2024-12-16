@@ -99,7 +99,7 @@
         <img src="../static/images/vehiculos/rangeRoverSubBlanco.png" alt="No carrega la imatge">
         <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
         <div class="details">
-            <p class="fa-solid fa-user" th:text="${vehicle.places}"></p>
+            <p class="fa-solid fa-user" th:text="${vehicle.places.getValor()}"></p>
             <p>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="30" height="30">
                     <!-- Contorno de la puerta -->
@@ -112,10 +112,10 @@
                     <!-- Manija -->
                     <rect x="130" y="120" width="20" height="6" rx="3" ry="3" fill="white"/>
                 </svg>
-            <p th:text="${vehicle.portes}"></p>
+            <p th:text="${vehicle.portes.getValor()}"></p>
             </p>
-            <p class="fa-solid fa-gear" th:text="${vehicle.caixaCanvis}"></p>
-            <p class="fa-solid fa-gas-pump" th:text="${vehicle.combustible}"></p>
+            <p class="fa-solid fa-gear" th:text="${vehicle.caixaCanvis.getValor()}"></p>
+            <p class="fa-solid fa-gas-pump" th:text="${vehicle.combustible.getValor()}"></p>
         </div>
         <div class="rating">
             <p>Valoracións:</p>
@@ -123,8 +123,9 @@
         </div>
 
         <div class="alquilarButton">
-            <a th:href="@{/pagaReserva/{matricula2}(matricula2=${vehicle.matricula})}">ALQUILAR</a>
+            <a th:href="@{/reserva/{matricula2}(matricula2=${vehicle.matricula})}" class="button-link">ALQUILAR</a>
         </div>
+
 
 
     </div>
