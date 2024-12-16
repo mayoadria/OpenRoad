@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-// Enums
-import com.copernic.projecte2_openroad.model.enums.Rol;
+
 
 @Entity
 @Table(name = "agent")

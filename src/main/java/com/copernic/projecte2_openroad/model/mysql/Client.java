@@ -2,10 +2,7 @@ package com.copernic.projecte2_openroad.model.mysql;
 
 
 // Jakarta
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
@@ -21,8 +18,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-// Enums
-import com.copernic.projecte2_openroad.model.enums.Reputacio;
+
 
 @Entity
 @Table(name = "client")
@@ -35,7 +31,6 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 @ToString(callSuper = true)
 public class Client extends Usuari {
 
-//    // Enums
 //    @Column(nullable = true)
 //    @Enumerated(EnumType.STRING)
 //    private Reputacio reputacio;
