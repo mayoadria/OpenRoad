@@ -145,14 +145,15 @@ body {
 
 /* Estilo para el botÃ³n de abrir el menÃº lateral */
 #openSidebar {
-    position: relative;
+    position: fixed;
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     font-size: 16px;
-    margin-left: -50px;
+    margin-top: -25px;
+    margin-left: 315px;
     z-index: 15;
     width: 115px;
     text-align: end;
@@ -169,7 +170,7 @@ body {
     position: fixed;
     top: 0;
     left: -350px;
-    background-color:#46494d;
+    background-color: #46494d;
     overflow-x: hidden;
     transition: 0.3s;
     padding-top: 125px;
@@ -186,16 +187,10 @@ body {
 /* Estilo inicial de la secciÃ³n de vehÃ­culos */
 .filtres {
     margin-left: 0;
-    /* Sin margen inicial */
     transition: margin-left 0.3s ease;
-    /* TransiciÃ³n suave */
 }
 
-/* Cuando el menÃº lateral estÃ¡ abierto */
-.filtres.open {
-    margin-left: 350px;
-    /* Deja espacio para el menÃº lateral */
-}
+
 
 /* Estilo de los elementos dentro del menÃº lateral */
 .sidebar h3,
@@ -213,16 +208,18 @@ body {
     border-radius: 5px;
 }
 
-#combustible-radios {
+#data-radios {
     display: block;
     flex-direction: column;
     gap: 1px;
 }
 
-#combustible-radios label {
+#data-radios label {
     display: inline-flex;
     align-items: center;
     gap: 2px;
+    width: max-content;
+
 }
 
 
@@ -230,12 +227,14 @@ body {
     display: block;
     margin-bottom: 30px;
     --color-headline: white;
+    --color-headline: white;
 }
 
 #range-values {
     color: white;
     padding-left: 15px;
 }
+
 /* Range Slider */
 .input-ranges[type='range'] {
     width: 210px;
@@ -244,6 +243,7 @@ body {
     outline: none;
 }
 
+
 .input-ranges[type='range'],
 .input-ranges[type='range']::-webkit-slider-runnable-track,
 .input-ranges[type='range']::-webkit-slider-thumb {
@@ -251,15 +251,20 @@ body {
     background: none;
 }
 
+
 .input-ranges[type='range']::-webkit-slider-runnable-track {
     width: 200px;
     height: 1px;
     background: var(--color-headline);
 }
 
+
+
 .input-ranges[type='range']:nth-child(2)::-webkit-slider-runnable-track {
     background: none;
 }
+
+
 
 .input-ranges[type='range']::-webkit-slider-thumb {
     position: relative;
@@ -278,19 +283,25 @@ body {
     -o-transition: .5s;
 }
 
+
+
 .input-ranges[type='range']::-webkit-slider-thumb:hover {
     background: #eaefff;
     border: 1px solid var(--color-primary);
     outline: .5px solid var(--color-primary);
 }
 
+
+
 .input-ranges[type='range']::-webkit-slider-thumb:active {
     cursor: grabbing;
 }
 
+
 .input-ranges[type='range']:nth-child(1)::-webkit-slider-thumb {
     z-index: 2;
 }
+
 
 .rangeslider {
     font-family: sans-serif;
@@ -301,6 +312,7 @@ body {
     display: inline-block;
     margin-top: -5px;
 }
+
 
 .rangeslider input {
     position: absolute;
@@ -319,6 +331,8 @@ body {
 }
 
 .separador {
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 15px;
     margin-right: 25px;
 
@@ -338,7 +352,7 @@ body {
 }
 
 .cars-section {
-    padding-top: 35px;
+    padding-top: 70px;
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
