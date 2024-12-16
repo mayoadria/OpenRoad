@@ -159,7 +159,7 @@ body {
     position: fixed;
     top: 0;
     left: -350px;
-    background-color:#46494d;
+    background-color: #46494d;
     overflow-x: hidden;
     transition: 0.3s;
     padding-top: 125px;
@@ -176,15 +176,10 @@ body {
 /* Estilo inicial de la secciÃ³n de vehÃ­culos */
 .filtres {
     margin-left: 0;
-    /* Sin margen inicial */
     transition: margin-left 0.3s ease;
-    /* TransiciÃ³n suave */
 }
 
-/* Cuando el menÃº lateral estÃ¡ abierto */
-.filtres.open {
-    margin-left: -5px;
-}
+
 
 /* Estilo de los elementos dentro del menÃº lateral */
 .sidebar h3,
@@ -202,13 +197,13 @@ body {
     border-radius: 5px;
 }
 
-#combustible-radios {
+#data-radios {
     display: block;
     flex-direction: column;
     gap: 1px;
 }
 
-#combustible-radios label {
+#data-radios label {
     display: inline-flex;
     align-items: center;
     gap: 2px;
@@ -218,39 +213,40 @@ body {
 #range-filter {
     display: block;
     margin-bottom: 30px;
-  --color-headline: white;
+    --color-headline: white;
 }
 
 #range-values {
     color: white;
     padding-left: 15px;
 }
+
 /* Range Slider */
 .input-ranges[type='range'] {
     width: 210px;
     height: 30px;
     overflow: hidden;
     outline: none;
-  }
-  
-  .input-ranges[type='range'],
-  .input-ranges[type='range']::-webkit-slider-runnable-track,
-  .input-ranges[type='range']::-webkit-slider-thumb {
+}
+
+.input-ranges[type='range'],
+.input-ranges[type='range']::-webkit-slider-runnable-track,
+.input-ranges[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
     background: none;
-  }
-  
-  .input-ranges[type='range']::-webkit-slider-runnable-track {
+}
+
+.input-ranges[type='range']::-webkit-slider-runnable-track {
     width: 200px;
     height: 1px;
     background: var(--color-headline);
-  }
-  
-  .input-ranges[type='range']:nth-child(2)::-webkit-slider-runnable-track {
+}
+
+.input-ranges[type='range']:nth-child(2)::-webkit-slider-runnable-track {
     background: none;
-  }
-  
-  .input-ranges[type='range']::-webkit-slider-thumb {
+}
+
+.input-ranges[type='range']::-webkit-slider-thumb {
     position: relative;
     height: 15px;
     width: 15px;
@@ -265,23 +261,23 @@ body {
     -moz-transition: .5s;
     -ms-transition: .5s;
     -o-transition: .5s;
-  }
-  
-  .input-ranges[type='range']::-webkit-slider-thumb:hover {
+}
+
+.input-ranges[type='range']::-webkit-slider-thumb:hover {
     background: #eaefff;
     border: 1px solid var(--color-primary);
     outline: .5px solid var(--color-primary);
-  }
-  
-  .input-ranges[type='range']::-webkit-slider-thumb:active {
+}
+
+.input-ranges[type='range']::-webkit-slider-thumb:active {
     cursor: grabbing;
-  }
-  
-  .input-ranges[type='range']:nth-child(1)::-webkit-slider-thumb {
+}
+
+.input-ranges[type='range']:nth-child(1)::-webkit-slider-thumb {
     z-index: 2;
-  }
-  
-  .rangeslider {
+}
+
+.rangeslider {
     font-family: sans-serif;
     font-size: 14px;
     position: relative;
@@ -289,25 +285,27 @@ body {
     width: 210px;
     display: inline-block;
     margin-top: -5px;
-  }
-  
-  .rangeslider input {
+}
+
+.rangeslider input {
     position: absolute;
-  }
-  
-  .rangeslider span {
+}
+
+.rangeslider span {
     position: absolute;
     margin-top: 20px;
     left: 0;
-  }
-  
-  .rangeslider .right {
+}
+
+.rangeslider .right {
     position: relative;
     float: right;
     margin-right: -5px;
-  }
+}
 
-  .separador {
+.separador {
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 15px;
     margin-right: 25px;
 
