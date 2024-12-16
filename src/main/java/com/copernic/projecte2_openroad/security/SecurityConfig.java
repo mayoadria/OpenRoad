@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/cataleg","/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
                 .requestMatchers("/admin/**").hasAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
-                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString(),TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())    // Autorización para clientes
+                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString())    // Autorización para clientes
                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -99,6 +99,7 @@ public class SecurityConfig {
         String username = part[0];
         admin.setNomUsuari(username);
         admin.setPermisos(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString());
+        admin.setEnabled(true);
 
         // Llama al método correcto de tu servicio para guardar el administrador
         String resultado = usuariServiceSQL.guardarAdmin(admin);
@@ -111,7 +112,7 @@ public class SecurityConfig {
         vehicle.setMarca("Mercedes");
         vehicle.setModel("GT2-PRO");
         vehicle.setCombustible(Combustible.DIESEL10E);
-        vehicle.setColor(Color.BLAU);
+        vehicle.setColor(Color.NEGRE);
         vehicle.setPreuDia(12.0);
         vehicle.setFianca(10.0);
         vehicle.setDiesLloguerMinim(3);
