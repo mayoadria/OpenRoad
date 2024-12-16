@@ -1,9 +1,6 @@
 package com.copernic.projecte2_openroad.security;
 
-import com.copernic.projecte2_openroad.model.enums.CaixaCanvis;
-import com.copernic.projecte2_openroad.model.enums.Marxes;
-import com.copernic.projecte2_openroad.model.enums.Places;
-import com.copernic.projecte2_openroad.model.enums.Portes;
+import com.copernic.projecte2_openroad.model.enums.*;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
@@ -48,7 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/cataleg","/registre/**", "/", "/scripts","/admin/loginAdmin").permitAll()
                 .requestMatchers("/admin/**").hasAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
-                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString(),TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())    // Autorización para clientes
+                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString())    // Autorización para clientes
                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -102,6 +99,7 @@ public class SecurityConfig {
         String username = part[0];
         admin.setNomUsuari(username);
         admin.setPermisos(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString());
+        admin.setEnabled(true);
 
         // Llama al método correcto de tu servicio para guardar el administrador
         String resultado = usuariServiceSQL.guardarAdmin(admin);
@@ -113,8 +111,8 @@ public class SecurityConfig {
         vehicle.setMatricula("ABC-123");
         vehicle.setMarca("Mercedes");
         vehicle.setModel("GT2-PRO");
-        vehicle.setCombustible("Diesel");
-        vehicle.setColor("Azul");
+        vehicle.setCombustible(Combustible.DIESEL10E);
+        vehicle.setColor(Color.BLAU);
         vehicle.setPreuDia(12.0);
         vehicle.setFianca(10.0);
         vehicle.setDiesLloguerMinim(3);

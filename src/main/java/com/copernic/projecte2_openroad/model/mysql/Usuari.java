@@ -55,7 +55,8 @@ public abstract class Usuari implements UserDetails {
     @Column(nullable = false, name = "nom_usuari")
     private String nomUsuari;
 
-
+    @Column(nullable = false)
+    private boolean enabled = false;
 
     @Column(nullable = false)
     private String permisos;

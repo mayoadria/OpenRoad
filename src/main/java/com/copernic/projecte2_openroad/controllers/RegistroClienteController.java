@@ -49,7 +49,7 @@ public class RegistroClienteController {
             String username = part[0];
             cli.setNomUsuari(username);
             cli.setPermisos(TipusPermis.MOSTRAR_PEPE.toString());
-            clientServiceSQL.guardarClient(cli);
+
 
             // Processar i guardar imatges a MongoDB
             DocumentClient document = new DocumentClient();
@@ -63,7 +63,8 @@ public class RegistroClienteController {
             docList.add(carnetImatge);
 
             document.setClientDoc(docList);
-
+            cli.setEnabled(false);
+            clientServiceSQL.guardarClient(cli);
             // Guardar a MongoDB
             documentServiceMongo.guardarDocument(document);
 
