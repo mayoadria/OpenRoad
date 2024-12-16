@@ -1,9 +1,6 @@
 package com.copernic.projecte2_openroad.controllers;
 
-import com.copernic.projecte2_openroad.model.enums.CaixaCanvis;
-import com.copernic.projecte2_openroad.model.enums.Marxes;
-import com.copernic.projecte2_openroad.model.enums.Places;
-import com.copernic.projecte2_openroad.model.enums.Portes;
+import com.copernic.projecte2_openroad.model.enums.*;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
 
@@ -25,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Controller
 public class CatalegController {
+
     @Autowired
     private VehicleServiceSQL vehicleServiceSQL;
 
@@ -48,8 +46,7 @@ public class CatalegController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.isAuthenticated() &&
-                !(authentication.getPrincipal() instanceof String)) {
+        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
             String nomUsuari = authentication.getName();
             model.addAttribute("nomUsuari", nomUsuari);
             model.addAttribute("isLogged", true);
@@ -61,10 +58,8 @@ public class CatalegController {
 
         List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
-        List<String> colors = vehicleServiceSQL.getAtributsVehicle(Vehicle::getColor, vehicles).stream()
-                .map(String::toLowerCase).collect(Collectors.toList());
-        List<String> combustibles = vehicleServiceSQL.getAtributsVehicle(Vehicle::getCombustible, vehicles).stream()
-                .map(String::toLowerCase).collect(Collectors.toList());
+        List<Color> colors = Arrays.asList(Color.values());
+        List<Combustible> combustibles = Arrays.asList(Combustible.values());
         int diaLloguerMin = 1;
         int diaLloguerMax = 31;
         List<Double> preuDies = vehicleServiceSQL.getAtributsVehicle(Vehicle::getPreuDia, vehicles);
@@ -88,7 +83,7 @@ public class CatalegController {
         }   
         if (colorsFilt != null && !colorsFilt.isEmpty()) {
             vehicles = vehicles.stream()
-                    .filter(v -> v.getColor().equalsIgnoreCase(colorsFilt))
+                    .filter(v -> v.getColor() == Color.valueOf(colorsFilt))
                     .collect(Collectors.toList());
         } 
         if (minDiesFilt != null && !minDiesFilt.isEmpty()) {
@@ -123,7 +118,7 @@ public class CatalegController {
         }  
         if (combustiblesFilt != null && !combustiblesFilt.isEmpty()) {
             vehicles = vehicles.stream()
-                    .filter(v -> v.getCombustible().equalsIgnoreCase(combustiblesFilt))
+                    .filter(v -> v.getCombustible() == Combustible.valueOf(combustiblesFilt))
                     .collect(Collectors.toList());
         } 
         if (portesFilt != null && !portesFilt.isEmpty()) {
@@ -165,6 +160,7 @@ public class CatalegController {
         return "cataleg";
     }
 
+    // Mostrar formulario para crear un vehículo
     @GetMapping("/crear_vehicle")
     public String mostrarFormulariCrear(Model model) {
         Vehicle vehicle = new Vehicle();
@@ -183,13 +179,27 @@ public class CatalegController {
         return "redirect:/cataleg";
     }
 
-    @GetMapping("vehicle/{matricula}")
-    public String detallsVehicle(@PathVariable("matricula") String matricula, Model model) {
-        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+    // Mostrar detalles de un vehículo
+    @GetMapping("vehicle/{matricula1}")
+        public String detallsVehicle (@PathVariable("matricula1") String matricula, Model model){
+            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
-        model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
-        return "infoVehiculo";
-    }
+
+            model.addAttribute("vehicle", vehicle);
+            model.addAttribute("isLogged", false);
+            return "infoVehiculo";
+        }
+
+
+    @GetMapping("reserva/{matricula2}")
+        public String mostrarPagaReserva (@PathVariable("matricula2") String matricula, Model model){
+            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+
+
+            model.addAttribute("vehicle", vehicle);
+            model.addAttribute("isLogged", false);
+            return "pagaReserva";
+        }
+
 
 }

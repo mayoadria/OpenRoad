@@ -33,7 +33,7 @@ public class AgenteController
         String[] part = agent.getEmail().split("@");
         String username = part[0];
         agent.setNomUsuari(username);
-        agent.setPermisos(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString());
+        agent.setPermisos(TipusPermis.MOSTRAR_PEPE.toString());
 
         usuariServiceSQL.guardarAgent(agent);
 
