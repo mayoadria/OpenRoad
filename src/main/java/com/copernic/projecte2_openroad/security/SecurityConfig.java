@@ -43,10 +43,9 @@ public class SecurityConfig {
                         .clearAuthentication(true)
                 )
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/scripts/**", "/cataleg","/registre/**", "/","/admin/loginAdmin").permitAll()
+                .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/cataleg","/registre/**", "/", "/scripts/**","/admin/loginAdmin").permitAll()
                 .requestMatchers("/admin/**").hasAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
-                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MOSTRAR_PEPE.toString())  
-                .requestMatchers("/agent/**").hasAnyAuthority(TipusPermis.MOSTRAR_DASHBOARDAGENT.toString())  // Autorización para clientes
+                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MODIFICAR_PERFIL.toString())    // Autorización para clientes
                 .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -59,7 +58,6 @@ public class SecurityConfig {
                 .userDetailsService(validadorUsuaris); // Registro del validador de clientes
 
         crearAdminSiNoExiste();
-        crearCotxeAutomatic();
 
         return http.build();
     }
@@ -107,25 +105,7 @@ public class SecurityConfig {
         System.out.println(resultado);
     }
 
-    private void crearCotxeAutomatic(){
-        Vehicle vehicle = new Vehicle();
-        vehicle.setMatricula("ABC-123");
-        vehicle.setMarca("Mercedes");
-        vehicle.setModel("GT2-PRO");
-        vehicle.setCombustible(Combustible.DIESEL10E);
-        vehicle.setColor(Color.NEGRE);
-        vehicle.setPreuDia(12.0);
-        vehicle.setFianca(10.0);
-        vehicle.setDiesLloguerMinim(3);
-        vehicle.setDiesLloguerMaxim(30);
-        vehicle.setPlaces(Places.CINC);
-        vehicle.setPortes(Portes.CINC);
-        vehicle.setCaixaCanvis(CaixaCanvis.MANUAL);
-        vehicle.setMarxes(Marxes.SIS);
-        vehicle.setAnyVehicle(2008);
 
-        vehicleServiceSQL.guardarVehicle(vehicle);
-    }
 
 }
 

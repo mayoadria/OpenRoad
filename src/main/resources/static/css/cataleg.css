@@ -2,11 +2,11 @@ html, body {
     height: 100%;
     margin: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Configura el diseño en columnas */
 }
 
 main {
-    flex: 1; /* Hace que el contenido principal ocupe todo el espacio disponible */
+    flex: 1; /* Permite que el contenido principal ocupe todo el espacio disponible */
 }
 
 /* Reseteo bÃ¡sico */
@@ -492,4 +492,6 @@ footer {
     background-color: #343a40;
     color: #ffffff;
     text-align: center;
+    margin-top: auto; /* Mantiene el footer en la parte inferior si el contenido es escaso */
+    width: 100%;
 }
