@@ -5,27 +5,26 @@ const fechaEntrega = document.getElementById('fechaEntrega');
 const diasReserva = document.getElementById('diasReserva');
 const precioTotal = document.getElementById('precioTotal');
 
-
-
 // Obtener precios dinámicamente desde el DOM
 const obtenerPrecioPorDia = () => {
-    const precioDiaElement = document.querySelector('[th\\:text="${vehicle.preuDia}"]');
+    const precioDiaElement = document.getElementById('preuDia');
     if (precioDiaElement) {
-        const valor = parseFloat(precioDiaElement.textContent.trim());
+        // Extraer solo el valor numérico (removiendo el símbolo '€')
+        const valor = parseFloat(precioDiaElement.textContent.replace('€', '').trim());
         return isNaN(valor) ? 0 : valor;
     }
     return 0;
 };
 
 const obtenerPrecioFianza = () => {
-    const precioFianzaElement = document.querySelector('[th\\:text="${vehicle.fianca}"]');
+    const precioFianzaElement = document.getElementById('precioFianza');
     if (precioFianzaElement) {
-        const valor = parseFloat(precioFianzaElement.textContent.trim());
+        // Extraer solo el valor numérico (removiendo el símbolo '€')
+        const valor = parseFloat(precioFianzaElement.textContent.replace('€', '').trim());
         return isNaN(valor) ? 0 : valor;
     }
     return 0;
 };
-
 
 // Función para obtener la fecha actual en formato ISO (YYYY-MM-DD)
 const obtenerFechaActual = () => {
@@ -62,11 +61,15 @@ const establecerFechasIniciales = () => {
 const calcularDias = (inicio, fin) => {
     const fechaInicio = new Date(inicio);
     const fechaFin = new Date(fin);
-    if (!isNaN(fechaInicio) && !isNaN(fechaFin) && fechaFin >= fechaInicio) {
-        const diferenciaMs = fechaFin - fechaInicio;
-        return Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24)); // Días inclusivos
+
+    // Validar fechas
+    if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
+        return 0; // Devuelve 0 si las fechas son inválidas
     }
-    return 0;
+
+    const diferenciaMilisegundos = fechaFin.getTime() - fechaInicio.getTime();
+    const dias = diferenciaMilisegundos / (1000 * 60 * 60 * 24); // Convertir a días
+    return Math.ceil(dias); // Redondear hacia arriba si hay horas parciales
 };
 
 // Función para actualizar el precio total y los días de reserva
@@ -79,15 +82,20 @@ const actualizarPrecioYDias = () => {
 
     const dias = calcularDias(inicio, fin);
 
-    // Validar y calcular
-    diasReserva.textContent = dias; // Actualizar número de días
-    if (dias > 0) {
-        const total = precioPorDia * dias * precioFianza;
-        precioTotal.textContent = `${total.toFixed(2)} €`; // Actualizar total en el DOM
-        console.log('Precio total actualizado:', total); // Verificar en consola
-    } else {
-        precioTotal.textContent = '0.00 €'; // Asegurar un valor consistente
-    }
+    // Actualizar número de días (convertir a string)
+    diasReserva.textContent = `${dias}`;
+
+    // Calcular el total
+    const precioFianzaNumerico = Number(precioFianza); // Asegurar tipo numérico
+    const total = (precioPorDia * dias) + precioFianzaNumerico;
+
+    // Actualizar el precio total en el DOM
+    precioTotal.textContent = `${total.toFixed(2)} €`;
+};
+
+// Función para inicializar el precio al cargar la página
+const inicializarPrecio = () => {
+    actualizarPrecioYDias(); // Ejecuta el cálculo inicial
 };
 
 // Función para limitar las horas disponibles en "Hora recogida"
@@ -131,9 +139,9 @@ fechaRecogida.addEventListener('input', () => {
 fechaEntrega.addEventListener('input', validarFechas);
 horaRecogida.addEventListener('input', limitarHoraRecogida);
 
-// Inicialización al cargar la página
+// Ejecutar el cálculo inicial al cargar la página
 window.addEventListener('DOMContentLoaded', () => {
     establecerFechasIniciales();
     limitarHoraRecogida();
-    actualizarPrecioYDias();
+    inicializarPrecio(); // Calcular y actualizar precio al cargar
 });

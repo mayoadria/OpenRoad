@@ -229,15 +229,18 @@
             <div class="price-details">
                 <p>
                     <span><strong>Preu per día:</strong></span>
-                    <span id="preuDia" th:text="${vehicle.preuDia}"></span>
+                    <span id="preuDia" th:text="${vehicle.preuDia + ' €'}"></span>
                 </p>
                 <p><strong>Número de días:</strong> <span id="diasReserva">0</span></p>
 
                 <p>
                     <span><strong>Preu fiança:</strong></span>
-                    <span id="precioFianza" th:text="${vehicle.fianca}"></span>
+                    <span id="precioFianza" th:text="${vehicle.fianca + ' €'}"></span>
                 </p>
-                <p><strong>Total:</strong> <span id="precioTotal">0 €</span></p>
+                <p>
+                    <span><strong>Total:</strong></span>
+                    <span id="precioTotal"></span>
+                </p>
             </div>
         </div>
 
@@ -254,11 +257,6 @@
                 <p>
                     <span><strong>Matrícula:</strong></span>
                     <span th:text="${vehicle.matricula}"></span>
-                </p>
-
-                <p>
-                    <span><strong>Combustible:</strong></span>
-                    <span th:text="${vehicle.combustible}"></span>
                 </p>
 
                 <p>
