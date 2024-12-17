@@ -11,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,7 +60,7 @@ public class CatalegController {
         }
 
 
-        List<Vehicle> vehicles = vehicleServiceSQL.listarTodosLosVehiculos();
+        List<Vehicle> vehicles = vehicleServiceSQL.llistarVehicles();
         for (Vehicle vehicle : vehicles) {
             if (vehicle != null && vehicle.getImage() != null) {
                 Imagen image = vehicle.getImage();
