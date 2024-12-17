@@ -53,6 +53,12 @@ public class UsuariServiceSQL {
         }
     }
 
+    public void activateUser(String nomUsuari) {
+        Client user = clientRepository.findByNomUsuari(nomUsuari);
+        user.setEnabled(true);
+        clientRepository.save(user);
+    }
+
     /**
      * Guarda un administrador en la base de datos.
      */

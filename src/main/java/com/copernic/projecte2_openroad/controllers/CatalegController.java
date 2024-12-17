@@ -1,6 +1,7 @@
 package com.copernic.projecte2_openroad.controllers;
 
 import com.copernic.projecte2_openroad.model.enums.*;
+import com.copernic.projecte2_openroad.model.mysql.Imagen;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
 
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,111 +58,130 @@ public class CatalegController {
             model.addAttribute("isLogged", false);
         }
 
+
         List<Vehicle> vehicles = vehicleServiceSQL.listarTodosLosVehiculos();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle != null && vehicle.getImage() != null) {
+                Imagen image = vehicle.getImage();
+                byte[] imageData = image.getImageData(); // Recupera los datos de la imagen
 
-        List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream()
-                .map(String::toLowerCase).collect(Collectors.toList());
-        List<Color> colors = vehicleServiceSQL.getAtributsVehicle(Vehicle::getColor, vehicles);
-        List<Combustible> combustibles = vehicleServiceSQL.getAtributsVehicle(Vehicle::getCombustible, vehicles);
-        int diaLloguerMin = 1;
-        int diaLloguerMax = 31;
-        List<Double> preuDies = vehicleServiceSQL.getAtributsVehicle(Vehicle::getPreuDia, vehicles);
-        int preuDiesMin = 1;
-        int preuDiesMax = Collections.max(preuDies).intValue();
-        List<Double> fiances = vehicleServiceSQL.getAtributsVehicle(Vehicle::getFianca, vehicles);
-        int fiancaMin = 1;
-        int fiancaMax = Collections.max(fiances).intValue();
-        List<Places> places = Arrays.asList(Places.values());
-        Collections.sort(places);
-        List<Portes> portes = Arrays.asList(Portes.values());
-        Collections.sort(portes);
-        List<CaixaCanvis> caixesCanvis = Arrays.asList(CaixaCanvis.values());
-        List<Marxes> marxes = Arrays.asList(Marxes.values());
-        Collections.sort(marxes);
+                if (imageData != null) {
+                    String base64Image = Base64.getEncoder().encodeToString(imageData); // Convierte los datos de la imagen a Base64
+                    String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
+                    vehicle.setImageUrl(imageUrl); // Asigna la URL de la imagen al vehículo
+                }
+            }
+        }
+            List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream()
+                    .map(String::toLowerCase).collect(Collectors.toList());
+            List<Color> colors = vehicleServiceSQL.getAtributsVehicle(Vehicle::getColor, vehicles);
+            List<Combustible> combustibles = vehicleServiceSQL.getAtributsVehicle(Vehicle::getCombustible, vehicles);
+            int diaLloguerMin = 1;
+            int diaLloguerMax = 31;
+            List<Double> preuDies = vehicleServiceSQL.getAtributsVehicle(Vehicle::getPreuDia, vehicles);
+            int preuDiesMin = 1;
+           int preuDiesMax = 99;
+            if (!vehicles.isEmpty()) {
+                preuDiesMax = Collections.max(preuDies).intValue();
+            }
+            List<Double> fiances = vehicleServiceSQL.getAtributsVehicle(Vehicle::getFianca, vehicles);
+            int fiancaMin = 1;
+            int fiancaMax = 99;
+            if (!vehicles.isEmpty()) {
+                fiancaMax = Collections.max(fiances).intValue();
+            }
+            List<Places> places = Arrays.asList(Places.values());
+            Collections.sort(places);
+            List<Portes> portes = Arrays.asList(Portes.values());
+            Collections.sort(portes);
+            List<CaixaCanvis> caixesCanvis = Arrays.asList(CaixaCanvis.values());
+            List<Marxes> marxes = Arrays.asList(Marxes.values());
+            Collections.sort(marxes);
 
-        if (marquesFilt != null && !marquesFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getMarca().equalsIgnoreCase(marquesFilt))
-                    .collect(Collectors.toList());
-        }   
-        if (colorsFilt != null && !colorsFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getColor() == Color.valueOf(colorsFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (minDiesFilt != null && !minDiesFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getDiesLloguerMinim() >= Integer.parseInt(minDiesFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (maxDiesFilt != null && !maxDiesFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getDiesLloguerMaxim() <= Integer.parseInt(maxDiesFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (minPreuFilt != null && !minPreuFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getPreuDia() >= Integer.parseInt(minPreuFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (maxPreuFilt != null && !maxPreuFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getPreuDia() <= Integer.parseInt(maxPreuFilt))
-                    .collect(Collectors.toList());
-        }  
-        if (minFianFilt != null && !minFianFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getFianca() >= Integer.parseInt(minFianFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (maxFianFilt != null && !maxFianFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getFianca() <= Integer.parseInt(maxFianFilt))
-                    .collect(Collectors.toList());
-        }  
-        if (combustiblesFilt != null && !combustiblesFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getCombustible() == Combustible.valueOf(combustiblesFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (portesFilt != null && !portesFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getPortes() == Portes.valueOf(portesFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (placesFilt != null && !placesFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getPlaces() == Places.valueOf(placesFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (caixesCanvisFilt != null && !caixesCanvisFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getCaixaCanvis().equals(caixesCanvisFilt))
-                    .collect(Collectors.toList());
-        } 
-        if (marxesFilt != null && !marxesFilt.isEmpty()) {
-            vehicles = vehicles.stream()
-                    .filter(v -> v.getMarxes().equals(marxesFilt))
-                    .collect(Collectors.toList());
-        } 
+            if (marquesFilt != null && !marquesFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getMarca().equalsIgnoreCase(marquesFilt))
+                        .collect(Collectors.toList());
+            }
+            if (colorsFilt != null && !colorsFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getColor() == Color.valueOf(colorsFilt))
+                        .collect(Collectors.toList());
+            }
+            if (minDiesFilt != null && !minDiesFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getDiesLloguerMinim() >= Integer.parseInt(minDiesFilt))
+                        .collect(Collectors.toList());
+            }
+            if (maxDiesFilt != null && !maxDiesFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getDiesLloguerMaxim() <= Integer.parseInt(maxDiesFilt))
+                        .collect(Collectors.toList());
+            }
+            if (minPreuFilt != null && !minPreuFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getPreuDia() >= Integer.parseInt(minPreuFilt))
+                        .collect(Collectors.toList());
+            }
+            if (maxPreuFilt != null && !maxPreuFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getPreuDia() <= Integer.parseInt(maxPreuFilt))
+                        .collect(Collectors.toList());
+            }
+            if (minFianFilt != null && !minFianFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getFianca() >= Integer.parseInt(minFianFilt))
+                        .collect(Collectors.toList());
+            }
+            if (maxFianFilt != null && !maxFianFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getFianca() <= Integer.parseInt(maxFianFilt))
+                        .collect(Collectors.toList());
+            }
+            if (combustiblesFilt != null && !combustiblesFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getCombustible() == Combustible.valueOf(combustiblesFilt))
+                        .collect(Collectors.toList());
+            }
+            if (portesFilt != null && !portesFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getPortes() == Portes.valueOf(portesFilt))
+                        .collect(Collectors.toList());
+            }
+            if (placesFilt != null && !placesFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getPlaces() == Places.valueOf(placesFilt))
+                        .collect(Collectors.toList());
+            }
+            if (caixesCanvisFilt != null && !caixesCanvisFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getCaixaCanvis().equals(caixesCanvisFilt))
+                        .collect(Collectors.toList());
+            }
+            if (marxesFilt != null && !marxesFilt.isEmpty()) {
+                vehicles = vehicles.stream()
+                        .filter(v -> v.getMarxes().equals(marxesFilt))
+                        .collect(Collectors.toList());
+            }
 
-        model.addAttribute("vehicles", vehicles);
-        model.addAttribute("marques", marques);
-        model.addAttribute("colors", colors);
-        model.addAttribute("combustibles", combustibles);
-        model.addAttribute("diaLloguerMin", diaLloguerMin);
-        model.addAttribute("diaLloguerMax", diaLloguerMax);
-        model.addAttribute("preuDiesMin", preuDiesMin);
-        model.addAttribute("preuDiesMax", preuDiesMax);
-        model.addAttribute("fiancaMin", fiancaMin);
-        model.addAttribute("fiancaMax", fiancaMax);
-        model.addAttribute("places", places);
-        model.addAttribute("portes", portes);
-        model.addAttribute("caixesCanvis", caixesCanvis);
-        model.addAttribute("marxes", marxes);
+            model.addAttribute("vehicles", vehicles);
+            model.addAttribute("marques", marques);
+            model.addAttribute("colors", colors);
+            model.addAttribute("combustibles", combustibles);
+            model.addAttribute("diaLloguerMin", diaLloguerMin);
+            model.addAttribute("diaLloguerMax", diaLloguerMax);
+            model.addAttribute("preuDiesMin", preuDiesMin);
+            model.addAttribute("preuDiesMax", preuDiesMax);
+            model.addAttribute("fiancaMin", fiancaMin);
+            model.addAttribute("fiancaMax", fiancaMax);
+            model.addAttribute("places", places);
+            model.addAttribute("portes", portes);
+            model.addAttribute("caixesCanvis", caixesCanvis);
+            model.addAttribute("marxes", marxes);
 
-        return "cataleg";
-    }
+            return "cataleg";
+        }
+
 
     // Mostrar formulario para crear un vehículo
     @GetMapping("/crear_vehicle")
@@ -174,20 +197,38 @@ public class CatalegController {
 
     // 3. Procesar la creación del vehículo (POST)
     @PostMapping("/crear") // Confirmamos que la ruta sea consistente
-    public String crearVehicle(@ModelAttribute Vehicle vehicle) {
-        vehicleServiceSQL.guardarVehicle(vehicle);
-        return "redirect:/cataleg";
+    public String crearVehicle(@ModelAttribute Vehicle vehicle,
+    @RequestParam("imagen")
+    MultipartFile file) {
+
+        try {
+            // Crear y guardar la imagen
+            Imagen image = new Imagen();
+            image.setNombre(file.getOriginalFilename());
+            image.setType(file.getContentType());
+            image.setImageData(file.getBytes());
+
+            // Asociar la imagen con el vehículo
+            vehicle.setImage(image);
+
+            // Generar la URL de la imagen
+            String base64Image = Base64.getEncoder().encodeToString(image.getImageData());
+            String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
+            vehicle.setImageUrl(imageUrl);
+            vehicleServiceSQL.guardarVehicle(vehicle);
+            return "redirect:/cataleg";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-    // Mostrar detalles de un vehículo
-    @GetMapping("vehicle/{matricula1}")
-        public String detallsVehicle (@PathVariable("matricula1") String matricula, Model model){
-            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+    @GetMapping("/vehicle/{matricula1}")
+    public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
+        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).orElse(null);
 
 
-            model.addAttribute("vehicle", vehicle);
-            model.addAttribute("isLogged", false);
-            return "infoVehiculo";
+        model.addAttribute("vehicle", vehicle);
+        model.addAttribute("isLogged", false);
+        return "infoVehiculo";
         }
 
 

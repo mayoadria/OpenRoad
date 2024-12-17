@@ -96,7 +96,7 @@
 </header>
 <div class="container">
     <div class="left-panel">
-        <img src="../static/images/vehiculos/rangeRoverSubBlanco.png" alt="No carrega la imatge">
+        <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}" >
         <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
         <div class="details">
             <p class="fa-solid fa-user" th:text="${vehicle.places}"></p>

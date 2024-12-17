@@ -55,10 +55,18 @@ public abstract class Usuari implements UserDetails {
     @Column(nullable = false, name = "nom_usuari")
     private String nomUsuari;
 
-
+    @Column(nullable = false)
+    private boolean enabled = false;
 
     @Column(nullable = false)
     private String permisos;
+
+    @Lob
+    private String imageUrl;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagen_id")
+    private Imagen image;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

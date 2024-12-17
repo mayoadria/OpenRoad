@@ -40,7 +40,8 @@ public class RegistroClienteController {
     public String save(
             @ModelAttribute("client") Client cli,
             @RequestParam("dniFile") MultipartFile dniFile,
-            @RequestParam("carnetFile") MultipartFile carnetFile
+            @RequestParam("carnetFile") MultipartFile carnetFile,
+            @RequestParam("imagen")  MultipartFile file
     ) {
         try {
             // Processar i guardar dades a MySQL
@@ -48,7 +49,8 @@ public class RegistroClienteController {
             String[] part = cli.getEmail().split("@");
             String username = part[0];
             cli.setNomUsuari(username);
-            cli.setPermisos(TipusPermis.MOSTRAR_PEPE.toString());
+            cli.setPermisos(TipusPermis.CONSULTAR_CATALEG + "," + TipusPermis.MODIFICAR_PERFIL);
+            cli.setEnabled(false);
             clientServiceSQL.guardarClient(cli);
 
             // Processar i guardar imatges a MongoDB

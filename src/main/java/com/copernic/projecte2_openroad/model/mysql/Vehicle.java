@@ -6,15 +6,7 @@ import java.util.List;
 
 // Jakarta
 import com.copernic.projecte2_openroad.model.enums.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 // Lombok
 import lombok.AllArgsConstructor;
@@ -79,13 +71,19 @@ public class Vehicle {
     private int km;
     @Column(nullable = true, name = "desc_vehicle")
     private String descVehicle;
-    
+    @Lob
+    private String imageUrl;
 
     // Relació OneToMany amb taula - Reserva (Bidireccional)
     @OneToMany(mappedBy = "vehicle")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Reserva> reserva;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagen_id")
+    private Imagen image;
 
     // Relació OneToMany amb taula - Incidencia
     @OneToMany(mappedBy = "vehicle")

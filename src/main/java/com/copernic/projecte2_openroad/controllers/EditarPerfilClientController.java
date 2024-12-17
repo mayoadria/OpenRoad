@@ -1,6 +1,7 @@
 package com.copernic.projecte2_openroad.controllers;
 
 import com.copernic.projecte2_openroad.model.mysql.Client;
+import com.copernic.projecte2_openroad.model.mysql.Imagen;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,10 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/perfil")
@@ -49,12 +51,17 @@ public class EditarPerfilClientController {
     }
 
     @PostMapping("/edit")
-    public String guardarCambios(@ModelAttribute Client cliente, @AuthenticationPrincipal Client usuarioLogueado, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String guardarCambios(@ModelAttribute Client cliente,
+                                 @RequestParam("imagen") MultipartFile file,
+                                 Model model,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) {
+        // Obtener la autenticación actual
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() &&
                 !(authentication.getPrincipal() instanceof String)) {
-            String nombreUsuarioLogueado = authentication.getName();  // Obtener el nombre de usuario logueado
+            String nombreUsuarioLogueado = authentication.getName();
 
             // Obtener el cliente logueado desde la base de datos
             Usuari clienteExistente = usuariServiceSQL.findByNomUsuari(nombreUsuarioLogueado);
@@ -73,33 +80,64 @@ public class EditarPerfilClientController {
                 // Actualizar email y derivar el nuevo nombre de usuario
                 String nuevoEmail = cliente.getEmail();
                 clienteACambiar.setEmail(nuevoEmail);
-
-                // Derivar nuevo nombre de usuario a partir del nuevo email
                 String nuevoNombreUsuario = nuevoEmail.split("@")[0];
 
-                // Validar si el nuevo nombre de usuario está disponible y no está en uso
+                // Validar disponibilidad del nuevo nombre de usuario
                 Usuari clienteConNuevoNombre = usuariServiceSQL.findByNomUsuari(nuevoNombreUsuario);
                 if (clienteConNuevoNombre != null && !clienteConNuevoNombre.equals(clienteExistente)) {
                     model.addAttribute("error", "El nombre de usuario derivado del nuevo email ya está en uso.");
-                    return "Perfil";  // Mostrar el error si el nombre de usuario ya está en uso
+                    return "Perfil";
                 }
 
-                // Si el nombre de usuario es único, actualizarlo
+                // Si el nuevo nombre de usuario es diferente, actualizamos
+                boolean nombreUsuarioCambiado = !nuevoNombreUsuario.equals(clienteACambiar.getNomUsuari());
                 clienteACambiar.setNomUsuari(nuevoNombreUsuario);
 
-                // Logout el usuario actual para forzar que inicie sesión nuevamente con el nuevo nombre de usuario
-                new SecurityContextLogoutHandler().logout(request, response, authentication);
+                // Procesar la imagen si se ha subido una nueva
+                if (file != null && !file.isEmpty()) {
+                    try {
+                        // Crear y guardar la nueva imagen
+                        Imagen image = new Imagen();
+                        image.setNombre(file.getOriginalFilename());
+                        image.setType(file.getContentType());
+                        image.setImageData(file.getBytes());
+
+                        // Asociar la imagen con el cliente
+                        clienteACambiar.setImage(image);
+
+                        // Generar la URL de la imagen
+                        String base64Image = Base64.getEncoder().encodeToString(image.getImageData());
+                        String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
+                        clienteACambiar.setImageUrl(imageUrl);
+                    } catch (IOException e) {
+                        model.addAttribute("error", "Error al cargar la imagen: " + e.getMessage());
+                        return "Perfil";
+                    }
+                }
 
                 // Guardar los cambios en la base de datos
                 usuariServiceSQL.modificarClient(clienteACambiar);
-                return "redirect:/";
+
+                // Solo cerrar sesión si el nombre de usuario ha cambiado
+                if (nombreUsuarioCambiado) {
+                    new SecurityContextLogoutHandler().logout(request, response, authentication);
+                    // Redirigir al inicio para un nuevo login
+                    return "redirect:/";
+                }
+
+                // Redirigir al perfil si no se cierra sesión
+                return "redirect:/perfil";
             } else {
                 model.addAttribute("error", "Cliente no encontrado o no es de tipo Client.");
-                return "Perfil";  // Redirigir al perfil si el cliente no existe o no es del tipo correcto
+                return "Perfil";
             }
-        } else {
-            return "redirect:/login";  // Redirigir a la página de login si no está autenticado
         }
+
+        // Redirigir a la página de login si no está autenticado
+        return "redirect:/login";
+    }
+
+
     }
 
 
@@ -107,4 +145,4 @@ public class EditarPerfilClientController {
 
 
 
-}
+
