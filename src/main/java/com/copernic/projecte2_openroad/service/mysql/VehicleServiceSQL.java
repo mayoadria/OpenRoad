@@ -35,7 +35,7 @@ public class VehicleServiceSQL {
     }
 
     // Listar todos los vehículos
-    public List<Vehicle> listarTodosLosVehiculos() {
+    public List<Vehicle> llistarVehicles() {
         return vehicleRepoSQL.findAll();
     }
 
