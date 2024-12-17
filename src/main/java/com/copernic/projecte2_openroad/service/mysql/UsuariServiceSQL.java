@@ -41,11 +41,6 @@ public class UsuariServiceSQL {
         return user; // Devuelve null si no se encuentra en ningún repositorio
     }
 
-    public void activateUser(String nomUsuari) {
-        Client user = clientRepository.findByNomUsuari(nomUsuari);
-        user.setEnabled(true);
-        clientRepository.save(user);
-    }
 
     /**
      * Guarda un cliente en la base de datos.
