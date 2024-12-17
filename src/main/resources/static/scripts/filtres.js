@@ -70,7 +70,7 @@ maxRangeFian.addEventListener('input', function() {
 document.addEventListener("DOMContentLoaded", function() {
     // Seleccionar el contenedor de 'marxes' y los radios de 'caixesCanvis'
     const marxesContainer = document.getElementById("marxes-radio");
-    const radiosCaixesCanvis = document.querySelectorAll("input[name='caixesCanvis']");
+    const radiosCaixesCanvis = document.querySelectorAll("input[name='caixes-canvis']");
 
     // Añadir evento a cada radio
     radiosCaixesCanvis.forEach(radio => {
