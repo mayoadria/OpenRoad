@@ -28,7 +28,6 @@ public class AdminDashBoardController {
         return "dashboard"; // dashboard.html en templates.
     }
 
-
     @GetMapping("/crearAgente")
     public String crearAgent(){
         return "CrearAgente";

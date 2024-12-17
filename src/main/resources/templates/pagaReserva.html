@@ -6,7 +6,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/pagaReserva.css">
     <link rel="stylesheet" href="/css/header.css">
-    <script src="/scripts/header.js" defer></script>
+    <script src="/scripts/pagaReserva.js" defer></script>
     <script src="/scripts/header.js" defer></script>
     <title>OpenRoad · Pagar Reserva</title>
 
@@ -119,9 +119,12 @@
 
                 </form>
                 <!-- Costos -->
-                <div class="cost-summary">
-                    <h4>COSTOS TOTALS</h4>
-                    <p><strong>80€</strong></p>
+                <div class="panel-derecho">
+                    <div class="cost-summary">
+                        <h4>COSTOS TOTALS</h4>
+                        <p><strong>0.00 €</strong></p>
+                    </div>
+
                     <div class="imagen">
                         <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}" >
                         <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>

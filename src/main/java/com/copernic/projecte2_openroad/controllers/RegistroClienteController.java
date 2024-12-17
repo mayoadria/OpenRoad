@@ -40,8 +40,7 @@ public class RegistroClienteController {
     public String save(
             @ModelAttribute("client") Client cli,
             @RequestParam("dniFile") MultipartFile dniFile,
-            @RequestParam("carnetFile") MultipartFile carnetFile,
-            @RequestParam("imagen")  MultipartFile file
+            @RequestParam("carnetFile") MultipartFile carnetFile
     ) {
         try {
             // Processar i guardar dades a MySQL
