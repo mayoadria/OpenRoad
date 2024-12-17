@@ -62,7 +62,7 @@ form input {
     font-size: 14px;
 }
 
-.cost-summary {
+.panel-derecho {
     background-color: #e0e0e0; /* Fondo gris claro */
     padding: 20px;
     border-radius: 10px;
@@ -72,23 +72,23 @@ form input {
     width: 50%;
 }
 
-.cost-summary h4 {
+.panel-derecho h4 {
     font-size: 18px;
     margin-bottom: 10px;
     color: #333; /* Color del texto */
 }
 
-.cost-summary p {
+.panel-derecho p {
     font-size: 16px;
     margin-bottom: 15px;
     color: #000; /* Color del texto */
 }
 
-.cost-summary .imagen {
+.panel-derecho .imagen {
     margin-top: 40px;
 }
 
-.cost-summary .imagen img {
+.panel-derecho .imagen img {
     width: 100%; /* Imagen ocupará el ancho disponible del contenedor */
     max-width: 300px; /* Aumentar tamaño máximo de la imagen */
     height: auto; /* Mantener proporción */

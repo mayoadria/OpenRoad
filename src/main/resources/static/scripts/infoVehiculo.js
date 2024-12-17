@@ -9,7 +9,6 @@ const precioTotal = document.getElementById('precioTotal');
 const obtenerPrecioPorDia = () => {
     const precioDiaElement = document.getElementById('preuDia');
     if (precioDiaElement) {
-        // Extraer solo el valor numérico (removiendo el símbolo '€')
         const valor = parseFloat(precioDiaElement.textContent.replace('€', '').trim());
         return isNaN(valor) ? 0 : valor;
     }
@@ -19,7 +18,6 @@ const obtenerPrecioPorDia = () => {
 const obtenerPrecioFianza = () => {
     const precioFianzaElement = document.getElementById('precioFianza');
     if (precioFianzaElement) {
-        // Extraer solo el valor numérico (removiendo el símbolo '€')
         const valor = parseFloat(precioFianzaElement.textContent.replace('€', '').trim());
         return isNaN(valor) ? 0 : valor;
     }
@@ -50,11 +48,11 @@ const establecerFechasIniciales = () => {
     manana.setDate(manana.getDate() + 1);
     const fechaMananaISO = manana.toISOString().split('T')[0];
 
-    fechaRecogida.value = fechaActual;
+    fechaRecogida.value = localStorage.getItem('fecha-recogida') || fechaActual;
     fechaRecogida.min = fechaActual;
 
-    fechaEntrega.value = fechaMananaISO;
-    fechaEntrega.min = fechaMananaISO;
+    fechaEntrega.value = localStorage.getItem('fecha-entrega') || fechaMananaISO;
+    fechaEntrega.min = fechaRecogida.value;
 };
 
 // Función para calcular la diferencia en días (inclusivos)
@@ -62,14 +60,13 @@ const calcularDias = (inicio, fin) => {
     const fechaInicio = new Date(inicio);
     const fechaFin = new Date(fin);
 
-    // Validar fechas
     if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
-        return 0; // Devuelve 0 si las fechas son inválidas
+        return 0;
     }
 
     const diferenciaMilisegundos = fechaFin.getTime() - fechaInicio.getTime();
-    const dias = diferenciaMilisegundos / (1000 * 60 * 60 * 24); // Convertir a días
-    return Math.ceil(dias); // Redondear hacia arriba si hay horas parciales
+    const dias = diferenciaMilisegundos / (1000 * 60 * 60 * 24);
+    return Math.ceil(dias);
 };
 
 // Función para actualizar el precio total y los días de reserva
@@ -82,20 +79,22 @@ const actualizarPrecioYDias = () => {
 
     const dias = calcularDias(inicio, fin);
 
-    // Actualizar número de días (convertir a string)
     diasReserva.textContent = `${dias}`;
 
-    // Calcular el total
-    const precioFianzaNumerico = Number(precioFianza); // Asegurar tipo numérico
+    const precioFianzaNumerico = Number(precioFianza);
     const total = (precioPorDia * dias) + precioFianzaNumerico;
 
-    // Actualizar el precio total en el DOM
     precioTotal.textContent = `${total.toFixed(2)} €`;
+
+    // Guardar datos en localStorage
+    localStorage.setItem('reserva-precio-total', total.toFixed(2));
+    localStorage.setItem('fecha-recogida', inicio);
+    localStorage.setItem('fecha-entrega', fin);
 };
 
 // Función para inicializar el precio al cargar la página
 const inicializarPrecio = () => {
-    actualizarPrecioYDias(); // Ejecuta el cálculo inicial
+    actualizarPrecioYDias();
 };
 
 // Función para limitar las horas disponibles en "Hora recogida"
@@ -104,12 +103,20 @@ const limitarHoraRecogida = () => {
     const hoy = obtenerFechaActual();
 
     if (fechaRecogida.value === hoy) {
-        // Si la fecha de recogida es hoy, deshabilita horas anteriores a la actual
+        let horaInvalida = true;
+
         for (const opcion of horaRecogida.options) {
-            opcion.disabled = opcion.value && opcion.value < horaActual;
+            if (opcion.value < horaActual) {
+                opcion.disabled = true;
+            } else {
+                opcion.disabled = false;
+                if (horaInvalida) {
+                    horaRecogida.value = opcion.value;
+                    horaInvalida = false;
+                }
+            }
         }
     } else {
-        // Si la fecha de recogida no es hoy, habilita todas las opciones
         for (const opcion of horaRecogida.options) {
             opcion.disabled = false;
         }
@@ -132,8 +139,8 @@ fechaRecogida.addEventListener('input', () => {
     nuevaFechaEntregaMin.setDate(nuevaFechaEntregaMin.getDate() + 1);
     fechaEntrega.min = nuevaFechaEntregaMin.toISOString().split('T')[0];
 
-    limitarHoraRecogida(); // Limita las horas si es necesario
-    validarFechas(); // Validar fechas
+    limitarHoraRecogida();
+    validarFechas();
 });
 
 fechaEntrega.addEventListener('input', validarFechas);
@@ -143,5 +150,5 @@ horaRecogida.addEventListener('input', limitarHoraRecogida);
 window.addEventListener('DOMContentLoaded', () => {
     establecerFechasIniciales();
     limitarHoraRecogida();
-    inicializarPrecio(); // Calcular y actualizar precio al cargar
+    inicializarPrecio();
 });
