@@ -41,18 +41,21 @@ const obtenerHoraActual = () => {
     return `${horas}:${minutos}`;
 };
 
-// Función para inicializar las fechas predeterminadas
+// Función para inicializar las fechas predeterminadas (sin usar localStorage)
 const establecerFechasIniciales = () => {
     const fechaActual = obtenerFechaActual();
+
     const manana = new Date();
     manana.setDate(manana.getDate() + 1);
     const fechaMananaISO = manana.toISOString().split('T')[0];
 
-    fechaRecogida.value = localStorage.getItem('fecha-recogida') || fechaActual;
+    fechaRecogida.value = fechaActual; // Siempre fecha actual
     fechaRecogida.min = fechaActual;
 
-    fechaEntrega.value = localStorage.getItem('fecha-entrega') || fechaMananaISO;
+    fechaEntrega.value = fechaMananaISO; // Día siguiente
     fechaEntrega.min = fechaRecogida.value;
+
+    actualizarPrecioYDias(); // Recalcula el precio al establecer fechas
 };
 
 // Función para calcular la diferencia en días (inclusivos)
@@ -88,8 +91,6 @@ const actualizarPrecioYDias = () => {
 
     // Guardar datos en localStorage
     localStorage.setItem('reserva-precio-total', total.toFixed(2));
-    localStorage.setItem('fecha-recogida', inicio);
-    localStorage.setItem('fecha-entrega', fin);
 };
 
 // Función para inicializar el precio al cargar la página
@@ -147,8 +148,9 @@ fechaEntrega.addEventListener('input', validarFechas);
 horaRecogida.addEventListener('input', limitarHoraRecogida);
 
 // Ejecutar el cálculo inicial al cargar la página
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('pageshow', () => {
     establecerFechasIniciales();
     limitarHoraRecogida();
     inicializarPrecio();
 });
+
