@@ -179,7 +179,7 @@ public class CatalegController {
         return "redirect:/cataleg";
     }
 
-    // Mostrar detalles de un vehículo
+    // Mostrar detalles d'un vehículo
     @GetMapping("vehicle/{matricula1}")
         public String detallsVehicle (@PathVariable("matricula1") String matricula, Model model){
             Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
@@ -193,7 +193,7 @@ public class CatalegController {
 
     @GetMapping("reserva/{matricula2}")
         public String mostrarPagaReserva (@PathVariable("matricula2") String matricula, Model model){
-            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
 
             model.addAttribute("vehicle", vehicle);
