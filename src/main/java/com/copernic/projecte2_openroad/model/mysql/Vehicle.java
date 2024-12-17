@@ -63,6 +63,9 @@ public class Vehicle {
     @Enumerated(EnumType.STRING)
     @Column(name = "color")
     private Color color;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estat_vehicle")
+    private EstatVehicle estatVehicle;
 
     // Camps Opcionals
     @Column(nullable = true, name = "any_vehicle")

@@ -36,7 +36,7 @@ public class MenuPrincipalController {
             model.addAttribute("isLogged", false);
         }
         
-        List<Vehicle> vehicles = vehicleServiceSQL.listarTodosLosVehiculos();
+        List<Vehicle> vehicles = vehicleServiceSQL.llistarVehicles();
         model.addAttribute("vehicles", vehicles.subList(Math.max(vehicles.size() - 3, 0), vehicles.size()));
         return "index";
     }

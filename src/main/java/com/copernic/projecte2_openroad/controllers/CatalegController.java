@@ -50,7 +50,8 @@ public class CatalegController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.isAuthenticated() && !(authentication.getPrincipal() instanceof String)) {
+        if (authentication != null && authentication.isAuthenticated()
+                && !(authentication.getPrincipal() instanceof String)) {
             String nomUsuari = authentication.getName();
             model.addAttribute("nomUsuari", nomUsuari);
             model.addAttribute("isLogged", true);
@@ -59,7 +60,7 @@ public class CatalegController {
         }
 
 
-        List<Vehicle> vehicles = vehicleServiceSQL.listarTodosLosVehiculos();
+        List<Vehicle> vehicles = vehicleServiceSQL.llistarVehicles();
         for (Vehicle vehicle : vehicles) {
             if (vehicle != null && vehicle.getImage() != null) {
                 Imagen image = vehicle.getImage();
@@ -231,16 +232,13 @@ public class CatalegController {
         return "infoVehiculo";
         }
 
-
     @GetMapping("reserva/{matricula2}")
-        public String mostrarPagaReserva (@PathVariable("matricula2") String matricula, Model model){
-            Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+    public String mostrarPagaReserva(@PathVariable("matricula2") String matricula, Model model) {
+        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
 
-
-            model.addAttribute("vehicle", vehicle);
-            model.addAttribute("isLogged", false);
-            return "pagaReserva";
-        }
-
+        model.addAttribute("vehicle", vehicle);
+        model.addAttribute("isLogged", false);
+        return "pagaReserva";
+    }
 
 }
