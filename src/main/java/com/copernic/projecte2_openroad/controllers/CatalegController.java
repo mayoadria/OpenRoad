@@ -202,4 +202,15 @@ public class CatalegController {
         }
 
 
+    @GetMapping("factura/{matricula3}")
+    public String mostrarFactura (@PathVariable("matricula3") String matricula, Model model){
+        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
+
+
+        model.addAttribute("vehicle", vehicle);
+        model.addAttribute("isLogged", false);
+        return "factura";
+    }
+
+
 }

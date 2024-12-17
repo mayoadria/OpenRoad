@@ -122,12 +122,12 @@ form input {
     margin-bottom: 10px;
 }
 
-.pay-button {
+.pagarButton {
     text-align: center;
     margin-top: 20px;
 }
 
-.pay-button button {
+.pagarButton .buttonAlquilar {
     background: #007bff;
     color: white;
     border: none;
@@ -136,11 +136,13 @@ form input {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
+    text-decoration: none; /* Asegura que no tenga subrayado */
 }
 
-.pay-button button:hover {
+.pagarButton .buttonAlquilar:hover {
     background: #0056b3;
 }
+
 
 
 /*---------------------------------------------------------------------*/

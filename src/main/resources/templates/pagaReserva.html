@@ -101,7 +101,7 @@
         <section class="conductor-section">
             <h3>Dades del conductor</h3>
             <div class="conductor-details">
-                <form>
+                <form id="conductor-form">
                     <label for="nom">Nom</label>
                     <input type="text" id="nom" placeholder="Nom" required>
                     <label for="cognom">Cognom</label>
@@ -113,12 +113,11 @@
                     <div class="terms">
                         <input type="checkbox" id="terms" required>
                         <label for="terms">
-                            He llegit els <a href="/docs/terminos_y_condiciones.txt" target="_blank">Termes y condicions</a> de la reserva, nota legal i privacitat.
+                            He llegit els <a href="/docs/terminos_y_condiciones.txt" target="_blank">Termes y condicions</a>
                         </label>
                     </div>
-
                 </form>
-                <!-- Costos -->
+                <!-- Panel de costos -->
                 <div class="panel-derecho">
                     <div class="cost-summary">
                         <h4>COSTOS TOTALS</h4>
@@ -133,11 +132,10 @@
             </div>
         </section>
 
-        <!-- Métodos de pago -->
         <section class="payment-section">
             <h3>Metodes de pagament</h3>
             <div class="payment-details">
-                <form>
+                <form id="pago-form">
                     <label for="nombre-tarjeta">Nom Tarjeta</label>
                     <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez" required>
                     <label for="numero-tarjeta">Nº tarjeta</label>
@@ -151,8 +149,8 @@
         </section>
 
         <!-- Botón de pago -->
-        <div class="pay-button">
-            <button type="submit">Efectuar Pagament</button>
+        <div class="pagarButton">
+            <a th:href="@{/factura/{matricula3}(matricula3=${vehicle.matricula})}" class="buttonAlquilar">EFECTUAR PAGAMENT</a>
         </div>
 
     </div>
