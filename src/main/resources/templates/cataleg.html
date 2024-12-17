@@ -293,7 +293,8 @@
             <div class="cars-grid">
 
                 <div th:each="vehicle : ${vehicles}" class="card">
-                    <img src="images/vehiculos/mercedes.jpg" class="card-img-top" alt="Mercedes CLA">
+                    <!-- Mostrar la imagen del vehículo -->
+                    <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}" >
                     <div class="card-body">
                         <h5 class="card-title" th:text="${vehicle.marca} + ' ' + ${vehicle.model}">Mercedes Benz</h5>
                         <div class="car-details"></div>
