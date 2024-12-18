@@ -62,17 +62,17 @@ public class VehicleServiceSQL {
     }
 
     // Eliminar Vehicle por ID
-    public String eliminarVehiclePerId(String id) {
-        Optional<Vehicle> vehicle = findByMatricula(id);
+    public String eliminarVehiclePerId(String matricula) {
+        Optional<Vehicle> vehicle = findByMatricula(matricula);
         try {
             if (vehicle.isPresent()) {
                 vehicleRepoSQL.delete(vehicle.get());
-                return "Vehicle: " + vehicle.get().getMarca() + " " + vehicle.get().getModel() + " amb ID(" + id + ") esborrat correctament!";
+                return "Vehicle: " + vehicle.get().getMarca() + " " + vehicle.get().getModel() + " amb ID(" + matricula + ") esborrat correctament!";
             } else {
-                return "Vehicle: ID(" + id + ") no s'ha trobat a la BD MySQL!";
+                return "Vehicle: ID(" + matricula + ") no s'ha trobat a la BD MySQL!";
             }
         } catch (Exception e) {
-            return "Error amb Vehicle: ID(" + id + "). Excepció: " + e.getMessage();
+            return "Error amb Vehicle: ID(" + matricula + "). Excepció: " + e.getMessage();
         }
     }
 

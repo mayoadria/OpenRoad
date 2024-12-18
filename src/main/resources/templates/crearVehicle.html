@@ -96,11 +96,8 @@
             <label for="places" class="form-label">Places</label>
             <select class="form-control" id="places" name="places" required>
                 <option value="" disabled selected>Seleccioneu les places del vehicle</option>
-                <option value="DOS">2</option>
-                <option value="TRES">3</option>
-                <option value="QUATRE">4</option>
-                <option value="CINC">5</option>
-                <option value="SET">7</option>
+                <option th:each="places : ${T(com.copernic.projecte2_openroad.model.enums.Places).values()}"
+                        th:value="${places}" th:text="${places.valor}"></option>
             </select>
         </div>
 
@@ -109,8 +106,8 @@
             <label for="portes" class="form-label">Portes</label>
             <select class="form-control" id="portes" name="portes" required>
                 <option value="" disabled selected>Seleccioneu les portes del vehicle</option>
-                <option value="TRES">3</option>
-                <option value="CINC">5</option>
+                <option th:each="portes : ${T(com.copernic.projecte2_openroad.model.enums.Portes).values()}"
+                        th:value="${portes}" th:text="${portes.valor}"></option>
             </select>
         </div>
 
@@ -118,9 +115,8 @@
         <div class="mb-3">
             <label for="caixaCanvis" class="form-label">Caixa de canvis</label>
             <select class="form-control" id="caixaCanvis" name="caixaCanvis" required>
-                <option value="" disabled selected>Seleccioneu la caixa de canvis</option>
-                <option value="MANUAL">Manual</option>
-                <option value="AUTOMATIC">Automàtic</option>
+                <option th:each="caixaCanvis : ${T(com.copernic.projecte2_openroad.model.enums.CaixaCanvis).values()}"
+                        th:value="${caixaCanvis}" th:text="${caixaCanvis.valor}"></option>
             </select>
         </div>
 
@@ -129,8 +125,8 @@
             <label for="marxes" class="form-label">Marxes</label>
             <select class="form-control" id="marxes" name="marxes" required>
                 <option value="" disabled selected>Seleccioneu marxes del vehicle</option>
-                <option value="CINC">5</option>
-                <option value="SIS">6</option>
+                <option th:each="marxes : ${T(com.copernic.projecte2_openroad.model.enums.Marxes).values()}"
+                        th:value="${marxes}" th:text="${marxes.valor}"></option>
             </select>
         </div>
 

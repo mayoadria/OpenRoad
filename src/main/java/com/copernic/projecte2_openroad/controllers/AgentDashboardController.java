@@ -3,28 +3,23 @@ package com.copernic.projecte2_openroad.controllers;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.copernic.projecte2_openroad.model.mysql.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.copernic.projecte2_openroad.model.enums.EstatVehicle;
-import com.copernic.projecte2_openroad.model.mysql.Incidencia;
-import com.copernic.projecte2_openroad.model.mysql.Reserva;
-import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.service.mongodb.IncidenciaServiceMongo;
 import com.copernic.projecte2_openroad.service.mongodb.ReservaServiceMongo;
 import com.copernic.projecte2_openroad.service.mysql.IncidenciaServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.ReservaServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/agent")
@@ -124,5 +119,56 @@ public class AgentDashboardController {
     public String crearVehicle(@ModelAttribute Vehicle vehicle) {
         vehicleServiceSQL.guardarVehicle(vehicle);
         return "redirect:/agent/dashboard";
+    }
+
+
+    @GetMapping("/delete/vehicle/{matricula}")
+    public String deleteClient(@PathVariable String matricula){
+        vehicleServiceSQL.eliminarVehiclePerId(matricula);
+        return "redirect:/agent/dashboard";
+    }
+
+    @GetMapping("/edit/{matricula}")
+    public String editVehicle(@PathVariable String matricula, Model model) {
+        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula); // Obtén el vehículo
+        if (vehicle.isPresent()) {
+            model.addAttribute("vehicle", vehicle.get());
+        }
+        return "ModificarVehicles"; // Nombre del archivo Thymeleaf
+    }
+
+    @PostMapping("/editVehicle")
+    public String guardarCambios(@ModelAttribute Vehicle vehiculo, @RequestParam String matricula, Model model) {
+        // Buscar el vehículo que se está editando por su matrícula enviada en el formulario
+        Optional<Vehicle> vehiculoExistente = vehicleServiceSQL.findByMatricula(matricula);
+
+        if (vehiculoExistente.isPresent()) {
+            Vehicle vehiculoACambiar = vehiculoExistente.get();
+
+            // Actualizar los datos del vehículo
+            vehiculoACambiar.setMarca(vehiculo.getMarca());
+            vehiculoACambiar.setModel(vehiculo.getModel());
+            vehiculoACambiar.setPreuDia(vehiculo.getPreuDia());
+            vehiculoACambiar.setFianca(vehiculo.getFianca());
+            vehiculoACambiar.setDiesLloguerMinim(vehiculo.getDiesLloguerMinim());
+            vehiculoACambiar.setDiesLloguerMaxim(vehiculo.getDiesLloguerMaxim());
+            vehiculoACambiar.setPlaces(vehiculo.getPlaces());
+            vehiculoACambiar.setPortes(vehiculo.getPortes());
+            vehiculoACambiar.setCaixaCanvis(vehiculo.getCaixaCanvis());
+            vehiculoACambiar.setMarxes(vehiculo.getMarxes());
+            vehiculoACambiar.setCombustible(vehiculo.getCombustible());
+            vehiculoACambiar.setColor(vehiculo.getColor());
+            //vehiculoACambiar.setEstatVehicle(vehiculo.getEstatVehicle());
+            vehiculoACambiar.setAnyVehicle(vehiculo.getAnyVehicle());
+            vehiculoACambiar.setKm(vehiculo.getKm());
+            //vehiculoACambiar.setDescVehicle(vehiculo.getDescVehicle());
+
+            // Guardar los cambios
+            vehicleServiceSQL.modificarVehicle(vehiculoACambiar);
+            return "redirect:/agent/dashboard";  // Redirigir al panel de administración
+        } else {
+            model.addAttribute("error", "El vehículo no existe o no es válido.");
+            return "ModificarVehicles";  // Mostrar la página con el error
+        }
     }
 }

@@ -7,4 +7,5 @@ import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 
 @Repository
 public interface VehicleRepositorySQL extends JpaRepository<Vehicle, String>{
+
 }
