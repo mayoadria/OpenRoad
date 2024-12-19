@@ -2,6 +2,7 @@ package com.copernic.projecte2_openroad.controllers;
 
 import com.copernic.projecte2_openroad.model.enums.*;
 import com.copernic.projecte2_openroad.model.mysql.Imagen;
+import com.copernic.projecte2_openroad.model.mysql.Localitat;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.security.UserUtils;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
@@ -42,6 +43,7 @@ public class CatalegController {
             @RequestParam(name = "places", required = false) String placesFilt,
             @RequestParam(name = "caixa-canvis", required = false) String caixesCanvisFilt,
             @RequestParam(name = "marxes", required = false) String marxesFilt,
+            @RequestParam(name = "poblacions", required = false) String poblacionsFilt,
             Model model) {
 
         /*
@@ -115,6 +117,9 @@ public class CatalegController {
         List<Marxes> marxes = Arrays.asList(Marxes.values());
         Collections.sort(marxes);
 
+        List<Localitat> localitats = vehicleServiceSQL.getAtributsVehicle(Vehicle::getLocalitat, vehicles);
+        List<String> poblacions = localitats.stream().map(Localitat::getPoblacio).collect(Collectors.toList());
+
         /*
          * Aplicar filtres passats per paràmetres per la URL i filtrar
          * la llista de vehicles per a cada atribut dels filtres
@@ -184,6 +189,11 @@ public class CatalegController {
                     .filter(v -> v.getMarxes().equals(marxesFilt))
                     .collect(Collectors.toList());
         }
+        if (poblacionsFilt != null && !poblacionsFilt.isEmpty()) {
+            vehicles = vehicles.stream()
+                    .filter(v -> v.getLocalitat().getPoblacio().equalsIgnoreCase(poblacionsFilt))
+                    .collect(Collectors.toList());
+        }
 
         // Pasar al model tots els camps dels filtres i la llista dels vehicles
         // (filtrats o no)
@@ -201,6 +211,7 @@ public class CatalegController {
         model.addAttribute("portes", portes);
         model.addAttribute("caixesCanvis", caixesCanvis);
         model.addAttribute("marxes", marxes);
+        model.addAttribute("poblacions", poblacions);
 
         return "cataleg";
     }

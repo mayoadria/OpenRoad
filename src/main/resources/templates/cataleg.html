@@ -7,9 +7,9 @@
     <title>OpenRoad · Catàleg</title>
 
     <link rel="stylesheet" href="/css/cataleg.css">
-    <link rel="stylesheet" href="/css/header.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="/css/header.css">
     <script src="/scripts/header.js" defer></script>
     <script src="/scripts/filtres.js" defer></script>
 
@@ -20,7 +20,7 @@
         <nav class="navbar">
             <div class="logo">
                 <a class="logo">
-                    <img src="images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
+                    <img src="/images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
                 </a>
             </div>
 
@@ -159,6 +159,14 @@
                     <select id="colors" name="colors">
                         <option value="">Tots</option>
                         <option th:each="color : ${colors}" th:value="${color}" th:text="${color.getValor}"></option>
+                    </select>
+
+                    <hr class="separador">
+
+                    <label for="poblacions"><b>Localitat:</b></label>
+                    <select id="poblacions" name="poblacions">
+                        <option value="">Totes</option>
+                        <option th:each="poblacio : ${poblacions}" th:value="${poblacio}" th:text="${poblacio}"></option>
                     </select>
 
                     <hr class="separador">
@@ -337,8 +345,7 @@
                             <div class="dades">
                                 <p class="diesLLog-text"
                                     th:text="'Lloguer: ' + ${vehicle.diesLloguerMinim} + ' - ' + ${vehicle.diesLloguerMaxim} + ' dies'">
-                                    <!--th:text="${vehicle.localitat}"-->
-                                <p class="loc-text">Terrassa</p>
+                                <p class="loc-text" th:text="${vehicle.localitat.poblacio}"></p>
                             </div>
                             <hr>
                             </hr>

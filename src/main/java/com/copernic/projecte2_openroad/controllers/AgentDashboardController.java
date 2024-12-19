@@ -5,9 +5,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.copernic.projecte2_openroad.model.mysql.*;
+import com.copernic.projecte2_openroad.security.UserUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -50,16 +50,8 @@ public class AgentDashboardController {
             @RequestParam(name = "models", required = false) String modelsFilt,
             Model model) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.isAuthenticated()
-                && !(authentication.getPrincipal() instanceof String)) {
-            String nomUsuari = authentication.getName();
-            model.addAttribute("nomUsuari", nomUsuari);
-            model.addAttribute("isLogged", true);
-        } else {
-            model.addAttribute("isLogged", false);
-        }
+        UserUtils.obtenirDadesUsuariModel(model);
 
         List<Vehicle> vehicles = vehicleServiceSQL.llistarVehicles();
         List<Reserva> reserves = reservaServiceSQL.llistarReserves();
@@ -69,7 +61,7 @@ public class AgentDashboardController {
         Collections.sort(estatsVehicle);
         List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
-                
+
         List<String> models = vehicleServiceSQL.getAtributsVehicle(Vehicle::getModel, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
 
@@ -99,7 +91,6 @@ public class AgentDashboardController {
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("reserves", reserves);
         model.addAttribute("incidencies", incidencies);
-
         model.addAttribute("estatsVehicle", estatsVehicle);
         model.addAttribute("marques", marques);
         model.addAttribute("models", models);
@@ -119,14 +110,13 @@ public class AgentDashboardController {
     public String mostrarFormulariVehicle(Model model) {
         Vehicle vehicle = new Vehicle();
         model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
+
         return "crearVehicle";
     }
 
     @PostMapping("/crear")
     public String crearVehicle(@ModelAttribute Vehicle vehicle,
-                               @RequestParam("imagen")
-                               MultipartFile file) {
+            @RequestParam("imagen") MultipartFile file, Model model) {
         try {
             // Crear y guardar la imagen
             Imagen image = new Imagen();
@@ -141,6 +131,14 @@ public class AgentDashboardController {
             String base64Image = Base64.getEncoder().encodeToString(image.getImageData());
             String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
             vehicle.setImageUrl(imageUrl);
+
+            // Obtenir la localitat de l'agent
+            Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
+            if (agentObj instanceof Agent) {
+                Agent agent = (Agent) agentObj;
+                vehicle.setLocalitat(agent.getLocalitat());
+            }
+
             vehicleServiceSQL.guardarVehicle(vehicle);
             return "redirect:/agent/dashboard";
         } catch (IOException e) {
@@ -149,16 +147,15 @@ public class AgentDashboardController {
 
     }
 
-
     @GetMapping("/delete/vehicle/{matricula}")
-    public String deleteClient(@PathVariable String matricula){
+    public String deleteClient(@PathVariable String matricula) {
         vehicleServiceSQL.eliminarVehiclePerId(matricula);
         return "redirect:/agent/dashboard";
     }
 
     @GetMapping("/edit/vehicle/{matricula}")
     public String editVehicle(@PathVariable String matricula, Model model) {
-        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula); 
+        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula);
         if (vehicle.isPresent()) {
             model.addAttribute("vehicle", vehicle.get());
         }
@@ -167,7 +164,8 @@ public class AgentDashboardController {
 
     @PostMapping("/editVehicle")
     public String guardarCambios(@ModelAttribute Vehicle vehiculo, @RequestParam String matricula, Model model) {
-        // Buscar el vehículo que se está editando por su matrícula enviada en el formulario
+        // Buscar el vehículo que se está editando por su matrícula enviada en el
+        // formulario
         Optional<Vehicle> vehiculoExistente = vehicleServiceSQL.findByMatricula(matricula);
 
         if (vehiculoExistente.isPresent()) {
@@ -186,17 +184,17 @@ public class AgentDashboardController {
             vehiculoACambiar.setMarxes(vehiculo.getMarxes());
             vehiculoACambiar.setCombustible(vehiculo.getCombustible());
             vehiculoACambiar.setColor(vehiculo.getColor());
-            //vehiculoACambiar.setEstatVehicle(vehiculo.getEstatVehicle());
+            // vehiculoACambiar.setEstatVehicle(vehiculo.getEstatVehicle());
             vehiculoACambiar.setAnyVehicle(vehiculo.getAnyVehicle());
             vehiculoACambiar.setKm(vehiculo.getKm());
-            //vehiculoACambiar.setDescVehicle(vehiculo.getDescVehicle());
+            // vehiculoACambiar.setDescVehicle(vehiculo.getDescVehicle());
 
             // Guardar los cambios
             vehicleServiceSQL.modificarVehicle(vehiculoACambiar);
-            return "redirect:/agent/dashboard";  // Redirigir al panel de administración
+            return "redirect:/agent/dashboard"; // Redirigir al panel de administración
         } else {
             model.addAttribute("error", "El vehículo no existe o no es válido.");
-            return "ModificarVehicles";  // Mostrar la página con el error
+            return "ModificarVehicles"; // Mostrar la página con el error
         }
     }
 }
