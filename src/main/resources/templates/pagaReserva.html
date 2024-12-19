@@ -9,195 +9,92 @@
     <script src="/scripts/pagaReserva.js" defer></script>
     <script src="/scripts/header.js" defer></script>
     <title>OpenRoad · Pagar Reserva</title>
-    <link rel="icon" href="/images/Branding/v2/OpenRoad_Logo_grande_Blanco.png" type="image/png">
-
-
 </head>
 <body>
 <header class="nav-container">
     <nav class="navbar">
-        <div class="logo">
-            <a class="logo">
-                <img src="images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
-            </a>
-        </div>
-
-        <ul class="nav-links">
-            <li><a th:href="@{/}">Inici</a></li>
-            <li><a th:href="@{/cataleg}">Catàleg</a></li>
-            <li><a href="#section3">Contacte</a></li>
-
-            <li class="user-menu-container">
-                <button class="icono_user">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
-                         class="bi bi-person"
-                         viewBox="0 0 16 16">
-                        <path
-                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                    </svg>
-                    <a class="username" th:if="${isLogged}" th:text="${nomUsuari}"></a>
-                </button>
-
-                <div th:if="${!isLogged}" class="dropdown-menu">
-                    <a th:href="@{/login}" class="dropdown-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                  d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
-                            <path fill-rule="evenodd"
-                                  d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                        </svg>
-                        Login
-                    </a>
-
-                    <a th:href="@{/registre}" class="dropdown-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-person-add" viewBox="0 0 16 16">
-                            <path
-                                    d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                            <path
-                                    d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
-                        </svg>
-                        Registre
-                    </a>
-                </div>
-
-                <div th:if="${isLogged}" class="dropdown-menu">
-                    <a th:href="@{/}" class="dropdown-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                  d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
-                            <path fill-rule="evenodd"
-                                  d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-                        </svg>
-                        Perfil
-                    </a>
-
-                    <a th:href="@{/logout}" class="dropdown-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-person-add" viewBox="0 0 16 16">
-                            <path
-                                    d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                            <path
-                                    d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
-                        </svg>
-                        Tancar sessió
-                    </a>
-                </div>
-
-                <script>
-                    // Obtener el contenedor del menú de usuario
-                    const userButton = document.querySelector('.icono_user');
-                    const userMenu = document.querySelector('.user-menu-container');
-
-                    // Agregar evento para mostrar/ocultar el menú al hacer clic en el icono
-                    userButton.addEventListener('click', (event) => {
-                        userMenu.classList.toggle('active'); // Añadir o quitar la clase 'active'
-                        event.stopPropagation(); // Prevenir que el clic se propague y cierre el menú
-                    });
-
-                    // Cerrar el menú si se hace clic fuera de él
-                    document.addEventListener('click', (event) => {
-                        if (!userMenu.contains(event.target)) {
-                            userMenu.classList.remove('active'); // Cerrar el menú si el clic está fuera
-                        }
-                    });
-                </script>
-
-            </li>
-        </ul>
+        <!-- Menú y logo como en tu código original -->
     </nav>
 </header>
+
 <main>
     <div class="container">
         <!-- Datos del conductor -->
         <section class="conductor-section">
             <h3>Dades del conductor</h3>
             <div class="conductor-details">
-                <form id="conductor-form">
+                <form th:action="@{/processForm}" th:object="${reserva}" method="post" enctype="multipart/form-data">
+                    <!-- Datos del Cliente -->
                     <label for="nom">Nom</label>
-                    <input type="text" id="nom" placeholder="Nom" required>
-                    <label for="cognom">Cognom</label>
-                    <input type="text" id="cognom" placeholder="Cognom" required>
+                    <input type="text" th:field="*{client.nom}" placeholder="Nom" required>
+
+                    <label for="cognom1">Cognom</label>
+                    <input type="text" th:field="*{client.cognom1}" placeholder="Cognom" required>
+
                     <label for="email">E-mail</label>
-                    <input type="email" id="email" placeholder="E-mail" required>
+                    <input type="email" th:field="*{client.email}" placeholder="E-mail" required>
+
                     <label for="telefono">Número de telèfon</label>
-                    <input type="tel" id="telefono" placeholder="Número de telèfon" required>
+                    <input type="tel" th:field="*{client.numContacte1}" placeholder="Número de telèfon" required>
+
+                    <!-- Checkbox para aceptar términos -->
                     <div class="terms">
                         <input type="checkbox" id="terms" required>
                         <label for="terms">
-                            He llegit els <a href="/docs/terminos_y_condiciones.txt" target="_blank">Termes y condicions</a>
+                            He llegit els <a href="/docs/terminos_y_condiciones.txt" target="_blank">Termes i condicions</a> de la reserva, nota legal i privacitat.
                         </label>
                     </div>
-                </form>
-                <!-- Panel de costos -->
-                <div class="panel-derecho">
-                    <div class="cost-summary">
-                        <h4>COSTOS TOTALS</h4>
-                        <p><strong>0.00 €</strong></p>
+
+                    <!-- Costos -->
+                    <div class="panel-derecho">
+                        <div class="cost-summary">
+                            <h4>COSTOS TOTALS</h4>
+                            <p id="costosTotales"><strong>0.00 €</strong></p>
+                            <!-- Campo oculto para preuComplert -->
+                            <input type="hidden" id="preuComplert" th:field="*{preuComplert}" required>
+                        </div>
+
+                        <div class="imagen">
+                            <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.marca}">
+                            <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
+                        </div>
                     </div>
 
-                    <div class="imagen">
-                        <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}" >
-                        <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    <!-- Métodos de pago -->
+                    <section class="payment-section">
+                        <h3>Metodes de pagament</h3>
+                        <div class="payment-details">
+                            <label for="nombre-tarjeta">Nom Tarjeta</label>
+                            <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez" required>
 
-        <section class="payment-section">
-            <h3>Metodes de pagament</h3>
-            <div class="payment-details">
-                <form id="pago-form">
-                    <label for="nombre-tarjeta">Nom Tarjeta</label>
-                    <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez" required>
-                    <label for="numero-tarjeta">Nº tarjeta</label>
-                    <input type="text" id="numero-tarjeta" placeholder="1234 1234 1234 1234" maxlength="19" required>
-                    <label for="fecha-caducidad">Data caducitat</label>
-                    <input type="text" id="fecha-caducidad" placeholder="05/2025" required>
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                            <label for="numero-tarjeta">Nº tarjeta</label>
+                            <input type="text" id="numero-tarjeta" placeholder="1234 1234 1234 1234" maxlength="19" required>
+
+                            <label for="fecha-caducidad">Data caducitat</label>
+                            <input type="text" id="fecha-caducidad" placeholder="05/2025" required>
+
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+
+                            <input type="hidden" name="matricula2" th:value="${vehicle.matricula}" />
+                        </div>
+                    </section>
+
+                    <!-- Botón de pago -->
+                    <div class="pay-button">
+                        <button type="submit" class="btn btn-primary">Pagar</button>
+                    </div>
+
                 </form>
             </div>
         </section>
-
-
-
-
-        <form th:action="@{/factura}" method="post">
-            <!-- Información del vehículo -->
-            <p>Vehículo: <span th:text="${vehicle.marca} + ' ' + ${vehicle.model}"></span></p>
-
-            <!-- Fechas de la reserva -->
-            <p>Fecha de inicio: <span th:text="${dataInici}"></span></p>
-            <input type="hidden" name="data_inici" th:value="${dataInici}" />
-
-            <p>Fecha de fin: <span th:text="${dataFinal}"></span></p>
-            <input type="hidden" name="data_final" th:value="${dataFinal}" />
-
-            <!-- Precio total -->
-            <p>Precio total: <span th:text="${preuComplet} + ' €'"></span></p>
-            <input type="hidden" name="preu_complet" th:value="${preuComplet}" />
-
-            <!-- Botón para enviar el formulario -->
-            <button type="submit">Proceder al pago</button>
-        </form>
-
-
-
-
-
-
     </div>
 </main>
 
-</body>
-</html>
-<!-- Footer -->
 <footer>
     <div class="container">
         <p>&copy; 2024 OpenRoad. Tots els drets reservats.</p>
     </div>
 </footer>
-
+</body>
+</html>

@@ -41,18 +41,18 @@ public class Reserva {
 
     // Camps Generals
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @Column(nullable = false, name = "data_inici")
+    @Column(nullable = true, name = "data_inici")
     private LocalDate dataInici;
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @Column(nullable = false, name = "data_final")
+    @Column(nullable = true, name = "data_final")
     private LocalDate dataFinal;
     @Column(nullable = false, name = "preu_complert")
     private Double preuComplert;
 
-    // Enums
-    @Column(nullable = false, name = "estat_reserva")
-    @Enumerated(EnumType.STRING)
-    private EstatReserva estatReserva;
+//    // Enums
+//    @Column(nullable = false, name = "estat_reserva")
+//    @Enumerated(EnumType.STRING)
+//    private EstatReserva estatReserva;
 
     // Relació ManyToOne amb taula - Client (Bidireccional)
     @ManyToOne

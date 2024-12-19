@@ -1,106 +1,90 @@
 package com.copernic.projecte2_openroad.controllers;
 
-import com.copernic.projecte2_openroad.model.enums.EstatReserva;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Reserva;
+import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
-import com.copernic.projecte2_openroad.repository.mysql.ReservaRepositorySQL;
+import com.copernic.projecte2_openroad.service.mysql.ReservaServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
-@RequestMapping("/pagaReserva")
 public class PagamentController {
 
     @Autowired
-    private ReservaRepositorySQL reservaRepository;
-
+    private UsuariServiceSQL clientServiceSQL;
     @Autowired
-    private UsuariServiceSQL clientService;
-
+    private VehicleServiceSQL vehicleServiceSQL;
     @Autowired
-    private VehicleServiceSQL vehicleService;
+    private ReservaServiceSQL reservaServiceSQL;
 
-    @PostMapping("/efectuarPagament/{matricula3}")
-    public String efectuarPagament(
-            @PathVariable("matricula3") String matricula,
-            @RequestParam("data_inici") String dataInici,
-            @RequestParam("data_final") String dataFinal,
-             // Recibir como String para mayor control
-            Model model) {
-
-        // Obtener cliente actual
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String nombreUsuarioLogueado = authentication.getName();
-        Client client = (Client) clientService.findByNomUsuari(nombreUsuarioLogueado);
-        if (client == null) {
-            model.addAttribute("error", "No se encontró el cliente. Por favor, inicie sesión.");
-            return "pagaReserva";
+    @GetMapping("/vehicle/{matricula1}")
+    public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
+        Optional<Vehicle> vehicleOptional = vehicleServiceSQL.findByMatricula(matricula);
+        if (vehicleOptional.isEmpty()) {
+            model.addAttribute("error", "Vehicle no trobat.");
+            return "ErrorPage"; // Cambiar a una página de error específica.
         }
 
-        // Obtener vehículo
-        Vehicle vehicle = vehicleService.findByMatricula(matricula).orElse(null);
-        if (vehicle == null) {
-            model.addAttribute("error", "No se encontró el vehículo. Por favor, vuelva a intentarlo.");
-            return "pagaReserva";
-        }
+        // Añadir vehículo al modelo
+        Vehicle vehicle = vehicleOptional.get();
+        model.addAttribute("vehicle", vehicle);
 
-        // Crear reserva
+        // Inicializar reserva y cliente
         Reserva reserva = new Reserva();
-        try {
-            // Convertir y validar fechas
-            LocalDate fechaInicio = LocalDate.parse(dataInici);
-            LocalDate fechaFinal = LocalDate.parse(dataFinal);
+        reserva.setClient(new Client()); // Evita errores al acceder a client.nom, etc.
+        model.addAttribute("reserva", reserva);
 
-            if (fechaFinal.isBefore(fechaInicio)) {
-                model.addAttribute("error", "La fecha final no puede ser anterior a la fecha de inicio.");
-                return "pagaReserva";
-            }
-
-            if (dataInici == null || dataInici.isEmpty() || dataFinal == null || dataFinal.isEmpty()) {
-                model.addAttribute("error", "Las fechas de inicio y finalización son obligatorias.");
-                return "pagaReserva";
-            }
-
-            // Configurar la reserva
-            reserva.setDataInici(fechaInicio);
-            reserva.setDataFinal(fechaFinal);
-            reserva.setEstatReserva(EstatReserva.ACCEPTADA);
-            reserva.setClient(client);
-            reserva.setVehicle(vehicle);
-
-            // Guardar en la base de datos
-            reservaRepository.save(reserva);
-
-        } catch (Exception e) {
-            model.addAttribute("error", "Error al procesar la reserva: " + e.getMessage());
-            return "pagaReserva";
-        }
-
-        // Redirigir a un método o vista para mostrar la factura
-        return "redirect:/factura?reservaId=" + reserva.getIdReserva();
+        model.addAttribute("isLogged", false); // Si necesitas controlar la sesión
+        return "Reserva";
     }
 
+    @PostMapping("/processForm")
+    public String processForm(
+            @ModelAttribute("reserva") Reserva reserva,
+            @RequestParam("preuComplert") Double preuComplert,
+            @RequestParam("matricula2") String vehicleMatricula,
+            Model model
+    ) {
+        try {
+            System.out.println("Valor de preuComplert recibido: " + preuComplert);
+            // Validar el precio
+            if (preuComplert == null || preuComplert <= 0) {
+                throw new IllegalArgumentException("El precio ingresado no es válido.");
+            }
 
+            // Obtener el cliente logueado
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            Usuari client = clientServiceSQL.findByNomUsuari(username);
+            if (client == null) {
+                throw new RuntimeException("Cliente no encontrado.");
+            }
 
-    private Double preuTotalInput(Vehicle vehicle) {
-        // Lógica para calcular el precio total
-        Double preuPerDia = vehicle.getPreuDia();
-        Double fianca = vehicle.getFianca();
-        int diasReserva = 3; // Ejemplo de días de reserva, reemplazar con lógica real
+            // Verificar el vehículo
+            Vehicle vehicle = vehicleServiceSQL.findByMatricula(vehicleMatricula)
+                    .orElseThrow(() -> new RuntimeException("Vehículo no encontrado."));
 
-        if (preuPerDia == null || fianca == null) {
-            throw new IllegalArgumentException("Faltan datos del vehículo para calcular el precio total.");
+            // Crear la reserva
+            reserva.setPreuComplert(preuComplert);
+            reserva.setClient((Client) client);
+            reserva.setVehicle(vehicle);
+
+            // Guardar la reserva
+            reservaServiceSQL.guardarReserva(reserva);
+
+            return "redirect:/factura";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", e.getMessage());
+            return "Reserva";  // Mantener al usuario en la página de reserva.
         }
-
-        return (preuPerDia * diasReserva) + fianca;
     }
 }
