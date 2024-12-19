@@ -1,9 +1,7 @@
 package com.copernic.projecte2_openroad.controllers;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.copernic.projecte2_openroad.model.mysql.*;
@@ -20,6 +18,7 @@ import com.copernic.projecte2_openroad.service.mongodb.ReservaServiceMongo;
 import com.copernic.projecte2_openroad.service.mysql.IncidenciaServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.ReservaServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/agent")
@@ -125,9 +124,29 @@ public class AgentDashboardController {
     }
 
     @PostMapping("/crear")
-    public String crearVehicle(@ModelAttribute Vehicle vehicle) {
-        vehicleServiceSQL.guardarVehicle(vehicle);
-        return "redirect:/agent/dashboard";
+    public String crearVehicle(@ModelAttribute Vehicle vehicle,
+                               @RequestParam("imagen")
+                               MultipartFile file) {
+        try {
+            // Crear y guardar la imagen
+            Imagen image = new Imagen();
+            image.setNombre(file.getOriginalFilename());
+            image.setType(file.getContentType());
+            image.setImageData(file.getBytes());
+
+            // Asociar la imagen con el vehículo
+            vehicle.setImage(image);
+
+            // Generar la URL de la imagen
+            String base64Image = Base64.getEncoder().encodeToString(image.getImageData());
+            String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
+            vehicle.setImageUrl(imageUrl);
+            vehicleServiceSQL.guardarVehicle(vehicle);
+            return "redirect:/agent/dashboard";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 

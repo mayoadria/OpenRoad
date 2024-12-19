@@ -208,39 +208,6 @@ public class CatalegController {
         return "cataleg";
     }
 
-    // Endpoint per a crear un nou vehicle
-    @GetMapping("/crear_vehicle")
-    public String mostrarFormulariCrear(Model model) {
-        Vehicle vehicle = new Vehicle();
-        model.addAttribute("vehicle", vehicle);
-
-        model.addAttribute("isLogged", false);
-
-        return "crearVehicle"; 
-    }
-
-    // Endpoint per a guardar la imatge del vehicle
-    @PostMapping("/crear") 
-    public String crearVehicle(@ModelAttribute Vehicle vehicle,
-            @RequestParam("imagen") MultipartFile file) {
-
-        try {
-            Imagen image = new Imagen();
-            image.setNombre(file.getOriginalFilename());
-            image.setType(file.getContentType());
-            image.setImageData(file.getBytes());
-            vehicle.setImage(image);
-            String base64Image = Base64.getEncoder().encodeToString(image.getImageData());
-            String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
-            vehicle.setImageUrl(imageUrl);
-            vehicleServiceSQL.guardarVehicle(vehicle);
-            return "redirect:/cataleg";
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // Endpoint per a consultar un vehicle
     @GetMapping("/vehicle/{matricula1}")
     public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
         Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).orElse(null);
