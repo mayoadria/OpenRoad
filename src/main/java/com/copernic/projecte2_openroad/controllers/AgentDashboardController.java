@@ -107,6 +107,15 @@ public class AgentDashboardController {
         return "dashboardAgent";
     }
 
+    @GetMapping("/vehicle/{matricula}")
+    public String detallsVehicle(@PathVariable("matricula") String matricula, Model model) {
+        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).orElse(null);
+
+        model.addAttribute("vehicle", vehicle);
+        model.addAttribute("isLogged", false);
+        return "infoVehiculo";
+    }
+
     @GetMapping("/crear_vehicle")
     public String mostrarFormulariVehicle(Model model) {
         Vehicle vehicle = new Vehicle();
@@ -128,9 +137,9 @@ public class AgentDashboardController {
         return "redirect:/agent/dashboard";
     }
 
-    @GetMapping("/edit/{matricula}")
+    @GetMapping("/edit/vehicle/{matricula}")
     public String editVehicle(@PathVariable String matricula, Model model) {
-        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula); // Obtén el vehículo
+        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula); 
         if (vehicle.isPresent()) {
             model.addAttribute("vehicle", vehicle.get());
         }
