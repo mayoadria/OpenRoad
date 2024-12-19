@@ -183,45 +183,6 @@ public class CatalegController {
             return "cataleg";
         }
 
-
-    // Mostrar formulario para crear un vehículo
-    @GetMapping("/crear_vehicle")
-    public String mostrarFormulariCrear(Model model) {
-        Vehicle vehicle = new Vehicle();
-        model.addAttribute("vehicle", vehicle);
-
-        model.addAttribute("isLogged", false); // Inicializar variable isLogged
-
-        // Devolvemos el nombre de la vista del formulario (HTML)
-        return "crearVehicle"; // Asegúrate de tener una vista llamada crearVehiculo.html
-    }
-
-    // 3. Procesar la creación del vehículo (POST)
-    @PostMapping("/crear") // Confirmamos que la ruta sea consistente
-    public String crearVehicle(@ModelAttribute Vehicle vehicle,
-    @RequestParam("imagen")
-    MultipartFile file) {
-
-        try {
-            // Crear y guardar la imagen
-            Imagen image = new Imagen();
-            image.setNombre(file.getOriginalFilename());
-            image.setType(file.getContentType());
-            image.setImageData(file.getBytes());
-
-            // Asociar la imagen con el vehículo
-            vehicle.setImage(image);
-
-            // Generar la URL de la imagen
-            String base64Image = Base64.getEncoder().encodeToString(image.getImageData());
-            String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
-            vehicle.setImageUrl(imageUrl);
-            vehicleServiceSQL.guardarVehicle(vehicle);
-            return "redirect:/cataleg";
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
     @GetMapping("/vehicle/{matricula1}")
     public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
         Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).orElse(null);
