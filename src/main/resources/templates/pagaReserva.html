@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="imagen">
-                        <img src="/images/vehiculos/rangeRoverSubBlanco.png" alt="No ha carregat la imatge">
+                        <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}" >
                         <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
                     </div>
                 </div>

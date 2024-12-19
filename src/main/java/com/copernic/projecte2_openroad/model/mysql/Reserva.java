@@ -46,8 +46,8 @@ public class Reserva {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     @Column(nullable = false, name = "data_final")
     private LocalDate dataFinal;
-    @Column(nullable = false, name = "preu_complet")
-    private Double preuComplet;
+    @Column(nullable = false, name = "preu_complert")
+    private Double preuComplert;
 
     // Enums
     @Column(nullable = false, name = "estat_reserva")

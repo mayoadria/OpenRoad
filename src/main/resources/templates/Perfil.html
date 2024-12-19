@@ -9,19 +9,27 @@
 <body>
 
 <!-- Formulario de perfil -->
-<form th:action="@{/perfil/edit}" th:object="${cliente}" method="post">
+<form th:action="@{/perfil/edit}" th:object="${cliente}" method="post" enctype="multipart/form-data">
 
     <!-- Contenedor principal centrado -->
     <div class="main-container">
 
         <!-- Menú lateral (Sidebar) -->
         <div class="sidebar">
-            <img src="default-profile.jpg" alt="" class="profile-image"> <!-- Foto de perfil -->
+
+            <div class="profile-image">
+                <img th:src="${cliente.imageUrl}" alt="Imagen de ${cliente.nomUsuari}">
+            </div>
             <div class="profile-name" th:text="${cliente.nomUsuari}"></div> <!-- Nombre de usuario -->
             <div class="profile-bio">
                 <h3 th:text="${cliente.nom} + ' ' + ${cliente.cognom1} + ' ' + ${cliente.cognom2}"></h3> <!-- Nombre completo -->
             </div>
-            <a href="#" class="profile-button">Cambiar Foto</a> <!-- Botón para cambiar foto -->
+
+            <!-- Botón para cambiar la foto -->
+            <div class="file-upload">
+                <label class="file-upload-btn" for="imagen">Subir Foto</label>
+                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+            </div>
         </div>
 
         <!-- Contenido principal -->
@@ -72,7 +80,6 @@
 
                 <div>
                     <button type="submit">Guardar Canvis</button>
-
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 public class Agent extends Client {
     // Relació OneToOne amb taula - Localitat
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "codi_postal_loc", foreignKey = @ForeignKey(name = "fk_agent_localitat"))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

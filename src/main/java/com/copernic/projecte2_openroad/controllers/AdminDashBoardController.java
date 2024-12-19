@@ -80,12 +80,11 @@ public class AdminDashBoardController {
             return "EditarOtrosPerfilesAdmin";  // Mostrar la página con el error
         }
     }
-
-
     @GetMapping("/activateUser/{nomUsuari}")
     public String activateUser(@PathVariable String nomUsuari) {
         usuariServiceSQL.activateUser(nomUsuari);
         return "redirect:/admin/dashboard";
     }
+
 }
 
