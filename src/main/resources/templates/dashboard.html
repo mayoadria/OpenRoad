@@ -1,95 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="/scripts/dashboardAdmin.js" defer></script>
+
 </head>
+
 <body>
-<h1>Dashboard</h1>
+    <h1>Dashboard</h1>
 
-<!-- Botón para crear un nuevo agente -->
-<form th:action="@{/admin/newAgent}" method="get">
-    <button type="submit" class="btn btn-primary">Crear un agente</button>
-</form>
+    <!-- Botón para crear un nuevo agente -->
 
-<hr>
+    <hr>
 
-<!-- Sección para listar agentes -->
-<h2>Lista de Agentes</h2>
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th>DNI</th>
-        <th>Nombre</th>
-        <th>Primer Cognom</th>
-        <th>Segon Cognom</th>
-        <th>Nom usuari</th>
-        <th>Correu Electronic</th>
-        <th>Teléfon</th>
-        <th>Codi Postal</th>
-        <th>Direcció</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="agent : ${agents}">
-        <td th:text="${agent.dni}"></td>
-        <td th:text="${agent.nom}"></td>
-        <td th:text="${agent.cognom1}"></td>
-        <td th:text="${agent.cognom2}"></td>
-        <td th:text="${agent.nomUsuari}"></td>
-        <td th:text="${agent.email}"></td>
-        <td th:text="${agent.numContacte1}"></td>
-        <td th:text="${agent.codiPostal}"></td>
-        <td th:text="${agent.adreca}"></td>
-        <td>
-            <a class="btn btn-danger" th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Borrar</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <!-- Sección para listar agentes -->
+    <h2>Lista de Agentes</h2>
+    <div class="buttons-nav">
+        <form action="/admin/dashboard">
+            <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
+        </form>
+        <button id="applyFiltersAgent" class="filt-btn">Filtrar</button>
+        <form th:action="@{/admin/newAgent}" method="get">
+            <button type="submit" class="btn btn-primary">Crear un agente</button>
+        </form>
+    </div>
+    <table class="table table-bordered">
+        <form id="filtres-form-agent" action="/admin/dashboard">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="filtre">
+                            DNI
+                            <div class="filt-txt">Cercar:
+                                <input type="text" class="filt-input" name="dni">
+                            </div>
+                        </div>
+                    </th>
+                    <th>Nombre</th>
+                    <th>Primer Cognom</th>
+                    <th>Segon Cognom</th>
+                    <th>Nom usuari</th>
+                    <th>
+                        <div class="filtre">
+                            Correu Electronic
+                            <div class="filt-txt">Cercar:
+                                <input type="email" class="filt-input" name="email">
+                            </div>
+                        </div>
 
-<hr>
+                    </th>
+                    <th>Teléfon</th>
+                    <th>Codi Postal</th>
+                    <th>Direcció</th>
+                    <th>
+                        <div class="filtre">
+                            Nacionalitat
+                            <div class="filt-txt">
+                                <select id="paisos" name="paisos">
+                                    <option value="">-</option>
+                                    <option th:each="pais : ${paisos}" th:value="${pais}" th:text="${pais.getValor}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </th>
+                    <th>Accions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="agent : ${agents}">
+                    <td th:text="${agent.dni}"></td>
+                    <td th:text="${agent.nom}"></td>
+                    <td th:text="${agent.cognom1}"></td>
+                    <td th:text="${agent.cognom2}"></td>
+                    <td th:text="${agent.nomUsuari}"></td>
+                    <td th:text="${agent.email}"></td>
+                    <td th:text="${agent.numContacte1}"></td>
+                    <td th:text="${agent.codiPostal}"></td>
+                    <td th:text="${agent.adreca}"></td>
+                    <td th:text="${agent.pais}"></td>
 
-<!-- Sección para listar clientes -->
-<h2>Lista de Clientes</h2>
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th>DNI</th>
-        <th>Nombre</th>
-        <th>Primer Cognom</th>
-        <th>Segon Cognom</th>
-        <th>Nom usuari</th>
-        <th>Correu Electronic</th>
-        <th>Teléfon</th>
-        <th>Codi Postal</th>
-        <th>Direcció</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="client : ${clients}">
-        <td th:text="${client.dni}"></td>
-        <td th:text="${client.nom}"></td>
-        <td th:text="${client.cognom1}"></td>
-        <td th:text="${client.cognom2}"></td>
-        <td th:text="${client.nomUsuari}"></td>
-        <td th:text="${client.email}"></td>
-        <td th:text="${client.numContacte1}"></td>
-        <td th:text="${client.codiPostal}"></td>
-        <td th:text="${client.adreca}"></td>
-        <td th:text="${client.enabled}"></td>
-        <td>
-            <a class="btn btn-success" th:href="@{/admin/edit/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Editar</a>
-            <a class="btn btn-danger" th:href="@{/admin/delete/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Borrar</a>
-            <a class="btn btn-edit" th:href="@{/admin/activateUser/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Activar</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                    <td>
+                        <a class="btn btn-danger"
+                            th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Borrar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </form>
+    </table>
+
+    <hr>
+
+    <!-- Sección para listar clientes -->
+    <h2>Lista de Clientes</h2>
+    <form action="/admin/dashboard">
+        <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
+    </form>
+    <button id="applyFiltersClient" class="filt-btn">Filtrar</button>
+    <form th:action="@{/registre}" method="get">
+        <button type="submit" class="btn btn-primary">Crear un client</button>
+    </form>
+    <table class="table table-bordered">
+        <form id="filtres-form-client" action="/admin/dashboard">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="filtre">
+                            DNI
+                            <div class="filt-txt">Cercar:
+                                <input type="text" class="filt-input" name="dniClient">
+                            </div>
+                        </div>
+                    </th>
+                    <th>Nombre</th>
+                    <th>Primer Cognom</th>
+                    <th>Segon Cognom</th>
+                    <th>Nom usuari</th>
+                    <th>
+                        <div class="filtre">
+                            Correu Electronic
+                            <div class="filt-txt">Cercar:
+                                <input type="email" class="filt-input" name="emailClient">
+                            </div>
+                        </div>
+
+                    </th>
+                    <th>Teléfon</th>
+                    <th>Codi Postal</th>
+                    <th>Direcció</th>
+                    <th>
+                        <div class="filtre">
+                            Nacionalitat
+                            <div class="filt-txt">
+                                <select id="pais" name="paisClient">
+                                    <option value="">-</option>
+                                    <option th:each="pais : ${paisos}" th:value="${pais}" th:text="${pais.getValor}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </th>
+                    <th>Accions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="client : ${clients}">
+                    <td th:text="${client.dni}"></td>
+                    <td th:text="${client.nom}"></td>
+                    <td th:text="${client.cognom1}"></td>
+                    <td th:text="${client.cognom2}"></td>
+                    <td th:text="${client.nomUsuari}"></td>
+                    <td th:text="${client.email}"></td>
+                    <td th:text="${client.numContacte1}"></td>
+                    <td th:text="${client.codiPostal}"></td>
+                    <td th:text="${client.adreca}"></td>
+                    <td th:text="${client.pais}"></td>
+                    <td th:text="${client.enabled}"></td>
+                    <td>
+                        <a class="btn btn-success"
+                            th:href="@{/admin/edit/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Editar</a>
+                        <a class="btn btn-danger"
+                            th:href="@{/admin/delete/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Borrar</a>
+                        <a class="btn btn-edit"
+                            th:href="@{/admin/activateUser/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Activar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </form>
+    </table>
 
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 package com.copernic.projecte2_openroad.controllers;
 
+import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.Agent;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -20,11 +22,38 @@ public class AdminDashBoardController {
 
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model) {
+    public String dashboard(
+        @RequestParam(name = "dniClient", required = false) String dniClientFilt,
+        @RequestParam(name = "emailClient", required = false) String emailClientFilt,
+        @RequestParam(name = "paisClient", required = false) String paisClientFilt,
+        Model model) {
+
         List<Agent> agents = usuariServiceSQL.llistarAgents();
         List<Client> clients = usuariServiceSQL.llistarClient();
+
+        List<Pais> paisos = clients.stream().map(Client::getPais).distinct().toList();
+
+       if (dniClientFilt != null && !dniClientFilt.isEmpty()) {
+            clients = clients.stream()
+                    .filter(c -> c.getDni().equalsIgnoreCase(dniClientFilt))
+                    .collect(Collectors.toList());
+        }
+
+        if (emailClientFilt != null && !emailClientFilt.isEmpty()) {
+            clients = clients.stream()
+                    .filter(c -> c.getEmail().equalsIgnoreCase(emailClientFilt))
+                    .collect(Collectors.toList());
+        }
+
+        if (paisClientFilt != null && !paisClientFilt.isEmpty()) {
+            clients = clients.stream()
+                    .filter(c -> c.getPais() == Pais.valueOf(paisClientFilt))
+                    .collect(Collectors.toList());
+        }
+
         model.addAttribute("agents", agents);
         model.addAttribute("clients", clients);
+        model.addAttribute("paisos", paisos);
         return "dashboard"; // dashboard.html en templates.
     }
 
