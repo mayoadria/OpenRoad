@@ -41,18 +41,21 @@ const obtenerHoraActual = () => {
     return `${horas}:${minutos}`;
 };
 
-// Función para inicializar las fechas predeterminadas
+// Función para inicializar las fechas predeterminadas (sin usar localStorage)
 const establecerFechasIniciales = () => {
     const fechaActual = obtenerFechaActual();
+
     const manana = new Date();
     manana.setDate(manana.getDate() + 1);
     const fechaMananaISO = manana.toISOString().split('T')[0];
 
-    fechaRecogida.value = localStorage.getItem('fecha-recogida') || fechaActual;
+    fechaRecogida.value = fechaActual; // Siempre fecha actual
     fechaRecogida.min = fechaActual;
 
-    fechaEntrega.value = localStorage.getItem('fecha-entrega') || fechaMananaISO;
+    fechaEntrega.value = fechaMananaISO; // Día siguiente
     fechaEntrega.min = fechaRecogida.value;
+
+    actualizarPrecioYDias(); // Recalcula el precio al establecer fechas
 };
 
 // Función para calcular la diferencia en días (inclusivos)
@@ -88,14 +91,19 @@ const actualizarPrecioYDias = () => {
 
     // Guardar datos en localStorage
     localStorage.setItem('reserva-precio-total', total.toFixed(2));
-    localStorage.setItem('fecha-recogida', inicio);
-    localStorage.setItem('fecha-entrega', fin);
+
+    // Asignar el precio total al campo oculto del formulario
+    const inputPrecioTotal = document.getElementById("preuComplert");
+    if (inputPrecioTotal) {
+        inputPrecioTotal.value = total.toFixed(2);
+    }
 };
 
 // Función para inicializar el precio al cargar la página
 const inicializarPrecio = () => {
     actualizarPrecioYDias();
 };
+
 
 // Función para limitar las horas disponibles en "Hora recogida"
 const limitarHoraRecogida = () => {
@@ -143,12 +151,33 @@ fechaRecogida.addEventListener('input', () => {
     validarFechas();
 });
 
-fechaEntrega.addEventListener('input', validarFechas);
+fechaEntrega.addEventListener('input', () => {
+    validarFechas();
+    actualizarPrecioYDias(); // Asegura que se actualice el precio total.
+});
+
+
 horaRecogida.addEventListener('input', limitarHoraRecogida);
 
 // Ejecutar el cálculo inicial al cargar la página
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('pageshow', () => {
     establecerFechasIniciales();
     limitarHoraRecogida();
     inicializarPrecio();
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const submitButton = document.getElementById("alquilarBoton");
+    if (submitButton) {
+        submitButton.addEventListener("click", function () {
+            // Actualizar el campo oculto antes de enviar el formulario
+            actualizarPrecioYDias();
+
+            const form = document.getElementById("formReserva");
+            if (form) {
+                form.submit();
+            }
+        });
+    }
 });

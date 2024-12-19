@@ -36,36 +36,43 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Función para validar los campos del formulario de pago
-function validarFormulario() {
-    const nombreTarjeta = document.getElementById('nombre-tarjeta')?.value.trim();
-    const numeroTarjeta = document.getElementById('numero-tarjeta')?.value.trim();
-    const fechaCaducidad = document.getElementById('fecha-caducidad')?.value.trim();
-    const cvv = document.getElementById('cvv')?.value.trim();
+document.addEventListener('DOMContentLoaded', () => {
+    const conductorForm = document.getElementById('conductor-form');
+    const pagoForm = document.getElementById('pago-form');
+    const payButton = document.querySelector('.pay-button button');
+    const preuTotalInput = document.getElementById('preuTotal');
 
-    if (!nombreTarjeta || !numeroTarjeta || !fechaCaducidad || !cvv) {
-        alert('Por favor, complete todos los campos.');
-        console.error('Campos vacíos detectados en el formulario de pago.');
-        return false;
+    // Extraer el precio total desde la página
+    const totalElement = document.querySelector('.cost-summary strong');
+    if (totalElement) {
+        const totalText = totalElement.textContent.replace('€', '').trim(); // Elimina el símbolo y espacios
+        const totalNumeric = parseFloat(totalText); // Convierte a número
+
+        // Asegurarse de que es un número válido
+        if (!isNaN(totalNumeric)) {
+            preuTotalInput.value = totalNumeric.toFixed(2); // Establecer en el campo oculto
+        } else {
+            console.error('El precio total no es válido:', totalText);
+        }
+    } else {
+        console.error('No se encontró el elemento con el precio total.');
     }
 
-    if (!/^\d{16}$/.test(numeroTarjeta.replace(/\s+/g, ''))) {
-        alert('El número de tarjeta debe tener 16 dígitos.');
-        console.error('Número de tarjeta inválido:', numeroTarjeta);
-        return false;
-    }
+    payButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Evita la acción por defecto del botón.
 
-    if (!/^\d{3}$/.test(cvv)) {
-        alert('El CVV debe tener 3 dígitos.');
-        console.error('CVV inválido:', cvv);
-        return false;
-    }
+        // Verificar los formularios individualmente
+        if (!conductorForm.checkValidity()) {
+            conductorForm.reportValidity(); // Muestra los errores en pantalla
+            return;
+        }
 
-    if (!/^\d{2}\/\d{4}$/.test(fechaCaducidad)) {
-        alert('La fecha de caducidad debe tener el formato MM/AAAA.');
-        console.error('Fecha de caducidad inválida:', fechaCaducidad);
-        return false;
-    }
+        if (!pagoForm.checkValidity()) {
+            pagoForm.reportValidity(); // Muestra los errores en pantalla
+            return;
+        }
 
-    return true; // El formulario es válido
-}
+        // Enviar el formulario si todo está correcto
+        pagoForm.submit();
+    });
+});
