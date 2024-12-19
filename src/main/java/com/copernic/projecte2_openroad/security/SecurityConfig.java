@@ -1,12 +1,9 @@
 package com.copernic.projecte2_openroad.security;
 
-import com.copernic.projecte2_openroad.model.enums.*;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
-import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,13 +21,10 @@ public class SecurityConfig {
     private final ValidadorUsuaris validadorUsuaris;
 
     private final UsuariServiceSQL usuariServiceSQL;
-    private final VehicleServiceSQL vehicleServiceSQL;
 
-    @Autowired
     public SecurityConfig(ValidadorUsuaris validadorUsuaris, UsuariServiceSQL usuariServiceSQL, VehicleServiceSQL vehicleServiceSQL) {
         this.validadorUsuaris = validadorUsuaris;
         this.usuariServiceSQL = usuariServiceSQL;
-        this.vehicleServiceSQL = vehicleServiceSQL;
     }
 
     @Bean

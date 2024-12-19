@@ -10,7 +10,7 @@ import com.copernic.projecte2_openroad.model.mysql.Client;
 
 public class UserUtils {
 
-    public static void obtenirDadesUsuariModel(Model model) {
+    public static Object obtenirDadesUsuariModel(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() &&
@@ -26,6 +26,8 @@ public class UserUtils {
                 model.addAttribute("isAdmin", true);
                 model.addAttribute("isAgent", false);
                 model.addAttribute("isClient", false);
+
+                return admin;
             } else if (principal instanceof Agent) {
                 Agent agent = (Agent) principal;
                 String nomUsuari = agent.getNomUsuari();
@@ -34,6 +36,8 @@ public class UserUtils {
                 model.addAttribute("isAdmin", false);
                 model.addAttribute("isAgent", true);
                 model.addAttribute("isClient", false);
+
+                return agent;
             } else if (principal instanceof Client) {
                 Client client = (Client) principal;
                 String nomUsuari = client.getNomUsuari();
@@ -42,12 +46,17 @@ public class UserUtils {
                 model.addAttribute("isAdmin", false);
                 model.addAttribute("isAgent", false);
                 model.addAttribute("isClient", true);
+
+                return client;
             }
         } else {
             model.addAttribute("isAdmin", false);
             model.addAttribute("isAgent", false);
             model.addAttribute("isClient", false);
             model.addAttribute("isLogged", false);
+
+            return null;
         }
+        return null;
     }
 }
