@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.copernic.projecte2_openroad.model.mysql.*;
+import com.copernic.projecte2_openroad.security.UserUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -69,7 +71,7 @@ public class AgentDashboardController {
         Collections.sort(estatsVehicle);
         List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
-                
+
         List<String> models = vehicleServiceSQL.getAtributsVehicle(Vehicle::getModel, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
 
@@ -119,14 +121,16 @@ public class AgentDashboardController {
     public String mostrarFormulariVehicle(Model model) {
         Vehicle vehicle = new Vehicle();
         model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
+
+        Usuari agent = UserUtils.obtenirDadesUsuariModel(model);
+        
+
         return "crearVehicle";
     }
 
     @PostMapping("/crear")
     public String crearVehicle(@ModelAttribute Vehicle vehicle,
-                               @RequestParam("imagen")
-                               MultipartFile file) {
+            @RequestParam("imagen") MultipartFile file) {
         try {
             // Crear y guardar la imagen
             Imagen image = new Imagen();
@@ -149,16 +153,15 @@ public class AgentDashboardController {
 
     }
 
-
     @GetMapping("/delete/vehicle/{matricula}")
-    public String deleteClient(@PathVariable String matricula){
+    public String deleteClient(@PathVariable String matricula) {
         vehicleServiceSQL.eliminarVehiclePerId(matricula);
         return "redirect:/agent/dashboard";
     }
 
     @GetMapping("/edit/vehicle/{matricula}")
     public String editVehicle(@PathVariable String matricula, Model model) {
-        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula); 
+        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula);
         if (vehicle.isPresent()) {
             model.addAttribute("vehicle", vehicle.get());
         }
@@ -167,7 +170,8 @@ public class AgentDashboardController {
 
     @PostMapping("/editVehicle")
     public String guardarCambios(@ModelAttribute Vehicle vehiculo, @RequestParam String matricula, Model model) {
-        // Buscar el vehículo que se está editando por su matrícula enviada en el formulario
+        // Buscar el vehículo que se está editando por su matrícula enviada en el
+        // formulario
         Optional<Vehicle> vehiculoExistente = vehicleServiceSQL.findByMatricula(matricula);
 
         if (vehiculoExistente.isPresent()) {
@@ -186,17 +190,17 @@ public class AgentDashboardController {
             vehiculoACambiar.setMarxes(vehiculo.getMarxes());
             vehiculoACambiar.setCombustible(vehiculo.getCombustible());
             vehiculoACambiar.setColor(vehiculo.getColor());
-            //vehiculoACambiar.setEstatVehicle(vehiculo.getEstatVehicle());
+            // vehiculoACambiar.setEstatVehicle(vehiculo.getEstatVehicle());
             vehiculoACambiar.setAnyVehicle(vehiculo.getAnyVehicle());
             vehiculoACambiar.setKm(vehiculo.getKm());
-            //vehiculoACambiar.setDescVehicle(vehiculo.getDescVehicle());
+            // vehiculoACambiar.setDescVehicle(vehiculo.getDescVehicle());
 
             // Guardar los cambios
             vehicleServiceSQL.modificarVehicle(vehiculoACambiar);
-            return "redirect:/agent/dashboard";  // Redirigir al panel de administración
+            return "redirect:/agent/dashboard"; // Redirigir al panel de administración
         } else {
             model.addAttribute("error", "El vehículo no existe o no es válido.");
-            return "ModificarVehicles";  // Mostrar la página con el error
+            return "ModificarVehicles"; // Mostrar la página con el error
         }
     }
 }
