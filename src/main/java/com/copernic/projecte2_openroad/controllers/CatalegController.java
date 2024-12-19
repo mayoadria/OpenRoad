@@ -3,21 +3,16 @@ package com.copernic.projecte2_openroad.controllers;
 import com.copernic.projecte2_openroad.model.enums.*;
 import com.copernic.projecte2_openroad.model.mysql.Imagen;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
+import com.copernic.projecte2_openroad.security.UserUtils;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
@@ -48,18 +43,11 @@ public class CatalegController {
             @RequestParam(name = "marxes", required = false) String marxesFilt,
             Model model) {
 
-        /* Obtenir el nom d'usuari i un atribut de si esta loguinat o no i 
-           pasar-ho al model per a cambiar dades del header */
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated()
-                && !(authentication.getPrincipal() instanceof String)) {
-            String nomUsuari = authentication.getName();
-            model.addAttribute("nomUsuari", nomUsuari);
-            model.addAttribute("isLogged", true);
-        } else {
-            model.addAttribute("isLogged", false);
-        }
+        /*
+         * Obtenir el nom d'usuari i un atribut de si esta loguinat o no i
+         * pasar-ho al model per a cambiar dades del header
+         */
+        UserUtils.obtenirDadesUsuariModel(model);
 
         // Obtenir la llista complerta dels vehicles de la base de dades MySQL.
         List<Vehicle> vehicles = vehicleServiceSQL.llistarVehicles();
@@ -68,19 +56,22 @@ public class CatalegController {
         for (Vehicle vehicle : vehicles) {
             if (vehicle != null && vehicle.getImage() != null) {
                 Imagen image = vehicle.getImage();
-                byte[] imageData = image.getImageData(); 
+                byte[] imageData = image.getImageData();
 
                 if (imageData != null) {
-                    String base64Image = Base64.getEncoder().encodeToString(imageData); 
-                                                                                        
+                    String base64Image = Base64.getEncoder().encodeToString(imageData);
+
                     String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
-                    vehicle.setImageUrl(imageUrl); 
+                    vehicle.setImageUrl(imageUrl);
                 }
             }
         }
 
-        /* Obtenir la llista per a cada filtre dels atributs de cada vehicle 
-           per a tenir rangs de preus, marques/models... dels vehicles creats sense repetir */
+        /*
+         * Obtenir la llista per a cada filtre dels atributs de cada vehicle
+         * per a tenir rangs de preus, marques/models... dels vehicles creats sense
+         * repetir
+         */
         // Marques
         List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
@@ -89,13 +80,14 @@ public class CatalegController {
         // Combustibles
         List<Combustible> combustibles = vehicleServiceSQL.getAtributsVehicle(Vehicle::getCombustible, vehicles);
         // Dies de lloguer mínim i màxim
-        int diaLloguerMin = 1;  // Mínim per defecte
+        int diaLloguerMin = 1; // Mínim per defecte
         int diaLloguerMax = 31; // Màxim per defecte
         // Preu del lloguer mínim i màxim
         int preuDiesMin = 1; // Mínim per defecte
         int preuDiesMax = 99; // Màxim per defecte
         List<Double> preuDies = vehicleServiceSQL.getAtributsVehicle(Vehicle::getPreuDia, vehicles);
-        // Modificar el preu màxim obtenint el preu més alt de la llista i arrodonint-lo al més al natural més alt.
+        // Modificar el preu màxim obtenint el preu més alt de la llista i arrodonint-lo
+        // al més al natural més alt.
         if (!vehicles.isEmpty()) {
             Double preuDiesMaxDouble = preuDies.stream().max(Double::compare).orElse(0.0);
             preuDiesMax = (int) Math.ceil(preuDiesMaxDouble);
@@ -104,7 +96,8 @@ public class CatalegController {
         int fiancaMin = 1; // Mínim per defecte
         int fiancaMax = 99; // Màxim per defecte
         List<Double> fiances = vehicleServiceSQL.getAtributsVehicle(Vehicle::getFianca, vehicles);
-        // Modificar el preu màxim obtenint el preu més alt de la llista i arrodonint-lo al més al natural més alt.
+        // Modificar el preu màxim obtenint el preu més alt de la llista i arrodonint-lo
+        // al més al natural més alt.
         if (!vehicles.isEmpty()) {
             Double fiancaMaxDouble = fiances.stream().max(Double::compare).orElse(0.0);
             fiancaMax = (int) Math.ceil(fiancaMaxDouble);
@@ -121,8 +114,10 @@ public class CatalegController {
         List<Marxes> marxes = Arrays.asList(Marxes.values());
         Collections.sort(marxes);
 
-        /* Aplicar filtres passats per paràmetres per la URL i filtrar 
-           la llista de vehicles per a cada atribut dels filtres */
+        /*
+         * Aplicar filtres passats per paràmetres per la URL i filtrar
+         * la llista de vehicles per a cada atribut dels filtres
+         */
         if (marquesFilt != null && !marquesFilt.isEmpty()) {
             vehicles = vehicles.stream()
                     .filter(v -> v.getMarca().equalsIgnoreCase(marquesFilt))
@@ -189,7 +184,8 @@ public class CatalegController {
                     .collect(Collectors.toList());
         }
 
-        // Pasar al model tots els camps dels filtres i la llista dels vehicles (filtrats o no)
+        // Pasar al model tots els camps dels filtres i la llista dels vehicles
+        // (filtrats o no)
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("marques", marques);
         model.addAttribute("colors", colors);
