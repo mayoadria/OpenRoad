@@ -10,16 +10,6 @@
     <!-- JS HEADER -->
     <script src="/scripts/header.js" defer></script>
 
-    <!-- JS MAPA -->
-    <script src="/scripts/selectorCiudades.js" defer></script>
-
-    <!-- Librería de mapas js -->
-    <!-- CSS de Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-    <!-- Script de Leaflet -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-
 </head>
 <body>
 <header class="nav-container">
@@ -170,15 +160,6 @@
         <div class="mb-3">
             <label for="imagen" class="form-label">Imatge del vehicle</label>
             <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
-        </div>
-
-        <!-- Botón de búsqueda con tipo "button" -->
-        <div class="map-container">
-            <label for="direccion">Introdueix una adreça:</label>
-            <input type="text" id="direccion" placeholder="Exemple: Gran Via, Madrid, Espanya" />
-            <button id="buscar" type="button">Buscar</button>
-            <p id="error" style="color: red; display: none;">No s'ha pogut trobar l'adreça.</p>
-            <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
         </div>
 
         <!-- Botón de Crear Vehicle -->
