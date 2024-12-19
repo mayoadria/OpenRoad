@@ -141,6 +141,13 @@ body {
     color: #00b4d8;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
 /*----------------------------Filtres-----------------------------------*/
 
 /* Estilo para el botÃ³n de abrir el menÃº lateral */

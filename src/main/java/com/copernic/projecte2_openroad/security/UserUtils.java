@@ -7,11 +7,10 @@ import org.springframework.ui.Model;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
 import com.copernic.projecte2_openroad.model.mysql.Agent;
 import com.copernic.projecte2_openroad.model.mysql.Client;
-import com.copernic.projecte2_openroad.model.mysql.Usuari;
 
 public class UserUtils {
 
-    public static Usuari obtenirDadesUsuariModel(Model model) {
+    public static Object obtenirDadesUsuariModel(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() &&
