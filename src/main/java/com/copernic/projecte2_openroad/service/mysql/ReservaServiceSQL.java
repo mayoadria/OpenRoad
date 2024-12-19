@@ -2,8 +2,10 @@ package com.copernic.projecte2_openroad.service.mysql;
 
 // Java
 import java.util.List;
+import java.util.Optional;
 
 // Spring
+import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,4 +77,9 @@ public class ReservaServiceSQL {
             return msg;
         }
     }
+
+    public Optional<Reserva> buscarReservaPorVehiculo(Vehicle vehicle) {
+        return reservaRepoSQL.findByVehicle(vehicle);
+    }
+
 }

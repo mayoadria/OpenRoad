@@ -6,7 +6,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/infoVehiculo.css">
     <link rel="stylesheet" href="/css/header.css">
-    <script src="/scripts/infoVehiculo.js" defer></script>
+
     <script src="/scripts/header.js" defer></script>
     <title>OpenRoad · Vehicle</title>
 </head>
@@ -15,7 +15,8 @@
     <nav class="navbar">
         <div class="logo">
             <a class="logo">
-                <img src="/images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
+                <img src="/images/Branding/v2/OpenRoad_Logo_Nombre_drecha_blanco.png" alt=" " class="logo-img"
+                     width="55px" height="55px">
             </a>
         </div>
 
@@ -124,7 +125,7 @@
                     <!-- Manija -->
                     <rect x="130" y="120" width="20" height="6" rx="3" ry="3" fill="white"/>
                 </svg>
-                <p th:text="${vehicle.portes.getValor()}">
+            <p th:text="${vehicle.portes.getValor()}">
             </p>
             <div>
                 <i class="fa-solid fa-gear"></i>
@@ -141,7 +142,7 @@
         </div>
 
         <div class="alquilarButton">
-            <a th:href="@{/reserva/{matricula2}(matricula2=${vehicle.matricula})}" class="button-link">ALQUILAR</a>
+            <button id="alquilarBoton" type="button">ALQUILAR</button>
         </div>
 
 
@@ -150,15 +151,14 @@
         <div class="section">
             <h3>DADES RESERVA</h3>
             <div class="fechas">
-                <!-- Grupo de fechas -->
-                <div class="column">
-                    <p>Recollida</p>
-                    <input type="date" id="fechaRecogida">
-                </div>
-                <div class="column">
-                    <p>Entrega</p>
-                    <input type="date" id="fechaEntrega">
-                </div>
+                <form th:action="@{/reserva/{matricula3}(matricula3=${vehicle.matricula})}" method="post" id="formReserva">
+                    <input type="hidden" name="matricula" th:value="${vehicle.matricula}"/>
+                    <label for="fechaRecogida">Fecha de recogida:</label>
+                    <input type="date" id="fechaRecogida" name="fechaRecogida" required/>
+
+                    <label for="fechaEntrega">Fecha de entrega:</label>
+                    <input type="date" id="fechaEntrega" name="fechaEntrega" required/>
+                </form>
 
                 <!-- Grupo de horas -->
                 <div class="column">
@@ -294,7 +294,7 @@
 
     </div>
 </div>
-
+<script src="/scripts/infoVehiculo.js" defer></script>
 </body>
 </html>
 <!-- Footer -->

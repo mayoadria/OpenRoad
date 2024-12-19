@@ -40,6 +40,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const conductorForm = document.getElementById('conductor-form');
     const pagoForm = document.getElementById('pago-form');
     const payButton = document.querySelector('.pay-button button');
+    const preuTotalInput = document.getElementById('preuTotal');
+
+    // Extraer el precio total desde la página
+    const totalElement = document.querySelector('.cost-summary strong');
+    if (totalElement) {
+        const totalText = totalElement.textContent.replace('€', '').trim(); // Elimina el símbolo y espacios
+        const totalNumeric = parseFloat(totalText); // Convierte a número
+
+        // Asegurarse de que es un número válido
+        if (!isNaN(totalNumeric)) {
+            preuTotalInput.value = totalNumeric.toFixed(2); // Establecer en el campo oculto
+        } else {
+            console.error('El precio total no es válido:', totalText);
+        }
+    } else {
+        console.error('No se encontró el elemento con el precio total.');
+    }
 
     payButton.addEventListener('click', (event) => {
         event.preventDefault(); // Evita la acción por defecto del botón.
@@ -55,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Si ambos formularios son válidos
-        // Agregar una redirección o lógica adicional
+        // Enviar el formulario si todo está correcto
+        pagoForm.submit();
     });
 });

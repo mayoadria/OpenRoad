@@ -154,3 +154,14 @@ window.addEventListener('pageshow', () => {
     inicializarPrecio();
 });
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    const submitButton = document.getElementById("alquilarBoton");
+    if(submitButton){
+        submitButton.addEventListener("click", function (){
+            const form = document.getElementById("formReserva");
+            form.submit();
+        });
+
+    }
+});

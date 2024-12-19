@@ -24,6 +24,7 @@ import lombok.ToString;
 
 // Enums
 import com.copernic.projecte2_openroad.model.enums.EstatReserva;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "reserva")
@@ -39,8 +40,10 @@ public class Reserva {
     private Long idReserva;
 
     // Camps Generals
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     @Column(nullable = false, name = "data_inici")
     private LocalDate dataInici;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     @Column(nullable = false, name = "data_final")
     private LocalDate dataFinal;
     @Column(nullable = false, name = "preu_complet")
