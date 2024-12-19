@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/infoVehiculo.css">
+    <link rel="stylesheet" href="/css/Reserva.css">
     <link rel="stylesheet" href="/css/header.css">
-
+    <script src="/scripts/infoVehiculo.js" defer></script>
     <script src="/scripts/header.js" defer></script>
-    <title>OpenRoad · Vehicle</title>
+    <title>OpenRoad . Vehicle</title>
 </head>
 <body>
 <header class="nav-container">
     <nav class="navbar">
         <div class="logo">
             <a class="logo">
-                <img src="/images/Branding/v2/OpenRoad_Logo_Nombre_drecha_blanco.png" alt=" " class="logo-img"
-                     width="55px" height="55px">
+                <img src="/images/otros/logo_openroad.png" alt=" " class="logo-img" width="55px" height="55px">
             </a>
         </div>
 
@@ -104,9 +103,11 @@
         </ul>
     </nav>
 </header>
+
+
 <div class="container">
     <div class="left-panel">
-        <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}" >
+        <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}">
         <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
         <div class="details">
             <div>
@@ -140,25 +141,21 @@
             <p>Valoracións:</p>
             <p>⭐⭐⭐⭐⭐</p>
         </div>
-
-        <div class="alquilarButton">
-            <button id="alquilarBoton" type="button">ALQUILAR</button>
-        </div>
-
-
     </div>
+
     <div class="right-panel">
         <div class="section">
             <h3>DADES RESERVA</h3>
             <div class="fechas">
-                <form th:action="@{/reserva/{matricula3}(matricula3=${vehicle.matricula})}" method="post" id="formReserva">
-                    <input type="hidden" name="matricula" th:value="${vehicle.matricula}"/>
-                    <label for="fechaRecogida">Fecha de recogida:</label>
-                    <input type="date" id="fechaRecogida" name="fechaRecogida" required/>
-
-                    <label for="fechaEntrega">Fecha de entrega:</label>
-                    <input type="date" id="fechaEntrega" name="fechaEntrega" required/>
-                </form>
+                <!-- Grupo de fechas -->
+                <div class="column">
+                    <p>Recollida</p>
+                    <input type="date" id="fechaRecogida">
+                </div>
+                <div class="column">
+                    <p>Entrega</p>
+                    <input type="date" id="fechaEntrega">
+                </div>
 
                 <!-- Grupo de horas -->
                 <div class="column">
@@ -242,64 +239,73 @@
                     <span id="precioTotal"></span>
                 </p>
             </div>
-        </div>
+            <div class="container">
+                <!-- Datos del conductor -->
+                <section class="conductor-section">
+                    <h3>Dades del conductor</h3>
+                    <div class="conductor-details">
+                        <form th:action="@{/processForm}" th:object="${reserva}" method="post"
+                              enctype="multipart/form-data">
+                            <!-- Datos del Cliente -->
+                            <label for="nom">Nom</label>
+                            <input type="text" th:field="*{client.nom}" placeholder="Nom" required>
+
+                            <label for="cognom1">Cognom</label>
+                            <input type="text" th:field="*{client.cognom1}" placeholder="Cognom" required>
+
+                            <label for="email">E-mail</label>
+                            <input type="email" th:field="*{client.email}" placeholder="E-mail" required>
+
+                            <label for="telefono">Número de telèfon</label>
+                            <input type="tel" th:field="*{client.numContacte1}" placeholder="Número de telèfon"
+                                   required>
+
+                            <!-- Checkbox para aceptar términos -->
+                            <div class="terms">
+                                <input type="checkbox" id="terms" required>
+                                <label for="terms">
+                                    He llegit els <a href="/docs/terminos_y_condiciones.txt" target="_blank">Termes i
+                                    condicions</a> de la reserva, nota legal i privacitat.
+                                </label>
+                            </div>
 
 
-        <div class="section">
-            <h3>ALTRES DADES DE LA RESERVA</h3>
-            <div class="additional-info">
+                            <!-- Métodos de pago -->
+                            <section class="payment-section">
+                                <h3>Metodes de pagament</h3>
+                                <div class="payment-details">
+                                    <label for="nombre-tarjeta">Nom Tarjeta</label>
+                                    <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez"
+                                           required>
 
-                <p>
-                    <span><strong>Cotxe:</strong></span>
-                    <span th:text="${vehicle.marca + ' ' + vehicle.model}"></span>
-                </p>
+                                    <label for="numero-tarjeta">Nº tarjeta</label>
+                                    <input type="text" id="numero-tarjeta" placeholder="1234 1234 1234 1234"
+                                           maxlength="19" required>
 
-                <p>
-                    <span><strong>Matrícula:</strong></span>
-                    <span th:text="${vehicle.matricula}"></span>
-                </p>
+                                    <label for="fecha-caducidad">Data caducitat</label>
+                                    <input type="text" id="fecha-caducidad" placeholder="05/2025" required>
 
-                <p>
-                    <span><strong>Combustible:</strong></span>
-                    <span th:text="${vehicle.combustible}"></span>
-                </p>
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                                    <input type="hidden" id="preuComplert" name="preuComplert" value=""/>
+                                    <input type="hidden" name="matricula2" th:value="${vehicle.matricula}"/>
+                                </div>
+                            </section>
 
-                <p>
-                    <span><strong>Entrega/Recollida:</strong></span>
-                    <span th:text="${vehicle.localitat}"></span>
-                </p>
+                            <!-- Botón de pago -->
+                            <div class="pay-button">
+                                <button type="submit" class="btn btn-primary">Pagar</button>
+                            </div>
 
-
-                <p><strong>Horario de atención:</strong> Dilluns a diumenge, de 8:30 a 13:00 / 15:00 a 21:30</p>
-                <p><strong>Instrucciones:</strong> Preséntese con su documento de identidad y el número de reserva.</p>
-                <p><strong>Contacto:</strong> +34 900 123 456</p>
-                <p><strong>Correo electrónico:</strong> soporte@openroad.com</p>
-                <p><strong>Asistencia en carretera:</strong> Llame al +34 800 654 321 en caso de emergencia.</p>
-                <p><strong>Condiciones:</strong> No fumar en el interior del vehículo. Devolver con al menos 1/4 del
-                    tanque de combustible.</p>
-                <p><strong>Requisitos del conductor:</strong> Edad mínima de 20 años y licencia válida en la UE.</p>
-                <p><strong>Política de cancelación:</strong> Cancelación gratuita hasta 24 horas antes del inicio de la
-                    reserva.</p>
+                        </form>
+                    </div>
+                </section>
             </div>
-
-            <!-- Mapa insertado -->
-            <div class="map-container">
-                <p id="error" style="color: red; display: none;">No se pudo encontrar la dirección.</p>
-                <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
-            </div>
-
-
         </div>
 
 
     </div>
 </div>
-<script src="/scripts/infoVehiculo.js" defer></script>
+
 </body>
 </html>
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <p>&copy; 2024 OpenRoad. Todos los derechos reservados.</p>
-    </div>
-</footer>

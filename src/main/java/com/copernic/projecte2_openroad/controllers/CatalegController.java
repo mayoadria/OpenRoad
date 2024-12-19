@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
@@ -215,23 +216,5 @@ public class CatalegController {
         return "cataleg";
     }
 
-    @GetMapping("/vehicle/{matricula1}")
-    public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
-        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).orElse(null);
-
-        model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
-        return "infoVehiculo";
-    }
-
-    // Endpoint per a reservar un vehicle
-    @GetMapping("reserva/{matricula2}")
-    public String mostrarPagaReserva(@PathVariable("matricula2") String matricula, Model model) {
-        Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).get();
-
-        model.addAttribute("vehicle", vehicle);
-        model.addAttribute("isLogged", false);
-        return "pagaReserva";
-    }
 
 }
