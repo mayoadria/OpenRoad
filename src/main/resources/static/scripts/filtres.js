@@ -10,19 +10,19 @@ const minValueDies = document.getElementById('min-value-dies');
 const maxValueDies = document.getElementById('max-value-dies');
 
 // Sincronizar los valores de los rangos
-minRangeDies.addEventListener('input', function() {
+minRangeDies.addEventListener('input', function () {
     if (parseInt(minRangeDies.value) > parseInt(maxRangeDies.value)) {
         minRangeDies.value = maxRangeDies.value;
     }
     minValueDies.textContent = "De: " + minRangeDies.value;
 });
 
-maxRangeDies.addEventListener('input', function() {
+maxRangeDies.addEventListener('input', function () {
     if (parseInt(maxRangeDies.value) < parseInt(minRangeDies.value)) {
         maxRangeDies.value = minRangeDies.value;
     }
     maxValueDies.textContent = maxRangeDies.value + " dies";
-}); 
+});
 
 // Obtener el input tipo range y el span donde se muestra el valor
 const minRangePreu = document.getElementById('min-preu');
@@ -31,14 +31,14 @@ const minValuePreu = document.getElementById('min-value-preu');
 const maxValuePreu = document.getElementById('max-value-preu');
 
 // Sincronizar los valores de los rangos
-minRangePreu.addEventListener('input', function() {
+minRangePreu.addEventListener('input', function () {
     if (parseInt(minRangePreu.value) > parseInt(maxRangePreu.value)) {
         minRangePreu.value = maxRangePreu.value;
     }
     minValuePreu.textContent = "De: " + minRangePreu.value;
 });
 
-maxRangePreu.addEventListener('input', function() {
+maxRangePreu.addEventListener('input', function () {
     if (parseInt(maxRangePreu.value) < parseInt(minRangePreu.value)) {
         maxRangePreu.value = minRangePreu.value;
     }
@@ -52,14 +52,14 @@ const minValueFian = document.getElementById('min-value-fian');
 const maxValueFian = document.getElementById('max-value-fian');
 
 // Sincronizar los valores de los rangos
-minRangeFian.addEventListener('input', function() {
+minRangeFian.addEventListener('input', function () {
     if (parseInt(minRangeFian.value) > parseInt(maxRangeFian.value)) {
         minRangeFian.value = maxRangeFian.value;
     }
     minValueFian.textContent = "De: " + minRangeFian.value;
 });
 
-maxRangeFian.addEventListener('input', function() {
+maxRangeFian.addEventListener('input', function () {
     if (parseInt(maxRangeFian.value) < parseInt(minRangeFian.value)) {
         maxRangeFian.value = minRangeFian.value;
     }
@@ -67,23 +67,20 @@ maxRangeFian.addEventListener('input', function() {
 });
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Seleccionar el contenedor de 'marxes' y los radios de 'caixesCanvis'
+document.addEventListener("DOMContentLoaded", function () {
     const marxesContainer = document.getElementById("marxes-radio");
-    const radiosCaixesCanvis = document.querySelectorAll("input[name='caixes-canvis']");
+    const radiosCaixesCanvis = document.querySelectorAll("input[name='caixesCanvis']");
 
-    // Añadir evento a cada radio
     radiosCaixesCanvis.forEach(radio => {
-      radio.addEventListener("change", function() {
-        // Verificar si el valor seleccionado es "Manual"
-        if (this.value.toLowerCase() === "manual") {
-          marxesContainer.style.display = "block";
-        } else {
-          marxesContainer.style.display = "none";
-        }
-      });
+        radio.addEventListener("change", function () {
+            if (this.value.toLowerCase() === "manual") {
+                marxesContainer.style.display = "block";
+            } else {
+                marxesContainer.style.display = "none";
+            }
+        });
     });
-  });
+});
 
 
 
@@ -91,6 +88,6 @@ document.addEventListener("DOMContentLoaded", function() {
 openSidebarButton.addEventListener('click', function () {
     sidebar.classList.toggle('open'); // Togglear la clase 'open'
     filtres.classList.toggle('open');
-  });
+});
 
 
