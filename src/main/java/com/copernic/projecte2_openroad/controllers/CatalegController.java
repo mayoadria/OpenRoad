@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -118,8 +115,14 @@ public class CatalegController {
         Collections.sort(marxes);
 
         List<Localitat> localitats = vehicleServiceSQL.getAtributsVehicle(Vehicle::getLocalitat, vehicles);
-        List<String> poblacions = localitats.stream().map(Localitat::getPoblacio).collect(Collectors.toList());
 
+        List<String> poblacions = Collections.emptyList(); // Lista vacía por defecto
+        if (localitats != null) {
+            poblacions = localitats.stream()
+                    .filter(Objects::nonNull) // Filtra posibles elementos nulos en la lista
+                    .map(Localitat::getPoblacio)
+                    .collect(Collectors.toList());
+        }
         /*
          * Aplicar filtres passats per paràmetres per la URL i filtrar
          * la llista de vehicles per a cada atribut dels filtres
