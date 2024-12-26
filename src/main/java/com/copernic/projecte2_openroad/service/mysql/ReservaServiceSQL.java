@@ -38,6 +38,10 @@ public class ReservaServiceSQL {
         return reservaRepoSQL.findById(id).get();
     }
 
+    public List<Reserva> findReservasByClient_nom(String username) {
+        // Supongamos que el repositorio tiene un método para buscar por nombre de usuario
+        return reservaRepoSQL.findByClient_nom(username);
+    }
     // Llistar totes les Reservas.
     public List<Reserva> llistarReserves() {
         return reservaRepoSQL.findAll();
