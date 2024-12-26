@@ -381,7 +381,7 @@ form input {
 }
 
 .conductor-details {
-    display: flex;
+    display: block;
     justify-content: space-between;
     gap: 20px;
 }

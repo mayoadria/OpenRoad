@@ -145,84 +145,81 @@
 
     <div class="right-panel">
         <div class="section">
-            <h3>DADES RESERVA</h3>
-            <div class="fechas">
-                <!-- Grupo de fechas -->
-                <div class="column">
-                    <p>Recollida</p>
-                    <input type="date" id="fechaRecogida">
-                </div>
-                <div class="column">
-                    <p>Entrega</p>
-                    <input type="date" id="fechaEntrega">
-                </div>
-
-                <!-- Grupo de horas -->
-                <div class="column">
-                    <p>Hora recollida</p>
-                    <select id="horaRecogida">
-                        <option value="" disabled selected>Selecciona una hora</option>
-                        <option value="08:30">08:30</option>
-                        <option value="09:00">09:00</option>
-                        <option value="09:30">09:30</option>
-                        <option value="10:00">10:00</option>
-                        <option value="10:30">10:30</option>
-                        <option value="11:00">11:00</option>
-                        <option value="11:30">11:30</option>
-                        <option value="12:00">12:00</option>
-                        <option value="12:30">12:30</option>
-                        <option value="13:00">13:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="15:30">15:30</option>
-                        <option value="16:00">16:00</option>
-                        <option value="16:30">16:30</option>
-                        <option value="17:00">17:00</option>
-                        <option value="17:30">17:30</option>
-                        <option value="18:00">18:00</option>
-                        <option value="18:30">18:30</option>
-                        <option value="19:00">19:00</option>
-                        <option value="19:30">19:30</option>
-                        <option value="20:00">20:00</option>
-                        <option value="20:30">20:30</option>
-                        <option value="21:00">21:00</option>
-                        <option value="21:30">21:30</option>
-                    </select>
-                </div>
-                <div class="column">
-                    <p>Hora entrega</p>
-                    <select>
-                        <option value="" disabled selected>Selecciona una hora</option>
-                        <option value="08:30">08:30</option>
-                        <option value="09:00">09:00</option>
-                        <option value="09:30">09:30</option>
-                        <option value="10:00">10:00</option>
-                        <option value="10:30">10:30</option>
-                        <option value="11:00">11:00</option>
-                        <option value="11:30">11:30</option>
-                        <option value="12:00">12:00</option>
-                        <option value="12:30">12:30</option>
-                        <option value="13:00">13:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="15:30">15:30</option>
-                        <option value="16:00">16:00</option>
-                        <option value="16:30">16:30</option>
-                        <option value="17:00">17:00</option>
-                        <option value="17:30">17:30</option>
-                        <option value="18:00">18:00</option>
-                        <option value="18:30">18:30</option>
-                        <option value="19:00">19:00</option>
-                        <option value="19:30">19:30</option>
-                        <option value="20:00">20:00</option>
-                        <option value="20:30">20:30</option>
-                        <option value="21:00">21:00</option>
-                        <option value="21:30">21:30</option>
-                    </select>
-                </div>
-            </div>
-
-        </div>
-        <div class="section">
             <h3>PREU LLOGUER + SEGUR</h3>
+            <form th:action="@{/processForm}" th:object="${reserva}" method="post" enctype="multipart/form-data">
+                <div class="fechas">
+                    <!-- Grupo de fechas -->
+                    <div class="column">
+                        <label for="fechaRecogida">Fecha de Recogida:</label>
+                        <input type="date" id="fechaRecogida" name="fechaRecogida">
+                    </div>
+                    <div class="column">
+                        <label for="fechaEntrega">Fecha de Entrega:</label>
+                        <input type="date" id="fechaEntrega" name="fechaEntrega">
+                    </div>
+
+                    <!-- Grupo de horas -->
+                    <div class="column">
+                        <p>Hora recollida</p>
+                        <select id="horaRecogida">
+                            <option value="" disabled selected>Selecciona una hora</option>
+                            <option value="08:30">08:30</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:30">17:30</option>
+                            <option value="18:00">18:00</option>
+                            <option value="18:30">18:30</option>
+                            <option value="19:00">19:00</option>
+                            <option value="19:30">19:30</option>
+                            <option value="20:00">20:00</option>
+                            <option value="20:30">20:30</option>
+                            <option value="21:00">21:00</option>
+                            <option value="21:30">21:30</option>
+                        </select>
+                    </div>
+                    <div class="column">
+                        <p>Hora entrega</p>
+                        <select>
+                            <option value="" disabled selected>Selecciona una hora</option>
+                            <option value="08:30">08:30</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:30">17:30</option>
+                            <option value="18:00">18:00</option>
+                            <option value="18:30">18:30</option>
+                            <option value="19:00">19:00</option>
+                            <option value="19:30">19:30</option>
+                            <option value="20:00">20:00</option>
+                            <option value="20:30">20:30</option>
+                            <option value="21:00">21:00</option>
+                            <option value="21:30">21:30</option>
+                        </select>
+                    </div>
+                </div>
             <div class="price-details">
                 <p>
                     <span><strong>Preu per día:</strong></span>
@@ -244,25 +241,24 @@
                 <section class="conductor-section">
                     <h3>Dades del conductor</h3>
                     <div class="conductor-details">
-                        <form th:action="@{/processForm}" th:object="${reserva}" method="post"
-                              enctype="multipart/form-data">
+
+
                             <!-- Datos del Cliente -->
                             <label for="nom">Nom</label>
-                            <input type="text" th:field="*{client.nom}" placeholder="Nom" required>
+                            <input type="text" th:field="*{client.nom}" placeholder="Nom" readonly>
 
                             <label for="cognom1">Cognom</label>
-                            <input type="text" th:field="*{client.cognom1}" placeholder="Cognom" required>
+                            <input type="text" th:field="*{client.cognom1}" placeholder="Cognom" >
 
                             <label for="email">E-mail</label>
-                            <input type="email" th:field="*{client.email}" placeholder="E-mail" required>
+                            <input type="email" th:field="*{client.email}" placeholder="E-mail" >
 
                             <label for="telefono">Número de telèfon</label>
-                            <input type="tel" th:field="*{client.numContacte1}" placeholder="Número de telèfon"
-                                   required>
+                            <input type="tel" th:field="*{client.numContacte1}" placeholder="Número de telèfon" >
 
                             <!-- Checkbox para aceptar términos -->
                             <div class="terms">
-                                <input type="checkbox" id="terms" required>
+                                <input type="checkbox" id="terms" >
                                 <label for="terms">
                                     He llegit els <a href="/docs/terminos_y_condiciones.txt" target="_blank">Termes i
                                     condicions</a> de la reserva, nota legal i privacitat.
@@ -276,17 +272,17 @@
                                 <div class="payment-details">
                                     <label for="nombre-tarjeta">Nom Tarjeta</label>
                                     <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez"
-                                           required>
+                                           >
 
                                     <label for="numero-tarjeta">Nº tarjeta</label>
                                     <input type="text" id="numero-tarjeta" placeholder="1234 1234 1234 1234"
-                                           maxlength="19" required>
+                                           maxlength="19" >
 
                                     <label for="fecha-caducidad">Data caducitat</label>
-                                    <input type="text" id="fecha-caducidad" placeholder="05/2025" required>
+                                    <input type="text" id="fecha-caducidad" placeholder="05/2025" >
 
                                     <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                                    <input type="text" id="cvv" placeholder="123" maxlength="3" >
                                     <input type="hidden" id="preuComplert" name="preuComplert" value=""/>
                                     <input type="hidden" name="matricula2" th:value="${vehicle.matricula}"/>
                                 </div>
