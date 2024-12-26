@@ -36,18 +36,26 @@ public class PagamentController {
         Optional<Vehicle> vehicleOptional = vehicleServiceSQL.findByMatricula(matricula);
         if (vehicleOptional.isEmpty()) {
             model.addAttribute("error", "Vehicle no trobat.");
-            return "ErrorPage"; // Cambiar a una página de error específica.
+            return "ErrorPage"; // Página de error específica
         }
-        UserUtils.obtenirDadesUsuariModel(model);
+
+        Object dadesUsuari = UserUtils.obtenirDadesUsuariModel(model);
+
+        Client client = null;
+        if (dadesUsuari instanceof Client) {
+            client = (Client) dadesUsuari; // Usuario autenticado como Cliente
+        }
+
         Vehicle vehicle = vehicleOptional.get();
         model.addAttribute("vehicle", vehicle);
 
         Reserva reserva = new Reserva();
-        reserva.setClient(new Client());
+        if (client != null) {
+            reserva.setClient(client); // Asociar cliente autenticado
+        }
         model.addAttribute("reserva", reserva);
 
-
-        return "Reserva";
+        return "Reserva"; // Vista "Reserva" utiliza estos datos
     }
 
     @PostMapping("/processForm")
