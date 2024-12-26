@@ -41,11 +41,11 @@ public class Reserva {
 
     // Camps Generals
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @Column(nullable = true, name = "data_inici")
-    private LocalDate dataInici;
+    @Column(nullable = false, name = "fechaInici")
+    private LocalDate fechaRecogida;
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @Column(nullable = true, name = "data_final")
-    private LocalDate dataFinal;
+    @Column(nullable = false, name = "fechaFinal")
+    private LocalDate fechaEntrega;
     @Column(nullable = false, name = "preu_complert")
     private Double preuComplert;
 
