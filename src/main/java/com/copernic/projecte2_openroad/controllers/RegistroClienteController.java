@@ -14,8 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/registre")
@@ -56,14 +56,16 @@ public class RegistroClienteController {
             DocumentClient document = new DocumentClient();
             document.setIdClient(cli.getDni());
 
-            //
-            Binary dniImatge = new Binary(dniFile.getBytes());
-            Binary carnetImatge = new Binary(carnetFile.getBytes());
-            List<Binary> docList = new ArrayList<>();
-            docList.add(dniImatge);
-            docList.add(carnetImatge);
+            // Crear un mapa amb noms descriptius per les imatges
+            Map<String, Binary> docMap = new HashMap<>();
+            if (!dniFile.isEmpty()) {
+                docMap.put("dni", new Binary(dniFile.getBytes()));
+            }
+            if (!carnetFile.isEmpty()) {
+                docMap.put("carnetConduir", new Binary(carnetFile.getBytes()));
+            }
 
-            document.setClientDoc(docList);
+            document.setClientDoc(docMap);
 
             // Guardar a MongoDB
             documentServiceMongo.guardarDocument(document);
