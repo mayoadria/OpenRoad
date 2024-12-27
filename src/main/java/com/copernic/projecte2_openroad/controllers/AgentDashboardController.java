@@ -51,9 +51,15 @@ public class AgentDashboardController {
             Model model) {
 
 
-        UserUtils.obtenirDadesUsuariModel(model);
+        Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
+        if (!(agentObj instanceof Agent)) {
+            model.addAttribute("error", "No se pudo obtener los datos del agente.");
+            return "errorPage"; // Cambiar a una página de error adecuada
+        }
+        Agent agent = (Agent) agentObj;
 
-        List<Vehicle> vehicles = vehicleServiceSQL.llistarVehicles();
+        // Obtener vehículos en la misma localidad que el agente
+        List<Vehicle> vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
         List<Reserva> reserves = reservaServiceSQL.llistarReserves();
         List<Incidencia> incidencies = incidenciaServiceSQL.llistarIncidencies();
 

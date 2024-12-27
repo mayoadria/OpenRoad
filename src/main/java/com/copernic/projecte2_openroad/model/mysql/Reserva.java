@@ -50,9 +50,9 @@ public class Reserva {
     private Double preuComplert;
 
     // Enums
-    @Column(nullable = false, name = "estat_reserva")
-    @Enumerated(EnumType.STRING)
-    private EstatReserva estatReserva;
+//    @Column(nullable = false, name = "estat_reserva")
+//    @Enumerated(EnumType.STRING)
+//    private EstatReserva estatReserva;
 
     // Relació ManyToOne amb taula - Client (Bidireccional)
     @ManyToOne
