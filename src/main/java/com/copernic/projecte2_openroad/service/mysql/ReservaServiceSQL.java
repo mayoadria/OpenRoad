@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 // Spring
+import com.copernic.projecte2_openroad.model.enums.EstatReserva;
+import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,6 +90,12 @@ public class ReservaServiceSQL {
 
     public List<Reserva> buscarReservaPerDNI(String dni) {
         return reservaRepoSQL.findByClient_dni(dni);
+    }
+
+    public void activarReserva(Long id) {
+        Reserva user = llistarReservaPerId(id);
+        user.setEstatReserva(EstatReserva.ACCEPTADA);
+        reservaRepoSQL.save(user);
     }
 
 }

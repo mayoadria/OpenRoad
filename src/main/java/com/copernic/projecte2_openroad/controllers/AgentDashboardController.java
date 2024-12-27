@@ -203,4 +203,10 @@ public class AgentDashboardController {
             return "ModificarVehicles"; // Mostrar la página con el error
         }
     }
+
+    @GetMapping("/activateUser/{idReserva}")
+    public String activateUser(@PathVariable Long idReserva) {
+        reservaServiceSQL.activarReserva(idReserva);
+        return "redirect:/agent/dashboard";
+    }
 }

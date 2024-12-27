@@ -76,4 +76,6 @@ public class DashboardClient {
         reservaServiceSQL.eliminarReservaPerId(idReserva);
         return "redirect:/client/reserves";
     }
+
+
 }
