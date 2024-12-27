@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/perfil.css}">
+</head>
+<body>
+
+<!-- Formulario de perfil -->
+<form th:action="@{/perfil/edit}" th:object="${cliente}" method="post" enctype="multipart/form-data">
+
+    <!-- Contenedor principal centrado -->
+    <div class="main-container">
+
+        <!-- Menú lateral (Sidebar) -->
+        <div class="sidebar">
+
+            <div class="profile-image">
+                <img th:src="${cliente.imageUrl}" alt="Imagen de ${cliente.nomUsuari}">
+            </div>
+            <div class="profile-name" th:text="${cliente.nomUsuari}"></div> <!-- Nombre de usuario -->
+            <div class="profile-bio">
+                <h3 th:text="${cliente.nom} + ' ' + ${cliente.cognom1} + ' ' + ${cliente.cognom2}"></h3> <!-- Nombre completo -->
+            </div>
+
+            <!-- Botón para cambiar la foto -->
+            <div class="file-upload">
+                <label class="file-upload-btn" for="imagen">Subir Foto</label>
+                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="content">
+            <div class="profile-container">
+                <h1>Dades del meu perfil</h1>
+
+                <div class="profile-field">
+                    <h3>Nombre del Usuario:</h3>
+                    <h5 class="profile-name" th:text="${cliente.nomUsuari}"></h5>
+                    <input type="hidden" id="nomUsuari" name="nomUsuari" th:value="${cliente.nomUsuari}">
+                </div>
+
+                <div class="profile-field">
+                    <h3>Nombre:</h3>
+                    <input type="text" id="nom" name="nom" th:value="${cliente.nom}" placeholder="Nom">
+                </div>
+
+                <div class="profile-field">
+                    <h3>Cognom 1:</h3>
+                    <input type="text" id="cognom1" name="cognom1" th:value="${cliente.cognom1}" placeholder="Cognom 1">
+                </div>
+
+                <div class="profile-field">
+                    <h3>Cognom 2:</h3>
+                    <input type="text" id="cognom2" name="cognom2" th:value="${cliente.cognom2}" placeholder="Cognom 2">
+                </div>
+
+                <div class="profile-field">
+                    <h3>Numero de contacte:</h3>
+                    <input type="text" id="numContacte1" name="numContacte1" th:value="${cliente.numContacte1}" placeholder="Telefon">
+                </div>
+
+                <div class="profile-field">
+                    <h3>Codi Postal:</h3>
+                    <input type="text" id="codiPostal" name="codiPostal" th:value="${cliente.codiPostal}" placeholder="Codi postal">
+                </div>
+
+                <div class="profile-field">
+                    <h3>Direcció:</h3>
+                    <input type="text" id="adreca" name="adreca" th:value="${cliente.adreca}" placeholder="Direcció">
+                </div>
+
+                <div class="profile-field">
+                    <h3>Correu Electrònic:</h3>
+                    <input type="text" id="email" name="email" th:value="${cliente.email}" placeholder="Correu electronic">
+                </div>
+
+                <div>
+                    <button type="submit">Guardar Canvis</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+</body>
+</html>

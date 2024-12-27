@@ -2,11 +2,10 @@ package com.copernic.projecte2_openroad.model.mysql;
 
 
 // Jakarta
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 // Lombok
@@ -17,11 +16,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-// Enums
-import com.copernic.projecte2_openroad.model.enums.Reputacio;
+import java.util.List;
+
+
 
 @Entity
 @Table(name = "client")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,20 +31,23 @@ import com.copernic.projecte2_openroad.model.enums.Reputacio;
 @ToString(callSuper = true)
 public class Client extends Usuari {
 
-    // Enums
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Reputacio reputacio;
+//    @Column(nullable = true)
+//    @Enumerated(EnumType.STRING)
+//    private Reputacio reputacio;
 
-    // Camps Documentació
-    @Column(nullable = true, name = "carnet_conduir_doc")
-    private String carnetConduirDoc;
-    @Column(nullable = true, name = "tarjeta_credit_doc")
-    private String tarjetaCreditDoc;
-
-    // Relació OneToOne amb taula - Reserva (Bidireccional)
-    @OneToOne(mappedBy = "client")
+    // Relació OneToMany amb taula - Reserva (Bidireccional)
+    @OneToMany(mappedBy = "client")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Reserva reserva;
+    private List<Reserva> reserva;
+
+    @Override
+    public String getPassword() {
+        return getContrasenya();
+    }
+
+    @Override
+    public String getUsername() {
+        return getNomUsuari();
+    }
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Cliente</title>
+  <link rel="stylesheet" th:href="@{/css/ModificarPerfilAdmin.css}"> <!-- Cambia el enlace al CSS según tu proyecto -->
+  <script src="/scripts/infoVehiculo.js" defer></script>
+</head>
+<body>
+
+<h1>Editar Reserva</h1>
+
+<!-- Formulario de edición -->
+<form th:action="@{/client/edit}" th:object="${reserva}" method="post">
+  <!-- Identificador oculto del usuario -->
+
+
+  <div>
+    <label for="idReserva">ID RESERVA</label>
+    <input readonly type="text" id="idReserva" name="idReserva" th:value="${reserva.idReserva}">
+  </div>
+
+  <div>
+
+    <label for="fechaRecogida">Fecha de recogida:</label>
+    <input type="date" id="fechaRecogida" name="fechaRecogida" th:value="${reserva.fechaRecogida}"/>
+
+    <label for="fechaEntrega">Fecha de entrega:</label>
+    <input type="date" id="fechaEntrega" name="fechaEntrega" th:value="${reserva.fechaEntrega}"/>
+    <label for="Vehicle">Matrícula:</label>
+    <input readonly type="text" id="Vehicle" name="Vehicle" th:value="${reserva.vehicle.matricula} "/>
+
+    <br>
+    <p>
+      <span><strong>Preu per día:</strong></span>
+      <span id="preuDia" th:text="${reserva.vehicle.preuDia + ' €'}"></span>
+    </p>
+    <p><strong>Número de días:</strong> <span id="diasReserva">0</span></p>
+
+    <p>
+      <span><strong>Preu fiança:</strong></span>
+      <span id="precioFianza" th:text="${reserva.vehicle.fianca + ' €'}"></span>
+    </p>
+    <p>
+      <span><strong>Total:</strong></span>
+      <span id="precioTotal"></span>
+    </p>
+    <input type="hidden" id="preuComplert" name="preuComplert" value=""/>
+  </div>
+
+  <div>
+    <button type="submit">Guardar</button>
+    <a href="/client/reserves" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+  </div>
+</form>
+
+</body>
+</html>
