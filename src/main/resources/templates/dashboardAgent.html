@@ -249,6 +249,8 @@
                         <th>Preu Complert</th>
                         <th>Client</th>
                         <th>Vehicle</th>
+                        <th>Activar Reserva</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -260,6 +262,10 @@
                         <td th:text="${reserva.preuComplert}"></td>
                         <td th:text="${reserva.client.dni}"></td>
                         <td th:text="${reserva.vehicle.matricula}"></td>
+                        <td>
+                        <a class="btn btn-edit"
+                           th:href="@{/agent/activateUser/{idReserva}(idReserva=${reserva.idReserva})}">Activar</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
