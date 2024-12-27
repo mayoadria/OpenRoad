@@ -12,7 +12,8 @@
 
 <h1>Les meves Reserves</h1>
 <table class="table table-bordered">
-    <form  th:action="@{/client/reserves}">
+    <form  th:action="@{/client/reserve
+    }">
         <thead>
         <tr>
             <th>Id Reserva</th>
@@ -31,9 +32,9 @@
             <td th:text="${reserva.vehicle.matricula}"></td>
             <td>
                 <a class="btn btn-success"
-                   >Editar</a>
+                   th:href="@{/client/edit/{idReserva}(idReserva=${reserva.idReserva})}">Editar</a>
                 <a class="btn btn-danger"
-                   >Borrar</a>
+                   th:href="@{/client/delete/{idReserva}(idReserva=${reserva.idReserva})}">Anul·lar</a>
             </td>
         </tr>
         </tbody>
