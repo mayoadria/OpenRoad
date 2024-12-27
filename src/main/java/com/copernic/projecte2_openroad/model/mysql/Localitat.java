@@ -2,7 +2,7 @@ package com.copernic.projecte2_openroad.model.mysql;
 
 
 // Java
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +38,12 @@ public class Localitat {
     private String poblacio;
     @Column(nullable = false)
     private String direccio;
-
-    // Camps Opcionals
     @Column(nullable = false)
-    private String condicions;
-    @Column(nullable = false)
-    private LocalDateTime horari;
+    private String local;
+    @Column(nullable = false, name = "horari_apertura")
+    private LocalTime horariApertura;
+    @Column(nullable = false, name = "horari_tancada")
+    private LocalTime horariTancada;
 
     // Relació OneToMany amb taula - Vehicle
     @OneToMany(mappedBy = "localitat")

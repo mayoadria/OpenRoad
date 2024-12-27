@@ -1,0 +1,157 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('../images/otros/fondo_registro.jpg'); /* Sube un nivel para buscar en images */
+    background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Hace que el fondo se mantenga fijo al hacer scroll */
+}
+
+.form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    background: transparent;
+    border: 2px solid white;
+    backdrop-filter: blur(50px);
+    color: #fff;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.signin a {
+    color: #00b4d8;
+}
+
+.flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    gap: 6px;
+}
+
+.form label {
+    position: relative;
+}
+
+.form label .input {
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    color: white;
+    width: 100%;
+    padding: 20px 05px 05px 10px;
+    outline: 0;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.inp_pais {
+    background-color: transparent;
+    color: black;
+}
+
+
+.form label .input + span {
+    color: white;
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    font-size: 0.9em;
+    cursor: text;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+
+.form label .input:-ms-input-placeholder + span {
+    top: 12.5px;
+    font-size: 0.9em;
+}
+
+.form label .input:placeholder-shown + span {
+    top: 12.5px;
+    font-size: 0.9em;
+}
+
+.form label .input:focus + span,
+.form label .input:valid + span {
+    color: white;
+    top: 0px;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+/* Aplica el efecto glow al borde y al texto del placeholder cuando el input está enfocado */
+.form label .input:focus {
+    border: 1px solid white; /* Cambia el color del borde */
+    box-shadow: 0 0 8px white; /* Efecto glow */
+}
+
+.input{
+    font-size: medium;
+}
+
+
+.submit {
+    width: auto;
+    padding: 10px 80px; /* Controla el tamaño horizontal aquí */
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px auto 0;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.submit:hover {
+    background-color: lightslategray;
+}
+
+.signin {
+    text-align: center;
+    margin-top: 15px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.signin a {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.file-upload {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 5px;
+}
+
+.file-upload input[type="file"] {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+}

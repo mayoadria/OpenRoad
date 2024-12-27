@@ -1,11 +1,11 @@
 package com.copernic.projecte2_openroad.model.mongodb;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.copernic.projecte2_openroad.model.enums.EstatIncidencia;
-import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -22,10 +22,12 @@ public class HistoricIncidencia {
     private String idIncidencia;
 
     private EstatIncidencia estatIncidencia;
+    private String titolInc;
     private String motiu;
     private Double cost;
     private LocalDate dataInici;
     private LocalDate dataFinal;
-    private String incidenciaDoc;
-    private Vehicle vehicle;
+    private String matriculaVehicle;
+
+    private List<Byte> incidenciaDoc;
 }
