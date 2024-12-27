@@ -1,8 +1,11 @@
 package com.copernic.projecte2_openroad.repository.mysql;
 
-import com.copernic.projecte2_openroad.model.mysql.Client;
+// Repository JPA
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ClientRepositorySQL extends JpaRepository<Client, String> {
-    Client findByNomUsuari(String nomUsuari);
+import com.copernic.projecte2_openroad.model.mysql.Client;
+
+@Repository
+public interface ClientRepositorySQL extends JpaRepository<Client, String>{
 }
