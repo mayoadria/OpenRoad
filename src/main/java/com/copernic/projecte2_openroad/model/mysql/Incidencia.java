@@ -45,8 +45,6 @@ public class Incidencia {
 
     // Camps Generals
     @Column(nullable = false)
-    private String titolInc;
-    @Column(nullable = false)
     private String motiu;
     @Column(nullable = false)
     private Double cost;
@@ -56,6 +54,8 @@ public class Incidencia {
     // Camps Opcionals
     @Column(nullable = true, name = "data_final")
     private LocalDate dataFinal;
+    @Column(nullable = true, name = "incidencia_doc")
+    private String incidenciaDoc;
 
     // Relació ManyToOne amb taula - Vehicle
     @ManyToOne

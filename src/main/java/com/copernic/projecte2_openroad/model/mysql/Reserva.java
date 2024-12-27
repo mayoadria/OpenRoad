@@ -8,11 +8,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,6 @@ import lombok.ToString;
 
 // Enums
 import com.copernic.projecte2_openroad.model.enums.EstatReserva;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "reserva")
@@ -40,30 +40,28 @@ public class Reserva {
     private Long idReserva;
 
     // Camps Generals
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @Column(nullable = false, name = "fechaInici")
-    private LocalDate fechaRecogida;
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    @Column(nullable = false, name = "fechaFinal")
-    private LocalDate fechaEntrega;
-    @Column(nullable = false, name = "preu_complert")
-    private Double preuComplert;
+    @Column(nullable = false, name = "data_inici")
+    private LocalDate dataInici;
+    @Column(nullable = false, name = "data_final")
+    private LocalDate dataFinal;
+    @Column(nullable = false, name = "preu_complet")
+    private Double preuComplet;
 
     // Enums
     @Column(nullable = false, name = "estat_reserva")
     @Enumerated(EnumType.STRING)
     private EstatReserva estatReserva;
 
-    // Relació ManyToOne amb taula - Client (Bidireccional)
-    @ManyToOne
-    @JoinColumn(name = "client", referencedColumnName = "dni")
+    // Relació OneToOne amb taula - Client (Bidireccional)
+    @OneToOne
+    @JoinColumn(name = "dni_client", foreignKey = @ForeignKey(name = "fk_reserva_agent"))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Client client;
 
-    // Relació ManyToOne amb taula - Vehicle (Bidireccional)
-    @ManyToOne
-    @JoinColumn(name = "vehicle", referencedColumnName = "matricula")
+    // Relació OneToOne amb taula - Vehicle (Bidireccional)
+    @OneToOne
+    @JoinColumn(name = "matricula", foreignKey = @ForeignKey(name = "fk_vehicle_reserva"))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Vehicle vehicle;
