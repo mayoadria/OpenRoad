@@ -100,16 +100,6 @@
         </select>
         <br><br>
 
-<!--        &lt;!&ndash; Estado del vehículo &ndash;&gt;-->
-<!--        <label for="estatVehicle">Estado del vehículo:</label>-->
-<!--        <select id="estatVehicle" name="estatVehicle">-->
-<!--            <option value="" th:selected="${vehicle.estatVehicle == null}">Seleccione</option>-->
-<!--            <option value="DISPONIBLE" th:selected="${vehicle.estatVehicle == 'DISPONIBLE'}">Disponible</option>-->
-<!--            <option value="RESERVADO" th:selected="${vehicle.estatVehicle == 'RESERVADO'}">Reservado</option>-->
-<!--            <option value="MANTENIMIENTO" th:selected="${vehicle.estatVehicle == 'MANTENIMIENTO'}">Mantenimiento</option>-->
-<!--        </select>-->
-        <br><br>
-
         <!-- Año del vehículo -->
         <label for="anyVehicle">Año del vehículo:</label>
         <input type="number" id="anyVehicle" name="anyVehicle" th:value="${vehicle.anyVehicle}">
@@ -119,11 +109,6 @@
         <label for="km">Kilómetros:</label>
         <input type="number" id="km" name="km" th:value="${vehicle.km}">
         <br><br>
-
-<!--        &lt;!&ndash; Descripción del vehículo &ndash;&gt;-->
-<!--        <label for="descVehicle">Descripción del vehículo:</label>-->
-<!--        <textarea id="descVehicle" name="descVehicle" th:text="${vehicle.descVehicle}"></textarea>-->
-<!--        <br><br>-->
 
         <button type="submit">Guardar Cambios</button>
     </form>
