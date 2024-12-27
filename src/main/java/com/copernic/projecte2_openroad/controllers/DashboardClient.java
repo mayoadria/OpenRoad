@@ -54,6 +54,7 @@ public class DashboardClient {
             // Actualizar los datos de la reserva
             clienteExistente.setFechaEntrega(reserva.getFechaEntrega());
             clienteExistente.setFechaRecogida(reserva.getFechaRecogida());
+            clienteExistente.setPreuComplert(reserva.getPreuComplert());
 
             // Guardar los cambios
             reservaServiceSQL.modificarReserva(clienteExistente);
