@@ -16,7 +16,7 @@
         <div class="logo">
             <a class="logo">
                 <img src="/images/Branding/v2/OpenRoad_Logo_Nombre_drecha_blanco.png" alt=" " class="logo-img"
-                     width="55px" height="55px">
+                     width="55px" height="55px" draggable="false">
             </a>
         </div>
 
@@ -106,7 +106,7 @@
 </header>
 <div class="container">
     <div class="left-panel">
-        <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}" >
+        <img th:src="${vehicle.imageUrl}" alt="Imagen de ${vehicle.nombre}">
         <h3 class="nombre-coche" th:text="${vehicle.marca + ' ' + vehicle.model}"></h3>
         <div class="details">
             <div>
