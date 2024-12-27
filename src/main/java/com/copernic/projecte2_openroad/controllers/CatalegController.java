@@ -48,7 +48,7 @@ public class CatalegController {
         UserUtils.obtenirDadesUsuariModel(model);
 
         // Obtenir la llista complerta dels vehicles de la base de dades MySQL.
-        List<Vehicle> vehicles = vehicleServiceSQL.llistarVehicles();
+        List<Vehicle> vehicles = vehicleServiceSQL.llistarVehiclesActius(EstatVehicle.ACTIU);
 
         // Pasar la imatge del vehicle de byte a Imagen.
         for (Vehicle vehicle : vehicles) {

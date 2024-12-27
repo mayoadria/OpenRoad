@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-import com.copernic.projecte2_openroad.model.mysql.Localitat;
+import com.copernic.projecte2_openroad.model.enums.EstatVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +32,10 @@ public class VehicleServiceSQL {
     // Listar todos los vehículos
     public List<Vehicle> llistarVehicles() {
         return vehicleRepoSQL.findAll();
+    }
+
+    public List<Vehicle> llistarVehiclesActius(EstatVehicle estatVehicle) {
+        return vehicleRepoSQL.findByEstatVehicle(estatVehicle);
     }
 
     public List<Vehicle> getVehiclesByAgentLocalitat(String codiPostalLoc) {
