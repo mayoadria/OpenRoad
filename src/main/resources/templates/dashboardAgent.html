@@ -184,10 +184,10 @@
                                 <div class="filtre">
                                     Estat
                                     <div class="filt-txt">
-                                        <select id="estatsVehicle" name="estatsVehicle" class="filt-sel">
+                                        <select id="estats" name="estats" class="filt-sel">
                                             <option value="">-</option>
                                             <option th:each="estat : ${estatsVehicle}" th:value="${estat}"
-                                                th:text="${#strings.capitalize(estat)}"></option>
+                                                    th:text="${#strings.capitalize(estat)}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -222,6 +222,7 @@
                             <td th:text="${vehicle.marca} + ' ' + ${vehicle.model}"></td>
                             <td th:text="${vehicle.preuDia}"></td>
                             <td th:text="${vehicle.fianca}"></td>
+
                             <td>
                                 <a class="btn btn-info"
                                     th:href="@{/agent/vehicle/{matricula}(matricula=${vehicle.matricula})}">Info</a>
@@ -253,9 +254,9 @@
                 <tbody>
                     <tr th:each="reserva : ${reserves}">
                         <td th:text="${reserva.idReserva}"></td>
-<!--                        <td th:text="${reserva.estatReserva}"></td>-->
-                        <td th:text="${reserva.dataInici} + ' ' + ${vehicle.model}"></td>
-                        <td th:text="${reserva.dataFinal}"></td>
+                        <td th:text="${reserva.estatReserva}"></td>
+                        <td th:text="${reserva.fechaRecogida}"></td>
+                        <td th:text="${reserva.fechaEntrega}"></td>
                         <td th:text="${reserva.preuComplert}"></td>
                         <td th:text="${reserva.client}"></td>
                         <td th:text="${reserva.vehicle}"></td>

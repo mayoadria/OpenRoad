@@ -144,7 +144,7 @@ public class AgentDashboardController {
                 Agent agent = (Agent) agentObj;
                 vehicle.setLocalitat(agent.getLocalitat());
             }
-
+            vehicle.setEstatVehicle(EstatVehicle.ACTIU);
             vehicleServiceSQL.guardarVehicle(vehicle);
             return "redirect:/agent/dashboard";
         } catch (IOException e) {
