@@ -1,34 +1,72 @@
 package com.copernic.projecte2_openroad.controllers;
 
 import com.copernic.projecte2_openroad.model.mysql.Agent;
+import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Reserva;
+import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.service.mysql.ReservaServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/client")
 public class DashboardClient {
 
     @Autowired
     private ReservaServiceSQL reservaServiceSQL;
 
-    @GetMapping("/client/reserves")
+    @GetMapping("/reserves")
     public String reserves(Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         List<Reserva> reserva = reservaServiceSQL.findReservasByClient_nom(username);
-        model.addAttribute("reserva" ,reserva);
+        model.addAttribute("reserva", reserva);
         return "DashboardClient";
     }
 
+    @GetMapping("/edit/{idReserva}")
+    public String editarReserva(@PathVariable Long idReserva, Model model) {
+        Reserva usuario = reservaServiceSQL.llistarReservaPerId(idReserva);
+        if (usuario == null) {
 
+            return "redirect:/client/reserves";  // Redirigir si no existe el usuario
+        }
+        model.addAttribute("reserva", usuario);
+        return "ModificarReserva";  // Cargar la vista para editar
+    }
+
+
+    @PostMapping("/edit")
+    public String guardarCambios(@ModelAttribute Reserva reserva, @RequestParam Long idReserva, Model model) {
+               // Buscar la reserva existente por ID
+            Reserva clienteExistente = reservaServiceSQL.llistarReservaPerId(idReserva);
+            if (clienteExistente == null) {
+                return "DashboardClient"; // Redirige a la página con un mensaje de error
+            }
+
+            // Actualizar los datos de la reserva
+            clienteExistente.setFechaEntrega(reserva.getFechaEntrega());
+            clienteExistente.setFechaRecogida(reserva.getFechaRecogida());
+
+            // Guardar los cambios
+            reservaServiceSQL.modificarReserva(clienteExistente);
+
+            // Agregar el objeto actualizado al modelo para confirmación
+
+            return "redirect:/client/reserves"; // Redirige a la vista de éxito o confirmación
+
+    }
+
+    @GetMapping("/delete/{idReserva}")
+    public String deleteClient(@PathVariable Long idReserva) {
+        reservaServiceSQL.eliminarReservaPerId(idReserva);
+        return "redirect:/client/reserves";
+    }
 }
