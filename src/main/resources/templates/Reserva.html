@@ -138,8 +138,33 @@
             </div>
         </div>
         <div class="rating">
-            <p>Valoracións:</p>
-            <p>⭐⭐⭐⭐⭐</p>
+            <div th:each="comentari : ${comentaris}" class="coment-box">
+                <div class="dades-client">
+                    <p class="nomcognomCom" th:text="${comentari.nomClient} + ' ' + ${comentari.cognom1Client}"></p>
+                    <p class="nomUserCom" th:text="${comentari.nomUsuariClient}"></p>
+                </div>
+                <div class="dades-comentari">
+                    <p class="dataCom" th:text="${comentari.dataComentari}"></p>
+                    <p class="titolCom" th:text="${comentari.titolComent}"></p>
+                    <p class="msstgCom" th:text="${comentari.missatgeComentari}"></p>
+                    <p class="recCom" th:text="${comentari.recomanacio}"></p>
+
+                </div>
+                <div class="est-comentari">
+                    <div class="stars">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                </div>
+                <div class="likes-comentari">
+                    <p class="likesCom" th:text="${comentari.like}"></p>
+                    <p class="disLikesCom" th:text="${comentari.disLike}"></p>
+                </div>
+
+            </div>
             <a href="/comentariForm">Comentari</a>
         </div>
     </div>

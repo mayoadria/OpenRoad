@@ -140,15 +140,17 @@
             <p>Afegeix un comentari:</p>
             <div class="titol-com">
                 <label>
-                    <input type="text" placeholder="" id="titolComent" name="titolComent" required>
                     <span>Títol:</span>
+                    <input type="text" placeholder="" id="titolComent" name="titolComent" required>
+                    
                 </label>
             </div>
 
             <div class="mstg-com">
                 <label>
-                    <input type="text" placeholder="" id="missatgeComentari" name="missatgeComentari" required>
                     <span>Comentari:</span>
+
+                    <textarea type="text" placeholder="" id="missatgeComentari" rows="10" cols="30" name="missatgeComentari" required> </textarea>
                 </label>
             </div>
 
@@ -161,7 +163,14 @@
                     <span class="fa fa-star" onclick="selEstrella(4)"></span>
                     <span class="fa fa-star" onclick="selEstrella(5)"></span>
                 </div>
-                
+            </div>
+
+            <div class="rec-com">
+                <span>Recomanació: </span>
+                <input type="radio" id="recomanacioTrue" name="recomanacio" value="true" required>
+                <label for="recomanacioTrue"> Si</label>
+                <input type="radio" id="recomanacioFalse" name="recomanacio" value="false" required>
+                <label for="recomanacioFalse"> No</label>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>

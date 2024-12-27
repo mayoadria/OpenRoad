@@ -24,12 +24,14 @@ public class Comentari {
     private String nomUsuariClient;
     private String matriculaVehicle; 
 
-    private LocalDate dataComentari;
-    private int valoracio;
-    private Boolean recomanacio;
+
     private String titolComent;
     private String missatgeComentari;
+    private LocalDate dataComentari;
+    private Boolean recomanacio;
+    private int valoracio;
+    
     private int like;
-    private int dislike;
+    private int disLike;
 
 }

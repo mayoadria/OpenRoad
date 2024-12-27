@@ -48,7 +48,7 @@ public class ComentariController {
         LocalDate data = LocalDate.now();
         comentari.setDataComentari(data);
         comentari.setLike(0);
-        comentari.setDislike(0);
+        comentari.setDisLike(0);
 
         comentarisServiceMongo.guardarComentari(comentari);
 
