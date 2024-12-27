@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface ReservaRepositorySQL extends JpaRepository<Reserva, Long> {
     Optional<Reserva> findByVehicle(Vehicle vehicle);
     List<Reserva> findByClient_nom(String usuario);
+    List<Reserva> findByClient_dni(String dni);
 }
 
