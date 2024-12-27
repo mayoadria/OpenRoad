@@ -4,6 +4,7 @@ import com.copernic.projecte2_openroad.model.mysql.Agent;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Reserva;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
+import com.copernic.projecte2_openroad.security.UserUtils;
 import com.copernic.projecte2_openroad.service.mysql.ReservaServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,9 +25,15 @@ public class DashboardClient {
     @GetMapping("/reserves")
     public String reserves(Model model) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        List<Reserva> reserva = reservaServiceSQL.findReservasByClient_nom(username);
+        Object dadesUsuari = UserUtils.obtenirDadesUsuariModel(model);
+
+        Client client = new Client();
+        if (dadesUsuari instanceof Client) {
+            client = (Client) dadesUsuari; // Usuario autenticado como Cliente
+        }
+
+        List<Reserva> reserva = reservaServiceSQL.buscarReservaPerDNI(client.getDni());
+
         model.addAttribute("reserva", reserva);
         return "DashboardClient";
     }
@@ -36,31 +43,31 @@ public class DashboardClient {
         Reserva usuario = reservaServiceSQL.llistarReservaPerId(idReserva);
         if (usuario == null) {
 
-            return "redirect:/client/reserves";  // Redirigir si no existe el usuario
+            return "redirect:/client/reserves"; // Redirigir si no existe el usuario
         }
         model.addAttribute("reserva", usuario);
-        return "ModificarReserva";  // Cargar la vista para editar
+        return "ModificarReserva"; // Cargar la vista para editar
     }
-
 
     @PostMapping("/edit")
     public String guardarCambios(@ModelAttribute Reserva reserva, @RequestParam Long idReserva, Model model) {
-               // Buscar la reserva existente por ID
-            Reserva clienteExistente = reservaServiceSQL.llistarReservaPerId(idReserva);
-            if (clienteExistente == null) {
-                return "DashboardClient"; // Redirige a la página con un mensaje de error
-            }
+        // Buscar la reserva existente por ID
+        Reserva clienteExistente = reservaServiceSQL.llistarReservaPerId(idReserva);
+        if (clienteExistente == null) {
+            return "DashboardClient"; // Redirige a la página con un mensaje de error
+        }
 
-            // Actualizar los datos de la reserva
-            clienteExistente.setFechaEntrega(reserva.getFechaEntrega());
-            clienteExistente.setFechaRecogida(reserva.getFechaRecogida());
+        // Actualizar los datos de la reserva
+        clienteExistente.setFechaEntrega(reserva.getFechaEntrega());
+        clienteExistente.setFechaRecogida(reserva.getFechaRecogida());
+        clienteExistente.setPreuComplert(reserva.getPreuComplert());
 
-            // Guardar los cambios
-            reservaServiceSQL.modificarReserva(clienteExistente);
+        // Guardar los cambios
+        reservaServiceSQL.modificarReserva(clienteExistente);
 
-            // Agregar el objeto actualizado al modelo para confirmación
+        // Agregar el objeto actualizado al modelo para confirmación
 
-            return "redirect:/client/reserves"; // Redirige a la vista de éxito o confirmación
+        return "redirect:/client/reserves"; // Redirige a la vista de éxito o confirmación
 
     }
 

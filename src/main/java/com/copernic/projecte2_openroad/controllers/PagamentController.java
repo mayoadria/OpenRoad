@@ -1,5 +1,7 @@
 package com.copernic.projecte2_openroad.controllers;
 
+import com.copernic.projecte2_openroad.model.enums.EstatReserva;
+import com.copernic.projecte2_openroad.model.enums.EstatVehicle;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Reserva;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
@@ -107,7 +109,8 @@ public class PagamentController {
             reserva.setVehicle(vehicle);
             reserva.setFechaRecogida(fechaInicio);
             reserva.setFechaEntrega(fechaFin);
-
+            reserva.setEstatReserva(EstatReserva.PENDENT);
+            vehicle.setEstatVehicle(EstatVehicle.RESERVAT);
             // Guardar la reserva
             reservaServiceSQL.guardarReserva(reserva);
 

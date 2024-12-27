@@ -86,4 +86,8 @@ public class ReservaServiceSQL {
         return reservaRepoSQL.findByVehicle(vehicle);
     }
 
+    public List<Reserva> buscarReservaPerDNI(String dni) {
+        return reservaRepoSQL.findByClient_dni(dni);
+    }
+
 }
