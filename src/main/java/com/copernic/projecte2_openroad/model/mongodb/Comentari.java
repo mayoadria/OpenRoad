@@ -25,9 +25,11 @@ public class Comentari {
     private String matriculaVehicle; 
 
     private LocalDate dataComentari;
-    private Double valoracio;
+    private int valoracio;
     private Boolean recomanacio;
     private String titolComent;
     private String missatgeComentari;
     private int like;
+    private int dislike;
+
 }
