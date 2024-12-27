@@ -213,6 +213,7 @@
                             <th>Preu Dia</th>
                             <th>Fiança</th>
                             <th>Accions</th>
+                            <th>Canviar Estat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -230,6 +231,12 @@
                                     th:href="@{/agent/edit/vehicle/{matricula}(matricula=${vehicle.matricula})}">Editar</a>
                                 <a class="btn btn-danger"
                                     th:href="@{/agent/delete/vehicle/{matricula}(matricula=${vehicle.matricula})}">Borrar</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-success"
+                                    th:href="@{/agent/activar/vehicle/{matricula}(matricula=${vehicle.matricula})}">Activar</a>
+                                <a class="btn btn-danger"
+                                    th:href="@{/agent/desactivar/vehicle/{matricula}(matricula=${vehicle.matricula})}">Desactivar</a>
                             </td>
                         </tr>
                     </tbody>
