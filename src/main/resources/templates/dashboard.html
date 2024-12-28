@@ -6,32 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="/scripts/dashboardAdmin.js" defer></script>
-
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/dashboardAdmin.css">
+    <script src="/scripts/dashboardAgent.js" defer></script>
 </head>
 
 <body>
-    <h1>Dashboard</h1>
+<header class="nav-container">
+    <nav class="navbar">
+        <div class="logo">
+            <a class="logo">
+                <img src="/images/otros/logo_openroad.png" alt="Logo" class="logo-img" width="55px" height="55px">
+            </a>
+        </div>
+        <h1>Dashboard</h1>
+        <ul class="nav-links">
+            <li><a href="/">Inici</a></li>
+            <li><a href="/cataleg">Catàleg</a></li>
+            <li><a href="#section3">Contacte</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <!-- Botón para crear un nuevo agente -->
-
-    <hr>
-
-    <!-- Sección para listar agentes -->
-    <h2>Lista de Agentes</h2>
-    <div class="buttons-nav">
-        <form action="/admin/dashboard">
-            <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
-        </form>
-        <button id="applyFiltersAgent" class="filt-btn">Filtrar</button>
-        <form th:action="@{/admin/newAgent}" method="get">
-            <button type="submit" class="btn btn-primary">Crear un agente</button>
-        </form>
-    </div>
-    <table class="table table-bordered">
-        <form id="filtres-form-agent" action="/admin/dashboard">
-            <thead>
+<main>
+    <section>
+        <br>
+        <h2>Lista de Agentes</h2>
+        <div class="buttons-nav">
+            <form action="/admin/dashboard">
+                <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
+            </form>
+            <button id="applyFiltersAgent" class="filt-btn">Filtrar</button>
+            <form action="/admin/newAgent" method="get">
+                <button type="submit" class="btn btn-primary">Crear un agente</button>
+            </form>
+        </div>
+        <table class="table table-bordered">
+            <form id="filtres-form-agent" action="/admin/dashboard">
+                <thead>
                 <tr>
                     <th>
                         <div class="filtre">
@@ -52,7 +64,6 @@
                                 <input type="email" class="filt-input" name="email">
                             </div>
                         </div>
-
                     </th>
                     <th>Teléfon</th>
                     <th>Codi Postal</th>
@@ -71,8 +82,8 @@
                     </th>
                     <th>Accions</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr th:each="agent : ${agents}">
                     <td th:text="${agent.dni}"></td>
                     <td th:text="${agent.nom}"></td>
@@ -84,30 +95,30 @@
                     <td th:text="${agent.codiPostal}"></td>
                     <td th:text="${agent.adreca}"></td>
                     <td th:text="${agent.pais}"></td>
-
                     <td>
                         <a class="btn btn-danger"
-                            th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Borrar</a>
+                           th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Borrar</a>
                     </td>
                 </tr>
-            </tbody>
-        </form>
-    </table>
+                </tbody>
+            </form>
+        </table>
+    </section>
 
-    <hr>
-
-    <!-- Sección para listar clientes -->
-    <h2>Lista de Clientes</h2>
-    <form action="/admin/dashboard">
-        <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
-    </form>
-    <button id="applyFiltersClient" class="filt-btn">Filtrar</button>
-    <form th:action="@{/registre}" method="get">
-        <button type="submit" class="btn btn-primary">Crear un client</button>
-    </form>
-    <table class="table table-bordered">
-        <form id="filtres-form-client" action="/admin/dashboard">
-            <thead>
+    <section>
+        <h2>Lista de Clientes</h2>
+        <div class="buttons-nav">
+            <form action="/admin/dashboard">
+                <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
+            </form>
+            <button id="applyFiltersClient" class="filt-btn">Filtrar</button>
+            <form action="/registre" method="get">
+                <button type="submit" class="btn btn-primary">Crear un client</button>
+            </form>
+        </div>
+        <table class="table table-bordered">
+            <form id="filtres-form-client" action="/admin/dashboard">
+                <thead>
                 <tr>
                     <th>
                         <div class="filtre">
@@ -128,7 +139,6 @@
                                 <input type="email" class="filt-input" name="emailClient">
                             </div>
                         </div>
-
                     </th>
                     <th>Teléfon</th>
                     <th>Codi Postal</th>
@@ -147,8 +157,8 @@
                     </th>
                     <th>Accions</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr th:each="client : ${clients}">
                     <td th:text="${client.dni}"></td>
                     <td th:text="${client.nom}"></td>
@@ -160,20 +170,58 @@
                     <td th:text="${client.codiPostal}"></td>
                     <td th:text="${client.adreca}"></td>
                     <td th:text="${client.pais}"></td>
-                    <td th:text="${client.enabled}"></td>
                     <td>
                         <a class="btn btn-success"
-                            th:href="@{/admin/edit/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Editar</a>
+                           th:href="@{/admin/edit/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Editar</a>
                         <a class="btn btn-danger"
-                            th:href="@{/admin/delete/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Borrar</a>
+                           th:href="@{/admin/delete/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Borrar</a>
                         <a class="btn btn-edit"
-                            th:href="@{/admin/activateUser/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Activar</a>
+                           th:href="@{/admin/activateUser/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Activar</a>
                     </td>
                 </tr>
-            </tbody>
-        </form>
-    </table>
+                </tbody>
+            </form>
+        </table>
+    </section>
 
+    <section>
+        <h2>Lista de Reservas</h2>
+        <div class="buttons-nav">
+            <form action="/admin/dashboard">
+                <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
+            </form>
+            <button id="applyFiltersClient" class="filt-btn">Filtrar</button>
+
+        </div>
+        <table class="table table-bordered">
+            <form id="filtres-form-client" action="/admin/dashboard">
+                    <thead>
+                        <tr>
+                            <th>Id Reserva</th>
+                            <th>Dni Client</th>
+                            <th>Matricula del Vehicle</th>
+                            <th>Data Inici</th>
+                            <th>Data Final</th>
+                            <th>Estat de la Reserva</th>
+                            <th>Preu Total</th>
+                            <th>Accions</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    <tr th:each="reserva : ${reservas}">
+                        <td th:text="${reserva.idReserva}"></td>
+                        <td th:text="${reserva.client.dni}"></td>
+                        <td th:text="${reserva.vehicle.matricula}"></td>
+                        <td th:text="${reserva.fechaEntrega}"></td>
+                        <td th:text="${reserva.fechaRecogida}"></td>
+                        <td th:text="${reserva.estatReserva}"></td>
+                        <td th:text="${reserva.preuComplert}"></td>
+                    </tr>
+                </tbody>
+            </form>
+        </table>
+    </section>
+</main>
 </body>
 
 </html>
