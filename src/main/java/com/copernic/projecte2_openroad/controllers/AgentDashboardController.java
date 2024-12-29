@@ -51,9 +51,15 @@ public class AgentDashboardController {
             Model model) {
 
 
-        UserUtils.obtenirDadesUsuariModel(model);
+        Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
+        if (!(agentObj instanceof Agent)) {
+            model.addAttribute("error", "No se pudo obtener los datos del agente.");
+            return "errorPage"; // Cambiar a una página de error adecuada
+        }
+        Agent agent = (Agent) agentObj;
 
-        List<Vehicle> vehicles = vehicleServiceSQL.llistarVehicles();
+        // Obtener vehículos en la misma localidad que el agente
+        List<Vehicle> vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
         List<Reserva> reserves = reservaServiceSQL.llistarReserves();
         List<Incidencia> incidencies = incidenciaServiceSQL.llistarIncidencies();
 
@@ -110,7 +116,7 @@ public class AgentDashboardController {
     public String mostrarFormulariVehicle(Model model) {
         Vehicle vehicle = new Vehicle();
         model.addAttribute("vehicle", vehicle);
-
+        
         return "crearVehicle";
     }
 
@@ -138,7 +144,7 @@ public class AgentDashboardController {
                 Agent agent = (Agent) agentObj;
                 vehicle.setLocalitat(agent.getLocalitat());
             }
-
+            vehicle.setEstatVehicle(EstatVehicle.INACTIU);
             vehicleServiceSQL.guardarVehicle(vehicle);
             return "redirect:/agent/dashboard";
         } catch (IOException e) {
@@ -160,6 +166,26 @@ public class AgentDashboardController {
             model.addAttribute("vehicle", vehicle.get());
         }
         return "ModificarVehicles"; // Nombre del archivo Thymeleaf
+    }
+
+    @GetMapping("/activar/vehicle/{matricula}")
+    public String activarVehicle(@PathVariable String matricula, Model model) {
+        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula);
+        if (vehicle.isPresent()) {
+            vehicle.get().setEstatVehicle(EstatVehicle.ACTIU);
+            vehicleServiceSQL.modificarVehicle(vehicle.get());
+        }
+        return "redirect:/agent/dashboard";
+    }
+
+    @GetMapping("/desactivar/vehicle/{matricula}")
+    public String desactivarVehicle(@PathVariable String matricula, Model model) {
+        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula);
+        if (vehicle.isPresent()) {
+            vehicle.get().setEstatVehicle(EstatVehicle.INACTIU);
+            vehicleServiceSQL.modificarVehicle(vehicle.get());
+        }
+        return "redirect:/agent/dashboard";
     }
 
     @PostMapping("/editVehicle")
@@ -184,7 +210,7 @@ public class AgentDashboardController {
             vehiculoACambiar.setMarxes(vehiculo.getMarxes());
             vehiculoACambiar.setCombustible(vehiculo.getCombustible());
             vehiculoACambiar.setColor(vehiculo.getColor());
-            // vehiculoACambiar.setEstatVehicle(vehiculo.getEstatVehicle());
+            vehiculoACambiar.setEstatVehicle(vehiculo.getEstatVehicle());
             vehiculoACambiar.setAnyVehicle(vehiculo.getAnyVehicle());
             vehiculoACambiar.setKm(vehiculo.getKm());
             // vehiculoACambiar.setDescVehicle(vehiculo.getDescVehicle());
@@ -196,5 +222,11 @@ public class AgentDashboardController {
             model.addAttribute("error", "El vehículo no existe o no es válido.");
             return "ModificarVehicles"; // Mostrar la página con el error
         }
+    }
+
+    @GetMapping("/activateUser/{idReserva}")
+    public String activateUser(@PathVariable Long idReserva) {
+        reservaServiceSQL.activarReserva(idReserva);
+        return "redirect:/agent/dashboard";
     }
 }

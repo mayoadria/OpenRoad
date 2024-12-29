@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
+import com.copernic.projecte2_openroad.model.enums.EstatVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,13 @@ public class VehicleServiceSQL {
         return vehicleRepoSQL.findAll();
     }
 
+    public List<Vehicle> llistarVehiclesActius(EstatVehicle estatVehicle) {
+        return vehicleRepoSQL.findByEstatVehicle(estatVehicle);
+    }
+
+    public List<Vehicle> getVehiclesByAgentLocalitat(String codiPostalLoc) {
+        return vehicleRepoSQL.findByLocalitat_CodiPostalLoc(codiPostalLoc);
+    }
     public Optional<Vehicle> findByMatricula(String matricula) {
         return vehicleRepoSQL.findById(matricula); // Asumiendo que la matrícula es la PK
     }

@@ -72,8 +72,6 @@ public class Vehicle {
     private int anyVehicle;
     @Column(nullable = true)
     private int km;
-    @Column(nullable = true, name = "desc_vehicle")
-    private String descVehicle;
     @Lob
     private String imageUrl;
 

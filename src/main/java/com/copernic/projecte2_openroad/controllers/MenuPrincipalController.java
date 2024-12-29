@@ -41,9 +41,8 @@ public class MenuPrincipalController {
         return "redirect:/";
     }
 
-    @GetMapping("/menuVehicles")
-    public String menuVehicles() {
-        return "menuVehicles";
-    }
+
+
+
 
 }

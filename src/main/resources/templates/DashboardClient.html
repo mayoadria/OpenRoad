@@ -12,8 +12,7 @@
 
 <h1>Les meves Reserves</h1>
 <table class="table table-bordered">
-    <form  th:action="@{/client/reserve
-    }">
+    <form  th:action="@{/client/reserves}">
         <thead>
         <tr>
             <th>Id Reserva</th>
@@ -21,6 +20,7 @@
             <th>Data Final</th>
             <th>Preu Complert</th>
             <th>Matricula del Cotxe</th>
+            <th>Estat Reserva</th>
         </tr>
         </thead>
         <tbody>
@@ -30,6 +30,8 @@
             <td th:text="${reserva.fechaEntrega}"></td>
             <td th:text="${reserva.preuComplert}"></td>
             <td th:text="${reserva.vehicle.matricula}"></td>
+            <td th:text="${reserva.estatReserva}"></td>
+
             <td>
                 <a class="btn btn-success"
                    th:href="@{/client/edit/{idReserva}(idReserva=${reserva.idReserva})}">Editar</a>

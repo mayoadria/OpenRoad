@@ -1,10 +1,14 @@
 package com.copernic.projecte2_openroad.controllers;
 
+import com.copernic.projecte2_openroad.model.enums.EstatReserva;
+import com.copernic.projecte2_openroad.model.enums.EstatVehicle;
+import com.copernic.projecte2_openroad.model.mongodb.Comentari;
 import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.model.mysql.Reserva;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.security.UserUtils;
+import com.copernic.projecte2_openroad.service.mongodb.ComentarisServiceMongo;
 import com.copernic.projecte2_openroad.service.mysql.ReservaServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,6 +34,8 @@ public class PagamentController {
     private VehicleServiceSQL vehicleServiceSQL;
     @Autowired
     private ReservaServiceSQL reservaServiceSQL;
+    @Autowired
+    private ComentarisServiceMongo comentarisServiceMongo;
 
     private static final Logger logger = LoggerFactory.getLogger(PagamentController.class);
     @GetMapping("/vehicle/{matricula1}")
@@ -47,7 +54,10 @@ public class PagamentController {
         }
 
         Vehicle vehicle = vehicleOptional.get();
+
+        List<Comentari> comentaris = comentarisServiceMongo.llistarComentariPerMatricula(vehicle.getMatricula());
         model.addAttribute("vehicle", vehicle);
+        model.addAttribute("comentaris", comentaris);
 
         Reserva reserva = new Reserva();
         if (client != null) {
@@ -107,11 +117,13 @@ public class PagamentController {
             reserva.setVehicle(vehicle);
             reserva.setFechaRecogida(fechaInicio);
             reserva.setFechaEntrega(fechaFin);
-
+            reserva.setEstatReserva(EstatReserva.PENDENT);
+            vehicle.setEstatVehicle(EstatVehicle.RESERVAT);
             // Guardar la reserva
             reservaServiceSQL.guardarReserva(reserva);
 
-            return "redirect:/factura";
+            Long idReserva = reserva.getIdReserva();
+            return "redirect:/factura/" + idReserva;
 
         } catch (Exception e) {
             e.printStackTrace();

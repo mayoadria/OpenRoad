@@ -3,13 +3,16 @@ package com.copernic.projecte2_openroad.controllers;
 import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.Agent;
 import com.copernic.projecte2_openroad.model.mysql.Client;
+import com.copernic.projecte2_openroad.model.mysql.Reserva;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
+import com.copernic.projecte2_openroad.service.mysql.ReservaServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.server.RemoteServer;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +22,8 @@ public class AdminDashBoardController {
 
     @Autowired
     UsuariServiceSQL usuariServiceSQL;
+    @Autowired
+    ReservaServiceSQL reservaServiceSQL;
 
 
     @GetMapping("/dashboard")
@@ -30,6 +35,7 @@ public class AdminDashBoardController {
 
         List<Agent> agents = usuariServiceSQL.llistarAgents();
         List<Client> clients = usuariServiceSQL.llistarClient();
+        List<Reserva> reserva = reservaServiceSQL.llistarReserves();
 
         List<Pais> paisos = clients.stream().map(Client::getPais).distinct().toList();
 
@@ -54,6 +60,7 @@ public class AdminDashBoardController {
         model.addAttribute("agents", agents);
         model.addAttribute("clients", clients);
         model.addAttribute("paisos", paisos);
+        model.addAttribute("reservas", reserva);
         return "dashboard"; // dashboard.html en templates.
     }
 

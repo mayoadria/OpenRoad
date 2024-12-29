@@ -36,6 +36,11 @@ public class ComentarisServiceMongo {
         return comentariRepoMongo.findById(id).get();
     }
 
+    // Llistar Comentari per Matricula.
+    public List<Comentari> llistarComentariPerMatricula(String matricula) {
+        return comentariRepoMongo.findComentariByMatriculaVehicle(matricula);
+    }
+
     // Llistar tots els Comentaris.
     public List<Comentari> llistarComentaris() {
         return comentariRepoMongo.findAll();
