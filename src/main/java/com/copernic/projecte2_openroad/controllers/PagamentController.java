@@ -122,7 +122,8 @@ public class PagamentController {
             // Guardar la reserva
             reservaServiceSQL.guardarReserva(reserva);
 
-            return "redirect:/factura";
+            Long idReserva = reserva.getIdReserva();
+            return "redirect:/factura/" + idReserva;
 
         } catch (Exception e) {
             e.printStackTrace();
