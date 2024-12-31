@@ -43,7 +43,7 @@ public class AgenteController
         agent.setNomUsuari(username);
         agent.setAdreca(agent.getLocalitat().getDireccio());
         agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
-        agent.setPermisos(TipusPermis.MODIFICAR_PERFIL.toString());
+        agent.setPermisos(TipusPermis.AGENT.toString());
         agent.setEnabled(true);
         usuariServiceSQL.guardarAgent(agent);
 
