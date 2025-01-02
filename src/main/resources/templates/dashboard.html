@@ -220,6 +220,31 @@
                 </tbody>
             </form>
         </table>
+
+        <table class="table table-bordered">
+            <form id="filtres-form-client" action="/admin/dashboard">
+                <thead>
+                <tr>
+                    <th>Codi postal</th>
+                    <th>Direcció</th>
+                    <th>Horari d'apertura</th>
+                    <th>Horari de Tancament</th>
+                    <th>Nom del lloc</th>
+                    <th>Població</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="localitat : ${localitats}">
+                    <td th:text="${localitat.codiPostalLoc}"></td>
+                    <td th:text="${localitat.direccio}"></td>
+                    <td th:text="${localitat.horariApertura}"></td>
+                    <td th:text="${localitat.horariTancada}"></td>
+                    <td th:text="${localitat.local}"></td>
+                    <td th:text="${localitat.poblacio}"></td>
+                </tr>
+                </tbody>
+            </form>
+        </table>
     </section>
 </main>
 </body>
