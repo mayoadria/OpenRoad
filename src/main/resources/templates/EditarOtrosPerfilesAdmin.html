@@ -50,10 +50,12 @@
     <input type="email" id="email" name="email" th:value="${cliente.email}" placeholder="Ingrese el correo electrónico">
   </div>
 
-  <div>
+  <div th:if="${!visualizar}">
     <button type="submit">Guardar</button>
-    <a href="/admin/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+
   </div>
+  <a href="/admin/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+
 </form>
 
 </body>

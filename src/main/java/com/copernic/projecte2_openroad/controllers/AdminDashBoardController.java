@@ -84,17 +84,18 @@ public class AdminDashBoardController {
     }
 
     @GetMapping("/edit/{nomUsuari}")
-    public String editarUsuario(@PathVariable String nomUsuari, Model model) {
+    public String editarUsuario(@PathVariable String nomUsuari, boolean visualizar,Model model) {
         Usuari usuario = usuariServiceSQL.findByNomUsuari(nomUsuari);
         if (usuario == null) {
             return "redirect:/admin/dashboard";  // Redirigir si no existe el usuario
         }
         model.addAttribute("cliente", usuario);
+        model.addAttribute("visualizar", visualizar);
         return "EditarOtrosPerfilesAdmin";  // Cargar la vista para editar
     }
 
     @PostMapping("/edit")
-    public String guardarCambios(@ModelAttribute Client cliente, @RequestParam String nomUsuari, Model model) {
+    public String guardarCambios(@ModelAttribute Client cliente, @RequestParam String nomUsuari, Model model ) {
         // Buscar el usuario que se está editando por su nomUsuari enviado en el formulario
         Usuari clienteExistente = usuariServiceSQL.findByNomUsuari(nomUsuari);
 
@@ -123,6 +124,8 @@ public class AdminDashBoardController {
         usuariServiceSQL.activateUser(nomUsuari);
         return "redirect:/admin/dashboard";
     }
+
+
 
 }
 

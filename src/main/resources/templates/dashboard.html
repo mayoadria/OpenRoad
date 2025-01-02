@@ -177,6 +177,10 @@
                            th:href="@{/admin/delete/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Borrar</a>
                         <a class="btn btn-edit"
                            th:href="@{/admin/activateUser/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Activar</a>
+                        <a class="btn btn-primary"
+                           th:href="@{'/admin/edit/' + ${client.nomUsuari} + '?visualizar=true'}">Visualitzar</a>
+
+
                     </td>
                 </tr>
                 </tbody>
