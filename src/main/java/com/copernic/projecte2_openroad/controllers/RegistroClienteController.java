@@ -40,9 +40,22 @@ public class RegistroClienteController {
     public String save(
             @ModelAttribute("client") Client cli,
             @RequestParam("dniFile") MultipartFile dniFile,
-            @RequestParam("carnetFile") MultipartFile carnetFile
+            @RequestParam("carnetFile") MultipartFile carnetFile,
+            Model model
     ) {
         try {
+            // Validació de fitxers
+            if (dniFile.isEmpty() || carnetFile.isEmpty()) {
+                model.addAttribute("error", "Les imatges de DNI i carnet de conduir són obligatoris.");
+                return "Registre";  // Tornar a la pàgina de registre amb missatge d'error
+            }
+
+            // Validar tipus de fitxer (només imatges)
+            if (!dniFile.getContentType().startsWith("image/") || !carnetFile.getContentType().startsWith("image/")) {
+                model.addAttribute("error", "Els fitxers han de ser imatges.");
+                return "Registre";  // Tornar a la pàgina de registre amb missatge d'error
+            }
+
             // Processar i guardar dades a MySQL
             cli.setContrasenya(passwordEncoder.encode(cli.getContrasenya()));
             String[] part = cli.getEmail().split("@");
@@ -58,12 +71,8 @@ public class RegistroClienteController {
 
             // Crear un mapa amb noms descriptius per les imatges
             Map<String, Binary> docMap = new HashMap<>();
-            if (!dniFile.isEmpty()) {
-                docMap.put("dni", new Binary(dniFile.getBytes()));
-            }
-            if (!carnetFile.isEmpty()) {
-                docMap.put("carnetConduir", new Binary(carnetFile.getBytes()));
-            }
+            docMap.put("dni", new Binary(dniFile.getBytes()));
+            docMap.put("carnetConduir", new Binary(carnetFile.getBytes()));
 
             document.setClientDoc(docMap);
 
@@ -74,7 +83,8 @@ public class RegistroClienteController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // Pàgina d'error si falla alguna cosa
+            model.addAttribute("error", "S'ha produït un error durant el registre. Si us plau, intenta-ho més tard.");
+            return "Registre"; // Pàgina d'error si falla alguna cosa
         }
     }
 }
