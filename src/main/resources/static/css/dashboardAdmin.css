@@ -61,6 +61,7 @@ body {
 
 /* Main Content */
 h2 {
+    margin-left: -7%;
     margin-top: 80px; /* Espacio debajo del navbar */
     margin-bottom: 20px;
     color: #343a40;

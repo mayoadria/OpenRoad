@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+
 public class PagamentController {
 
     @Autowired

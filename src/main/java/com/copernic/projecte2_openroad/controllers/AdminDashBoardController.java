@@ -1,10 +1,8 @@
 package com.copernic.projecte2_openroad.controllers;
 
 import com.copernic.projecte2_openroad.model.enums.Pais;
-import com.copernic.projecte2_openroad.model.mysql.Agent;
-import com.copernic.projecte2_openroad.model.mysql.Client;
-import com.copernic.projecte2_openroad.model.mysql.Reserva;
-import com.copernic.projecte2_openroad.model.mysql.Usuari;
+import com.copernic.projecte2_openroad.model.mysql.*;
+import com.copernic.projecte2_openroad.service.mysql.LocalitatServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.ReservaServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,8 @@ public class AdminDashBoardController {
     UsuariServiceSQL usuariServiceSQL;
     @Autowired
     ReservaServiceSQL reservaServiceSQL;
+    @Autowired
+    LocalitatServiceSQL localitatServiceSQL;
 
 
     @GetMapping("/dashboard")
@@ -36,6 +36,7 @@ public class AdminDashBoardController {
         List<Agent> agents = usuariServiceSQL.llistarAgents();
         List<Client> clients = usuariServiceSQL.llistarClient();
         List<Reserva> reserva = reservaServiceSQL.llistarReserves();
+        List<Localitat> localitat = localitatServiceSQL.llistarLocalitats();
 
         List<Pais> paisos = clients.stream().map(Client::getPais).distinct().toList();
 
@@ -61,6 +62,7 @@ public class AdminDashBoardController {
         model.addAttribute("clients", clients);
         model.addAttribute("paisos", paisos);
         model.addAttribute("reservas", reserva);
+        model.addAttribute("localitats", localitat);
         return "dashboard"; // dashboard.html en templates.
     }
 
@@ -82,17 +84,18 @@ public class AdminDashBoardController {
     }
 
     @GetMapping("/edit/{nomUsuari}")
-    public String editarUsuario(@PathVariable String nomUsuari, Model model) {
+    public String editarUsuario(@PathVariable String nomUsuari, boolean visualizar,Model model) {
         Usuari usuario = usuariServiceSQL.findByNomUsuari(nomUsuari);
         if (usuario == null) {
             return "redirect:/admin/dashboard";  // Redirigir si no existe el usuario
         }
         model.addAttribute("cliente", usuario);
+        model.addAttribute("visualizar", visualizar);
         return "EditarOtrosPerfilesAdmin";  // Cargar la vista para editar
     }
 
     @PostMapping("/edit")
-    public String guardarCambios(@ModelAttribute Client cliente, @RequestParam String nomUsuari, Model model) {
+    public String guardarCambios(@ModelAttribute Client cliente, @RequestParam String nomUsuari, Model model ) {
         // Buscar el usuario que se está editando por su nomUsuari enviado en el formulario
         Usuari clienteExistente = usuariServiceSQL.findByNomUsuari(nomUsuari);
 
@@ -121,6 +124,8 @@ public class AdminDashBoardController {
         usuariServiceSQL.activateUser(nomUsuari);
         return "redirect:/admin/dashboard";
     }
+
+
 
 }
 
