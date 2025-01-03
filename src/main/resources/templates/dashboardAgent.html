@@ -297,7 +297,7 @@
                 <tbody>
                     <tr th:each="incidencia : ${incidencies}">
                         <td th:text="${incidencia.idIncidencia}"></td>
-                        <td th:text="${incidencia.estatIncidencia} + ' ' + ${vehicle.model}"></td>
+                        <td th:text="${incidencia.estatIncidencia} "></td>
                         <td th:text="${incidencia.titolInc}"></td>
                         <td th:text="${incidencia.cost}"></td>
                         <td th:text="${incidencia.dataInici}"></td>
