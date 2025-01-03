@@ -2,9 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Incidencia · Vehicle</title>
 </head>
 <body>
+<div class="container mt-5">
+    <h2>Crear Vehicle</h2>
+    <form th:action="@{/agent/crear_incidencia}" th:object="${incidencia}" method="post" enctype="multipart/form-data">
 
+        <!-- Títol -->
+        <div class="mb-3">
+            <label for="titol" class="form-label">Títol</label>
+            <input type="text" name="titol" id="titol" cols="22" rows="1" maxlength="20" required>
+        </div>
+
+        <!-- Cost -->
+        <div class="mb-3">
+            <label for="cost" class="form-label">Cost</label>
+            <input type="number" class="form-control" id="cost" name="cost" required>
+        </div>
+
+        <!-- Data Inici -->
+        <div class="mb-3">
+            <label for="dataInici" class="form-label">Data Inici</label>
+            <input type="date" class="form-control" id="dataInici" name="dataInici" required>
+        </div>
+
+        <!-- Data Final -->
+        <div class="mb-3">
+            <label for="dataFinal" class="form-label">Data Final</label>
+            <input type="date" class="form-control" id="dataFinal" name="dataFinal">
+        </div>
+
+        <!-- Coches del Agente -->
+        <div class="mb-3">
+            <label for="cochesAgente" class="form-label">Seleccionar Coche</label>
+            <select id="cochesAgente" name="cocheId" class="form-control" required>
+                <option th:each="vehicle : ${vehicles}" th:value="${vehicle.matricula}" th:text="${vehicle.marca + ' ' + vehicle.model}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="file" id="imagen" name="imagen" class="form-control" required>
+        </div>
+
+        <!-- Estat -->
+        <div class="mb-3">
+            <label for="estatIncidencia" class="form-label">Estat</label>
+            <select id="estatIncidencia" th:field="*{estatIncidencia}" class="form-control" required>
+                <option th:each="estat : ${T(com.copernic.projecte2_openroad.model.enums.EstatIncidencia).values()}"
+                        th:value="${estat}"
+                        th:text="${estat.valor}"></option>
+            </select>
+        </div>
+
+
+        <!-- Botón Submit -->
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

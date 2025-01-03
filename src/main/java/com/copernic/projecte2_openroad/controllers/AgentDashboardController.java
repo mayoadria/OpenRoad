@@ -50,7 +50,7 @@ public class AgentDashboardController {
             @RequestParam(name = "models", required = false) String modelsFilt,
             Model model) {
 
-
+        // Obtener los datos del agente actual
         Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
         if (!(agentObj instanceof Agent)) {
             model.addAttribute("error", "No se pudo obtener los datos del agente.");
@@ -60,17 +60,25 @@ public class AgentDashboardController {
 
         // Obtener vehículos en la misma localidad que el agente
         List<Vehicle> vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
-        List<Reserva> reserves = reservaServiceSQL.llistarReserves();
-        List<Incidencia> incidencies = incidenciaServiceSQL.llistarIncidencies();
 
+        // Filtrar las incidencias relacionadas con los vehículos del agente
+        List<Vehicle> finalVehicles = vehicles;
+        List<Incidencia> incidencies = incidenciaServiceSQL.llistarIncidencies().stream()
+                .filter(incidencia -> finalVehicles.contains(incidencia.getVehicle()))
+                .collect(Collectors.toList());
+
+        // Obtener otras entidades necesarias
+        List<Reserva> reserves = reservaServiceSQL.llistarReserves();
         List<EstatVehicle> estatsVehicle = Arrays.asList(EstatVehicle.values());
         Collections.sort(estatsVehicle);
+
+        // Obtener marcas y modelos
         List<String> marques = vehicleServiceSQL.getAtributsVehicle(Vehicle::getMarca, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
-
         List<String> models = vehicleServiceSQL.getAtributsVehicle(Vehicle::getModel, vehicles).stream()
                 .map(String::toLowerCase).collect(Collectors.toList());
 
+        // Aplicar filtros si están presentes
         if (matriculaFilt != null && !matriculaFilt.isEmpty()) {
             vehicles = vehicles.stream()
                     .filter(v -> v.getMatricula().equalsIgnoreCase(matriculaFilt))
@@ -88,20 +96,24 @@ public class AgentDashboardController {
                     .filter(v -> v.getMarca().equalsIgnoreCase(marquesFilt))
                     .collect(Collectors.toList());
         }
+
         if (modelsFilt != null && !modelsFilt.isEmpty()) {
             vehicles = vehicles.stream()
                     .filter(v -> v.getModel().equalsIgnoreCase(modelsFilt))
                     .collect(Collectors.toList());
         }
 
+        // Actualizar los datos en el modelo
         model.addAttribute("vehicles", vehicles);
         model.addAttribute("reserves", reserves);
         model.addAttribute("incidencies", incidencies);
         model.addAttribute("estatsVehicle", estatsVehicle);
         model.addAttribute("marques", marques);
         model.addAttribute("models", models);
-        return "dashboardAgent";
+
+        return "dashboardAgent"; // Nombre de la vista Thymeleaf
     }
+
 
     @GetMapping("/vehicle/{matricula}")
     public String detallsVehicle(@PathVariable("matricula") String matricula, Model model) {
@@ -229,4 +241,53 @@ public class AgentDashboardController {
         reservaServiceSQL.activarReserva(idReserva);
         return "redirect:/agent/dashboard";
     }
+
+    @GetMapping("/crear_incidencia")
+    public String mostrarFormularioCrearIncidencia(Model model) {
+        model.addAttribute("incidencia", new Incidencia());
+
+        // Añadir los vehículos disponibles
+        Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
+        if (agentObj instanceof Agent) {
+            Agent agent = (Agent) agentObj;
+            List<Vehicle> vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
+            model.addAttribute("vehicles", vehicles);
+        } else {
+            model.addAttribute("error", "No se pudo obtener el agente.");
+            return "errorPage"; // Muestra una página de error
+        }
+
+        return "Incidencia"; // Nombre de la plantilla Thymeleaf
+    }
+
+
+
+    @PostMapping("/crear_incidencia")
+    public String guardarIncidencia(@ModelAttribute Incidencia incidencia,
+                                    @RequestParam("cocheId") String cocheId, Model model) {
+        if (cocheId == null || cocheId.isEmpty()) {
+            model.addAttribute("error", "Debe seleccionar un vehículo.");
+            return "Incidencia";
+        }
+
+        Optional<Vehicle> optionalVehicle = vehicleServiceSQL.findByMatricula(cocheId);
+        if (optionalVehicle.isPresent()) {
+            Vehicle vehicle = optionalVehicle.get();
+            incidencia.setVehicle(vehicle); // Asociar el vehículo a la incidencia
+            incidenciaServiceSQL.guardarIncidencia(incidencia); // Guardar incidencia
+            return "redirect:/agent/dashboard";
+        } else {
+            model.addAttribute("error", "No se encontró el vehículo especificado.");
+            return "Incidencia";
+        }
+    }
+
+
+
+
+
+
+
+
+
 }
