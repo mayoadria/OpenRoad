@@ -190,8 +190,6 @@
                            th:href="@{/admin/activateUser/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Activar</a>
                         <a class="btn btn-primary"
                            th:href="@{'/admin/edit/' + ${client.nomUsuari} + '?visualizar=true'}">Visualitzar</a>
-
-
                     </td>
                 </tr>
                 </tbody>
@@ -260,6 +258,10 @@
                     <td th:text="${localitat.horariTancada}"></td>
                     <td th:text="${localitat.local}"></td>
                     <td th:text="${localitat.poblacio}"></td>
+                    <td>
+                        <a class="btn btn-danger"
+                           th:href="@{/admin/delete/{codiPostalLoc}(codiPostalLoc=${localitat.codiPostalLoc})}">Borrar</a>
+                    </td>
                 </tr>
                 </tbody>
             </form>

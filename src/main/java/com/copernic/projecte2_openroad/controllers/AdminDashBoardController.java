@@ -149,5 +149,11 @@ public class AdminDashBoardController {
 
     }
 
+    @GetMapping("/delete/{codiPostalLoc}")
+    public String deletelocalitat(@PathVariable String codiPostalLoc){
+        localitatServiceSQL.eliminarLocalitatPerId(codiPostalLoc);
+        return "redirect:/admin/dashboard";
+    }
+
 }
 
