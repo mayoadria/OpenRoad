@@ -103,7 +103,6 @@ public class SecurityConfig {
         admin.setNom("admin");
         admin.setAdreca("admin");
         admin.setCognom1("admin");
-        admin.setCognom2("admin");
         admin.setEmail("admin@admin.com");
         String[] part = admin.getEmail().split("@");
         String username = part[0];

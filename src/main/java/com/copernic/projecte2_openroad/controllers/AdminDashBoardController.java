@@ -105,7 +105,6 @@ public class AdminDashBoardController {
             // Actualizar los datos del cliente
             clienteACambiar.setNom(cliente.getNom());
             clienteACambiar.setCognom1(cliente.getCognom1());
-            clienteACambiar.setCognom2(cliente.getCognom2());
             clienteACambiar.setNumContacte1(cliente.getNumContacte1());
             clienteACambiar.setCodiPostal(cliente.getCodiPostal());
             clienteACambiar.setAdreca(cliente.getAdreca());
