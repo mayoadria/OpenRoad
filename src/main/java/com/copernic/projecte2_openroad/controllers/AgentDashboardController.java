@@ -104,12 +104,13 @@ public class AgentDashboardController {
     }
 
     @GetMapping("/vehicle/{matricula}")
-    public String detallsVehicle(@PathVariable("matricula") String matricula, Model model) {
+    public String detallsVehicle(@PathVariable("matricula") String matricula,boolean visualizar, Model model) {
         Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).orElse(null);
 
         model.addAttribute("vehicle", vehicle);
         model.addAttribute("isLogged", false);
-        return "infoVehiculo";
+        model.addAttribute("visualizar", true);
+        return "ModificarVehicles";
     }
 
     @GetMapping("/crear_vehicle")
@@ -164,6 +165,7 @@ public class AgentDashboardController {
         Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula);
         if (vehicle.isPresent()) {
             model.addAttribute("vehicle", vehicle.get());
+            model.addAttribute("visualizar", false);;
         }
         return "ModificarVehicles"; // Nombre del archivo Thymeleaf
     }

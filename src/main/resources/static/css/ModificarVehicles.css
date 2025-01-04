@@ -39,6 +39,7 @@ input, select, textarea {
     box-sizing: border-box;
 }
 
+
 textarea {
     resize: vertical;
     height: 100px;
@@ -62,7 +63,7 @@ button:hover {
 }
 
 /* Estilos de campos obligatorios */
-input:required, select:required, textarea:required {
+input:required, select:required, textarea:required ,p{
     border-color: #ff8800;
 }
 
@@ -83,3 +84,41 @@ input[readonly] {
         font-size: 14px;
     }
 }
+/* Estilo general para los párrafos */
+.visualizar-mode p {
+    font-size: 16px; /* Tamaño de letra adecuado para lectura */
+    line-height: 1.6; /* Espaciado entre líneas */
+    margin-bottom: 12px; /* Espaciado inferior entre párrafos */
+    color: #4a4a4a; /* Color de texto gris oscuro */
+    font-family: Arial, sans-serif; /* Fuente moderna y legible */
+    text-align: center;
+}
+
+/* Estilo para los títulos en negrita dentro de los párrafos */
+.visualizar-mode strong {
+    font-weight: bold; /* Negrita para destacar los títulos */
+    color: #2c3e50; /* Color más oscuro para títulos */
+}
+
+/* Estilo adicional para los valores dentro de los span */
+.visualizar-mode span {
+    font-style: italic; /* Valores en cursiva para diferenciarlos */
+    color: #333; /* Color ligeramente más oscuro para los valores */
+}
+.cancel-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+
+}
+.button-container {
+    display: flex; /* Usamos Flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    margin-top: 20px; /* Espaciado superior para separar del contenido anterior */
+}
+

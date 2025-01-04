@@ -1,116 +1,144 @@
-    <!DOCTYPE html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" th:href="@{/css/ModificarVehicles.css}">
-        <link rel="stylesheet" th:href="@{/css/header.css}">
-        <title>Editar Vehículo</title>
-    </head>
-    <body>
-    <h1>Editar Vehículo</h1>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/ModificarVehicles.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <title th:if="${visualizar}">Detalles del Vehículo</title>
+    <title th:if="${!visualizar}">Editar Vehículo</title>
+</head>
+<body>
+<h1 th:if="${visualizar}">Detalles del Vehículo</h1>
+<h1 th:if="${!visualizar}">Editar Vehículo</h1>
 
-    <!-- Formulario para editar vehículo -->
-    <form th:action="@{/agent/editVehicle}" th:object="${vehicle}" method="post">
-        <!-- Matrícula (readonly) -->
-        <label for="matricula">Matrícula:</label>
-        <input type="text" id="matricula" name="matricula" th:value="${vehicle.matricula}" readonly>
-        <br><br>
+<!-- Modo Edición -->
+<form th:if="${!visualizar}" th:action="@{/agent/editVehicle}" th:object="${vehicle}" method="post">
+    <!-- Matrícula -->
+    <label for="matricula">Matrícula:</label>
+    <input type="text" id="matricula" name="matricula" th:value="${vehicle.matricula}" readonly>
+    <br><br>
 
-        <!-- Marca -->
-        <label for="marca">Marca:</label>
-        <input type="text" id="marca" name="marca" th:value="${vehicle.marca}" required>
-        <br><br>
+    <!-- Marca -->
+    <label for="marca">Marca:</label>
+    <input type="text" id="marca" name="marca" th:value="${vehicle.marca}" required>
+    <br><br>
 
-        <!-- Modelo -->
-        <label for="model">Modelo:</label>
-        <input type="text" id="model" name="model" th:value="${vehicle.model}" required>
-        <br><br>
+    <!-- Modelo -->
+    <label for="model">Modelo:</label>
+    <input type="text" id="model" name="model" th:value="${vehicle.model}" required>
+    <br><br>
 
-        <!-- Precio por día -->
-        <label for="preuDia">Precio por día:</label>
-        <input type="number" id="preuDia" name="preuDia" th:value="${vehicle.preuDia}" step="0.01" required>
-        <br><br>
+    <!-- Precio por día -->
+    <label for="preuDia">Precio por día:</label>
+    <input type="number" id="preuDia" name="preuDia" th:value="${vehicle.preuDia}" step="0.01" required>
+    <br><br>
 
-        <!-- Fianza -->
-        <label for="fianca">Fianza:</label>
-        <input type="number" id="fianca" name="fianca" th:value="${vehicle.fianca}" step="0.01" required>
-        <br><br>
+    <!-- Fianza -->
+    <label for="fianca">Fianza:</label>
+    <input type="number" id="fianca" name="fianca" th:value="${vehicle.fianca}" step="0.01" required>
+    <br><br>
 
-        <!-- Días de alquiler mínimo -->
-        <label for="diesLloguerMinim">Días de alquiler mínimo:</label>
-        <input type="number" id="diesLloguerMinim" name="diesLloguerMinim" th:value="${vehicle.diesLloguerMinim}" required>
-        <br><br>
+    <!-- Días de alquiler mínimo -->
+    <label for="diesLloguerMinim">Días de alquiler mínimo:</label>
+    <input type="number" id="diesLloguerMinim" name="diesLloguerMinim" th:value="${vehicle.diesLloguerMinim}" required>
+    <br><br>
 
-        <!-- Días de alquiler máximo -->
-        <label for="diesLloguerMaxim">Días de alquiler máximo:</label>
-        <input type="number" id="diesLloguerMaxim" name="diesLloguerMaxim" th:value="${vehicle.diesLloguerMaxim}" required>
-        <br><br>
+    <!-- Días de alquiler máximo -->
+    <label for="diesLloguerMaxim">Días de alquiler máximo:</label>
+    <input type="number" id="diesLloguerMaxim" name="diesLloguerMaxim" th:value="${vehicle.diesLloguerMaxim}" required>
+    <br><br>
 
-        <!-- Plazas -->
-        <label for="places">Plazas:</label>
-        <select id="places" name="places" required>
-            <option value="" th:selected="${vehicle.places == null}">Seleccione</option>
-            <option th:each="places : ${T(com.copernic.projecte2_openroad.model.enums.Places).values()}"
-                    th:value="${places}" th:text="${places.valor}"></option>
-        </select>
-        <br><br>
+    <!-- Plazas -->
+    <label for="places">Plazas:</label>
+    <select id="places" name="places" required>
+        <option value="" th:selected="${vehicle.places == null}">Seleccione</option>
+        <option th:each="places : ${T(com.copernic.projecte2_openroad.model.enums.Places).values()}"
+                th:value="${places}" th:text="${places.valor}"></option>
+    </select>
+    <br><br>
 
-        <!-- Puertas -->
-        <label for="portes">Puertas:</label>
-        <select id="portes" name="portes" required>
-            <option value="" th:selected="${vehicle.portes == null}">Seleccione</option>
-            <option th:each="portes : ${T(com.copernic.projecte2_openroad.model.enums.Portes).values()}"
-                    th:value="${portes}" th:text="${portes.valor}"></option>
-        </select>
-        <br><br>
+    <!-- Puertas -->
+    <label for="portes">Puertas:</label>
+    <select id="portes" name="portes" required>
+        <option value="" th:selected="${vehicle.portes == null}">Seleccione</option>
+        <option th:each="portes : ${T(com.copernic.projecte2_openroad.model.enums.Portes).values()}"
+                th:value="${portes}" th:text="${portes.valor}"></option>
+    </select>
+    <br><br>
 
-        <!-- Caja de cambios -->
-        <label for="caixaCanvis">Caja de cambios:</label>
-        <select id="caixaCanvis" name="caixaCanvis" required>
-            <option value="" th:selected="${vehicle.caixaCanvis == null}">Seleccione</option>
-            <option th:each="caixaCanvis : ${T(com.copernic.projecte2_openroad.model.enums.CaixaCanvis).values()}"
-                    th:value="${caixaCanvis}" th:text="${caixaCanvis.valor}"></option>
-        </select>
-        <br><br>
+    <!-- Caja de cambios -->
+    <label for="caixaCanvis">Caja de cambios:</label>
+    <select id="caixaCanvis" name="caixaCanvis" required>
+        <option value="" th:selected="${vehicle.caixaCanvis == null}">Seleccione</option>
+        <option th:each="caixaCanvis : ${T(com.copernic.projecte2_openroad.model.enums.CaixaCanvis).values()}"
+                th:value="${caixaCanvis}" th:text="${caixaCanvis.valor}"></option>
+    </select>
+    <br><br>
 
-        <!-- Marchas -->
-        <label for="marxes">Marchas:</label>
-        <select id="marxes" name="marxes" required>
-            <option value="" th:selected="${vehicle.marxes == null}">Seleccione</option>
-            <option th:each="marxes : ${T(com.copernic.projecte2_openroad.model.enums.Marxes).values()}"
-                    th:value="${marxes}" th:text="${marxes.valor}"></option>
-        </select>
-        <br><br>
+    <!-- Marchas -->
+    <label for="marxes">Marchas:</label>
+    <select id="marxes" name="marxes" required>
+        <option value="" th:selected="${vehicle.marxes == null}">Seleccione</option>
+        <option th:each="marxes : ${T(com.copernic.projecte2_openroad.model.enums.Marxes).values()}"
+                th:value="${marxes}" th:text="${marxes.valor}"></option>
+    </select>
+    <br><br>
 
-        <!-- Combustible -->
-        <label for="combustible">Combustible:</label>
-        <select id="combustible" name="combustible">
-            <option value="" th:selected="${vehicle.combustible == null}">Seleccione</option>
-            <option th:each="combustible : ${T(com.copernic.projecte2_openroad.model.enums.Combustible).values()}"
-                    th:value="${combustible}" th:text="${combustible.valor}"></option>
-        </select>
-        <br><br>
+    <!-- Combustible -->
+    <label for="combustible">Combustible:</label>
+    <select id="combustible" name="combustible">
+        <option value="" th:selected="${vehicle.combustible == null}">Seleccione</option>
+        <option th:each="combustible : ${T(com.copernic.projecte2_openroad.model.enums.Combustible).values()}"
+                th:value="${combustible}" th:text="${combustible.valor}"></option>
+    </select>
+    <br><br>
 
-        <!-- Color -->
-        <label for="color">Color:</label>
-        <select id="color" name="color">
-            <option th:each="color : ${T(com.copernic.projecte2_openroad.model.enums.Color).values()}"
-                    th:value="${color}" th:text="${color.valor}"></option>
-        </select>
-        <br><br>
+    <!-- Color -->
+    <label for="color">Color:</label>
+    <select id="color" name="color">
+        <option th:each="color : ${T(com.copernic.projecte2_openroad.model.enums.Color).values()}"
+                th:value="${color}" th:text="${color.valor}"></option>
+    </select>
+    <br><br>
 
-        <!-- Año del vehículo -->
-        <label for="anyVehicle">Año del vehículo:</label>
-        <input type="number" id="anyVehicle" name="anyVehicle" th:value="${vehicle.anyVehicle}">
-        <br><br>
+    <!-- Año del vehículo -->
+    <label for="anyVehicle">Año del vehículo:</label>
+    <input type="number" id="anyVehicle" name="anyVehicle" th:value="${vehicle.anyVehicle}">
+    <br><br>
 
-        <!-- Kilómetros -->
-        <label for="km">Kilómetros:</label>
-        <input type="number" id="km" name="km" th:value="${vehicle.km}">
-        <br><br>
+    <!-- Kilómetros -->
+    <label for="km">Kilómetros:</label>
+    <input type="number" id="km" name="km" th:value="${vehicle.km}">
+    <br><br>
 
-        <button type="submit">Guardar Cambios</button>
-    </form>
-    </body>
-    </html>
+    <button type="submit">Guardar</button>
+    <div class="button-container">
+        <a href="/agent/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+    </div>
+</form>
+
+<!-- Modo Visualización -->
+<div  class="visualizar-mode" th:if="${visualizar}">
+    <p><strong>Matrícula:</strong> <span th:text="${vehicle.matricula}"></span></p>
+    <p><strong>Marca:</strong> <span th:text="${vehicle.marca}"></span></p>
+    <p><strong>Modelo:</strong> <span th:text="${vehicle.model}"></span></p>
+    <p><strong>Precio por día:</strong> <span th:text="${vehicle.preuDia}"></span> €</p>
+    <p><strong>Fianza:</strong> <span th:text="${vehicle.fianca}"></span> €</p>
+    <p><strong>Días de alquiler mínimo:</strong> <span th:text="${vehicle.diesLloguerMinim}"></span></p>
+    <p><strong>Días de alquiler máximo:</strong> <span th:text="${vehicle.diesLloguerMaxim}"></span></p>
+    <p><strong>Plazas:</strong> <span th:text="${vehicle.places}"></span></p>
+    <p><strong>Puertas:</strong> <span th:text="${vehicle.portes}"></span></p>
+    <p><strong>Caja de cambios:</strong> <span th:text="${vehicle.caixaCanvis}"></span></p>
+    <p><strong>Marchas:</strong> <span th:text="${vehicle.marxes}"></span></p>
+    <p><strong>Combustible:</strong> <span th:text="${vehicle.combustible}"></span></p>
+    <p><strong>Color:</strong> <span th:text="${vehicle.color}"></span></p>
+    <p><strong>Año del vehículo:</strong> <span th:text="${vehicle.anyVehicle}"></span></p>
+    <p><strong>Kilómetros:</strong> <span th:text="${vehicle.km}"></span></p>
+
+    <div class="button-container">
+        <a href="/agent/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+    </div>
+</div>
+</body>
+</html>
