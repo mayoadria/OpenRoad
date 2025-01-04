@@ -44,13 +44,13 @@ public class AdminDashBoardController {
 
        if (dniClientFilt != null && !dniClientFilt.isEmpty()) {
             clients = clients.stream()
-                    .filter(c -> c.getDni().equalsIgnoreCase(dniClientFilt))
+                    .filter(c -> c.getDni().contains(dniClientFilt))
                     .collect(Collectors.toList());
         }
 
         if (emailClientFilt != null && !emailClientFilt.isEmpty()) {
             clients = clients.stream()
-                    .filter(c -> c.getEmail().equalsIgnoreCase(emailClientFilt))
+                    .filter(c -> c.getEmail().contains(emailClientFilt))
                     .collect(Collectors.toList());
         }
 
@@ -64,7 +64,7 @@ public class AdminDashBoardController {
                     .collect(Collectors.toList());
         }if (CognomClientFilt != null && !CognomClientFilt.isEmpty()) {
             clients = clients.stream()
-                    .filter(c -> c.getCognom1().equalsIgnoreCase(CognomClientFilt))
+                    .filter(c -> c.getCognom1().contains(CognomClientFilt))
                     .collect(Collectors.toList());
         }
 
