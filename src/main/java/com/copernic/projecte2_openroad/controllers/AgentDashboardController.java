@@ -189,6 +189,16 @@ public class AgentDashboardController {
         }
         return "redirect:/agent/dashboard";
     }
+    @GetMapping("/lliurar/vehicle/{matricula}")
+    public String lliurarVehicle(@PathVariable String matricula, Model model) {
+        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula);
+        if (vehicle.isPresent()) {
+            vehicle.get().setEstatVehicle(EstatVehicle.ENTREGAT);
+            vehicleServiceSQL.modificarVehicle(vehicle.get());
+        }
+        return "redirect:/agent/dashboard";
+    }
+
 
     @PostMapping("/editVehicle")
     public String guardarCambios(@ModelAttribute Vehicle vehiculo, @RequestParam String matricula, Model model) {
