@@ -134,7 +134,20 @@ public class AdminDashBoardController {
         return "redirect:/admin/dashboard";
     }
 
+    @GetMapping("/crear_localitzacio")
+    public String mostrarFormulariLocalitzacio(Model model) {
+        Localitat localitat = new Localitat();
+        model.addAttribute("localitat", localitat);
 
+        return "crearLocalitat";
+    }
+    @PostMapping("/crearL")
+    public String crearLocalitat(@ModelAttribute Localitat localitat) {
+        localitatServiceSQL.guardarLocalitat(localitat);
+        return "redirect:/admin/dashboard";
+
+
+    }
 
 }
 
