@@ -31,6 +31,8 @@ public class AdminDashBoardController {
         @RequestParam(name = "dniClient", required = false) String dniClientFilt,
         @RequestParam(name = "emailClient", required = false) String emailClientFilt,
         @RequestParam(name = "paisClient", required = false) String paisClientFilt,
+        @RequestParam(name = "cognom1", required = false) String CognomClientFilt,
+        @RequestParam(name = "numContacte", required = false) String TelefonClientFilt,
         Model model) {
 
         List<Agent> agents = usuariServiceSQL.llistarAgents();
@@ -55,6 +57,14 @@ public class AdminDashBoardController {
         if (paisClientFilt != null && !paisClientFilt.isEmpty()) {
             clients = clients.stream()
                     .filter(c -> c.getPais() == Pais.valueOf(paisClientFilt))
+                    .collect(Collectors.toList());
+        }if (TelefonClientFilt != null && !TelefonClientFilt.isEmpty()) {
+            clients = clients.stream()
+                    .filter(c -> c.getNumContacte1() == Integer.parseInt(TelefonClientFilt))
+                    .collect(Collectors.toList());
+        }if (CognomClientFilt != null && !CognomClientFilt.isEmpty()) {
+            clients = clients.stream()
+                    .filter(c -> c.getCognom1().equalsIgnoreCase(CognomClientFilt))
                     .collect(Collectors.toList());
         }
 
