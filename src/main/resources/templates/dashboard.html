@@ -235,7 +235,7 @@
         </table>
 
         <h2>Lista de Localitats</h2>
-        <form action="/admin/crear_localitzacio" method="get">
+        <form class="button-container" action="/admin/crear_localitzacio" method="get">
             <button type="submit" class="btn btn-primary">Crear una localitat</button>
         </form>
         <table class="table table-bordered">
@@ -259,6 +259,8 @@
                     <td th:text="${localitat.local}"></td>
                     <td th:text="${localitat.poblacio}"></td>
                     <td>
+                        <a class="btn btn-success"
+                           th:href="@{/admin/modificar-localitat/{codiPostalLoc}(codiPostalLoc=${localitat.codiPostalLoc})}">Editar</a>
                         <a class="btn btn-danger"
                            th:href="@{/admin/delete/{codiPostalLoc}(codiPostalLoc=${localitat.codiPostalLoc})}">Borrar</a>
                     </td>

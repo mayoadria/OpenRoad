@@ -4,6 +4,7 @@ package com.copernic.projecte2_openroad.service.mysql;
 import java.util.List;
 
 // Spring
+import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,20 +43,9 @@ public class LocalitatServiceSQL {
     }
 
     // Modificar Localitat.
-    public String modificarLocalitat(Localitat localitat) {
-        try {
-            if (llistarLocalitatPerId(localitat.getCodiPostalLoc()) != null) {
+    public void modificarLocalitat(Localitat localitat) {
+
                 localitatRepoSQL.save(localitat);
-                String msg = "Localitat: " + localitat.getPoblacio() + " amb ID(" + localitat.getCodiPostalLoc() + ") modificat correctament!";
-                return msg;
-            } else {
-                String msg = "Localitat: ID(" + localitat.getCodiPostalLoc() + ") no s'ha trobat a la BD MySQL!";
-                return msg;
-            }
-        } catch (Exception e) {
-            String msg = "Error amb Localitat: ID(" + localitat.getCodiPostalLoc() + "). Excepció: " + e.getMessage();
-            return msg;
-        }
     }
 
     // Eliminar Localitat.
@@ -74,5 +64,9 @@ public class LocalitatServiceSQL {
             String msg = "Error amb Localitat: ID(" + id + "). Excepció: " + e.getMessage();
             return msg;
         }
+    }
+    public Localitat findByNomUsuari(String codiPostalLoc) {
+        Localitat user = localitatRepoSQL.findBycodiPostalLoc(codiPostalLoc);
+        return user;
     }
 }

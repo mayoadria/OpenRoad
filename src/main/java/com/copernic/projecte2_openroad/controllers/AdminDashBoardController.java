@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.rmi.server.RemoteServer;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -153,6 +154,21 @@ public class AdminDashBoardController {
     public String deletelocalitat(@PathVariable String codiPostalLoc){
         localitatServiceSQL.eliminarLocalitatPerId(codiPostalLoc);
         return "redirect:/admin/dashboard";
+    }
+
+    @GetMapping("/modificar-localitat/{codiPostalLoc}")
+    public String modificarLocalitatForm(@PathVariable("codiPostalLoc") String codiPostalLoc, Model model) {
+        Localitat localitat = localitatServiceSQL.findByNomUsuari(codiPostalLoc);
+
+            model.addAttribute("localitat", localitat);
+
+        return "modificarLocalitat"; // Nombre de la plantilla Thymeleaf
+    }
+
+    @PostMapping("/modificarL")
+    public String modificarLocalitat(@ModelAttribute Localitat localitat) {
+        localitatServiceSQL.modificarLocalitat(localitat); // Aquí llamas al servicio para actualizar la localización
+        return "redirect:/admin/dashboard"; // Redirige después de modificar
     }
 
 }

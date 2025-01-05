@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Localitat</title>
+    <title>Gestionar Localitat</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<h1>Crear Localitat</h1>
 
-<!-- Formulario para crear una Localitat -->
-<form th:action="@{/admin/crearL}" th:object="${localitat}" method="post">
+<h1>Gestionar Localitat</h1>
+
+<!-- Botones para seleccionar crear o modificar -->
+
+
+<!-- Formulario para crear una nueva Localitat -->
+<form id="formCrear" th:action="@{/admin/crearL}" th:object="${localitat}" method="post" >
+    <h2>Añadir Nueva Localitat</h2>
 
     <!-- Campo Codi Postal -->
     <label for="codiPostalLoc">Codi Postal:</label>
@@ -46,7 +51,11 @@
     <button type="submit">Crear Localitat</button>
 </form>
 
-<!-- Volver a la página principal -->
+
+
+<!-- Volver a la lista de Localitats -->
 <a href="/localitat/listar">Volver a la lista de Localitats</a>
+
+
 </body>
 </html>

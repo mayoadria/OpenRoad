@@ -121,7 +121,7 @@ public class AgentDashboardController {
         Vehicle vehicle = new Vehicle();
         model.addAttribute("vehicle", vehicle);
         
-        return "crearVehicles";
+        return "crearVehicle";
     }
 
 
