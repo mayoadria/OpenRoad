@@ -137,18 +137,20 @@
                 <span th:text="${vehicle.combustible.getValor()}"></span>
             </div>
         </div>
+        <!-- Comentaris -->
         <div class="rating">
             <div th:each="comentari : ${comentaris}" class="coment-box">
                 <div class="dades-client">
                     <p class="nomcognomCom" th:text="${comentari.nomClient} + ' ' + ${comentari.cognom1Client}"></p>
-                    <p class="nomUserCom" th:text="${comentari.nomUsuariClient}"></p>
+                    <p class="nomUserCom" th:text="'@' + ${comentari.nomUsuariClient}"></p>
                 </div>
                 <div class="dades-comentari">
                     <p class="dataCom" th:text="${comentari.dataComentari}"></p>
                     <p class="titolCom" th:text="${comentari.titolComent}"></p>
                     <p class="msstgCom" th:text="${comentari.missatgeComentari}"></p>
-                    <p class="recCom" th:text="${comentari.recomanacio}"></p>
-
+                    <div class="recCom" th:if="${comentari.recomanacio}">
+                        <p>Recomanat!</p>
+                    </div>
                 </div>
                 <div class="est-comentari">
                     <div class="stars">
@@ -160,8 +162,14 @@
                     </div>
                 </div>
                 <div class="likes-comentari">
-                    <p class="likesCom" th:text="${comentari.like}"></p>
-                    <p class="disLikesCom" th:text="${comentari.disLike}"></p>
+                    <div class="icon-likes">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <p class="likesCom" th:text="${comentari.like}"></p>
+                    </div>
+                    <div class="icon-likes">
+                        <i class="fa-solid fa-thumbs-down"></i>
+                        <p class="disLikesCom" th:text="${comentari.disLike}"></p>
+                    </div>
                 </div>
 
             </div>

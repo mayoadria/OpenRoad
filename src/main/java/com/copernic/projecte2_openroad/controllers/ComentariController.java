@@ -13,6 +13,8 @@ import com.copernic.projecte2_openroad.service.mongodb.ComentarisServiceMongo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class ComentariController {
@@ -53,6 +55,6 @@ public class ComentariController {
         comentarisServiceMongo.guardarComentari(comentari);
 
         return "redirect:/comentariForm";
-    }
+    }   
 
 }

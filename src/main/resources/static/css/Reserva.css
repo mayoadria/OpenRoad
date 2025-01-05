@@ -118,7 +118,7 @@ body {
 }
 
 .left-panel {
-    width: 30%;
+    width: 20%;
     background: white;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -280,6 +280,142 @@ body {
     font-weight: bold; /* Resalta los títulos */
     color: #000; /* Color negro para los títulos */
 }
+
+/*----------------------------Comentaris-------------------------------*/
+
+/* Estilo general para el contenedor de comentarios */
+.rating {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaciado entre comentarios */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de cada comentario */
+.coment-box {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para los datos del cliente */
+.dades-client {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dades-client p {
+    padding-left: 5px;;
+}
+
+.nomcognomCom {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.nomUserCom {
+    font-size: 14px;
+    font-style: italic;
+    color: #666;
+}
+
+/* Estilo para los datos del comentario */
+.dades-comentari {
+    display: block;
+    padding-inline: 10px;
+
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dataCom {
+    font-size: 12px;
+    color: #999;
+}
+
+.titolCom {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 5px;
+}
+
+.msstgCom {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.recCom {
+    font-size: 14px;
+    font-weight: bold;
+    color: #008000; /* Verde para resaltar recomendaciones */
+}
+
+/* Estilo para las estrellas de calificación */
+.est-comentari .stars {
+    display: flex;
+    padding-top: 20px;
+    gap: 5px;
+}
+
+.stars .fa-star {
+    color: #ffc107; /* Color dorado para estrellas */
+    font-size: 18px;
+}
+
+/* Estilo para los likes y dislikes */
+.likes-comentari {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon-likes {
+    margin-left: 10px;
+    display: ruby;
+}
+
+.likesCom {
+    color: #008000; /* Verde para likes */
+    font-weight: bold;
+}
+
+.disLikesCom {
+    color: #ff0000; /* Rojo para dislikes */
+    font-weight: bold;
+}
+
+/* Adaptabilidad para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .coment-box {
+        padding: 10px;
+    }
+
+    .dades-client,
+    .likes-comentari {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .est-comentari .stars {
+        justify-content: flex-start;
+    }
+}
+
 
 /*---------------------------------------------------------------------*/
 
