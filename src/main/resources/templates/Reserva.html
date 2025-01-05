@@ -139,7 +139,7 @@
         </div>
         <!-- Comentaris -->
         <div class="rating">
-            <div th:each="comentari : ${comentaris}" class="coment-box">
+            <div th:each="comentari : ${comentaris}" class="coment-box" data-id="${comentari.idComentari}">
                 <div class="dades-client">
                     <p class="nomcognomCom" th:text="${comentari.nomClient} + ' ' + ${comentari.cognom1Client}"></p>
                     <p class="nomUserCom" th:text="'@' + ${comentari.nomUsuariClient}"></p>
@@ -153,23 +153,29 @@
                     </div>
                 </div>
                 <div class="est-comentari">
-                    <div class="stars">
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                    <div class="stars" data-valoracio="${comentari.valoracio}">
+                        <span class="fa fa-star" th:each="i : ${#numbers.sequence(1, 5)}"
+                              th:classappend="${i <= comentari.valoracio} ? ' checked' : ''"></span>
                     </div>
+                    
                 </div>
                 <div class="likes-comentari">
                     <div class="icon-likes">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                        <p class="likesCom" th:text="${comentari.like}"></p>
+                        <i id="likeButton" class="fa-solid fa-thumbs-up likeButton"></i>
+                        <p id="likeCounter" class="likesCom likeCounter" th:text="${comentari.like}"></p>
                     </div>
                     <div class="icon-likes">
-                        <i class="fa-solid fa-thumbs-down"></i>
-                        <p class="disLikesCom" th:text="${comentari.disLike}"></p>
+                        <i id="dislikeButton" class="fa-solid fa-thumbs-down dislikeButton"></i>
+                        <p id="dislikeCounter" class="disLikesCom dislikeCounter" th:text="${comentari.disLike}"></p>
                     </div>
+
+                    <form class="likeForm" th:action="@{/modificarLikes}" method="post" style="display: none;">
+                        <input type="hidden" name="idComentari" th:value="${comentari.idComentari}" />
+                        <input type="hidden" name="matricula" th:value="${vehicle.matricula}" />
+                        <input type="hidden" name="likes" class="likesInput" value="0" />
+                        <input type="hidden" name="dislikes" class="dislikesInput" value="0" />
+                        <button type="submit" style="display: none;"></button>
+                    </form>
                 </div>
 
             </div>

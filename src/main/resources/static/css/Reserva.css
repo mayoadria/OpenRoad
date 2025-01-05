@@ -292,6 +292,9 @@ body {
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+    max-height: 600px; /* Limitar la altura máxima del contenedor */
+    overflow-y: auto; 
 }
 
 /* Contenedor de cada comentario */
@@ -373,9 +376,14 @@ body {
 }
 
 .stars .fa-star {
-    color: #ffc107; /* Color dorado para estrellas */
     font-size: 18px;
 }
+
+.checked {
+    color: gold;
+}
+
+
 
 /* Estilo para los likes y dislikes */
 .likes-comentari {
@@ -396,6 +404,10 @@ body {
 .disLikesCom {
     color: #ff0000; /* Rojo para dislikes */
     font-weight: bold;
+}
+
+.selected {
+    color: #00b4d8;
 }
 
 /* Adaptabilidad para pantallas más pequeñas */
