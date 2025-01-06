@@ -6,11 +6,14 @@ import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.security.TipusPermis;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mongodb.DocumentServiceMongo;
+import jakarta.jws.WebParam;
+import jakarta.validation.Valid;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,14 +36,16 @@ public class RegistroClienteController {
     @GetMapping("")
     public String Registre(Model model) {
         model.addAttribute("paisos", Pais.values());
+        model.addAttribute("client", new Client());
         return "Registre";
     }
 
     @PostMapping("/new")
     public String save(
-            @ModelAttribute("client") Client cli,
+            @Valid @ModelAttribute("client") Client cli, BindingResult result,
             @RequestParam("dniFile") MultipartFile dniFile,
-            @RequestParam("carnetFile") MultipartFile carnetFile
+            @RequestParam("carnetFile") MultipartFile carnetFile,
+            Model model
     ) {
         try {
             // Processar i guardar dades a MySQL
@@ -50,27 +55,32 @@ public class RegistroClienteController {
             cli.setNomUsuari(username);
             cli.setPermisos(TipusPermis.CLIENT.toString());
             cli.setEnabled(false);
-            clientServiceSQL.guardarClient(cli);
+            if (result.hasErrors()) {
+                model.addAttribute("paisos", Pais.values());
+                return "Registre";
+            }else {
+                clientServiceSQL.guardarClient(cli);
 
-            // Processar i guardar imatges a MongoDB
-            DocumentClient document = new DocumentClient();
-            document.setIdClient(cli.getDni());
+                // Processar i guardar imatges a MongoDB
+                DocumentClient document = new DocumentClient();
+                document.setIdClient(cli.getDni());
 
-            // Crear un mapa amb noms descriptius per les imatges
-            Map<String, Binary> docMap = new HashMap<>();
-            if (!dniFile.isEmpty()) {
-                docMap.put("dni", new Binary(dniFile.getBytes()));
+                // Crear un mapa amb noms descriptius per les imatges
+                Map<String, Binary> docMap = new HashMap<>();
+                if (!dniFile.isEmpty()) {
+                    docMap.put("dni", new Binary(dniFile.getBytes()));
+                }
+                if (!carnetFile.isEmpty()) {
+                    docMap.put("carnetConduir", new Binary(carnetFile.getBytes()));
+                }
+
+                document.setClientDoc(docMap);
+
+                // Guardar a MongoDB
+                documentServiceMongo.guardarDocument(document);
+
+                return "redirect:/login";
             }
-            if (!carnetFile.isEmpty()) {
-                docMap.put("carnetConduir", new Binary(carnetFile.getBytes()));
-            }
-
-            document.setClientDoc(docMap);
-
-            // Guardar a MongoDB
-            documentServiceMongo.guardarDocument(document);
-
-            return "redirect:/login";
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,6 +7,7 @@ import com.copernic.projecte2_openroad.security.TipusPermis;
 import jakarta.persistence.*;
 
 // Lombok
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,18 +28,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 public abstract class Usuari implements UserDetails {
 
     // PK DNI - Identificador d'Usuari (Client i Agent).
+    @NotEmpty(message = "No puede estar vacio")
+    @Size(min = 9 ,max =9,message = "Tiene que tener un tamaño de 9 letras")
+    @Pattern(regexp = "^[0-9]{8}[A-Z]$", message = "El DNI debe tener 8 números seguidos de una letra mayúscula.")
     @Id
     private String dni;
 
     // Camps Generals
+    @NotEmpty(message = "Debes entrar un nombre valido")
     @Column(nullable = false)
     private String nom;
+
+    @NotEmpty(message = "Debes entrar un apellido valido")
     @Column(nullable = false, name = "cognom_1")
     private String cognom1;
+
+    @NotEmpty(message = "No puede estar vacío")
+    @Size(min = 9, max = 9, message = "El número de teléfono debe tener exactamente 9 dígitos")
+    @Pattern(regexp = "\\d{9}", message = "El número de teléfono solo puede contener dígitos")
     @Column(nullable = false, name = "num_contacte_1")
-    private int numContacte1;
+    private String numContacte1;
+
+    @NotEmpty(message = "No puede estar vacío")
+    @Size(min = 5, max = 5, message = "El codi postal debe tener exactamente 5 dígitos")
+    @Pattern(regexp = "\\d{5}", message = "El codi postal solo puede contener dígitos")
     @Column(nullable = true, name = "codi_postal")
     private String codiPostal;
+
+    @NotEmpty(message = "L'Adreça no pot ser buida")
     @Column(nullable = true)
     private String adreca;
 
@@ -46,8 +63,10 @@ public abstract class Usuari implements UserDetails {
     private Pais pais;
 
     // Inici Sessió General
+    @NotEmpty(message = "No puede estar vacio")
     @Column(nullable = false)
     private String email;
+    @NotEmpty(message = "No puede estar vacio")
     @Column(nullable = false)
     private String contrasenya;
     @Column(nullable = false, name = "nom_usuari")

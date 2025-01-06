@@ -61,7 +61,7 @@ public class AdminDashBoardController {
                     .collect(Collectors.toList());
         }if (TelefonClientFilt != null && !TelefonClientFilt.isEmpty()) {
             clients = clients.stream()
-                    .filter(c -> c.getNumContacte1() == Integer.parseInt(TelefonClientFilt))
+                    .filter(c -> c.getNumContacte1().contains(TelefonClientFilt))
                     .collect(Collectors.toList());
         }if (CognomClientFilt != null && !CognomClientFilt.isEmpty()) {
             clients = clients.stream()

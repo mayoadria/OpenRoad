@@ -10,38 +10,44 @@
 
 <form class="form" th:action="@{/registre/new}" th:object="${client}" method="post" th:enctype="@{multipart/form-data}">
     <p class="title">Registre client</p>
-    <div class="flex">
-        <label>
-            <input class="input" type="text" placeholder="" id="nom" name="nom" required="">
+
+    <div class="compact-row">
+        <label for="nom">
+            <input type="text" class="input" id="nom" th:field="*{nom}" placeholder=" ">
             <span>Nom</span>
         </label>
+        <div class="error-message" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
 
-        <label>
-            <input class="input" type="text" placeholder="" id="cognom1" name="cognom1" required="">
+        <label for="cognom1">
+            <input type="text" class="input" id="cognom1" th:field="*{cognom1}" placeholder=" ">
             <span>Cognom</span>
         </label>
+        <div class="error-message" th:if="${#fields.hasErrors('cognom1')}" th:errors="*{cognom1}"></div>
     </div>
 
-    <div class="flex">
-        <label>
-            <input class="input" type="email" placeholder="" id="email" name="email" required="">
+    <div class="compact-row">
+        <label for="email">
+            <input type="email" class="input" id="email" th:field="*{email}" placeholder=" ">
             <span>Correu</span>
         </label>
+        <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
-        <label>
-            <input class="input" type="password" placeholder="" id="contrasenya" name="contrasenya" required="">
+        <label for="contrasenya">
+            <input type="password" class="input" id="contrasenya" th:field="*{contrasenya}" placeholder=" ">
             <span>Contrasenya</span>
         </label>
+        <div class="error-message" th:if="${#fields.hasErrors('contrasenya')}" th:errors="*{contrasenya}"></div>
     </div>
 
-    <div class="flex">
-        <label>
-            <input class="input" type="text" placeholder="" id="dni" name="dni" required="">
+    <div class="compact-row">
+        <label for="dni">
+            <input type="text" class="input" id="dni" th:field="*{dni}" placeholder=" ">
             <span>DNI/NIE</span>
         </label>
+        <div class="error-message" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>
 
         <label>
-            <select class="input" name="pais" id="pais" required>
+            <select class="input" th:field="*{pais}" id="pais" required>
                 <option value="" disabled selected hidden></option>
                 <option class="inp_pais" th:each="pais : ${paisos}"
                         th:value="${pais}"
@@ -51,36 +57,41 @@
         </label>
     </div>
 
-    <div class="flex">
-        <label>
-            <input class="input" type="text" placeholder="" id="numContacte1" name="numContacte1" required="">
-            <span>Nº Telefon</span>
+    <div class="compact-row">
+        <label for="numContacte1">
+            <input type="text" class="input" id="numContacte1" th:field="*{numContacte1}" placeholder=" ">
+            <span>Nº Telèfon</span>
         </label>
+        <div class="error-message" th:if="${#fields.hasErrors('numContacte1')}" th:errors="*{numContacte1}"></div>
 
-        <label>
-            <input class="input" type="text" placeholder="" id="codiPostal" name="codiPostal" required="">
+        <label for="codiPostal">
+            <input type="text" class="input" id="codiPostal" th:field="*{codiPostal}" placeholder=" ">
             <span>Codi Postal</span>
         </label>
+        <div class="error-message" th:if="${#fields.hasErrors('codiPostal')}" th:errors="*{codiPostal}"></div>
     </div>
 
-    <label class="flex">
-        <input class="input" type="text" id="adreca" name="adreca" required>
+    <label for="adreca">
+        <input type="text" class="input" id="adreca" th:field="*{adreca}" placeholder=" ">
         <span>Adreça</span>
     </label>
+    <div class="error-message" th:if="${#fields.hasErrors('adreca')}" th:errors="*{adreca}"></div>
 
-    <div class="file-upload">
-        <label for="dniFile">Foto DNI</label>
-        <input type="file" id="dniFile" name="dniFile" accept="image/*">
-    </div>
-    <div class="file-upload">
-        <label for="carnetFile">Foto Carnet</label>
-        <input type="file" id="carnetFile" name="carnetFile" accept="image/*">
+    <div class="compact-row">
+        <div class="file-upload">
+            <label for="dniFile">Foto DNI</label>
+            <input type="file" id="dniFile" name="dniFile" accept="image/*">
+        </div>
+
+        <div class="file-upload">
+            <label for="carnetFile">Foto Carnet</label>
+            <input type="file" id="carnetFile" name="carnetFile" accept="image/*">
+        </div>
     </div>
 
     <button class="submit">Registra</button>
-    <p class="signin">Ja estàs registrat? <a th:href="@{/login}">Inicia sessió</a> </p>
-
+    <p class="signin">Ja estàs registrat? <a th:href="@{/login}">Inicia sessió</a></p>
 </form>
-</body>
 
+</body>
 </html>
