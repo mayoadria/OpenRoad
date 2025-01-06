@@ -99,7 +99,8 @@ public class SecurityConfig {
         admin.setNomUsuari(username);
         admin.setPermisos(TipusPermis.ADMIN.toString());
         admin.setEnabled(true);
-        admin.setCodiPostal("admin");
+        admin.setCodiPostal("00000");
+        admin.setNumContacte1("123456789");
         admin.setPais(Pais.ESPANYA);
 
 // Asignar la localidad al Admin

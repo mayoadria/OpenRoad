@@ -49,13 +49,11 @@ public abstract class Usuari implements UserDetails {
     @Column(nullable = false, name = "num_contacte_1")
     private String numContacte1;
 
-    @NotEmpty(message = "No puede estar vacío")
     @Size(min = 5, max = 5, message = "El codi postal debe tener exactamente 5 dígitos")
     @Pattern(regexp = "\\d{5}", message = "El codi postal solo puede contener dígitos")
     @Column(nullable = true, name = "codi_postal")
     private String codiPostal;
 
-    @NotEmpty(message = "L'Adreça no pot ser buida")
     @Column(nullable = true)
     private String adreca;
 

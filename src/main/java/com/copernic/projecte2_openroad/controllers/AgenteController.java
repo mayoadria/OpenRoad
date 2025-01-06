@@ -6,10 +6,12 @@ import com.copernic.projecte2_openroad.model.mysql.Localitat;
 import com.copernic.projecte2_openroad.security.TipusPermis;
 import com.copernic.projecte2_openroad.service.mysql.LocalitatServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +42,9 @@ public class AgenteController {
     }
 
     @PostMapping("/new")
-    public String crearAgente(@ModelAttribute Agent agent, @ModelAttribute("localitatOption") String localitatOption) {
+    public String crearAgente(@Valid @ModelAttribute("agent") Agent agent, BindingResult result,
+                              @ModelAttribute("localitatOption") String localitatOption, Model model) {
+
         if ("new".equals(localitatOption)) {
             // Crear nueva localidad si se seleccionó "Crear nueva localidad"
             Localitat novaLocalitat = agent.getLocalitat();
@@ -50,6 +54,7 @@ public class AgenteController {
             agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
         } if (localitatOption.equals("")) {
             agent.setLocalitat(null);
+            agent.setCodiPostal("00000");
         } if (!localitatOption.equals("")) {
              // Usar una localidad existente
             String localitatId = localitatOption;
@@ -59,6 +64,11 @@ public class AgenteController {
             agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
         }
 
+        if (result.hasErrors()) {
+            model.addAttribute("paisos", Pais.values());
+            model.addAttribute("localitats", localitatService.llistarLocalitats());
+            return "crearAgent"; // Asegúrate de que esta plantilla esté configurada para manejar errores
+        }
         // Configurar datos del agente
         agent.setContrasenya(passwordEncoder.encode(agent.getContrasenya()));
         String[] part = agent.getEmail().split("@");
@@ -68,7 +78,8 @@ public class AgenteController {
         agent.setEnabled(true);
 
         // Guardar agente
-        usuariServiceSQL.guardarAgent(agent);
+
+            usuariServiceSQL.guardarAgent(agent);
 
         return "redirect:/admin/dashboard";
     }
