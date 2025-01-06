@@ -1,15 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>OpenRoad · Factura</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/factura.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <script th:src="@{/scripts/infoVehiculo.js}" defer></script>
+    <script th:src="@{/scripts/header.js}" defer></script>
+    <title>Resumen de Reserva | OpenRoad</title>
 </head>
 <body>
-<h1>Factura</h1>
-    <!--<p><strong>Fecha de inicio:</strong> <span th:text="${reserva.dataInici}"></span></p>
-    <p><strong>Fecha de fin:</strong> <span th:text="${reserva.dataFinal}"></span></p>
-    <p><strong>Estado:</strong> <span th:text="${reserva.estatReserva}"></span></p> -->
+<header class="nav-container">
+    <nav class="navbar">
+        <div class="logo">
+            <a class="logo" th:href="@{/}">
+                <img th:src="@{/images/otros/logo_openroad.png}" alt="OpenRoad Logo" class="logo-img" width="55px" height="55px">
+            </a>
+        </div>
 
-   <!-- <p><strong>Precio total:</strong> <span th:text="${reserva.preuComplet}"></span></p> -->
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/cataleg}">Catálogo</a></li>
+        </ul>
+
+    </nav>
+</header>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="summary">
+        <h2>Resumen de tu Reserva</h2>
+
+        <section class="vehicle-details">
+            <h3>Detalles del Vehículo</h3>
+            <div class="vehicle-info">
+                <img th:src="${vehicle.imageUrl}" alt="Imagen del vehículo" class="vehicle-image">
+                <div class="vehicle-data">
+                    <p><strong>Marca y Modelo:</strong> <span th:text="${vehicle.marca}"></span> <span th:text="${vehicle.model}"></span></p>
+                    <p><strong>Plazas:</strong> <span th:text="${vehicle.places.valor}"></span></p>
+                    <p><strong>Puertas:</strong> <span th:text="${vehicle.portes.valor}"></span></p>
+                    <p><strong>Transmisión:</strong> <span th:text="${vehicle.caixaCanvis.valor}"></span></p>
+                    <p><strong>Combustible:</strong> <span th:text="${vehicle.combustible.valor}"></span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Puedes descomentar estas secciones según sea necesario -->
+
+        <section class="rental-dates">
+            <h3>Fechas de la Reserva</h3>
+            <p><strong>Fecha de Recogida:</strong> <span th:text="${reserva.fechaRecogida}"></span></p>
+            <p><strong>Fecha de Entrega:</strong> <span th:text="${reserva.fechaEntrega}"></span></p>
+<!--            <p><strong>Hora de Recogida:</strong> <span th:text="${reserva.horaRecogida}"></span></p>-->
+<!--            <p><strong>Hora de Entrega:</strong> <span th:text="${reserva.horaEntrega}"></span></p>-->
+        </section>
+        <section class="client-details">
+            <h3>Datos del Conductor</h3>
+            <p><strong>Nombre:</strong> <span th:text="${client.nom}"></span> <span th:text="${client.cognom1}"></span></p>
+            <p><strong>DNI:</strong> <span th:text="${client.dni}"></span></p>
+            <p><strong>Direcció:</strong> <span th:text="${client.adreca}"></span></p>
+            <p><strong>Numero de Telefón:</strong> <span th:text="${client.numContacte1}"></span></p>
+            <p><strong>Correu Electornic:</strong> <span th:text="${client.email}"></span></p>
+
+        </section>
+    </div>
+</div>
 </body>
 </html>

@@ -7,5 +7,5 @@ import com.copernic.projecte2_openroad.model.mysql.Localitat;
 
 @Repository
 public interface LocalitatRepositorySQL extends JpaRepository<Localitat, String> {
-
+Localitat findBycodiPostalLoc(String localitat);
 }

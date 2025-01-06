@@ -20,7 +20,7 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="#section1">Inici</a></li>
+            <li><a th:href="@{/}">Inici</a></li>
             <li><a th:href="@{/cataleg}">Catàleg</a></li>
             <li><a href="#section3">Contacte</a></li>
 
@@ -68,6 +68,33 @@
                         </svg>
                         Perfil
                     </a>
+                    <div th:if="${isAgent}" >
+                        <a th:href="@{/agent/dashboard}" class="dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </div>
+                    <div th:if="${isAdmin}" >
+                        <a th:href="@{/admin/dashboard}" class="dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </div>
+                    <div th:if="${isClient}" >
+                        <a th:href="@{/client/reserves}" class="dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </div>
 
                     <a th:href="@{/logout}" class="dropdown-item">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -260,27 +287,27 @@
                         </select>
                     </div>
                 </div>
-            <div class="price-details">
-                <p>
-                    <span><strong>Preu per día:</strong></span>
-                    <span id="preuDia" th:text="${vehicle.preuDia + ' €'}"></span>
-                </p>
-                <p><strong>Número de días:</strong> <span id="diasReserva">0</span></p>
+                <div class="price-details">
+                    <p>
+                        <span><strong>Preu per día:</strong></span>
+                        <span id="preuDia" th:text="${vehicle.preuDia + ' €'}"></span>
+                    </p>
+                    <p><strong>Número de días:</strong> <span id="diasReserva">0</span></p>
 
-                <p>
-                    <span><strong>Preu fiança:</strong></span>
-                    <span id="precioFianza" th:text="${vehicle.fianca + ' €'}"></span>
-                </p>
-                <p>
-                    <span><strong>Total:</strong></span>
-                    <span id="precioTotal"></span>
-                </p>
-            </div>
-            <div class="container">
-                <!-- Datos del conductor -->
-                <section class="conductor-section">
-                    <h3>Dades del conductor</h3>
-                    <div class="conductor-details">
+                    <p>
+                        <span><strong>Preu fiança:</strong></span>
+                        <span id="precioFianza" th:text="${vehicle.fianca + ' €'}"></span>
+                    </p>
+                    <p>
+                        <span><strong>Total:</strong></span>
+                        <span id="precioTotal"></span>
+                    </p>
+                </div>
+                <div class="container">
+                    <!-- Datos del conductor -->
+                    <section class="conductor-section">
+                        <h3>Dades del conductor</h3>
+                        <div class="conductor-details">
 
 
                             <!-- Datos del Cliente -->
@@ -294,11 +321,12 @@
                             <input type="email" th:field="*{client.email}" placeholder="E-mail" readonly>
 
                             <label for="telefono">Número de telèfon</label>
-                            <input type="tel" th:field="*{client.numContacte1}" placeholder="Número de telèfon"readonly >
+                            <input type="tel" th:field="*{client.numContacte1}" placeholder="Número de telèfon"
+                                   readonly>
 
                             <!-- Checkbox para aceptar términos -->
                             <div class="terms">
-                                <input type="checkbox" id="terms" >
+                                <input type="checkbox" id="terms">
                                 <label for="terms">
                                     He llegit els <a href="/docs/terminos_y_condiciones.txt" target="_blank">Termes i
                                     condicions</a> de la reserva, nota legal i privacitat.
@@ -312,17 +340,17 @@
                                 <div class="payment-details">
                                     <label for="nombre-tarjeta">Nom Tarjeta</label>
                                     <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez"
-                                           >
+                                    >
 
                                     <label for="numero-tarjeta">Nº tarjeta</label>
                                     <input type="text" id="numero-tarjeta" placeholder="1234 1234 1234 1234"
-                                           maxlength="19" >
+                                           maxlength="19">
 
                                     <label for="fecha-caducidad">Data caducitat</label>
-                                    <input type="text" id="fecha-caducidad" placeholder="05/2025" >
+                                    <input type="text" id="fecha-caducidad" placeholder="05/2025">
 
                                     <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" placeholder="123" maxlength="3" >
+                                    <input type="text" id="cvv" placeholder="123" maxlength="3">
                                     <input type="hidden" id="preuComplert" name="preuComplert" value=""/>
                                     <input type="hidden" name="matricula2" th:value="${vehicle.matricula}"/>
                                 </div>
@@ -333,10 +361,12 @@
                                 <button type="submit" class="btn btn-primary">Pagar</button>
                             </div>
 
-                        </form>
-                    </div>
-                </section>
-            </div>
+
+                        </div>
+                    </section>
+
+                </div>
+            </form>
         </div>
 
 

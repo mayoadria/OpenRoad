@@ -48,7 +48,7 @@ public class RegistroClienteController {
             String[] part = cli.getEmail().split("@");
             String username = part[0];
             cli.setNomUsuari(username);
-            cli.setPermisos(TipusPermis.CONSULTAR_CATALEG + "," + TipusPermis.MODIFICAR_PERFIL);
+            cli.setPermisos(TipusPermis.CLIENT.toString());
             cli.setEnabled(false);
             clientServiceSQL.guardarClient(cli);
 

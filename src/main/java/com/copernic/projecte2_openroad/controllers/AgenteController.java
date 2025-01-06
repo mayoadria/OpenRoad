@@ -4,6 +4,7 @@ import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.Agent;
 import com.copernic.projecte2_openroad.model.mysql.Localitat;
 import com.copernic.projecte2_openroad.security.TipusPermis;
+import com.copernic.projecte2_openroad.service.mysql.LocalitatServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,38 +17,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class AgenteController
-    {
+public class AgenteController {
 
-        @Autowired
-        UsuariServiceSQL usuariServiceSQL;
+    @Autowired
+    UsuariServiceSQL usuariServiceSQL;
 
-        @Autowired
-        PasswordEncoder passwordEncoder;
+    @Autowired
+    LocalitatServiceSQL localitatService;
 
-        @GetMapping("/newAgent")
-        public String mostrarFormAgent(Model model) {
-            Agent agent = new Agent();
-            agent.setLocalitat(new Localitat());
-            
-            model.addAttribute("paisos", Pais.values());
-            model.addAttribute("agent", agent);
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @GetMapping("/newAgent")
+    public String mostrarFormAgent(Model model) {
+        Agent agent = new Agent();
+        agent.setLocalitat(new Localitat());
+
+        model.addAttribute("paisos", Pais.values());
+        model.addAttribute("agent", agent);
+        model.addAttribute("localitats", localitatService.llistarLocalitats());
         return "crearAgent";
     }
 
-        @PostMapping("/new")
-        public String crearAgente(@ModelAttribute Agent agent) {
+    @PostMapping("/new")
+    public String crearAgente(@ModelAttribute Agent agent, @ModelAttribute("localitatOption") String localitatOption) {
+        if ("new".equals(localitatOption)) {
+            // Crear nueva localidad si se seleccionó "Crear nueva localidad"
+            Localitat novaLocalitat = agent.getLocalitat();
+            localitatService.guardarLocalitat(novaLocalitat);
+            agent.setLocalitat(novaLocalitat);
+        } else {
+            // Usar una localidad existente
+            String localitatId = localitatOption;
+            Localitat localitatExist = localitatService.findByNomUsuari(localitatId);
+            agent.setLocalitat(localitatExist);
+        }
+
+        // Configurar datos del agente
         agent.setContrasenya(passwordEncoder.encode(agent.getContrasenya()));
         String[] part = agent.getEmail().split("@");
         String username = part[0];
         agent.setNomUsuari(username);
         agent.setAdreca(agent.getLocalitat().getDireccio());
         agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
-        agent.setPermisos(TipusPermis.MODIFICAR_PERFIL.toString());
+        agent.setPermisos(TipusPermis.AGENT.toString());
         agent.setEnabled(true);
+
+        // Guardar agente
         usuariServiceSQL.guardarAgent(agent);
 
         return "redirect:/admin/dashboard";
     }
-    }
-
+}

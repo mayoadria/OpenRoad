@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+
 public class PagamentController {
 
     @Autowired
@@ -122,7 +123,8 @@ public class PagamentController {
             // Guardar la reserva
             reservaServiceSQL.guardarReserva(reserva);
 
-            return "redirect:/factura";
+            Long idReserva = reserva.getIdReserva();
+            return "redirect:/factura/" + idReserva;
 
         } catch (Exception e) {
             e.printStackTrace();

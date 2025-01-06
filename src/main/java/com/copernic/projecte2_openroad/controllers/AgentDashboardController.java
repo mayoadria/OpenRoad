@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.copernic.projecte2_openroad.model.mysql.*;
 import com.copernic.projecte2_openroad.security.UserUtils;
 
+import com.copernic.projecte2_openroad.service.mysql.LocalitatServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,8 @@ public class AgentDashboardController {
 
     @Autowired
     IncidenciaServiceSQL incidenciaServiceSQL;
+
+
 
     // MongoDB
 
@@ -104,12 +107,13 @@ public class AgentDashboardController {
     }
 
     @GetMapping("/vehicle/{matricula}")
-    public String detallsVehicle(@PathVariable("matricula") String matricula, Model model) {
+    public String detallsVehicle(@PathVariable("matricula") String matricula,boolean visualizar, Model model) {
         Vehicle vehicle = vehicleServiceSQL.findByMatricula(matricula).orElse(null);
 
         model.addAttribute("vehicle", vehicle);
         model.addAttribute("isLogged", false);
-        return "infoVehiculo";
+        model.addAttribute("visualizar", true);
+        return "ModificarVehicles";
     }
 
     @GetMapping("/crear_vehicle")
@@ -119,6 +123,8 @@ public class AgentDashboardController {
         
         return "crearVehicle";
     }
+
+
 
     @PostMapping("/crear")
     public String crearVehicle(@ModelAttribute Vehicle vehicle,
@@ -164,6 +170,7 @@ public class AgentDashboardController {
         Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula);
         if (vehicle.isPresent()) {
             model.addAttribute("vehicle", vehicle.get());
+            model.addAttribute("visualizar", false);;
         }
         return "ModificarVehicles"; // Nombre del archivo Thymeleaf
     }
@@ -187,6 +194,16 @@ public class AgentDashboardController {
         }
         return "redirect:/agent/dashboard";
     }
+    @GetMapping("/lliurar/vehicle/{matricula}")
+    public String lliurarVehicle(@PathVariable String matricula, Model model) {
+        Optional<Vehicle> vehicle = vehicleServiceSQL.findByMatricula(matricula);
+        if (vehicle.isPresent()) {
+            vehicle.get().setEstatVehicle(EstatVehicle.ENTREGAT);
+            vehicleServiceSQL.modificarVehicle(vehicle.get());
+        }
+        return "redirect:/agent/dashboard";
+    }
+
 
     @PostMapping("/editVehicle")
     public String guardarCambios(@ModelAttribute Vehicle vehiculo, @RequestParam String matricula, Model model) {
@@ -222,5 +239,11 @@ public class AgentDashboardController {
             model.addAttribute("error", "El vehículo no existe o no es válido.");
             return "ModificarVehicles"; // Mostrar la página con el error
         }
+    }
+
+    @GetMapping("/activateUser/{idReserva}")
+    public String activateUser(@PathVariable Long idReserva) {
+        reservaServiceSQL.activarReserva(idReserva);
+        return "redirect:/agent/dashboard";
     }
 }

@@ -1,6 +1,8 @@
 package com.copernic.projecte2_openroad.security;
 
+import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
+import com.copernic.projecte2_openroad.model.mysql.Localitat;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
@@ -13,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.time.LocalTime;
 
 @Configuration
 @EnableWebSecurity
@@ -38,9 +42,13 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/logout", "/css/**", "/images/**", "/cataleg","/registre/**", "/", "/scripts/**","/admin/loginAdmin").permitAll()
-                .requestMatchers("/admin/**").hasAuthority(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString())
-                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.MODIFICAR_PERFIL.toString())    // Autorización para clientes
-                .anyRequest().authenticated())
+                .requestMatchers("/admin/**").hasAuthority(TipusPermis.ADMIN.toString())
+                .requestMatchers("/client/**").hasAnyAuthority(TipusPermis.CLIENT.toString(),TipusPermis.ADMIN.toString(),TipusPermis.AGENT.toString())
+                        .requestMatchers("/agent/**").hasAnyAuthority(TipusPermis.CLIENT.toString(),TipusPermis.ADMIN.toString(),TipusPermis.AGENT.toString())
+                        .requestMatchers("/reserva/**").hasAnyAuthority(TipusPermis.CLIENT.toString(),TipusPermis.ADMIN.toString(),TipusPermis.AGENT.toString()) // Autorización para clientes
+                        .requestMatchers("/perfil/**").hasAnyAuthority(TipusPermis.CLIENT.toString(),TipusPermis.ADMIN.toString(),TipusPermis.AGENT.toString())
+                        .requestMatchers("/factura/**").hasAnyAuthority(TipusPermis.CLIENT.toString(),TipusPermis.ADMIN.toString(),TipusPermis.AGENT.toString())
+                        .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
@@ -80,19 +88,32 @@ public class SecurityConfig {
         }
 
         // Crear administrador si no existe
+        Localitat localitat = new Localitat();
+        localitat.setCodiPostalLoc("08001");
+        localitat.setPoblacio("Barcelona");
+        localitat.setDireccio("Carrer de l'Example, 123");
+        localitat.setLocal("Local Principal");
+        localitat.setHorariApertura(LocalTime.of(9, 0)); // Horario de apertura: 09:00 AM
+        localitat.setHorariTancada(LocalTime.of(18, 0));
+
+// Crear el Admin y asignarle la localidad
         Admin admin = new Admin();
         admin.setContrasenya(passwordEncoder().encode("admin"));
         admin.setDni("12345678A");
         admin.setNom("admin");
         admin.setAdreca("admin");
         admin.setCognom1("admin");
-        admin.setCognom2("admin");
         admin.setEmail("admin@admin.com");
         String[] part = admin.getEmail().split("@");
         String username = part[0];
         admin.setNomUsuari(username);
-        admin.setPermisos(TipusPermis.MOSTRAR_DASHBOARDADMIN.toString());
+        admin.setPermisos(TipusPermis.ADMIN.toString());
         admin.setEnabled(true);
+        admin.setCodiPostal("admin");
+        admin.setPais(Pais.ESPANYA);
+
+// Asignar la localidad al Admin
+        admin.setLocalitat(localitat);
 
         // Llama al método correcto de tu servicio para guardar el administrador
         String resultado = usuariServiceSQL.guardarAdmin(admin);

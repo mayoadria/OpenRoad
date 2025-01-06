@@ -25,10 +25,6 @@
     <input type="text" id="cognom1" name="cognom1" th:value="${cliente.cognom1}" placeholder="Ingrese el primer apellido">
   </div>
 
-  <div>
-    <label for="cognom2">Segundo Apellido:</label>
-    <input type="text" id="cognom2" name="cognom2" th:value="${cliente.cognom2}" placeholder="Ingrese el segundo apellido">
-  </div>
 
   <div>
     <label for="numContacte1">Número de Contacto:</label>
@@ -50,10 +46,12 @@
     <input type="email" id="email" name="email" th:value="${cliente.email}" placeholder="Ingrese el correo electrónico">
   </div>
 
-  <div>
+  <div th:if="${!visualizar}">
     <button type="submit">Guardar</button>
-    <a href="/admin/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+
   </div>
+  <a href="/admin/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+
 </form>
 
 </body>

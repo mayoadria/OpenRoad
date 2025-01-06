@@ -2,7 +2,7 @@ package com.copernic.projecte2_openroad.model.enums;
 
 
 public enum EstatVehicle {
-    ACTIU("Actiu"), INACTIU("Inactiu"), RESERVAT("Reservat");
+    ACTIU("Actiu"), INACTIU("Inactiu") ,RESERVAT("Reservat"), ENTREGAT("lliurat");
 
     private final String valor;
 

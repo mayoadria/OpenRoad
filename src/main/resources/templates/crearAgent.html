@@ -3,64 +3,76 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/CrearAgente.css} ">
+    <link rel="stylesheet" th:href="@{/css/CrearAgente.css}">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- JS MAPA -->
-    <script src="/scripts/selectorCiudades.js" defer></script>
-
     <!-- Librería de mapas js -->
-    <!-- CSS de Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-    <!-- Script de Leaflet -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <title>Crear Agent</title>
+    <script>
+        // Mostrar u ocultar campos para nueva localidad según selección
+        function handleLocalitatChange() {
+            const localitatSelect = document.getElementById('localitat-select');
+            const newLocalitatFields = document.getElementById('new-localitat-fields');
+            if (localitatSelect.value === "new") {
+                newLocalitatFields.style.display = "block";
+            } else {
+                newLocalitatFields.style.display = "none";
+            }
+        }
+    </script>
 </head>
 
 <body>
-    <h1>Crear Agent</h1>
-    <form th:action="@{/admin/new}" th:object="${agent}" method="POST">
-        <!-- DNI -->
-        <label for="dni">DNI:</label>
-        <input type="text" id="dni" th:field="*{dni}" required>
+<h1>Crear Agent</h1>
+<form th:action="@{/admin/new}" th:object="${agent}" method="POST">
+    <!-- DNI -->
+    <label for="dni">DNI:</label>
+    <input type="text" id="dni" th:field="*{dni}" required>
 
-        <!-- Nom -->
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" th:field="*{nom}" required>
+    <!-- Nom -->
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" th:field="*{nom}" required>
 
-        <!-- Cognom 1 -->
-        <label for="cognom1">Primer Cognom:</label>
-        <input type="text" id="cognom1" th:field="*{cognom1}" required>
+    <!-- Cognom 1 -->
+    <label for="cognom1">Primer Cognom:</label>
+    <input type="text" id="cognom1" th:field="*{cognom1}" required>
 
-        <!-- Cognom 2 -->
-        <label for="cognom2">Segon cognom:</label>
-        <input type="text" id="cognom2" th:field="*{cognom2}" required>
+    <!-- Num Contacte 1 -->
+    <label for="numContacte1">Numero de contacte:</label>
+    <input type="tel" id="numContacte1" th:field="*{numContacte1}" required>
 
-        <!-- Num Contacte 1 -->
-        <label for="numContacte1">Numero de contacte:</label>
-        <input type="tel" id="numContacte1" th:field="*{numContacte1}" required>
+    <!-- Pais -->
+    <label>
+        <span>Nacionalitat</span>
+        <select class="input" th:field="*{pais}" id="pais" required>
+            <option value="" disabled selected hidden></option>
+            <option class="inp_pais" th:each="pais : ${paisos}" th:value="${pais}" th:text="${pais.getValor()}"></option>
+        </select>
+    </label>
 
-        <!-- Pais -->
-        <label>
-            <span>Nacionalitat</span>
-            <select class="input" th:field="*{pais}" id="pais" required>
-                <option value="" disabled selected hidden></option>
-                <option class="inp_pais" th:each="pais : ${paisos}"
-                        th:value="${pais}"
-                        th:text="${pais.getValor()}"></option>
-            </select>
-        </label>
+    <!-- Email -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}" required>
 
-        <!-- Email -->
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required>
+    <!-- Contrasenya -->
+    <label for="contrasenya">Contrasenya:</label>
+    <input type="password" id="contrasenya" th:field="*{contrasenya}" required>
 
-        <!-- Contrasenya -->
-        <label for="contrasenya">Contrasenya:</label>
-        <input type="password" id="contrasenya" th:field="*{contrasenya}" required>
+    <!-- Selector de Localidad -->
+    <label for="localitat-select">Localitat:</label>
+    <select id="localitat-select" name="localitatOption" onchange="handleLocalitatChange()" required>
+        <option value="" disabled selected hidden>Seleccionar una opción</option>
+        <option th:each="loc : ${localitats}" th:value="${loc.codiPostalLoc}" th:text="${loc.local}"></option>
+        <option value="new">Crear nueva localidad</option>
+    </select>
 
+    <!-- Campos para nueva localidad -->
+    <div id="new-localitat-fields" style="display: none; margin-top: 20px;">
+        <h3>Crear Nueva Localidad</h3>
 
         <!-- Codi Postal -->
         <label for="codiPostal">Codi Postal:</label>
@@ -70,17 +82,11 @@
         <label for="poblacio">Població:</label>
         <input type="text" id="poblacio" th:field="*{localitat.poblacio}">
 
-        <!-- Botón de búsqueda con tipo "button" -->
-        <div class="map-container">
-            <label for="direccio">Introdueix una adreça:</label>
-            <input type="text" id="direccio" th:field="*{localitat.direccio}" placeholder="Exemple: Gran Via, Madrid, Espanya" />
-            <button id="buscar" type="button">Buscar</button>
-            <p id="error" style="color: red; display: none;">No s'ha pogut trobar l'adreça.</p>
-            <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
-        </div>
+        <!-- Direcció -->
+        <label for="direccio">Direcció:</label>
+        <input type="text" id="direccio" th:field="*{localitat.direccio}" placeholder="Exemple: Gran Via, Madrid, Espanya" />
 
         <!-- Local -->
-        <hr></hr>
         <label for="local">Local:</label>
         <input type="text" id="local" th:field="*{localitat.local}" placeholder="Garatge">
 
@@ -88,12 +94,12 @@
         <label for="horari">Horari:</label>
         <input type="time" id="horariApertura" th:field="*{localitat.horariApertura}">
         <input type="time" id="horariTancada" th:field="*{localitat.horariTancada}">
+    </div>
 
-        <div>
-            <button type="submit">Crear Agent</button>
-        </div>
-
-    </form>
+    <div>
+        <button type="submit">Crear Agent</button>
+    </div>
+</form>
 </body>
 
 </html>
