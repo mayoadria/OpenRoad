@@ -4,7 +4,6 @@ package com.copernic.projecte2_openroad.service.mysql;
 import java.util.List;
 
 // Spring
-import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

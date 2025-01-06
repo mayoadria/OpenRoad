@@ -71,9 +71,9 @@
                         <div class="filtre">
                             Nacionalitat
                             <div class="filt-txt">
-                                <select id="paisos" name="paisos">
+                                <select id="paisosAgent" name="paisosAgent">
                                     <option value="">-</option>
-                                    <option th:each="pais : ${paisos}" th:value="${pais}" th:text="${pais.getValor}">
+                                    <option th:each="pais : ${paisosAgent}" th:value="${pais}" th:text="${pais.getValor}">
                                     </option>
                                 </select>
                             </div>
@@ -94,6 +94,8 @@
                     <td th:text="${agent.adreca}"></td>
                     <td th:text="${agent.pais}"></td>
                     <td>
+                        <a class="btn btn-success"
+                           th:href="@{/admin/editarAgent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Editar</a>
                         <a class="btn btn-danger"
                            th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Borrar</a>
                     </td>
@@ -159,9 +161,9 @@
                         <div class="filtre">
                             Nacionalitat
                             <div class="filt-txt">
-                                <select id="pais" name="paisClient">
+                                <select id="paisosClient" name="paisClient">
                                     <option value="">-</option>
-                                    <option th:each="pais : ${paisos}" th:value="${pais}" th:text="${pais.getValor}">
+                                    <option th:each="pais : ${paisosClient}" th:value="${pais}" th:text="${pais.getValor}">
                                     </option>
                                 </select>
                             </div>
