@@ -23,11 +23,12 @@ public class ComentarisServiceMongo {
     public String guardarComentari(Comentari comentari) {
         try {
             comentariRepoMongo.save(comentari);
-            String msg = "Comentari: " + comentari.getTitolComent() + " amb ID(" + comentari.getIdComentari() + ") s'ha creat correctament!";
+            String msg = "Comentari: " + comentari.getTitolComent() + " amb ID(" + comentari.getIdComentari()
+                    + ") s'ha creat correctament!";
             return msg;
         } catch (Exception e) {
             String msg = "Error amb Comentari: ID(" + comentari.getIdComentari() + "). Excepció: " + e.getMessage();
-            return msg;     
+            return msg;
         }
     }
 
@@ -49,9 +50,10 @@ public class ComentarisServiceMongo {
     // Modificar Comentari.
     public String modificarComentari(Comentari comentari) {
         try {
-            if (llistarComentariPerId(comentari.getTitolComent()) != null) {
+            if (llistarComentariPerId(comentari.getIdComentari()) != null) {
                 comentariRepoMongo.save(comentari);
-                String msg = "Comentari: " + comentari.getTitolComent() + " amb ID(" + comentari.getTitolComent() + ") modificat correctament!";
+                String msg = "Comentari: " + comentari.getTitolComent() + " amb ID(" + comentari.getTitolComent()
+                        + ") modificat correctament!";
                 return msg;
             } else {
                 String msg = "Comentari: ID(" + comentari.getIdComentari() + ") no s'ha trobat a la BD MySQL!";
@@ -69,7 +71,8 @@ public class ComentarisServiceMongo {
         try {
             if (Comentari != null) {
                 comentariRepoMongo.delete(Comentari);
-                String msg = "Comentari: " + Comentari.getTitolComent() + " amb ID(" + Comentari.getTitolComent() + ") esborrat correctament!";
+                String msg = "Comentari: " + Comentari.getTitolComent() + " amb ID(" + Comentari.getTitolComent()
+                        + ") esborrat correctament!";
                 return msg;
             } else {
                 String msg = "Comentari: ID(" + id + ") no s'ha trobat a la BD MySQL!";

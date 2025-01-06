@@ -13,6 +13,7 @@ import com.copernic.projecte2_openroad.service.mongodb.ComentarisServiceMongo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ComentariController {
@@ -55,4 +56,18 @@ public class ComentariController {
         return "redirect:/comentariForm";
     }
 
+    @PostMapping("/modificarLikes")
+    public String modificarLikes(
+            @RequestParam String idComentari,
+            @RequestParam String matricula,
+            @RequestParam int likes,
+            @RequestParam int dislikes) {
+
+        Comentari comentari = comentarisServiceMongo.llistarComentariPerId(idComentari);
+        comentari.setLike(likes);
+        comentari.setDisLike(dislikes);
+        comentarisServiceMongo.modificarComentari(comentari);
+
+        return "redirect:/vehicle/" + matricula;
+    }
 }
