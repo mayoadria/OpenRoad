@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import com.copernic.projecte2_openroad.model.mysql.*;
 import com.copernic.projecte2_openroad.security.UserUtils;
 
-import com.copernic.projecte2_openroad.service.mysql.LocalitatServiceSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
