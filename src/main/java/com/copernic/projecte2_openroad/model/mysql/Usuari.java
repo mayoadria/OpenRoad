@@ -62,7 +62,7 @@ public abstract class Usuari implements UserDetails {
 
     // Inici Sessió General
     @NotEmpty(message = "No puede estar vacio")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @NotEmpty(message = "No puede estar vacio")
     @Column(nullable = false)

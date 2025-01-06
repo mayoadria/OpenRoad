@@ -46,16 +46,19 @@ public class AgenteController {
                               @ModelAttribute("localitatOption") String localitatOption, Model model) {
 
         if ("new".equals(localitatOption)) {
-            // Crear nueva localidad si se seleccionó "Crear nueva localidad"
             Localitat novaLocalitat = agent.getLocalitat();
+            if (novaLocalitat == null) {
+                novaLocalitat = new Localitat();
+                agent.setLocalitat(novaLocalitat);
+            }
             localitatService.guardarLocalitat(novaLocalitat);
-            agent.setLocalitat(novaLocalitat);
-            agent.setAdreca(agent.getLocalitat().getDireccio());
-            agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
-        } if (localitatOption.equals("")) {
+            agent.setAdreca(novaLocalitat.getDireccio());
+            agent.setCodiPostal(novaLocalitat.getCodiPostalLoc());
+
+        } else if (localitatOption.equals("")) {
             agent.setLocalitat(null);
             agent.setCodiPostal("00000");
-        } if (!localitatOption.equals("")) {
+        } else if (!localitatOption.equals("")) {
              // Usar una localidad existente
             String localitatId = localitatOption;
             Localitat localitatExist = localitatService.findByNomUsuari(localitatId);
