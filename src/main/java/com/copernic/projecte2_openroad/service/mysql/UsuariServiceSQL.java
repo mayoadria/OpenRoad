@@ -1,5 +1,6 @@
 package com.copernic.projecte2_openroad.service.mysql;
 
+import com.copernic.projecte2_openroad.Excepciones.ExcepcionEmailDuplicado;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
 import com.copernic.projecte2_openroad.model.mysql.Agent;
 import com.copernic.projecte2_openroad.model.mysql.Client;
@@ -60,12 +61,9 @@ public class UsuariServiceSQL {
     /**
      * Guarda un cliente en la base de datos.
      */
-    public String guardarClient(Client client) {
-        try {
-            clientRepository.save(client);
-            return "Client: " + client.getNom() + " amb DNI(" + client.getDni() + ") s'ha creat correctament!";
-        } catch (Exception e) {
-            return "Error amb Client: DNI(" + client.getDni() + "). Excepció: " + e.getMessage();
+    public void guardarClient(Client client) {
+        if (existeEmail(client.getEmail())) {
+            throw new ExcepcionEmailDuplicado("El correo electrónico ya está registrado.");
         }
     }
 
@@ -105,14 +103,18 @@ public class UsuariServiceSQL {
     /**
      * Guarda un agente en la base de datos.
      */
-    public String guardarAgent(Agent agent) {
-        try {
-            agentRepository.save(agent);
-            return "Agent: " + agent.getNom() + " amb DNI(" + agent.getDni() + ") s'ha creat correctament!";
-        } catch (Exception e) {
-            return "Error amb Agent: DNI(" + agent.getDni() + "). Excepció: " + e.getMessage();
-        }
+    public boolean existeEmail(String email) {
+        return agentRepository.existsByEmail(email);
     }
+
+    public void guardarAgent(Agent agent) {
+        if (existeEmail(agent.getEmail())) {
+            throw new ExcepcionEmailDuplicado("El correo electrónico ya está registrado.");
+        }
+        agentRepository.save(agent);
+    }
+
+
 
     /**
      * Lista todos los agentes.

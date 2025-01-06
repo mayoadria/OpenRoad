@@ -45,6 +45,19 @@ public class AgenteController {
     public String crearAgente(@Valid @ModelAttribute("agent") Agent agent, BindingResult result,
                               @ModelAttribute("localitatOption") String localitatOption, Model model) {
 
+        // Verificar si el email ya existe
+        if (usuariServiceSQL.existeEmail(agent.getEmail())) {
+            result.rejectValue("email", "error.agent", "El correo electrónico ya está registrado");
+        }
+
+        // Manejar errores de validación
+        if (result.hasErrors()) {
+            model.addAttribute("paisos", Pais.values());
+            model.addAttribute("localitats", localitatService.llistarLocalitats());
+            return "crearAgent";
+        }
+
+        // Procesar la localidad
         if ("new".equals(localitatOption)) {
             Localitat novaLocalitat = agent.getLocalitat();
             if (novaLocalitat == null) {
@@ -54,36 +67,27 @@ public class AgenteController {
             localitatService.guardarLocalitat(novaLocalitat);
             agent.setAdreca(novaLocalitat.getDireccio());
             agent.setCodiPostal(novaLocalitat.getCodiPostalLoc());
-
-        } else if (localitatOption.equals("")) {
+        } else if (localitatOption.isEmpty()) {
             agent.setLocalitat(null);
             agent.setCodiPostal("00000");
-        } else if (!localitatOption.equals("")) {
-             // Usar una localidad existente
-            String localitatId = localitatOption;
-            Localitat localitatExist = localitatService.findByNomUsuari(localitatId);
+        } else {
+            Localitat localitatExist = localitatService.findByNomUsuari(localitatOption);
             agent.setLocalitat(localitatExist);
-            agent.setAdreca(agent.getLocalitat().getDireccio());
-            agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
+            agent.setAdreca(localitatExist.getDireccio());
+            agent.setCodiPostal(localitatExist.getCodiPostalLoc());
         }
 
-        if (result.hasErrors()) {
-            model.addAttribute("paisos", Pais.values());
-            model.addAttribute("localitats", localitatService.llistarLocalitats());
-            return "crearAgent"; // Asegúrate de que esta plantilla esté configurada para manejar errores
-        }
-        // Configurar datos del agente
+        // Configurar datos adicionales del agente
         agent.setContrasenya(passwordEncoder.encode(agent.getContrasenya()));
-        String[] part = agent.getEmail().split("@");
-        String username = part[0];
-        agent.setNomUsuari(username);
+        String[] partes = agent.getEmail().split("@");
+        agent.setNomUsuari(partes[0]);
         agent.setPermisos(TipusPermis.AGENT.toString());
         agent.setEnabled(true);
 
         // Guardar agente
-
-            usuariServiceSQL.guardarAgent(agent);
+        usuariServiceSQL.guardarAgent(agent);
 
         return "redirect:/admin/dashboard";
     }
+
 }
