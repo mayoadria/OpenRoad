@@ -181,3 +181,82 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+/* Likes i Dislikes dels comentaris */
+document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener("click", function (e) {
+        if (e.target.classList.contains("likeButton")) {
+            likeFunction(e.target);
+        } else if (e.target.classList.contains("dislikeButton")) {
+            dislikeFunction(e.target);
+        }
+    });
+
+    function likeFunction(likeButton) {
+        const comment = likeButton.closest(".coment-box");
+        const likeCounter = comment.querySelector(".likeCounter");
+        const dislikeButton = comment.querySelector(".dislikeButton");
+        const dislikeCounter = comment.querySelector(".dislikeCounter");
+        const likeForm = comment.querySelector(".likeForm");
+        const likesInput = likeForm.querySelector(".likesInput");
+        const dislikesInput = likeForm.querySelector(".dislikesInput");
+
+
+        let likeIsActive = likeButton.classList.contains("selected");
+        let dislikeIsActive = dislikeButton.classList.contains("selected");
+
+        if (!likeIsActive) {
+            if (dislikeIsActive) {
+                dislikeCounter.textContent = parseInt(dislikeCounter.textContent) - 1;
+                dislikeButton.classList.remove("selected");
+                
+            }
+            likeCounter.textContent = parseInt(likeCounter.textContent) + 1;
+            likeButton.classList.add("selected");
+        } else {
+            likeCounter.textContent = parseInt(likeCounter.textContent) - 1;
+            likeButton.classList.remove("selected");
+        }
+
+        likesInput.value = parseInt(likeCounter.textContent);
+        dislikesInput.value = parseInt(dislikeCounter.textContent);
+        likeForm.submit();
+    }
+
+    function dislikeFunction(dislikeButton) {
+        const comment = dislikeButton.closest(".coment-box");
+        const dislikeCounter = comment.querySelector(".dislikeCounter");
+        const likeButton = comment.querySelector(".likeButton");
+        const likeCounter = comment.querySelector(".likeCounter");
+        const likeForm = comment.querySelector(".likeForm");
+        const likesInput = likeForm.querySelector(".likesInput");
+        const dislikesInput = likeForm.querySelector(".dislikesInput");
+
+        let likeIsActive = likeButton.classList.contains("selected");
+        let dislikeIsActive = dislikeButton.classList.contains("selected");
+
+        if (!dislikeIsActive) {
+            if (likeIsActive) {
+                likeCounter.textContent = parseInt(likeCounter.textContent) - 1;
+                likeButton.classList.remove("selected");
+
+            }
+            dislikeCounter.textContent = parseInt(dislikeCounter.textContent) + 1;
+            dislikeButton.classList.add("selected");
+
+        } else {
+            dislikeCounter.textContent = parseInt(dislikeCounter.textContent) - 1;
+            dislikeButton.classList.remove("selected");
+
+        }
+
+        likesInput.value = parseInt(likeCounter.textContent);
+        dislikesInput.value = parseInt(dislikeCounter.textContent);
+        likeForm.submit();
+    } 
+});
+
+
+
+

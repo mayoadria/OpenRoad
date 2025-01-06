@@ -46,11 +46,17 @@ public class AgenteController {
             Localitat novaLocalitat = agent.getLocalitat();
             localitatService.guardarLocalitat(novaLocalitat);
             agent.setLocalitat(novaLocalitat);
-        } else {
-            // Usar una localidad existente
+            agent.setAdreca(agent.getLocalitat().getDireccio());
+            agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
+        } if (localitatOption.equals("")) {
+            agent.setLocalitat(null);
+        } if (!localitatOption.equals("")) {
+             // Usar una localidad existente
             String localitatId = localitatOption;
             Localitat localitatExist = localitatService.findByNomUsuari(localitatId);
             agent.setLocalitat(localitatExist);
+            agent.setAdreca(agent.getLocalitat().getDireccio());
+            agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
         }
 
         // Configurar datos del agente
@@ -58,8 +64,6 @@ public class AgenteController {
         String[] part = agent.getEmail().split("@");
         String username = part[0];
         agent.setNomUsuari(username);
-        agent.setAdreca(agent.getLocalitat().getDireccio());
-        agent.setCodiPostal(agent.getLocalitat().getCodiPostalLoc());
         agent.setPermisos(TipusPermis.AGENT.toString());
         agent.setEnabled(true);
 
