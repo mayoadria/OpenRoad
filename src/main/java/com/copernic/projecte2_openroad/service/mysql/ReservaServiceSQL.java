@@ -42,6 +42,7 @@ public class ReservaServiceSQL {
         }
     }
 
+
     // Llistar Reserva.
     public Reserva llistarReservaPerId(Long id) {
         return reservaRepoSQL.findById(id).get();

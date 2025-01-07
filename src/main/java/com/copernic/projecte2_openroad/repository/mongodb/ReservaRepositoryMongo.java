@@ -9,3 +9,4 @@ import com.copernic.projecte2_openroad.model.mongodb.HistoricReserva;
 public interface ReservaRepositoryMongo extends MongoRepository<HistoricReserva, String>{
 
 }
+

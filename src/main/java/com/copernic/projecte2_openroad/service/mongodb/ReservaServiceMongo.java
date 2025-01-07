@@ -32,6 +32,7 @@ public class ReservaServiceMongo {
         }
     }
 
+
     // Llistar Reserva.
     public HistoricReserva llistarReservaPerId(String id) {
         Optional<HistoricReserva> reserva = reservaRepoMongo.findById(id);
