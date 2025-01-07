@@ -2,7 +2,6 @@ package com.copernic.projecte2_openroad.security;
 
 import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
-import com.copernic.projecte2_openroad.model.mysql.Localitat;
 import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mysql.VehicleServiceSQL;
@@ -15,8 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.time.LocalTime;
 
 @Configuration
 @EnableWebSecurity
@@ -64,6 +61,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @SuppressWarnings("removal")
     @Bean
     public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
@@ -87,14 +85,6 @@ public class SecurityConfig {
             return;
         }
 
-        // Crear administrador si no existe
-        Localitat localitat = new Localitat();
-        localitat.setCodiPostalLoc("08001");
-        localitat.setPoblacio("Barcelona");
-        localitat.setDireccio("Carrer de l'Example, 123");
-        localitat.setLocal("Local Principal");
-        localitat.setHorariApertura(LocalTime.of(9, 0)); // Horario de apertura: 09:00 AM
-        localitat.setHorariTancada(LocalTime.of(18, 0));
 
 // Crear el Admin y asignarle la localidad
         Admin admin = new Admin();
@@ -103,18 +93,17 @@ public class SecurityConfig {
         admin.setNom("admin");
         admin.setAdreca("admin");
         admin.setCognom1("admin");
-        admin.setCognom2("admin");
         admin.setEmail("admin@admin.com");
         String[] part = admin.getEmail().split("@");
         String username = part[0];
         admin.setNomUsuari(username);
         admin.setPermisos(TipusPermis.ADMIN.toString());
         admin.setEnabled(true);
-        admin.setCodiPostal("admin");
+        admin.setCodiPostal("00000");
+        admin.setNumContacte1("123456789");
         admin.setPais(Pais.ESPANYA);
 
 // Asignar la localidad al Admin
-        admin.setLocalitat(localitat);
 
         // Llama al método correcto de tu servicio para guardar el administrador
         String resultado = usuariServiceSQL.guardarAdmin(admin);

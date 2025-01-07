@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/dashboardAdmin.css">
-    <script src="/scripts/dashboardAgent.js" defer></script>
+    <script src="/scripts/dashboardAdmin.js" defer></script>
 </head>
 
 <body>
@@ -54,8 +54,7 @@
                         </div>
                     </th>
                     <th>Nombre</th>
-                    <th>Primer Cognom</th>
-                    <th>Segon Cognom</th>
+                    <th>Cognoms</th>
                     <th>Nom usuari</th>
                     <th>
                         <div class="filtre">
@@ -72,9 +71,9 @@
                         <div class="filtre">
                             Nacionalitat
                             <div class="filt-txt">
-                                <select id="paisos" name="paisos">
+                                <select id="paisosAgent" name="paisosAgent">
                                     <option value="">-</option>
-                                    <option th:each="pais : ${paisos}" th:value="${pais}" th:text="${pais.getValor}">
+                                    <option th:each="pais : ${paisosAgent}" th:value="${pais}" th:text="${pais.getValor}">
                                     </option>
                                 </select>
                             </div>
@@ -88,7 +87,6 @@
                     <td th:text="${agent.dni}"></td>
                     <td th:text="${agent.nom}"></td>
                     <td th:text="${agent.cognom1}"></td>
-                    <td th:text="${agent.cognom2}"></td>
                     <td th:text="${agent.nomUsuari}"></td>
                     <td th:text="${agent.email}"></td>
                     <td th:text="${agent.numContacte1}"></td>
@@ -96,6 +94,8 @@
                     <td th:text="${agent.adreca}"></td>
                     <td th:text="${agent.pais}"></td>
                     <td>
+                        <a class="btn btn-success"
+                           th:href="@{/admin/editarAgent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Editar</a>
                         <a class="btn btn-danger"
                            th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Borrar</a>
                     </td>
@@ -129,8 +129,15 @@
                         </div>
                     </th>
                     <th>Nombre</th>
-                    <th>Primer Cognom</th>
-                    <th>Segon Cognom</th>
+
+                    <th>
+                        <div class="filtre">
+                            Cognom
+                            <div class="filt-txt">Cercar:
+                                <input type="text" class="filt-input" name="cognom1">
+                            </div>
+                        </div>
+                    </th>
                     <th>Nom usuari</th>
                     <th>
                         <div class="filtre">
@@ -140,16 +147,23 @@
                             </div>
                         </div>
                     </th>
-                    <th>Teléfon</th>
+                    <th>
+                        <div class="filtre">
+                            Telefón
+                            <div class="filt-txt">Cercar:
+                                <input type="text" class="filt-input" name="numContacte">
+                            </div>
+                        </div>
+                    </th>
                     <th>Codi Postal</th>
                     <th>Direcció</th>
                     <th>
                         <div class="filtre">
                             Nacionalitat
                             <div class="filt-txt">
-                                <select id="pais" name="paisClient">
+                                <select id="paisosClient" name="paisClient">
                                     <option value="">-</option>
-                                    <option th:each="pais : ${paisos}" th:value="${pais}" th:text="${pais.getValor}">
+                                    <option th:each="pais : ${paisosClient}" th:value="${pais}" th:text="${pais.getValor}">
                                     </option>
                                 </select>
                             </div>
@@ -163,7 +177,6 @@
                     <td th:text="${client.dni}"></td>
                     <td th:text="${client.nom}"></td>
                     <td th:text="${client.cognom1}"></td>
-                    <td th:text="${client.cognom2}"></td>
                     <td th:text="${client.nomUsuari}"></td>
                     <td th:text="${client.email}"></td>
                     <td th:text="${client.numContacte1}"></td>
@@ -179,8 +192,6 @@
                            th:href="@{/admin/activateUser/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Activar</a>
                         <a class="btn btn-primary"
                            th:href="@{'/admin/edit/' + ${client.nomUsuari} + '?visualizar=true'}">Visualitzar</a>
-
-
                     </td>
                 </tr>
                 </tbody>
@@ -225,6 +236,10 @@
             </form>
         </table>
 
+        <h2>Lista de Localitats</h2>
+        <form class="button-container" action="/admin/crear_localitzacio" method="get">
+            <button type="submit" class="btn btn-primary">Crear una localitat</button>
+        </form>
         <table class="table table-bordered">
             <form id="filtres-form-client" action="/admin/dashboard">
                 <thead>
@@ -245,6 +260,12 @@
                     <td th:text="${localitat.horariTancada}"></td>
                     <td th:text="${localitat.local}"></td>
                     <td th:text="${localitat.poblacio}"></td>
+                    <td>
+                        <a class="btn btn-success"
+                           th:href="@{/admin/modificar-localitat/{codiPostalLoc}(codiPostalLoc=${localitat.codiPostalLoc})}">Editar</a>
+                        <a class="btn btn-danger"
+                           th:href="@{/admin/delete/{codiPostalLoc}(codiPostalLoc=${localitat.codiPostalLoc})}">Borrar</a>
+                    </td>
                 </tr>
                 </tbody>
             </form>

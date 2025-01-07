@@ -239,3 +239,8 @@ footer {
         width: 100%;
     }
 }
+.button-container {
+    display: flex; /* Usamos Flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    margin-top: 20px; /* Espaciado superior para separar del contenido anterior */
+}
