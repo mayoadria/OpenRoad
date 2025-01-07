@@ -12,6 +12,7 @@ import com.copernic.projecte2_openroad.security.UserUtils;
 import com.copernic.projecte2_openroad.service.mongodb.ComentarisServiceMongo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,19 +22,20 @@ public class ComentariController {
     @Autowired
     private ComentarisServiceMongo comentarisServiceMongo;
 
-    @GetMapping("/comentariForm")
-    public String comentariForm(Model model) {
+    @GetMapping("/comentariForm/{matricula}")
+    public String comentariForm(@PathVariable String matricula,  Model model) {
 
         UserUtils.obtenirDadesUsuariModel(model);
 
         Comentari comentari = new Comentari();
         model.addAttribute("comentari", comentari);
+        model.addAttribute("matricula", matricula);
 
         return "comentariForm";
     }
 
     @PostMapping("/crearComentari")
-    public String crearComentari(@ModelAttribute Comentari comentari, Model model) {
+    public String crearComentari(@ModelAttribute Comentari comentari, @RequestParam String matricula, Model model) {
 
         Object dadesUsuari = UserUtils.obtenirDadesUsuariModel(model);
 
@@ -45,7 +47,7 @@ public class ComentariController {
         comentari.setNomClient(client.getNom());
         comentari.setCognom1Client(client.getCognom1());
         comentari.setNomUsuariClient(client.getNomUsuari());
-        comentari.setMatriculaVehicle("12345ABC");
+        comentari.setMatriculaVehicle(matricula);
         LocalDate data = LocalDate.now();
         comentari.setDataComentari(data);
         comentari.setLike(0);
@@ -53,7 +55,7 @@ public class ComentariController {
 
         comentarisServiceMongo.guardarComentari(comentari);
 
-        return "redirect:/comentariForm";
+        return "redirect:/vehicle/" + matricula;
     }
 
     @PostMapping("/modificarLikes")
