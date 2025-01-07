@@ -240,7 +240,7 @@
                                 <a class="btn btn-success"
                                     th:href="@{/agent/edit/vehicle/{matricula}(matricula=${vehicle.matricula})}">Editar</a>
                                 <a class="btn btn-danger"
-                                    th:href="@{/agent/delete/vehicle/{matricula}(matricula=${vehicle.matricula})}">Borrar</a>
+                                    th:href="@{/agent/delete/vehicle/{matricula}(matricula=${vehicle.matricula})}">Esborrar</a>
                             </td>
                             <td>
                                 <a class="btn btn-success"
@@ -292,7 +292,7 @@
 
         <section id="inc" class="info-section">
             <h2>Llista d'Incidències</h2>
-            <a href="/agent/crear_incidencia" class="btn btn-primary">Crear Incidencia</a>
+            <a href="/agent/crear_incidencia" class="btn btn-primary">Crear Incidència</a>
 
             <table class="table table-bordered">
                 <thead>
@@ -323,7 +323,7 @@
                                href="#"
                                onclick="confirmarEliminacion(this);"
                                th:attr="data-href=@{/agent/incidencia/eliminar/{id}(id=${incidencia.idIncidencia})}">
-                                Borrar
+                                Esborrar
                             </a>
 
 
@@ -348,8 +348,8 @@
     <script>
         function confirmarEliminacion(element) {
             Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Esta acción no se puede deshacer.",
+                title: '¿Estás segur?',
+                text: "Aquesta acció no es pot desfer",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

@@ -24,8 +24,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador para gestionar las operaciones de reserva de vehículos, incluyendo la visualización
+ * de detalles del vehículo, la gestión de comentarios y el proceso de pago.
+ */
 @Controller
-
 public class PagamentController {
 
     @Autowired
@@ -38,6 +41,15 @@ public class PagamentController {
     private ComentarisServiceMongo comentarisServiceMongo;
 
     private static final Logger logger = LoggerFactory.getLogger(PagamentController.class);
+
+    /**
+     * Muestra los detalles de un vehículo, incluyendo los comentarios asociados y la posibilidad
+     * de realizar una reserva.
+     *
+     * @param matricula la matrícula del vehículo que se desea visualizar.
+     * @param model el modelo utilizado para pasar los datos a la vista.
+     * @return el nombre de la vista "Reserva" para mostrar los detalles del vehículo y permitir la reserva.
+     */
     @GetMapping("/vehicle/{matricula1}")
     public String detallsVehicle(@PathVariable("matricula1") String matricula, Model model) {
         Optional<Vehicle> vehicleOptional = vehicleServiceSQL.findByMatricula(matricula);
@@ -55,10 +67,12 @@ public class PagamentController {
 
         Vehicle vehicle = vehicleOptional.get();
 
+        // Obtiene los comentarios del vehículo desde la base de datos MongoDB
         List<Comentari> comentaris = comentarisServiceMongo.llistarComentariPerMatricula(vehicle.getMatricula());
         model.addAttribute("vehicle", vehicle);
         model.addAttribute("comentaris", comentaris);
 
+        // Crea una nueva reserva asociada al cliente autenticado
         Reserva reserva = new Reserva();
         if (client != null) {
             reserva.setClient(client); // Asociar cliente autenticado
@@ -68,6 +82,20 @@ public class PagamentController {
         return "Reserva"; // Vista "Reserva" utiliza estos datos
     }
 
+    /**
+     * Procesa el formulario de reserva y crea una nueva reserva para un vehículo.
+     *
+     * Este método valida las fechas de recogida y entrega, verifica los datos del vehículo y del cliente
+     * y guarda la reserva en la base de datos. Luego redirige a la página de factura.
+     *
+     * @param reserva la reserva con los detalles del cliente y el vehículo.
+     * @param preuComplert el precio completo de la reserva.
+     * @param vehicleMatricula la matrícula del vehículo reservado.
+     * @param fechaRecogida la fecha de recogida del vehículo.
+     * @param fechaEntrega la fecha de entrega del vehículo.
+     * @param model el modelo utilizado para pasar los datos a la vista.
+     * @return redirige a la página de factura si todo es correcto, o muestra un error en caso de validación fallida.
+     */
     @PostMapping("/processForm")
     public String processForm(
             @ModelAttribute("reserva") Reserva reserva,
@@ -79,13 +107,9 @@ public class PagamentController {
     ) {
         try {
             // Parsear las fechas de String a LocalDate
-            // Convertir las fechas a LocalDate
             LocalDate fechaInicio = LocalDate.parse(fechaRecogida);
             LocalDate fechaFin = LocalDate.parse(fechaEntrega);
 
-
-            logger.info("Fecha de recogida: {}", fechaRecogida);
-            logger.info("Fecha de entrega: {}", fechaEntrega);
             // Agregar las fechas al modelo para mostrarlas en la vista si es necesario
             model.addAttribute("fechaRecogida", fechaRecogida);
             model.addAttribute("fechaEntrega", fechaEntrega);
@@ -119,6 +143,7 @@ public class PagamentController {
             reserva.setFechaEntrega(fechaFin);
             reserva.setEstatReserva(EstatReserva.PENDENT);
             vehicle.setEstatVehicle(EstatVehicle.RESERVAT);
+
             // Guardar la reserva
             reservaServiceSQL.guardarReserva(reserva);
 
@@ -128,8 +153,7 @@ public class PagamentController {
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", e.getMessage());
-            return "Reserva";  // Mantener al usuario en la página de reserva en caso de error
+            return "Reserva"; // Mantener al usuario en la página de reserva en caso de error
         }
     }
-
 }

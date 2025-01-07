@@ -217,11 +217,11 @@
                 <div class="fechas">
                     <!-- Grupo de fechas -->
                     <div class="column">
-                        <label for="fechaRecogida">Fecha de Recogida:</label>
+                        <label for="fechaRecogida">Data de Recogida:</label>
                         <input type="date" id="fechaRecogida" name="fechaRecogida">
                     </div>
                     <div class="column">
-                        <label for="fechaEntrega">Fecha de Entrega:</label>
+                        <label for="fechaEntrega">Data d'Entrega:</label>
                         <input type="date" id="fechaEntrega" name="fechaEntrega">
                     </div>
 
@@ -289,10 +289,10 @@
                 </div>
                 <div class="price-details">
                     <p>
-                        <span><strong>Preu per día:</strong></span>
+                        <span><strong>Preu per dia:</strong></span>
                         <span id="preuDia" th:text="${vehicle.preuDia + ' €'}"></span>
                     </p>
-                    <p><strong>Número de días:</strong> <span id="diasReserva">0</span></p>
+                    <p><strong>Número de dies:</strong> <span id="diasReserva">0</span></p>
 
                     <p>
                         <span><strong>Preu fiança:</strong></span>
@@ -321,8 +321,7 @@
                             <input type="email" th:field="*{client.email}" placeholder="E-mail" readonly>
 
                             <label for="telefono">Número de telèfon</label>
-                            <input type="tel" th:field="*{client.numContacte1}" placeholder="Número de telèfon"
-                                   readonly>
+                            <input type="tel" th:field="*{client.numContacte1}" placeholder="Número de telèfon" readonly>
 
                             <!-- Checkbox para aceptar términos -->
                             <div class="terms">
@@ -336,21 +335,20 @@
 
                             <!-- Métodos de pago -->
                             <section class="payment-section">
-                                <h3>Metodes de pagament</h3>
+                                <h3>Mètodes de pagament</h3>
                                 <div class="payment-details">
                                     <label for="nombre-tarjeta">Nom Tarjeta</label>
-                                    <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez"
-                                    >
+                                    <input type="text" id="nombre-tarjeta" placeholder="Paco Martínez Martínez" required>
 
                                     <label for="numero-tarjeta">Nº tarjeta</label>
                                     <input type="text" id="numero-tarjeta" placeholder="1234 1234 1234 1234"
-                                           maxlength="19">
+                                           maxlength="19" required>
 
                                     <label for="fecha-caducidad">Data caducitat</label>
-                                    <input type="text" id="fecha-caducidad" placeholder="05/2025">
+                                    <input type="text" id="fecha-caducidad" placeholder="05/2025" required>
 
                                     <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" placeholder="123" maxlength="3">
+                                    <input type="text" id="cvv" placeholder="123" maxlength="3" required>
                                     <input type="hidden" id="preuComplert" name="preuComplert" value=""/>
                                     <input type="hidden" name="matricula2" th:value="${vehicle.matricula}"/>
                                 </div>

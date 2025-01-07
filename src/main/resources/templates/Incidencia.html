@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Incidencia</title>
+    <title>Crear Incidència</title>
 </head>
 <body>
 <div class="container mt-5">
@@ -13,33 +13,33 @@
 
         <!-- Título -->
         <div class="mb-3">
-            <label for="titol" class="form-label">Título</label>
+            <label for="titol" class="form-label">Títol</label>
             <input type="text" th:field="*{titol}" class="form-control" id="titol" placeholder="Ingrese el título" required />
         </div>
 
         <!-- Coste -->
         <div class="mb-3">
-            <label for="cost" class="form-label">Coste</label>
+            <label for="cost" class="form-label">Cost</label>
             <input type="number" th:field="*{cost}" class="form-control" id="cost" placeholder="Ingrese el coste" required />
         </div>
 
         <!-- Fecha de Inicio -->
         <div class="mb-3">
-            <label for="dataInici" class="form-label">Fecha de Inicio</label>
+            <label for="dataInici" class="form-label">Data d'Inici</label>
             <input type="date" th:field="*{dataInici}" class="form-control" id="dataInici" required />
         </div>
 
         <!-- Fecha Final -->
         <div class="mb-3">
-            <label for="dataFinal" class="form-label">Fecha Final</label>
+            <label for="dataFinal" class="form-label">Data Final</label>
             <input type="date" th:field="*{dataFinal}" class="form-control" id="dataFinal" />
         </div>
 
         <!-- Seleccionar Vehículo -->
         <div class="mb-3">
-            <label for="vehicles" class="form-label">Vehículo</label>
+            <label for="vehicles" class="form-label">Vehícle</label>
             <select id="vehicles" th:field="*{vehicle.matricula}" class="form-control" required>
-                <option value="" disabled selected>Seleccione un vehículo</option>
+                <option value="" disabled selected>Seleccioni un vehicle</option>
                 <option th:each="vehicle : ${vehicles}"
                         th:value="${vehicle.matricula}"
                         th:text="${vehicle.marca + ' ' + vehicle.model}">
@@ -49,9 +49,9 @@
 
         <!-- Estado -->
         <div class="mb-3">
-            <label for="estatIncidencia" class="form-label">Estado</label>
+            <label for="estatIncidencia" class="form-label">Estat</label>
             <select id="estatIncidencia" th:field="*{estatIncidencia}" class="form-control" required>
-                <option value="" disabled selected>Seleccione un estado</option>
+                <option value="" disabled selected>Seleccioni un estat</option>
                 <option th:each="estat : ${T(com.copernic.projecte2_openroad.model.enums.EstatIncidencia).values()}"
                         th:value="${estat}"
                         th:text="${estat.valor}">
