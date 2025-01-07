@@ -45,9 +45,9 @@ public class Incidencia {
 
     // Camps Generals
     @Column(nullable = false)
-    private String titolInc;
-    @Column(nullable = false)
-    private String motiu;
+    private String titol;
+//    @Column(nullable = false)
+//    private String motiu;
     @Column(nullable = false)
     private Double cost;
     @Column(nullable = false, name = "data_inici")

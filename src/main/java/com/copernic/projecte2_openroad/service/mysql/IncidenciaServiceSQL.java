@@ -23,7 +23,7 @@ public class IncidenciaServiceSQL {
     public String guardarIncidencia(Incidencia incidencia) {
         try {
             incidenciaRepoSQL.save(incidencia);
-            String msg = "Incidència: " + incidencia.getTitolInc() + " amb ID(" + incidencia.getIdIncidencia() + ") s'ha creat correctament!";
+            String msg = "Incidència: " + incidencia.getTitol() + " amb ID(" + incidencia.getIdIncidencia() + ") s'ha creat correctament!";
             return msg;
         } catch (Exception e) {
             String msg = "Error amb Incidència: ID(" + incidencia.getIdIncidencia() + "). Excepció: " + e.getMessage();
@@ -46,7 +46,7 @@ public class IncidenciaServiceSQL {
         try {
             if (llistarIncidenciaPerId(incidencia.getIdIncidencia()) != null) {
                 incidenciaRepoSQL.save(incidencia);
-                String msg = "Incidència: " + incidencia.getTitolInc() + " amb ID(" + incidencia.getIdIncidencia() + ") modificat correctament!";
+                String msg = "Incidència: " + incidencia.getTitol() + " amb ID(" + incidencia.getIdIncidencia() + ") modificat correctament!";
                 return msg;
             } else {
                 String msg = "Incidència: ID(" + incidencia.getIdIncidencia() + ") no s'ha trobat a la BD MySQL!";
@@ -64,7 +64,7 @@ public class IncidenciaServiceSQL {
         try {
             if (incidencia != null) {
                 incidenciaRepoSQL.delete(incidencia);
-                String msg = "Incidència: " + incidencia.getTitolInc() + " amb ID(" + incidencia.getIdIncidencia() + ") esborrat correctament!";
+                String msg = "Incidència: " + incidencia.getTitol() + " amb ID(" + incidencia.getIdIncidencia() + ") esborrat correctament!";
                 return msg;
             } else {
                 String msg = "Incidència: ID(" + id + ") no s'ha trobat a la BD MySQL!";
