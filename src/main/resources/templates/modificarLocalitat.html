@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modificar Localitat</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<h1>Modificar Localitat</h1>
+
+<!-- Formulario para modificar una Localitat -->
+<form th:action="@{/admin/modificarL}" th:object="${localitat}" method="post">
+
+  <!-- Campo Codi Postal (solo lectura) -->
+  <label for="codiPostalLoc">Codi Postal:</label>
+  <input type="text" id="codiPostalLoc" name="codiPostalLoc" th:value="${localitat.codiPostalLoc}" readonly>
+  <br><br>
+
+  <!-- Campo Població -->
+  <label for="poblacio">Població:</label>
+  <input type="text" id="poblacio" name="poblacio" th:value="${localitat.poblacio}" >
+  <br><br>
+
+  <!-- Campo Direcció -->
+  <label for="direccio">Direcció:</label>
+  <input type="text" id="direccio" name="direccio" th:value="${localitat.direccio}" >
+  <br><br>
+
+  <!-- Campo Local -->
+  <label for="local">Local:</label>
+  <input type="text" id="local" name="local" th:value="${localitat.local}" >
+  <br><br>
+
+  <!-- Campo Horari d'Apertura -->
+  <label for="horariApertura">Horari d'Apertura:</label>
+  <input type="time" id="horariApertura" name="horariApertura" th:value="${localitat.horariApertura}" >
+  <br><br>
+
+  <!-- Campo Horari de Tancada -->
+  <label for="horariTancada">Horari de Tancada:</label>
+  <input type="time" id="horariTancada" name="horariTancada" th:value="${localitat.horariTancada}" >
+  <br><br>
+
+  <!-- Botón de Enviar -->
+  <button type="submit">Modificar Localitat</button>
+</form>
+
+<!-- Volver a la página de gestión -->
+<a href="/admin/gestionar-localitats">Volver a gestionar Localitats</a>
+
+</body>
+</html>

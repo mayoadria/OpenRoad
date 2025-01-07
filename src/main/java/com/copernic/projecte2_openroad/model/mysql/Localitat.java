@@ -6,9 +6,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.copernic.projecte2_openroad.model.enums.EstatLocalitat;
+
 // Jakarta
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -34,6 +38,9 @@ public class Localitat {
     private String codiPostalLoc;
 
     // Camps Generals
+    @Column(nullable = false, name = "estat_localitat")
+    @Enumerated(EnumType.STRING)
+    private EstatLocalitat estatLocalitat;
     @Column(nullable = false)
     private String poblacio;
     @Column(nullable = false)

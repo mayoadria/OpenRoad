@@ -6,6 +6,7 @@ import com.copernic.projecte2_openroad.model.mysql.Usuari;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,8 +14,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.IOException;
 import java.util.Base64;
@@ -40,7 +43,13 @@ public class EditarPerfilClientController {
             Usuari usuari = usuariServiceSQL.findByNomUsuari(nomUsuari);
 
             if (usuari != null) {
-                model.addAttribute("cliente", usuari);  // Pasar el cliente a la vista
+                // Verificar si es un cliente
+                if (usuari instanceof Client) {
+                    model.addAttribute("cliente", usuari);  // Pasar el cliente a la vista
+                } else {
+                    model.addAttribute("error", "Usuario no es de tipo Client.");
+                    return "Perfil";
+                }
             } else {
                 model.addAttribute("error", "Cliente no encontrado");
             }
@@ -51,11 +60,15 @@ public class EditarPerfilClientController {
     }
 
     @PostMapping("/edit")
-    public String guardarCambios(@ModelAttribute Client cliente,
+    public String guardarCambios(@Valid @ModelAttribute Client cliente,BindingResult result,  // Validar el objeto Cliente
                                  @RequestParam("imagen") MultipartFile file,
                                  Model model,
+                                  // Para capturar los errores de validación
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
+
+
+
         // Obtener la autenticación actual
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -72,7 +85,6 @@ public class EditarPerfilClientController {
                 // Actualizar los datos del cliente
                 clienteACambiar.setNom(cliente.getNom());
                 clienteACambiar.setCognom1(cliente.getCognom1());
-                clienteACambiar.setCognom2(cliente.getCognom2());
                 clienteACambiar.setNumContacte1(cliente.getNumContacte1());
                 clienteACambiar.setCodiPostal(cliente.getCodiPostal());
                 clienteACambiar.setAdreca(cliente.getAdreca());
@@ -114,19 +126,25 @@ public class EditarPerfilClientController {
                         return "Perfil";
                     }
                 }
+// Verificar si hay errores de validación
+                if (result.hasErrors()) {
+                    model.addAttribute("isLogged", true);
+                    model.addAttribute("cliente", cliente);
+                    return "Perfil";  // Si hay errores, regresa a la vista y muestra los errores
+                }else {
+                    // Guardar los cambios en la base de datos
+                    usuariServiceSQL.modificarClient(clienteACambiar);
 
-                // Guardar los cambios en la base de datos
-                usuariServiceSQL.modificarClient(clienteACambiar);
+                    // Solo cerrar sesión si el nombre de usuario ha cambiado
+                    if (nombreUsuarioCambiado) {
+                        new SecurityContextLogoutHandler().logout(request, response, authentication);
+                        // Redirigir al inicio para un nuevo login
+                        return "redirect:/";
+                    }
 
-                // Solo cerrar sesión si el nombre de usuario ha cambiado
-                if (nombreUsuarioCambiado) {
-                    new SecurityContextLogoutHandler().logout(request, response, authentication);
-                    // Redirigir al inicio para un nuevo login
-                    return "redirect:/";
+                    // Redirigir al perfil si no se cierra sesión
+                    return "redirect:/perfil";
                 }
-
-                // Redirigir al perfil si no se cierra sesión
-                return "redirect:/perfil";
             } else {
                 model.addAttribute("error", "Cliente no encontrado o no es de tipo Client.");
                 return "Perfil";
@@ -136,6 +154,4 @@ public class EditarPerfilClientController {
         // Redirigir a la página de login si no está autenticado
         return "redirect:/login";
     }
-
-
 }

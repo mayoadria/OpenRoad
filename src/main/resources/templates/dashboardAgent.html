@@ -163,9 +163,17 @@
                         <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
                     </form>
                     <button id="applyFilters" class="filt-btn">Filtrar</button>
-                    <form th:action="@{/agent/crear_vehicle}" method="get">
-                        <button type="submit" class="btn btn-dark">Crear un vehicle</button>
-                    </form>
+                    <div th:if="${haveLocal}">
+                        <form th:action="@{/agent/crear_vehicle}" method="get">
+                            <button type="submit" class="btn btn-dark">Crear un vehicle</button>
+                        </form>
+                    </div>
+                    <div th:if="${!haveLocal}">
+                        <p class="noLocal">No tens localitat asignada, no podràs crear vehicles!</p>
+                        <button class="btn btn-dark">Crear un vehicle</button>
+                    </div>
+                    
+                    
                 </div>
 
             </div>
@@ -239,6 +247,8 @@
                                     th:href="@{/agent/activar/vehicle/{matricula}(matricula=${vehicle.matricula})}">Activar</a>
                                 <a class="btn btn-danger"
                                     th:href="@{/agent/desactivar/vehicle/{matricula}(matricula=${vehicle.matricula})}">Desactivar</a>
+                                <a class="btn btn-success"
+                                   th:href="@{/agent/lliurar/vehicle/{matricula}(matricula=${vehicle.matricula})}">Lliurar Vehicle</a>
                             </td>
                         </tr>
                     </tbody>

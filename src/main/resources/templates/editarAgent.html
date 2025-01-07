@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <title>Crear Agent</title>
+    <title>Editar Agent</title>
     <script>
         // Mostrar u ocultar campos para nueva localidad según selección
         function handleLocalitatChange() {
@@ -27,27 +27,23 @@
 </head>
 
 <body>
-<h1>Crear Agent</h1>
-<form th:action="@{/admin/new}" th:object="${agent}" method="POST">
+<h1>Editar Agent</h1>
+<form th:action="@{/admin/editAgent/{dniAgent}(dniAgent=${dniAgent})}" th:object="${agent}" method="POST">
     <!-- DNI -->
     <label for="dni">DNI:</label>
-    <input type="text" id="dni" th:field="*{dni}">
-    <div class="error-message" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>
+    <input type="text" id="dni" th:field="*{dni}" required>
 
     <!-- Nom -->
     <label for="nom">Nom:</label>
-    <input type="text" id="nom" th:field="*{nom}">
-    <div class="error-message" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
+    <input type="text" id="nom" th:field="*{nom}" required>
 
     <!-- Cognom 1 -->
     <label for="cognom1">Primer Cognom:</label>
-    <input type="text" id="cognom1" th:field="*{cognom1}" >
-    <div class="error-message" th:if="${#fields.hasErrors('cognom1')}" th:errors="*{cognom1}"></div>
+    <input type="text" id="cognom1" th:field="*{cognom1}" required>
 
     <!-- Num Contacte 1 -->
     <label for="numContacte1">Numero de contacte:</label>
-    <input type="tel" id="numContacte1" th:field="*{numContacte1}" >
-    <div class="error-message" th:if="${#fields.hasErrors('numContacte1')}" th:errors="*{numContacte1}"></div>
+    <input type="tel" id="numContacte1" th:field="*{numContacte1}" required>
 
     <!-- Pais -->
     <label>
@@ -60,13 +56,11 @@
 
     <!-- Email -->
     <label for="email">Email:</label>
-    <input type="email" id="email" th:field="*{email}" >
-    <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    <input type="email" id="email" th:field="*{email}" required>
 
     <!-- Contrasenya -->
     <label for="contrasenya">Contrasenya:</label>
-    <input type="password" id="contrasenya" th:field="*{contrasenya}">
-    <div class="error-message" th:if="${#fields.hasErrors('contrasenya')}" th:errors="*{contrasenya}"></div>
+    <input type="password" id="contrasenya" th:field="*{contrasenya}" required>
 
     <!-- Selector de Localidad -->
     <label for="localitat-select">Localitat:</label>
@@ -79,12 +73,11 @@
 
     <!-- Campos para nueva localidad -->
     <div id="new-localitat-fields" style="display: none; margin-top: 20px;">
-        <h3>Crear Nueva Localidad</h3>
+        <h3>Crear Nova Localitat</h3>
 
         <!-- Codi Postal -->
         <label for="codiPostal">Codi Postal:</label>
         <input type="number" id="codiPostal" th:field="*{localitat.codiPostalLoc}">
-        <div class="error-message" th:if="${#fields.hasErrors('codiPostal')}" th:errors="*{codiPostal}"></div>
 
         <!-- Població -->
         <label for="poblacio">Població:</label>
@@ -95,7 +88,7 @@
         <input type="text" id="direccio" th:field="*{localitat.direccio}" placeholder="Exemple: Gran Via, Madrid, Espanya" />
 
         <!-- Local -->
-        <label for="local">Local:</label>
+        <label for="local">Nom Local:</label>
         <input type="text" id="local" th:field="*{localitat.local}" placeholder="Garatge">
 
         <!-- Horari -->
@@ -105,7 +98,7 @@
     </div>
 
     <div>
-        <button type="submit">Crear Agent</button>
+        <button type="submit">Editar Agent</button>
     </div>
 </form>
 </body>
