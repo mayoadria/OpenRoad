@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.*;
 import com.copernic.projecte2_openroad.security.UserUtils;
 
@@ -64,7 +63,12 @@ public class AgentDashboardController {
         Agent agent = (Agent) agentObj;
 
         // Obtener vehículos en la misma localidad que el agente
-        List<Vehicle> vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
+        List<Vehicle> vehicles = new ArrayList<>();
+        Boolean haveLocal = false;
+        if (agent.getLocalitat() != null) {
+            vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
+            haveLocal = true;
+        }
         List<Reserva> reserves = reservaServiceSQL.llistarReserves();
         List<Incidencia> incidencies = incidenciaServiceSQL.llistarIncidencies();
 
@@ -105,6 +109,7 @@ public class AgentDashboardController {
         model.addAttribute("estatsVehicle", estatsVehicle);
         model.addAttribute("marques", marques);
         model.addAttribute("models", models);
+        model.addAttribute("haveLocal", haveLocal);
         return "dashboardAgent";
     }
 
@@ -150,7 +155,11 @@ public class AgentDashboardController {
             Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
             if (agentObj instanceof Agent) {
                 Agent agent = (Agent) agentObj;
-                vehicle.setLocalitat(agent.getLocalitat());
+                if (agent.getLocalitat() == null) {
+                    return "redirect:/agent/dashboard";
+                } else {
+                    vehicle.setLocalitat(agent.getLocalitat());
+                }
             }
             vehicle.setEstatVehicle(EstatVehicle.INACTIU);
             if(result.hasErrors()) {

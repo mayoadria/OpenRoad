@@ -1,5 +1,6 @@
 package com.copernic.projecte2_openroad.controllers;
 
+import com.copernic.projecte2_openroad.model.enums.EstatLocalitat;
 import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.Agent;
 import com.copernic.projecte2_openroad.model.mysql.Localitat;
@@ -58,20 +59,34 @@ public class AgenteController {
             return "crearAgent";
         }
 
+        
+        
         // Procesar la localidad
+        if (agent.getLocalitat() != null) {
+            Localitat localitat = agent.getLocalitat();
+            localitat.setEstatLocalitat(EstatLocalitat.LLIURE);
+            localitatService.guardarLocalitat(localitat);
+        }
         if ("new".equals(localitatOption)) {
             Localitat novaLocalitat = agent.getLocalitat();
             if (novaLocalitat == null) {
                 novaLocalitat = new Localitat();
                 agent.setLocalitat(novaLocalitat);
             }
+            novaLocalitat.setEstatLocalitat(EstatLocalitat.ASSIGNADA);
             localitatService.guardarLocalitat(novaLocalitat);
             agent.setAdreca(novaLocalitat.getDireccio());
             agent.setCodiPostal(novaLocalitat.getCodiPostalLoc());
         } else if (localitatOption.isEmpty()) {
+            if (agent.getLocalitat() != null) {
+                Localitat localitat = agent.getLocalitat();
+                localitat.setEstatLocalitat(EstatLocalitat.LLIURE);
+            }
             agent.setLocalitat(null);
+            
         } else {
             Localitat localitatExist = localitatService.findByNomUsuari(localitatOption);
+            localitatExist.setEstatLocalitat(EstatLocalitat.ASSIGNADA);
             agent.setLocalitat(localitatExist);
             agent.setAdreca(localitatExist.getDireccio());
             agent.setCodiPostal(localitatExist.getCodiPostalLoc());
@@ -102,12 +117,18 @@ public class AgenteController {
         }
 
         // Procesar la localidad
+        if (agent.getLocalitat() != null) {
+            Localitat localitat = agent.getLocalitat();
+            localitat.setEstatLocalitat(EstatLocalitat.LLIURE);
+            localitatService.guardarLocalitat(localitat);
+        }
         if ("new".equals(localitatOption)) {
             Localitat novaLocalitat = agent.getLocalitat();
             if (novaLocalitat == null) {
                 novaLocalitat = new Localitat();
                 agent.setLocalitat(novaLocalitat);
             }
+            novaLocalitat.setEstatLocalitat(EstatLocalitat.ASSIGNADA);
             localitatService.guardarLocalitat(novaLocalitat);
             agent.setAdreca(novaLocalitat.getDireccio());
             agent.setCodiPostal(novaLocalitat.getCodiPostalLoc());
@@ -115,6 +136,7 @@ public class AgenteController {
             agent.setLocalitat(null);
         } else {
             Localitat localitatExist = localitatService.findByNomUsuari(localitatOption);
+            localitatExist.setEstatLocalitat(EstatLocalitat.ASSIGNADA);
             agent.setLocalitat(localitatExist);
             agent.setAdreca(localitatExist.getDireccio());
             agent.setCodiPostal(localitatExist.getCodiPostalLoc());

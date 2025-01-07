@@ -1,5 +1,6 @@
 package com.copernic.projecte2_openroad.controllers;
 
+import com.copernic.projecte2_openroad.model.enums.EstatLocalitat;
 import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.*;
 import com.copernic.projecte2_openroad.service.mysql.LocalitatServiceSQL;
@@ -93,6 +94,9 @@ public class AdminDashBoardController {
                     .collect(Collectors.toList());
         }
 
+        Boolean teVehicles = false;
+
+        model.addAttribute("teVehicles", teVehicles);
         model.addAttribute("agents", agents);
         model.addAttribute("clients", clients);
         model.addAttribute("paisosClient", paisosClient);
@@ -111,9 +115,14 @@ public class AdminDashBoardController {
     public String editarAgent(@PathVariable String nomUsuari, Model model) {
         Agent agent = (Agent) usuariServiceSQL.findByNomUsuari(nomUsuari);
         if (agent instanceof Agent) {
-            agent.setLocalitat(new Localitat());
+            if (agent.getLocalitat() == null) {
+                agent.setLocalitat(new Localitat());
+            }
             model.addAttribute("paisos", Pais.values());
-            model.addAttribute("localitats", localitatServiceSQL.llistarLocalitats());
+            model.addAttribute("localitats", localitatServiceSQL.llistarLocalitats().stream()
+                    .filter(localitat -> localitat.getEstatLocalitat() == EstatLocalitat.LLIURE ||
+                            (agent.getLocalitat() != null && localitat.equals(agent.getLocalitat())))
+                    .collect(Collectors.toList()));
             model.addAttribute("agent", agent);
             model.addAttribute("dniAgent", agent.getDni());
         }
@@ -122,8 +131,17 @@ public class AdminDashBoardController {
 
     @GetMapping("/delete/agent/{nomUsuari}")
     public String deleteAgent(@PathVariable String nomUsuari) {
-        usuariServiceSQL.eliminarAgentPerNomUsuari(nomUsuari);
+        Agent agent = (Agent) usuariServiceSQL.findByNomUsuari(nomUsuari);
+        if (agent instanceof Agent) { 
+            Localitat localitat = localitatServiceSQL.llistarLocalitatPerId(agent.getLocalitat().getCodiPostalLoc());
+            localitat.setEstatLocalitat(EstatLocalitat.LLIURE);
+            localitatServiceSQL.guardarLocalitat(localitat);
+            usuariServiceSQL.eliminarAgentPerNomUsuari(nomUsuari);
+            
+        }
+
         return "redirect:/admin/dashboard";
+        
     }
 
     @GetMapping("/delete/client/{nomUsuari}")
@@ -185,15 +203,17 @@ public class AdminDashBoardController {
 
     @PostMapping("/crearL")
     public String crearLocalitat(@ModelAttribute Localitat localitat) {
+        localitat.setEstatLocalitat(EstatLocalitat.LLIURE);
         localitatServiceSQL.guardarLocalitat(localitat);
         return "redirect:/admin/dashboard";
 
     }
 
     @GetMapping("/delete/{codiPostalLoc}")
-    public String deletelocalitat(@PathVariable String codiPostalLoc) {
+    public String deletelocalitat(@PathVariable String codiPostalLoc, Model model) {
         localitatServiceSQL.eliminarLocalitatPerId(codiPostalLoc);
         return "redirect:/admin/dashboard";
+
     }
 
     @GetMapping("/modificar-localitat/{codiPostalLoc}")
