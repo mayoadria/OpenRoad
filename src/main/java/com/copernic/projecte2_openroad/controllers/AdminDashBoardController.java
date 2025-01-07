@@ -115,6 +115,7 @@ public class AdminDashBoardController {
             model.addAttribute("paisos", Pais.values());
             model.addAttribute("localitats", localitatServiceSQL.llistarLocalitats());
             model.addAttribute("agent", agent);
+            model.addAttribute("dniAgent", agent.getDni());
         }
         return "editarAgent";
     }
