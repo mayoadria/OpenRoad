@@ -251,6 +251,11 @@ body {
     border-color: #00b4d8;
 }
 
+.noLocal {
+    color: red;
+    text-decoration: underline;
+}
+
 .filtre {
     display: flex;
     justify-content: space-between;
