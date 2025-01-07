@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <title>Crear Agent</title>
+    <title>Editar Agent</title>
     <script>
         // Mostrar u ocultar campos para nueva localidad según selección
         function handleLocalitatChange() {
@@ -27,8 +27,8 @@
 </head>
 
 <body>
-<h1>Crear Agent</h1>
-<form th:action="@{/admin/new}" th:object="${agent}" method="POST">
+<h1>Editar Agent</h1>
+<form th:action="@{/admin/editAgent/{dniAgent}(dniAgent=${dniAgent})}" th:object="${agent}" method="POST">
     <!-- DNI -->
     <label for="dni">DNI:</label>
     <input type="text" id="dni" th:field="*{dni}" required>
@@ -73,7 +73,7 @@
 
     <!-- Campos para nueva localidad -->
     <div id="new-localitat-fields" style="display: none; margin-top: 20px;">
-        <h3>Crear Nueva Localidad</h3>
+        <h3>Crear Nova Localitat</h3>
 
         <!-- Codi Postal -->
         <label for="codiPostal">Codi Postal:</label>
@@ -88,7 +88,7 @@
         <input type="text" id="direccio" th:field="*{localitat.direccio}" placeholder="Exemple: Gran Via, Madrid, Espanya" />
 
         <!-- Local -->
-        <label for="local">Local:</label>
+        <label for="local">Nom Local:</label>
         <input type="text" id="local" th:field="*{localitat.local}" placeholder="Garatge">
 
         <!-- Horari -->
@@ -98,7 +98,7 @@
     </div>
 
     <div>
-        <button type="submit">Guardar canvis</button>
+        <button type="submit">Editar Agent</button>
     </div>
 </form>
 </body>

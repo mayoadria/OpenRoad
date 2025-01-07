@@ -129,8 +129,14 @@ public class UsuariServiceSQL {
     /**
      * Actualiza los datos de un agente.
      */
-    public void modificarAgent(Agent agent) {
-        agentRepository.save(agent);  // Guarda los cambios en la base de datos
+    public void modificarAgent(Agent agent, String dniAgent) {
+        if (agent.getDni().equals(dniAgent)) {
+            agentRepository.save(agent); 
+        } else {
+            agentRepository.deleteById(dniAgent);
+            agentRepository.save(agent); 
+        }
+         // Guarda los cambios en la base de datos
     }
 
     public void modificarClient(Client client) {
