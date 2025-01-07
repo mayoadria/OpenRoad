@@ -81,7 +81,10 @@ public class RegistroClienteController {
         try {
             // Verificar si el email ya está registrado
             if (clientServiceSQL.existeEmail(cli.getEmail())) {
-                result.rejectValue("email", "error.cli", "El correo electrónico ya está registrado");
+                result.rejectValue("email", "error.cli", "El correu electronic ya está registrat");
+            }
+            if(clientServiceSQL.existeDni(cli.getDni())) {
+                result.rejectValue("dni", "error.cli", "El dni ja está registrat");
             }
 
             // Procesar y guardar datos en MySQL

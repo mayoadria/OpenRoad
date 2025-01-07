@@ -33,4 +33,5 @@ public interface VehicleRepositorySQL extends JpaRepository<Vehicle, String> {
      * @return una llista de vehicles amb l'estat especificat.
      */
     List<Vehicle> findByEstatVehicle(EstatVehicle estatVehicle);
+    Boolean existsByMatricula(String matricula);
 }

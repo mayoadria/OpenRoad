@@ -71,6 +71,9 @@ public class AgenteController {
         if (usuariServiceSQL.existeEmail(agent.getEmail())) {
             result.rejectValue("email", "error.agent", "El correu electrònic ja està registrat");
         }
+        if(usuariServiceSQL.existeDni(agent.getDni())) {
+            result.rejectValue("dni", "error.agent", "El dni ja está registrat");
+        }
 
         // Gestionar errors de validació
         if (result.hasErrors()) {

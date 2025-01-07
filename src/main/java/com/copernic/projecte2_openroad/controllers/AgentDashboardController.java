@@ -203,6 +203,9 @@ public class AgentDashboardController {
                 }
             }
             vehicle.setEstatVehicle(EstatVehicle.INACTIU);
+            if(vehicleServiceSQL.existeVehiculo(vehicle.getMatricula())) {
+                result.rejectValue("matricula", "error.vehicle", "La matricula ja está registrada");
+            }
             if (result.hasErrors()) {
                 return "crearVehicle";
             } else {

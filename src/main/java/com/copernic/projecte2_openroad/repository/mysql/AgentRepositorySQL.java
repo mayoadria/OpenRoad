@@ -29,4 +29,6 @@ public interface AgentRepositorySQL extends JpaRepository<Agent, String> {
      * @return true si ja existeix un agent amb aquest correu electrònic, false en cas contrari.
      */
     boolean existsByEmail(String email);
+    boolean existsByDni(String dni);
+
 }
