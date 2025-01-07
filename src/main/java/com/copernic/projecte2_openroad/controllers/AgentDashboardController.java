@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.copernic.projecte2_openroad.model.enums.Pais;
 import com.copernic.projecte2_openroad.model.mysql.*;
 import com.copernic.projecte2_openroad.security.UserUtils;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.copernic.projecte2_openroad.model.enums.EstatVehicle;
@@ -126,8 +129,8 @@ public class AgentDashboardController {
 
 
     @PostMapping("/crear")
-    public String crearVehicle(@ModelAttribute Vehicle vehicle,
-            @RequestParam("imagen") MultipartFile file, Model model) {
+    public String crearVehicle(@Valid @ModelAttribute Vehicle vehicle, BindingResult result,
+                               @RequestParam("imagen") MultipartFile file, Model model) {
         try {
             // Crear y guardar la imagen
             Imagen image = new Imagen();
@@ -150,8 +153,12 @@ public class AgentDashboardController {
                 vehicle.setLocalitat(agent.getLocalitat());
             }
             vehicle.setEstatVehicle(EstatVehicle.INACTIU);
-            vehicleServiceSQL.guardarVehicle(vehicle);
-            return "redirect:/agent/dashboard";
+            if(result.hasErrors()) {
+                return "crearVehicle";
+            }else {
+                vehicleServiceSQL.guardarVehicle(vehicle);
+                return "redirect:/agent/dashboard";
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
