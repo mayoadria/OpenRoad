@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controlador per gestionar els agents dins de l'administració.
+ * Permet la creació i edició d'agents, així com l'assignació de localitats.
+ */
 @Controller
 @RequestMapping("/admin")
 public class AgenteController {
@@ -32,6 +36,12 @@ public class AgenteController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    /**
+     * Mostra el formulari per a crear un nou agent.
+     *
+     * @param model El model per passar les dades a la vista
+     * @return El formulari per crear un agent
+     */
     @GetMapping("/newAgent")
     public String mostrarFormAgent(Model model) {
         Agent agent = new Agent();
@@ -43,16 +53,26 @@ public class AgenteController {
         return "crearAgent";
     }
 
+    /**
+     * Crea un nou agent i el desa a la base de dades.
+     * Si es fa servir una nova localitat, aquesta també es desa.
+     *
+     * @param agent L'agent amb les dades introduïdes
+     * @param result Els resultats de la validació del formulari
+     * @param localitatOption Opció seleccionada per la localitat (si és nova o existent)
+     * @param model El model per passar les dades a la vista
+     * @return Redirigeix al tauler de control de l'administrador
+     */
     @PostMapping("/new")
     public String crearAgente(@Valid @ModelAttribute("agent") Agent agent, BindingResult result,
                               @ModelAttribute("localitatOption") String localitatOption, Model model) {
 
-        // Verificar si el email ya existe
+        // Comprovar si el correu electrònic ja existeix
         if (usuariServiceSQL.existeEmail(agent.getEmail())) {
-            result.rejectValue("email", "error.agent", "El correo electrónico ya está registrado");
+            result.rejectValue("email", "error.agent", "El correu electrònic ja està registrat");
         }
 
-        // Manejar errores de validación
+        // Gestionar errors de validació
         if (result.hasErrors()) {
             model.addAttribute("paisos", Pais.values());
             model.addAttribute("localitats", localitatService.llistarLocalitats());
@@ -92,24 +112,34 @@ public class AgenteController {
             agent.setCodiPostal(localitatExist.getCodiPostalLoc());
         }
 
-        // Configurar datos adicionales del agente
+        // Configurar dades addicionals de l'agent
         agent.setContrasenya(passwordEncoder.encode(agent.getContrasenya()));
         String[] partes = agent.getEmail().split("@");
         agent.setNomUsuari(partes[0]);
         agent.setPermisos(TipusPermis.AGENT.toString());
         agent.setEnabled(true);
 
-        // Guardar agente
+        // Desa l'agent
         usuariServiceSQL.guardarAgent(agent);
 
         return "redirect:/admin/dashboard";
     }
 
+    /**
+     * Edita les dades d'un agent existent, incloent la localitat.
+     *
+     * @param dniAgent DNI de l'agent que es vol editar
+     * @param agent L'agent amb les dades actualitzades
+     * @param result Els resultats de la validació del formulari
+     * @param localitatOption Opció seleccionada per la localitat (si és nova o existent)
+     * @param model El model per passar les dades a la vista
+     * @return Redirigeix al tauler de control de l'administrador
+     */
     @PostMapping("/editAgent/{dniAgent}")
     public String editarAgente(@PathVariable String dniAgent, @Valid @ModelAttribute("agent") Agent agent, BindingResult result,
-                              @ModelAttribute("localitatOption") String localitatOption, Model model) {
+                               @ModelAttribute("localitatOption") String localitatOption, Model model) {
 
-        // Manejar errores de validación
+        // Gestionar errors de validació
         if (result.hasErrors()) {
             model.addAttribute("paisos", Pais.values());
             model.addAttribute("localitats", localitatService.llistarLocalitats());
@@ -142,14 +172,14 @@ public class AgenteController {
             agent.setCodiPostal(localitatExist.getCodiPostalLoc());
         }
 
-        // Configurar datos adicionales del agente
+        // Configurar dades addicionals de l'agent
         agent.setContrasenya(passwordEncoder.encode(agent.getContrasenya()));
         String[] partes = agent.getEmail().split("@");
         agent.setNomUsuari(partes[0]);
         agent.setPermisos(TipusPermis.AGENT.toString());
         agent.setEnabled(true);
 
-        // Guardar agente
+        // Desa l'agent
         usuariServiceSQL.modificarAgent(agent, dniAgent);
 
         return "redirect:/admin/dashboard";

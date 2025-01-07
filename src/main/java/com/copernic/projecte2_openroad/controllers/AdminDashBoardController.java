@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controlador que maneja el panel de administración del sistema, donde los administradores pueden gestionar
+ * agentes, clientes, reservas, localizaciones, y realizar varias acciones de edición y eliminación.
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminDashBoardController {
@@ -25,6 +29,20 @@ public class AdminDashBoardController {
     @Autowired
     LocalitatServiceSQL localitatServiceSQL;
 
+    /**
+     * Muestra el panel de administración con filtros para gestionar usuarios y mostrar reservas y localizaciones.
+     *
+     * @param dniClientFilt Filtro por DNI del cliente
+     * @param dniAgentFilt Filtro por DNI del agente
+     * @param emailClientFilt Filtro por email del cliente
+     * @param emailAgentFilt Filtro por email del agente
+     * @param paisClientFilt Filtro por país del cliente
+     * @param paisAgentFilt Filtro por país del agente
+     * @param CognomClientFilt Filtro por primer apellido del cliente
+     * @param TelefonClientFilt Filtro por número de contacto del cliente
+     * @param model Modelo para pasar los datos a la vista
+     * @return La vista del dashboard con los datos filtrados
+     */
     @GetMapping("/dashboard")
     public String dashboard(
             @RequestParam(name = "dniClient", required = false) String dniClientFilt,
@@ -106,11 +124,23 @@ public class AdminDashBoardController {
         return "dashboard"; // dashboard.html en templates.
     }
 
+    /**
+     * Redirige a la vista para crear un nuevo agente.
+     *
+     * @return La vista para crear un nuevo agente
+     */
     @GetMapping("/crearAgente")
     public String crearAgent() {
         return "CrearAgente";
     }
 
+    /**
+     * Permite editar la información de un agente específico.
+     *
+     * @param nomUsuari Nombre de usuario del agente
+     * @param model Modelo para pasar los datos a la vista
+     * @return La vista para editar los datos del agente
+     */
     @GetMapping("/editarAgent/{nomUsuari}")
     public String editarAgent(@PathVariable String nomUsuari, Model model) {
         Agent agent = (Agent) usuariServiceSQL.findByNomUsuari(nomUsuari);
@@ -129,6 +159,12 @@ public class AdminDashBoardController {
         return "editarAgent";
     }
 
+    /**
+     * Elimina un agente por su nombre de usuario.
+     *
+     * @param nomUsuari Nombre de usuario del agente a eliminar
+     * @return Redirige al panel de administración
+     */
     @GetMapping("/delete/agent/{nomUsuari}")
     public String deleteAgent(@PathVariable String nomUsuari) {
         Agent agent = (Agent) usuariServiceSQL.findByNomUsuari(nomUsuari);
@@ -144,12 +180,26 @@ public class AdminDashBoardController {
         
     }
 
+    /**
+     * Elimina un cliente por su nombre de usuario.
+     *
+     * @param nomUsuari Nombre de usuario del cliente a eliminar
+     * @return Redirige al panel de administración
+     */
     @GetMapping("/delete/client/{nomUsuari}")
     public String deleteClient(@PathVariable String nomUsuari) {
         usuariServiceSQL.eliminarClientPerNomUsuari(nomUsuari);
         return "redirect:/admin/dashboard";
     }
 
+    /**
+     * Permite editar los datos de un usuario específico.
+     *
+     * @param nomUsuari Nombre de usuario del cliente o agente
+     * @param visualizar Flag que indica si solo se visualizarán los datos o se editarán
+     * @param model Modelo para pasar los datos a la vista
+     * @return La vista para editar los datos del usuario
+     */
     @GetMapping("/edit/{nomUsuari}")
     public String editarUsuario(@PathVariable String nomUsuari, boolean visualizar, Model model) {
         Usuari usuario = usuariServiceSQL.findByNomUsuari(nomUsuari);
@@ -161,10 +211,16 @@ public class AdminDashBoardController {
         return "EditarOtrosPerfilesAdmin"; // Cargar la vista para editar
     }
 
+    /**
+     * Guarda los cambios realizados en los datos de un cliente.
+     *
+     * @param cliente Cliente con los datos actualizados
+     * @param nomUsuari Nombre de usuario del cliente
+     * @param model Modelo para pasar los datos a la vista
+     * @return Redirige al panel de administración después de guardar los cambios
+     */
     @PostMapping("/edit")
     public String guardarCambios(@ModelAttribute Client cliente, @RequestParam String nomUsuari, Model model) {
-        // Buscar el usuario que se está editando por su nomUsuari enviado en el
-        // formulario
         Usuari clienteExistente = usuariServiceSQL.findByNomUsuari(nomUsuari);
 
         if (clienteExistente != null && clienteExistente instanceof Client) {
@@ -187,12 +243,24 @@ public class AdminDashBoardController {
         }
     }
 
+    /**
+     * Activa un usuario en el sistema.
+     *
+     * @param nomUsuari Nombre de usuario del usuario a activar
+     * @return Redirige al panel de administración
+     */
     @GetMapping("/activateUser/{nomUsuari}")
     public String activateUser(@PathVariable String nomUsuari) {
         usuariServiceSQL.activateUser(nomUsuari);
         return "redirect:/admin/dashboard";
     }
 
+    /**
+     * Muestra el formulario para crear una nueva localización.
+     *
+     * @param model Modelo para pasar los datos a la vista
+     * @return La vista para crear una nueva localización
+     */
     @GetMapping("/crear_localitzacio")
     public String mostrarFormulariLocalitzacio(Model model) {
         Localitat localitat = new Localitat();
@@ -201,14 +269,25 @@ public class AdminDashBoardController {
         return "crearLocalitat";
     }
 
+    /**
+     * Crea una nueva localización.
+     *
+     * @param localitat Objeto Localitat con los datos a guardar
+     * @return Redirige al panel de administración después de guardar la localización
+     */
     @PostMapping("/crearL")
     public String crearLocalitat(@ModelAttribute Localitat localitat) {
         localitat.setEstatLocalitat(EstatLocalitat.LLIURE);
         localitatServiceSQL.guardarLocalitat(localitat);
         return "redirect:/admin/dashboard";
-
     }
 
+    /**
+     * Elimina una localización por su código postal.
+     *
+     * @param codiPostalLoc Código postal de la localización a eliminar
+     * @return Redirige al panel de administración después de eliminar la localización
+     */
     @GetMapping("/delete/{codiPostalLoc}")
     public String deletelocalitat(@PathVariable String codiPostalLoc, Model model) {
         localitatServiceSQL.eliminarLocalitatPerId(codiPostalLoc);
@@ -216,6 +295,13 @@ public class AdminDashBoardController {
 
     }
 
+    /**
+     * Muestra el formulario para modificar una localización existente.
+     *
+     * @param codiPostalLoc Código postal de la localización a modificar
+     * @param model Modelo para pasar los datos a la vista
+     * @return La vista para modificar la localización
+     */
     @GetMapping("/modificar-localitat/{codiPostalLoc}")
     public String modificarLocalitatForm(@PathVariable("codiPostalLoc") String codiPostalLoc, Model model) {
         Localitat localitat = localitatServiceSQL.findByNomUsuari(codiPostalLoc);
@@ -225,6 +311,12 @@ public class AdminDashBoardController {
         return "modificarLocalitat"; // Nombre de la plantilla Thymeleaf
     }
 
+    /**
+     * Modifica una localización existente.
+     *
+     * @param localitat Objeto Localitat con los datos actualizados
+     * @return Redirige al panel de administración después de modificar la localización
+     */
     @PostMapping("/modificarL")
     public String modificarLocalitat(@ModelAttribute Localitat localitat) {
         localitatServiceSQL.modificarLocalitat(localitat); // Aquí llamas al servicio para actualizar la localización
