@@ -1,77 +1,103 @@
+/**
+ * Servei que gestiona les operacions CRUD per a les incidències emmagatzemades en una col·lecció MongoDB.
+ * Proporciona funcionalitats per crear, llistar, modificar i eliminar incidències.
+ */
 package com.copernic.projecte2_openroad.service.mongodb;
 
-// Java
 import java.util.List;
 
-// Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// Model
 import com.copernic.projecte2_openroad.model.mongodb.HistoricIncidencia;
-
-// Repository
 import com.copernic.projecte2_openroad.repository.mongodb.IncidenciaRepositoryMongo;
 
+/**
+ * Classe de servei per a la gestió de les incidències a MongoDB.
+ */
 @Service
 public class IncidenciaServiceMongo {
 
     @Autowired
     private IncidenciaRepositoryMongo incidenciaRepoMongo;
 
-    // Crear Incidencia.
+    /**
+     * Guarda una nova incidència a MongoDB.
+     *
+     * @param incidencia l'entitat de la incidència a guardar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String guardarIncidencia(HistoricIncidencia incidencia) {
         try {
             incidenciaRepoMongo.save(incidencia);
-            String msg = "Incidencia: " + incidencia.getTitolInc() + " amb ID(" + incidencia.getIdIncidencia() + ") s'ha creat correctament!";
+            String msg = "Incidència: " + incidencia.getTitolInc() + " amb ID(" + incidencia.getIdIncidencia() + ") s'ha creat correctament!";
             return msg;
         } catch (Exception e) {
-            String msg = "Error amb Incidencia: ID(" + incidencia.getIdIncidencia() + "). Excepció: " + e.getMessage();
-            return msg;     
+            String msg = "Error amb Incidència: ID(" + incidencia.getIdIncidencia() + "). Excepció: " + e.getMessage();
+            return msg;
         }
     }
 
-    // Llistar Incidencia.
+    /**
+     * Cerca una incidència a MongoDB pel seu ID.
+     *
+     * @param id l'ID de la incidència a cercar.
+     * @return l'entitat de la incidència si existeix.
+     */
     public HistoricIncidencia llistarIncidenciaPerId(String id) {
-        return incidenciaRepoMongo.findById(id).get();
+        return incidenciaRepoMongo.findById(id).orElse(null);
     }
 
-    // Llistar tots els Incidencias.
+    /**
+     * Llista totes les incidències emmagatzemades a MongoDB.
+     *
+     * @return una llista amb totes les incidències.
+     */
     public List<HistoricIncidencia> llistarIncidencias() {
         return incidenciaRepoMongo.findAll();
     }
 
-    // Modificar Incidencia.
+    /**
+     * Modifica una incidència existent a MongoDB.
+     *
+     * @param incidencia l'entitat de la incidència a modificar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String modificarIncidencia(HistoricIncidencia incidencia) {
         try {
-            if (llistarIncidenciaPerId(incidencia.getTitolInc()) != null) {
+            if (llistarIncidenciaPerId(incidencia.getIdIncidencia()) != null) {
                 incidenciaRepoMongo.save(incidencia);
-                String msg = "Incidencia: " + incidencia.getTitolInc() + " amb ID(" + incidencia.getIdIncidencia() + ") modificat correctament!";
+                String msg = "Incidència: " + incidencia.getTitolInc() + " amb ID(" + incidencia.getIdIncidencia() + ") modificada correctament!";
                 return msg;
             } else {
-                String msg = "Incidencia: ID(" + incidencia.getIdIncidencia() + ") no s'ha trobat a la BD MySQL!";
+                String msg = "Incidència: ID(" + incidencia.getIdIncidencia() + ") no s'ha trobat a la BD MongoDB!";
                 return msg;
             }
         } catch (Exception e) {
-            String msg = "Error amb Incidencia: ID(" + incidencia.getIdIncidencia() + "). Excepció: " + e.getMessage();
+            String msg = "Error amb Incidència: ID(" + incidencia.getIdIncidencia() + "). Excepció: " + e.getMessage();
             return msg;
         }
     }
 
-    // Eliminar Incidencia.
+    /**
+     * Elimina una incidència a MongoDB pel seu ID.
+     *
+     * @param id l'ID de la incidència a eliminar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String eliminarIncidenciaPerId(String id) {
-        HistoricIncidencia Incidencia = llistarIncidenciaPerId(id);
+        HistoricIncidencia incidencia = llistarIncidenciaPerId(id);
         try {
-            if (Incidencia != null) {
-                incidenciaRepoMongo.delete(Incidencia);
-                String msg = "Incidencia: " + Incidencia.getTitolInc() + " amb ID(" + Incidencia.getIdIncidencia() + ") esborrat correctament!";
+            if (incidencia != null) {
+                incidenciaRepoMongo.delete(incidencia);
+                String msg = "Incidència: " + incidencia.getTitolInc() + " amb ID(" + incidencia.getIdIncidencia() + ") esborrada correctament!";
                 return msg;
             } else {
-                String msg = "Incidencia: ID(" + id + ") no s'ha trobat a la BD MySQL!";
+                String msg = "Incidència: ID(" + id + ") no s'ha trobat a la BD MongoDB!";
                 return msg;
             }
         } catch (Exception e) {
-            String msg = "Error amb Incidencia: ID(" + id + "). Excepció: " + e.getMessage();
+            String msg = "Error amb Incidència: ID(" + id + "). Excepció: " + e.getMessage();
             return msg;
         }
     }

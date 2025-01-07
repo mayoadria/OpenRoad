@@ -17,31 +17,42 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controlador per gestionar les operacions relacionades amb els comentaris dels vehicles.
+ */
 @Controller
 public class ComentariController {
 
     @Autowired
     private ComentarisServiceMongo comentarisServiceMongo;
 
-    // Endpoint per al formulari de comentari per un vehicle
+    /**
+     * Mostra el formulari per afegir un comentari a un vehicle.
+     *
+     * @param matricula la matrícula del vehicle per al qual es vol afegir un comentari.
+     * @param model     l'objecte {@link Model} utilitzat per passar dades a la vista.
+     * @return el nom de la vista del formulari de comentari.
+     */
     @GetMapping("/comentariForm/{matricula}")
     public String comentariForm(@PathVariable String matricula, Model model) {
-
-        // Obtenir les dades de l'usuari i passar-les al model
         UserUtils.obtenirDadesUsuariModel(model);
-
         Comentari comentari = new Comentari();
         model.addAttribute("comentari", comentari);
         model.addAttribute("matricula", matricula);
 
-        return "comentariForm"; // Retorna la vista del formulari
+        return "comentariForm";
     }
 
-    // Endpoint per crear un nou comentari
+    /**
+     * Crea un nou comentari i el guarda a la base de dades.
+     *
+     * @param comentari l'objecte {@link Comentari} amb les dades del comentari.
+     * @param matricula la matrícula del vehicle associat al comentari.
+     * @param model     l'objecte {@link Model} utilitzat per passar dades a la vista.
+     * @return una redirecció a la pàgina del vehicle associat.
+     */
     @PostMapping("/crearComentari")
     public String crearComentari(@ModelAttribute Comentari comentari, @RequestParam String matricula, Model model) {
-
-        // Obtenir les dades de l'usuari per associar-les al comentari
         Object dadesUsuari = UserUtils.obtenirDadesUsuariModel(model);
 
         Client client = new Client();
@@ -49,23 +60,29 @@ public class ComentariController {
             client = (Client) dadesUsuari;
         }
 
-        // Assignar les dades del client al comentari
         comentari.setNomClient(client.getNom());
         comentari.setCognom1Client(client.getCognom1());
         comentari.setNomUsuariClient(client.getNomUsuari());
         comentari.setMatriculaVehicle(matricula);
         LocalDate data = LocalDate.now();
         comentari.setDataComentari(data);
-        comentari.setLike(0); // Inicialitzar likes
-        comentari.setDisLike(0); // Inicialitzar dislikes
+        comentari.setLike(0);
+        comentari.setDisLike(0);
 
-        // Guardar el comentari al servei MongoDB
         comentarisServiceMongo.guardarComentari(comentari);
 
-        return "redirect:/vehicle/" + matricula; // Redirigir al vehicle amb la matrícula corresponent
+        return "redirect:/vehicle/" + matricula;
     }
 
-    // Endpoint per modificar els likes i dislikes d'un comentari
+    /**
+     * Modifica els likes i dislikes d'un comentari existent.
+     *
+     * @param idComentari l'identificador del comentari a modificar.
+     * @param matricula   la matrícula del vehicle associat al comentari.
+     * @param likes       el nou valor de likes.
+     * @param dislikes    el nou valor de dislikes.
+     * @return una redirecció a la pàgina del vehicle associat.
+     */
     @PostMapping("/modificarLikes")
     public String modificarLikes(
             @RequestParam String idComentari,
@@ -73,16 +90,13 @@ public class ComentariController {
             @RequestParam int likes,
             @RequestParam int dislikes) {
 
-        // Obtenir el comentari per ID
         Comentari comentari = comentarisServiceMongo.llistarComentariPerId(idComentari);
 
-        // Modificar els likes i dislikes del comentari
         comentari.setLike(likes);
         comentari.setDisLike(dislikes);
 
-        // Actualitzar el comentari al servei MongoDB
         comentarisServiceMongo.modificarComentari(comentari);
 
-        return "redirect:/vehicle/" + matricula; // Redirigir al vehicle amb la matrícula corresponent
+        return "redirect:/vehicle/" + matricula;
     }
 }

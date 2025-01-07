@@ -1,26 +1,33 @@
+/**
+ * Servei que gestiona les operacions CRUD per a les reserves emmagatzemades en una col·lecció MongoDB.
+ * Proporciona funcionalitats per crear, llistar i eliminar reserves.
+ */
 package com.copernic.projecte2_openroad.service.mongodb;
 
-// Java
 import java.util.List;
 import java.util.Optional;
 
-// Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// Model
 import com.copernic.projecte2_openroad.model.mongodb.HistoricReserva;
-
-// Repository
 import com.copernic.projecte2_openroad.repository.mongodb.ReservaRepositoryMongo;
 
+/**
+ * Classe de servei per a la gestió de les reserves a MongoDB.
+ */
 @Service
 public class ReservaServiceMongo {
 
     @Autowired
     private ReservaRepositoryMongo reservaRepoMongo;
 
-    // Crear Reserva.
+    /**
+     * Guarda una nova reserva a MongoDB.
+     *
+     * @param reserva l'entitat de la reserva a guardar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String guardarReserva(HistoricReserva reserva) {
         try {
             reservaRepoMongo.save(reserva);
@@ -32,19 +39,32 @@ public class ReservaServiceMongo {
         }
     }
 
-
-    // Llistar Reserva.
+    /**
+     * Cerca una reserva a MongoDB pel seu ID.
+     *
+     * @param id l'ID de la reserva a cercar.
+     * @return l'entitat de la reserva si existeix, o null si no es troba.
+     */
     public HistoricReserva llistarReservaPerId(String id) {
         Optional<HistoricReserva> reserva = reservaRepoMongo.findById(id);
         return reserva.orElse(null);
     }
 
-    // Llistar totes les Reservas.
+    /**
+     * Llista totes les reserves emmagatzemades a MongoDB.
+     *
+     * @return una llista amb totes les reserves.
+     */
     public List<HistoricReserva> llistarReservas() {
         return reservaRepoMongo.findAll();
     }
 
-    // Eliminar Reserva.
+    /**
+     * Elimina una reserva a MongoDB pel seu ID.
+     *
+     * @param id l'ID de la reserva a eliminar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String eliminarReservaPerId(String id) {
         try {
             HistoricReserva reserva = llistarReservaPerId(id);

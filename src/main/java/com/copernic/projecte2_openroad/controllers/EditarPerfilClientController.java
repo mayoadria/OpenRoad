@@ -18,34 +18,41 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.IOException;
 import java.util.Base64;
 
+/**
+ * Controlador per gestionar la funcionalitat d'edició del perfil d'un client.
+ */
 @Controller
 @RequestMapping("/perfil")
 public class EditarPerfilClientController {
 
     @Autowired
-    private UsuariServiceSQL usuariServiceSQL;  // Servicio para manejar operaciones con los datos del cliente.
+    private UsuariServiceSQL usuariServiceSQL;
 
+    /**
+     * Mostra la pàgina del perfil del client loguejat.
+     *
+     * @param model           l'objecte {@link Model} per passar dades a la vista.
+     * @param usuarioLogueado l'usuari actualment autenticat.
+     * @return el nom de la vista del perfil.
+     */
     @GetMapping("")
     public String mostrarPerfil(Model model, @AuthenticationPrincipal Usuari usuarioLogueado) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() &&
                 !(authentication.getPrincipal() instanceof String)) {
-            String nomUsuari = authentication.getName();  // Obtener el nombre de usuario logueado
-            model.addAttribute("nomUsuari", nomUsuari);  // Pasar el nombre de usuario al modelo
-            model.addAttribute("isLogged", true);  // Indicar que el usuario está logueado
+            String nomUsuari = authentication.getName();
+            model.addAttribute("nomUsuari", nomUsuari);
+            model.addAttribute("isLogged", true);
 
-            // Obtener el cliente logueado desde la base de datos usando el nombre de usuario
             Usuari usuari = usuariServiceSQL.findByNomUsuari(nomUsuari);
 
             if (usuari != null) {
-                // Verificar si es un cliente
                 if (usuari instanceof Client) {
-                    model.addAttribute("cliente", usuari);  // Pasar el cliente a la vista
+                    model.addAttribute("cliente", usuari);
                 } else {
                     model.addAttribute("error", "Usuario no es de tipo Client.");
                     return "Perfil";
@@ -54,70 +61,68 @@ public class EditarPerfilClientController {
                 model.addAttribute("error", "Cliente no encontrado");
             }
         } else {
-            model.addAttribute("isLogged", false);  // Indicar que el usuario no está logueado
+            model.addAttribute("isLogged", false);
         }
-        return "Perfil";  // Nombre del archivo HTML para mostrar el perfil
+        return "Perfil";
     }
 
+    /**
+     * Guarda els canvis realitzats al perfil del client.
+     *
+     * @param cliente   l'objecte {@link Client} amb les dades actualitzades.
+     * @param result    l'objecte {@link BindingResult} per manejar errors de validació.
+     * @param file      la imatge carregada per a l'actualització del perfil.
+     * @param model     l'objecte {@link Model} per passar dades a la vista.
+     * @param request   l'objecte {@link HttpServletRequest} per manejar la sessió.
+     * @param response  l'objecte {@link HttpServletResponse} per manejar la resposta HTTP.
+     * @return una redirecció a la vista del perfil o al login si cal tornar a autenticar-se.
+     */
     @PostMapping("/edit")
-    public String guardarCambios(@Valid @ModelAttribute Client cliente,BindingResult result,  // Validar el objeto Cliente
+    public String guardarCambios(@Valid @ModelAttribute Client cliente,
+                                 BindingResult result,
                                  @RequestParam("imagen") MultipartFile file,
                                  Model model,
-                                  // Para capturar los errores de validación
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
-
-
-
-        // Obtener la autenticación actual
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() &&
                 !(authentication.getPrincipal() instanceof String)) {
             String nombreUsuarioLogueado = authentication.getName();
 
-            // Obtener el cliente logueado desde la base de datos
             Usuari clienteExistente = usuariServiceSQL.findByNomUsuari(nombreUsuarioLogueado);
 
             if (clienteExistente != null && clienteExistente instanceof Client) {
                 Client clienteACambiar = (Client) clienteExistente;
 
-                // Actualizar los datos del cliente
                 clienteACambiar.setNom(cliente.getNom());
                 clienteACambiar.setCognom1(cliente.getCognom1());
                 clienteACambiar.setNumContacte1(cliente.getNumContacte1());
                 clienteACambiar.setCodiPostal(cliente.getCodiPostal());
                 clienteACambiar.setAdreca(cliente.getAdreca());
 
-                // Actualizar email y derivar el nuevo nombre de usuario
                 String nuevoEmail = cliente.getEmail();
                 clienteACambiar.setEmail(nuevoEmail);
                 String nuevoNombreUsuario = nuevoEmail.split("@")[0];
 
-                // Validar disponibilidad del nuevo nombre de usuario
                 Usuari clienteConNuevoNombre = usuariServiceSQL.findByNomUsuari(nuevoNombreUsuario);
                 if (clienteConNuevoNombre != null && !clienteConNuevoNombre.equals(clienteExistente)) {
                     model.addAttribute("error", "El nombre de usuario derivado del nuevo email ya está en uso.");
                     return "Perfil";
                 }
 
-                // Si el nuevo nombre de usuario es diferente, actualizamos
                 boolean nombreUsuarioCambiado = !nuevoNombreUsuario.equals(clienteACambiar.getNomUsuari());
                 clienteACambiar.setNomUsuari(nuevoNombreUsuario);
 
-                // Procesar la imagen si se ha subido una nueva
                 if (file != null && !file.isEmpty()) {
                     try {
-                        // Crear y guardar la nueva imagen
                         Imagen image = new Imagen();
                         image.setNombre(file.getOriginalFilename());
                         image.setType(file.getContentType());
                         image.setImageData(file.getBytes());
 
-                        // Asociar la imagen con el cliente
                         clienteACambiar.setImage(image);
 
-                        // Generar la URL de la imagen
                         String base64Image = Base64.getEncoder().encodeToString(image.getImageData());
                         String imageUrl = "data:" + image.getType() + ";base64," + base64Image;
                         clienteACambiar.setImageUrl(imageUrl);
@@ -126,23 +131,19 @@ public class EditarPerfilClientController {
                         return "Perfil";
                     }
                 }
-// Verificar si hay errores de validación
+
                 if (result.hasErrors()) {
                     model.addAttribute("isLogged", true);
                     model.addAttribute("cliente", cliente);
-                    return "Perfil";  // Si hay errores, regresa a la vista y muestra los errores
-                }else {
-                    // Guardar los cambios en la base de datos
+                    return "Perfil";
+                } else {
                     usuariServiceSQL.modificarClient(clienteACambiar);
 
-                    // Solo cerrar sesión si el nombre de usuario ha cambiado
                     if (nombreUsuarioCambiado) {
                         new SecurityContextLogoutHandler().logout(request, response, authentication);
-                        // Redirigir al inicio para un nuevo login
                         return "redirect:/";
                     }
 
-                    // Redirigir al perfil si no se cierra sesión
                     return "redirect:/perfil";
                 }
             } else {
@@ -151,7 +152,6 @@ public class EditarPerfilClientController {
             }
         }
 
-        // Redirigir a la página de login si no está autenticado
         return "redirect:/login";
     }
 }

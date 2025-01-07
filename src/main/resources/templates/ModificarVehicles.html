@@ -9,8 +9,8 @@
     <title th:if="${!visualizar}">Editar Vehículo</title>
 </head>
 <body>
-<h1 th:if="${visualizar}">Detalles del Vehículo</h1>
-<h1 th:if="${!visualizar}">Editar Vehículo</h1>
+<h1 th:if="${visualizar}">Detalls del Vehicle</h1>
+<h1 th:if="${!visualizar}">Editar Vehicle</h1>
 
 <!-- Modo Edición -->
 <form th:if="${!visualizar}" th:action="@{/agent/editVehicle}" th:object="${vehicle}" method="post">
@@ -26,33 +26,33 @@
     <br><br>
 
     <!-- Modelo -->
-    <label for="model">Modelo:</label>
+    <label for="model">Model:</label>
     <input type="text" id="model" name="model" th:value="${vehicle.model}">
     <div class="error-message" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
     <br><br>
 
     <!-- Precio por día -->
-    <label for="preuDia">Precio por día:</label>
+    <label for="preuDia">Preu per dia:</label>
     <input type="number" id="preuDia" name="preuDia" th:value="${vehicle.preuDia}" step="0.01" required>
     <br><br>
 
     <!-- Fianza -->
-    <label for="fianca">Fianza:</label>
+    <label for="fianca">Fiança:</label>
     <input type="number" id="fianca" name="fianca" th:value="${vehicle.fianca}" step="0.01" required>
     <br><br>
 
     <!-- Días de alquiler mínimo -->
-    <label for="diesLloguerMinim">Días de alquiler mínimo:</label>
+    <label for="diesLloguerMinim">Díes de lloguer mínim:</label>
     <input type="number" id="diesLloguerMinim" name="diesLloguerMinim" th:value="${vehicle.diesLloguerMinim}" required>
     <br><br>
 
     <!-- Días de alquiler máximo -->
-    <label for="diesLloguerMaxim">Días de alquiler máximo:</label>
+    <label for="diesLloguerMaxim">Dies de lloguer màxim:</label>
     <input type="number" id="diesLloguerMaxim" name="diesLloguerMaxim" th:value="${vehicle.diesLloguerMaxim}" required>
     <br><br>
 
     <!-- Plazas -->
-    <label for="places">Plazas:</label>
+    <label for="places">Plaçes:</label>
     <select id="places" name="places" required>
         <option value="" th:selected="${vehicle.places == null}">Seleccione</option>
         <option th:each="places : ${T(com.copernic.projecte2_openroad.model.enums.Places).values()}"
@@ -61,7 +61,7 @@
     <br><br>
 
     <!-- Puertas -->
-    <label for="portes">Puertas:</label>
+    <label for="portes">Portes:</label>
     <select id="portes" name="portes" required>
         <option value="" th:selected="${vehicle.portes == null}">Seleccione</option>
         <option th:each="portes : ${T(com.copernic.projecte2_openroad.model.enums.Portes).values()}"
@@ -70,7 +70,7 @@
     <br><br>
 
     <!-- Caja de cambios -->
-    <label for="caixaCanvis">Caja de cambios:</label>
+    <label for="caixaCanvis">Caixa de canvis:</label>
     <select id="caixaCanvis" name="caixaCanvis" required>
         <option value="" th:selected="${vehicle.caixaCanvis == null}">Seleccione</option>
         <option th:each="caixaCanvis : ${T(com.copernic.projecte2_openroad.model.enums.CaixaCanvis).values()}"
@@ -79,7 +79,7 @@
     <br><br>
 
     <!-- Marchas -->
-    <label for="marxes">Marchas:</label>
+    <label for="marxes">Marxes:</label>
     <select id="marxes" name="marxes" required>
         <option value="" th:selected="${vehicle.marxes == null}">Seleccione</option>
         <option th:each="marxes : ${T(com.copernic.projecte2_openroad.model.enums.Marxes).values()}"
@@ -105,18 +105,18 @@
     <br><br>
 
     <!-- Año del vehículo -->
-    <label for="anyVehicle">Año del vehículo:</label>
+    <label for="anyVehicle">Any del vehicle:</label>
     <input type="number" id="anyVehicle" name="anyVehicle" th:value="${vehicle.anyVehicle}">
     <br><br>
 
     <!-- Kilómetros -->
-    <label for="km">Kilómetros:</label>
+    <label for="km">Quilòmetres:</label>
     <input type="number" id="km" name="km" th:value="${vehicle.km}">
     <br><br>
 
     <button type="submit">Guardar</button>
     <div class="button-container">
-        <a href="/agent/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+        <a href="/agent/dashboard" class="cancel-button">Cancel·lar</a> <!-- Enlace para regresar -->
     </div>
 </form>
 
@@ -124,22 +124,22 @@
 <div  class="visualizar-mode" th:if="${visualizar}">
     <p><strong>Matrícula:</strong> <span th:text="${vehicle.matricula}"></span></p>
     <p><strong>Marca:</strong> <span th:text="${vehicle.marca}"></span></p>
-    <p><strong>Modelo:</strong> <span th:text="${vehicle.model}"></span></p>
-    <p><strong>Precio por día:</strong> <span th:text="${vehicle.preuDia}"></span> €</p>
-    <p><strong>Fianza:</strong> <span th:text="${vehicle.fianca}"></span> €</p>
-    <p><strong>Días de alquiler mínimo:</strong> <span th:text="${vehicle.diesLloguerMinim}"></span></p>
-    <p><strong>Días de alquiler máximo:</strong> <span th:text="${vehicle.diesLloguerMaxim}"></span></p>
-    <p><strong>Plazas:</strong> <span th:text="${vehicle.places}"></span></p>
-    <p><strong>Puertas:</strong> <span th:text="${vehicle.portes}"></span></p>
-    <p><strong>Caja de cambios:</strong> <span th:text="${vehicle.caixaCanvis}"></span></p>
-    <p><strong>Marchas:</strong> <span th:text="${vehicle.marxes}"></span></p>
+    <p><strong>Model:</strong> <span th:text="${vehicle.model}"></span></p>
+    <p><strong>Preu per da:</strong> <span th:text="${vehicle.preuDia}"></span> €</p>
+    <p><strong>Fiança:</strong> <span th:text="${vehicle.fianca}"></span> €</p>
+    <p><strong>Dies loguer mínim:</strong> <span th:text="${vehicle.diesLloguerMinim}"></span></p>
+    <p><strong>Dies lloguer màxim:</strong> <span th:text="${vehicle.diesLloguerMaxim}"></span></p>
+    <p><strong>Plaçes:</strong> <span th:text="${vehicle.places}"></span></p>
+    <p><strong>Portes:</strong> <span th:text="${vehicle.portes}"></span></p>
+    <p><strong>Caixa de canvis:</strong> <span th:text="${vehicle.caixaCanvis}"></span></p>
+    <p><strong>Marxes:</strong> <span th:text="${vehicle.marxes}"></span></p>
     <p><strong>Combustible:</strong> <span th:text="${vehicle.combustible}"></span></p>
     <p><strong>Color:</strong> <span th:text="${vehicle.color}"></span></p>
-    <p><strong>Año del vehículo:</strong> <span th:text="${vehicle.anyVehicle}"></span></p>
-    <p><strong>Kilómetros:</strong> <span th:text="${vehicle.km}"></span></p>
+    <p><strong>Any del vehicle:</strong> <span th:text="${vehicle.anyVehicle}"></span></p>
+    <p><strong>Quilòmetres:</strong> <span th:text="${vehicle.km}"></span></p>
 
     <div class="button-container">
-        <a href="/agent/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+        <a href="/agent/dashboard" class="cancel-button">Cancel·lar</a> <!-- Enlace para regresar -->
     </div>
 </div>
 </body>

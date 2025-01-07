@@ -445,6 +445,15 @@ public class AgentDashboardController {
         }
     }
 
+    /**
+     * Elimina una incidencia de la base de datos según el ID proporcionado.
+     * Si la eliminación es exitosa, redirige al dashboard del agente.
+     * Si ocurre algún error, muestra un mensaje de error en el dashboard.
+     *
+     * @param id El identificador de la incidencia a eliminar.
+     * @param model El modelo para agregar atributos de error en caso de fallo.
+     * @return Redirección al dashboard del agente o a la vista de error en caso de fallo.
+     */
     @GetMapping("/incidencia/eliminar/{id}")
     public String eliminarIncidencia(@PathVariable("id") Long id, Model model) {
         try {
@@ -463,8 +472,15 @@ public class AgentDashboardController {
         }
     }
 
-
-
+    /**
+     * Activa una incidencia cambiando su estado a "OBERTA" (abierta).
+     * Si la operación es exitosa, redirige al dashboard del agente.
+     * Si ocurre un error, muestra un mensaje de error en el dashboard.
+     *
+     * @param id El identificador de la incidencia a activar.
+     * @param model El modelo para agregar atributos de error en caso de fallo.
+     * @return Redirección al dashboard del agente o a la vista de error en caso de fallo.
+     */
     @GetMapping("/incidencia/activar/{id}")
     public String activarIncidencia(@PathVariable("id") Long id, Model model) {
         try {
@@ -479,6 +495,15 @@ public class AgentDashboardController {
         }
     }
 
+    /**
+     * Desactiva una incidencia cambiando su estado a "TANCADA" (cerrada).
+     * Si la operación es exitosa, redirige al dashboard del agente.
+     * Si ocurre un error, muestra un mensaje de error en el dashboard.
+     *
+     * @param id El identificador de la incidencia a desactivar.
+     * @param model El modelo para agregar atributos de error en caso de fallo.
+     * @return Redirección al dashboard del agente o a la vista de error en caso de fallo.
+     */
     @GetMapping("/incidencia/desactivar/{id}")
     public String desactivarIncidencia(@PathVariable("id") Long id, Model model) {
         try {
@@ -496,8 +521,6 @@ public class AgentDashboardController {
 
 
 
-
-//vehicleServiceSQL.findByMatricula(incidencia.getVehicle().getMatricula()));
 
 
 }

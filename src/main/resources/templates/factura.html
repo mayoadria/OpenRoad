@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <script th:src="@{/scripts/infoVehiculo.js}" defer></script>
     <script th:src="@{/scripts/header.js}" defer></script>
-    <title>Resumen de Reserva | OpenRoad</title>
+    <title>Resum de Reserva | OpenRoad</title>
 </head>
 <body>
 <header class="nav-container">
@@ -21,7 +21,7 @@
 
         <ul class="nav-links">
             <li><a th:href="@{/}">Inicio</a></li>
-            <li><a th:href="@{/cataleg}">Catálogo</a></li>
+            <li><a th:href="@{/cataleg}">Catàleg</a></li>
         </ul>
 
     </nav>
@@ -32,17 +32,17 @@
 <br>
 <div class="container">
     <div class="summary">
-        <h2>Resumen de tu Reserva</h2>
+        <h2>Resum de la teva Reserva</h2>
 
         <section class="vehicle-details">
-            <h3>Detalles del Vehículo</h3>
+            <h3>Detalls del Vehicle</h3>
             <div class="vehicle-info">
                 <img th:src="${vehicle.imageUrl}" alt="Imagen del vehículo" class="vehicle-image">
                 <div class="vehicle-data">
-                    <p><strong>Marca y Modelo:</strong> <span th:text="${vehicle.marca}"></span> <span th:text="${vehicle.model}"></span></p>
-                    <p><strong>Plazas:</strong> <span th:text="${vehicle.places.valor}"></span></p>
-                    <p><strong>Puertas:</strong> <span th:text="${vehicle.portes.valor}"></span></p>
-                    <p><strong>Transmisión:</strong> <span th:text="${vehicle.caixaCanvis.valor}"></span></p>
+                    <p><strong>Marca y Model:</strong> <span th:text="${vehicle.marca}"></span> <span th:text="${vehicle.model}"></span></p>
+                    <p><strong>Plaçes:</strong> <span th:text="${vehicle.places.valor}"></span></p>
+                    <p><strong>Portes:</strong> <span th:text="${vehicle.portes.valor}"></span></p>
+                    <p><strong>Transmissió:</strong> <span th:text="${vehicle.caixaCanvis.valor}"></span></p>
                     <p><strong>Combustible:</strong> <span th:text="${vehicle.combustible.valor}"></span></p>
                 </div>
             </div>
@@ -51,19 +51,19 @@
         <!-- Puedes descomentar estas secciones según sea necesario -->
 
         <section class="rental-dates">
-            <h3>Fechas de la Reserva</h3>
-            <p><strong>Fecha de Recogida:</strong> <span th:text="${reserva.fechaRecogida}"></span></p>
-            <p><strong>Fecha de Entrega:</strong> <span th:text="${reserva.fechaEntrega}"></span></p>
+            <h3>Dates de la Reserva</h3>
+            <p><strong>Data de Recogida:</strong> <span th:text="${reserva.fechaRecogida}"></span></p>
+            <p><strong>Data d'Entrega:</strong> <span th:text="${reserva.fechaEntrega}"></span></p>
 <!--            <p><strong>Hora de Recogida:</strong> <span th:text="${reserva.horaRecogida}"></span></p>-->
 <!--            <p><strong>Hora de Entrega:</strong> <span th:text="${reserva.horaEntrega}"></span></p>-->
         </section>
         <section class="client-details">
-            <h3>Datos del Conductor</h3>
-            <p><strong>Nombre:</strong> <span th:text="${client.nom}"></span> <span th:text="${client.cognom1}"></span></p>
+            <h3>Dades del Conductor</h3>
+            <p><strong>Nom:</strong> <span th:text="${client.nom}"></span> <span th:text="${client.cognom1}"></span></p>
             <p><strong>DNI:</strong> <span th:text="${client.dni}"></span></p>
             <p><strong>Direcció:</strong> <span th:text="${client.adreca}"></span></p>
-            <p><strong>Numero de Telefón:</strong> <span th:text="${client.numContacte1}"></span></p>
-            <p><strong>Correu Electornic:</strong> <span th:text="${client.email}"></span></p>
+            <p><strong>Número de Telèfon:</strong> <span th:text="${client.numContacte1}"></span></p>
+            <p><strong>Correu Electrònic:</strong> <span th:text="${client.email}"></span></p>
 
         </section>
     </div>

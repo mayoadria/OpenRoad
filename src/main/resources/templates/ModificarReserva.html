@@ -23,20 +23,20 @@
 
   <div>
 
-    <label for="fechaRecogida">Fecha de recogida:</label>
+    <label for="fechaRecogida">Data recogida:</label>
     <input type="date" id="fechaRecogida" name="fechaRecogida" th:value="${reserva.fechaRecogida}"/>
 
-    <label for="fechaEntrega">Fecha de entrega:</label>
+    <label for="fechaEntrega">Data d'entrega:</label>
     <input type="date" id="fechaEntrega" name="fechaEntrega" th:value="${reserva.fechaEntrega}"/>
     <label for="Vehicle">Matrícula:</label>
     <input readonly type="text" id="Vehicle" name="Vehicle" th:value="${reserva.vehicle.matricula} "/>
 
     <br>
     <p>
-      <span><strong>Preu per día:</strong></span>
+      <span><strong>Preu per dia:</strong></span>
       <span id="preuDia" th:text="${reserva.vehicle.preuDia + ' €'}"></span>
     </p>
-    <p><strong>Número de días:</strong> <span id="diasReserva">0</span></p>
+    <p><strong>Número de díes:</strong> <span id="diasReserva">0</span></p>
 
     <p>
       <span><strong>Preu fiança:</strong></span>

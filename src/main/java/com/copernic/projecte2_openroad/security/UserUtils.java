@@ -1,3 +1,8 @@
+/**
+ * Classe utilitària per gestionar i obtenir les dades de l'usuari autenticat.
+ * Aquesta classe proporciona mètodes per afegir informació de l'usuari al model
+ * i determinar el seu rol dins del sistema.
+ */
 package com.copernic.projecte2_openroad.security;
 
 import org.springframework.security.core.Authentication;
@@ -10,6 +15,14 @@ import com.copernic.projecte2_openroad.model.mysql.Client;
 
 public class UserUtils {
 
+    /**
+     * Obtén les dades de l'usuari autenticat i les afegeix al model.
+     * Depenent del rol de l'usuari (Admin, Agent o Client), s'assignen valors específics
+     * al model per a l'ús posterior en la vista.
+     *
+     * @param model l'objecte {@link Model} on s'afegiran les dades de l'usuari.
+     * @return l'objecte de l'usuari autenticat (Admin, Agent o Client), o null si no hi ha usuari autenticat.
+     */
     public static Object obtenirDadesUsuariModel(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
