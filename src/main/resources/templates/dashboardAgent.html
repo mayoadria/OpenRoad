@@ -304,7 +304,8 @@
                         <td th:text="${incidencia.dataFinal}"></td>
                         <td th:text="${incidencia.vehicle.matricula}"></td>
                         <td>
-                            <a class="btn btn-success" th:href="@{/agent/editar_incidencia/{id}(id=${incidencia.idIncidencia})}">Editar</a>
+                            <a class="btn btn-success"
+                               th:href="@{/agent/incidencia/editar/{id}(id=${incidencia.idIncidencia})}">Editar</a>
 
                             <a class="btn btn-danger"
                                th:href="@{/agent/incidencia/eliminar/{id}(id=${incidencia.idIncidencia})}">Borrar</a>

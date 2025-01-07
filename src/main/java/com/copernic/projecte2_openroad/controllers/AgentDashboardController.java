@@ -128,7 +128,7 @@ public class AgentDashboardController {
     public String mostrarFormulariVehicle(Model model) {
         Vehicle vehicle = new Vehicle();
         model.addAttribute("vehicle", vehicle);
-        
+
         return "crearVehicle";
     }
 
@@ -285,33 +285,56 @@ public class AgentDashboardController {
     }
 
 
+    @GetMapping("/incidencia/editar/{id}")
+    public String editarIncidencia(@PathVariable("id") Long id, Model model) {
+        try {
+            // Obtener la incidencia usando el servicio
+            Incidencia incidencia = incidenciaServiceSQL.llistarIncidenciaPerId(id);
 
-    @GetMapping("/agent/editar_incidencia/{id}")
-    public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
-        // Buscar la incidencia por ID
-        Incidencia incidencia = incidenciaServiceSQL.llistarIncidenciaPerId(id);
+            // Añadir la incidencia al modelo
+            model.addAttribute("incidencia", incidencia);
 
-        if (incidencia == null) {
-            throw new IllegalArgumentException("No se encontró la incidencia con el ID: " + id);
+            // Obtener los vehículos asociados al agente para el formulario
+            Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
+            if (agentObj instanceof Agent) {
+                Agent agent = (Agent) agentObj;
+                List<Vehicle> vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
+                model.addAttribute("vehicles", vehicles);
+            }
+
+            return "EditarIncidencia"; // Vista del formulario de edición
+        } catch (Exception e) {
+            // Manejar la excepción si la incidencia no se encuentra
+            model.addAttribute("error", "No se encontró la incidencia con ID: " + id);
+            return "redirect:/agent/dashboard"; // Redirige al dashboard si no se encuentra la incidencia
         }
-
-        // Obtener los vehículos relacionados
-        Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
-        if (agentObj instanceof Agent) {
-            Agent agent = (Agent) agentObj;
-            List<Vehicle> vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
-            model.addAttribute("vehicles", vehicles);
-        } else {
-            model.addAttribute("error", "No se pudo obtener el agente.");
-            return "errorPage"; // Página de error
-        }
-
-        // Cargar incidencia en el modelo
-        model.addAttribute("incidencia", incidencia);
-
-        // Retornar la vista de edición
-        return "EditarIncidencia";
     }
+
+    @PostMapping("/guardar_incidencia")
+    public String guardarIncidencia(@ModelAttribute Incidencia incidencia, Model model) {
+        try {
+            // Actualiza la incidencia existente
+            Incidencia incidenciaExistente = incidenciaServiceSQL.llistarIncidenciaPerId(incidencia.getIdIncidencia());
+            incidenciaExistente.setTitol(incidencia.getTitol());
+            incidenciaExistente.setCost(incidencia.getCost());
+            incidenciaExistente.setDataInici(incidencia.getDataInici());
+            incidenciaExistente.setDataFinal(incidencia.getDataFinal());
+            incidenciaExistente.setVehicle(incidencia.getVehicle());
+            incidenciaExistente.setEstatIncidencia(incidencia.getEstatIncidencia());
+
+            // Guarda la incidencia actualizada
+            incidenciaServiceSQL.guardarIncidencia(incidenciaExistente);
+
+            // Redirige al dashboard después de guardar
+            return "redirect:/agent/dashboard";
+        } catch (Exception e) {
+            // Maneja errores y vuelve a la página de edición
+            model.addAttribute("error", "Error al guardar la incidencia: " + e.getMessage());
+            model.addAttribute("incidencia", incidencia);
+            return "EditarIncidencia"; // Asegúrate de que este es el nombre correcto de tu archivo HTML
+        }
+    }
+
 
 
 

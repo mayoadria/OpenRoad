@@ -10,7 +10,8 @@
 
   <!-- Formulario -->
   <form th:action="@{/agent/guardar_incidencia}" th:object="${incidencia}" method="post">
-    <!-- Campo oculto para el ID de la incidencia -->
+
+  <!-- Campo oculto para el ID de la incidencia -->
     <input type="hidden" th:field="*{idIncidencia}" />
 
     <!-- Título -->
@@ -58,14 +59,15 @@
         <option th:each="estat : ${T(com.copernic.projecte2_openroad.model.enums.EstatIncidencia).values()}"
                 th:value="${estat}"
                 th:text="${estat.valor}"
-                th:selected="${estat == incidencia.estatIncidencia}">
+                th:selected="${estat.name() == incidencia.estatIncidencia?.name()}">
         </option>
+
       </select>
     </div>
 
     <!-- Botón Guardar -->
     <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Guardar</button>
+      <button type="submit" class="btn btn-primary">Actualizar</button>
     </div>
   </form>
 </div>
