@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.copernic.projecte2_openroad.model.enums.EstatIncidencia;
 import com.copernic.projecte2_openroad.model.mysql.*;
 import com.copernic.projecte2_openroad.security.UserUtils;
 
@@ -332,6 +333,54 @@ public class AgentDashboardController {
             model.addAttribute("error", "Error al guardar la incidencia: " + e.getMessage());
             model.addAttribute("incidencia", incidencia);
             return "EditarIncidencia"; // Asegúrate de que este es el nombre correcto de tu archivo HTML
+        }
+    }
+
+    @GetMapping("/incidencia/eliminar/{id}")
+    public String eliminarIncidencia(@PathVariable("id") Long id, Model model) {
+        try {
+            // Llama al servicio para eliminar la incidencia
+            String mensaje = incidenciaServiceSQL.eliminarIncidenciaPerId(id);
+
+            // Imprime el mensaje de éxito o error en los logs (opcional para depuración)
+            System.out.println(mensaje);
+
+            // Redirige al dashboard después de la eliminación
+            return "redirect:/agent/dashboard";
+        } catch (Exception e) {
+            // Maneja errores en caso de que no se pueda eliminar
+            model.addAttribute("error", "No se pudo eliminar la incidencia: " + e.getMessage());
+            return "dashboardAgent"; // Vuelve al dashboard mostrando un mensaje de error
+        }
+    }
+
+
+
+    @GetMapping("/incidencia/activar/{id}")
+    public String activarIncidencia(@PathVariable("id") Long id, Model model) {
+        try {
+            // Busca la incidencia por ID y activa
+            Incidencia incidencia = incidenciaServiceSQL.llistarIncidenciaPerId(id);
+            incidencia.setEstatIncidencia(EstatIncidencia.OBERTA); // Cambia el estado a "ACTIVA"
+            incidenciaServiceSQL.guardarIncidencia(incidencia);
+            return "redirect:/agent/dashboard";
+        } catch (Exception e) {
+            model.addAttribute("error", "No se pudo activar la incidencia: " + e.getMessage());
+            return "dashboardAgent";
+        }
+    }
+
+    @GetMapping("/incidencia/desactivar/{id}")
+    public String desactivarIncidencia(@PathVariable("id") Long id, Model model) {
+        try {
+            // Busca la incidencia por ID y desactiva
+            Incidencia incidencia = incidenciaServiceSQL.llistarIncidenciaPerId(id);
+            incidencia.setEstatIncidencia(EstatIncidencia.TANCADA); // Cambia el estado a "INACTIVA"
+            incidenciaServiceSQL.guardarIncidencia(incidencia);
+            return "redirect:/agent/dashboard";
+        } catch (Exception e) {
+            model.addAttribute("error", "No se pudo desactivar la incidencia: " + e.getMessage());
+            return "dashboardAgent";
         }
     }
 

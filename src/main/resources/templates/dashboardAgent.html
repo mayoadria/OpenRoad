@@ -17,6 +17,8 @@
 
 
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -308,13 +310,23 @@
                                th:href="@{/agent/incidencia/editar/{id}(id=${incidencia.idIncidencia})}">Editar</a>
 
                             <a class="btn btn-danger"
-                               th:href="@{/agent/incidencia/eliminar/{id}(id=${incidencia.idIncidencia})}">Borrar</a>
+                               href="#"
+                               onclick="confirmarEliminacion(this);"
+                               th:attr="data-href=@{/agent/incidencia/eliminar/{id}(id=${incidencia.idIncidencia})}">
+                                Borrar
+                            </a>
+
+
                         </td>
                         <td>
                             <a class="btn btn-primary"
-                               th:href="@{/agent/incidencia/activar/{id}(id=${incidencia.idIncidencia})}">Activar</a>
+                               th:href="@{/agent/incidencia/activar/{id}(id=${incidencia.idIncidencia})}">
+                                Activar
+                            </a>
                             <a class="btn btn-danger"
-                               th:href="@{/agent/incidencia/desactivar/{id}(id=${incidencia.idIncidencia})}">Desactivar</a>
+                               th:href="@{/agent/incidencia/desactivar/{id}(id=${incidencia.idIncidencia})}">
+                                Desactivar
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -322,6 +334,26 @@
         </section>
 
     </section>
+
+    <script>
+        function confirmarEliminacion(element) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esta acción no se puede deshacer.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirige al enlace del botón si el usuario confirma
+                    window.location.href = element.getAttribute("data-href");
+                }
+            });
+        }
+    </script>
 
 </body>
 
