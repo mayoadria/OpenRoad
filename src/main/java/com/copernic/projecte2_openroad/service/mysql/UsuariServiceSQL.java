@@ -1,3 +1,7 @@
+/**
+ * Servei que gestiona les operacions CRUD per als usuaris (administradors, clients i agents) emmagatzemats en una base de dades MySQL.
+ * Proporciona funcionalitats per crear, modificar, eliminar i llistar usuaris, així com gestionar els seus estats i correus electrònics.
+ */
 package com.copernic.projecte2_openroad.service.mysql;
 
 import com.copernic.projecte2_openroad.Excepciones.ExcepcionEmailDuplicado;
@@ -14,6 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Classe de servei per a la gestió dels usuaris (Admin, Client i Agent) a MySQL.
+ */
 @Service
 public class UsuariServiceSQL {
 
@@ -27,47 +34,45 @@ public class UsuariServiceSQL {
     private AgentRepositorySQL agentRepository;
 
     /**
-     * Busca un usuario por su nombre de usuario (nomUsuari) en todos los repositorios.
+     * Cerca un usuari pel seu nom d'usuari en tots els repositoris.
+     *
+     * @param nomUsuari el nom d'usuari de l'usuari a cercar.
+     * @return l'usuari trobat o null si no existeix.
      */
     public Usuari findByNomUsuari(String nomUsuari) {
-        // Primero buscar en el repositorio de administradores
         Usuari user = adminRepository.findByNomUsuari(nomUsuari);
-
-        // Si no se encuentra en administradores, buscar en el repositorio de clientes
         if (user == null) {
             user = clientRepository.findByNomUsuari(nomUsuari);
         }
-
-        // Si no se encuentra en ninguno de los anteriores, buscar en el repositorio de agentes
         if (user == null) {
             List<Agent> agents = agentRepository.findByNomUsuari(nomUsuari);
-
-            // Si hay más de un agente, lanzar excepción
             if (agents.size() > 1) {
-                throw new IllegalStateException("Más de un agente encontrado para el nomUsuari: " + nomUsuari);
+                throw new IllegalStateException("Més d'un agent trobat per al nom d'usuari: " + nomUsuari);
             }
-
-            // Si se encuentra exactamente un agente, lo devolvemos
-            if (agents.size() == 1) {
-                user = agents.get(0); // Aquí asignamos el agente al objeto Usuari
+            if (!agents.isEmpty()) {
+                user = agents.get(0);
             }
         }
-
-        return user; // Devuelve el Usuari encontrado o null si no se encuentra en ninguno de los repositorios
+        return user;
     }
 
-
-
     /**
-     * Guarda un cliente en la base de datos.
+     * Guarda un nou client a MySQL.
+     *
+     * @param client l'entitat del client a guardar.
      */
     public void guardarClient(Client client) {
         if (existeEmail(client.getEmail())) {
-            throw new ExcepcionEmailDuplicado("El correo electrónico ya está registrado.");
+            throw new ExcepcionEmailDuplicado("El correu electrònic ja està registrat.");
         }
         clientRepository.save(client);
     }
 
+    /**
+     * Activa un client mitjançant el seu nom d'usuari.
+     *
+     * @param nomUsuari el nom d'usuari del client a activar.
+     */
     public void activateUser(String nomUsuari) {
         Client user = clientRepository.findByNomUsuari(nomUsuari);
         user.setEnabled(true);
@@ -75,7 +80,10 @@ public class UsuariServiceSQL {
     }
 
     /**
-     * Guarda un administrador en la base de datos.
+     * Guarda un nou administrador a MySQL.
+     *
+     * @param admin l'entitat de l'administrador a guardar.
+     * @return un missatge sobre el resultat de l'operació.
      */
     public String guardarAdmin(Admin admin) {
         try {
@@ -87,86 +95,119 @@ public class UsuariServiceSQL {
     }
 
     /**
-     * Lista todos los administradores.
+     * Llista tots els administradors emmagatzemats a MySQL.
+     *
+     * @return una llista d'administradors.
      */
     public List<Admin> llistarAdmins() {
         return adminRepository.findAll();
     }
 
     /**
-     * Actualiza los datos de un administrador.
+     * Modifica les dades d'un administrador existent.
+     *
+     * @param admin l'entitat de l'administrador amb les dades modificades.
      */
     public void modificarAdmin(Admin admin) {
-        adminRepository.save(admin);  // Guarda los cambios en la base de datos
+        adminRepository.save(admin);
     }
 
-
     /**
-     * Guarda un agente en la base de datos.
+     * Verifica si un correu electrònic ja està registrat.
+     *
+     * @param email el correu electrònic a verificar.
+     * @return true si el correu electrònic existeix, false en cas contrari.
      */
     public boolean existeEmail(String email) {
         return agentRepository.existsByEmail(email);
     }
 
+    /**
+     * Guarda un nou agent a MySQL.
+     *
+     * @param agent l'entitat de l'agent a guardar.
+     */
     public void guardarAgent(Agent agent) {
         if (existeEmail(agent.getEmail())) {
-            throw new ExcepcionEmailDuplicado("El correo electrónico ya está registrado.");
+            throw new ExcepcionEmailDuplicado("El correu electrònic ja està registrat.");
         }
         agentRepository.save(agent);
     }
 
-
-
     /**
-     * Lista todos los agentes.
+     * Llista tots els agents emmagatzemats a MySQL.
+     *
+     * @return una llista d'agents.
      */
     public List<Agent> llistarAgents() {
         return agentRepository.findAll();
     }
-    public List<Client> llistarClient() {
-        return clientRepository.findAll();
-    }
+
     /**
-     * Actualiza los datos de un agente.
+     * Modifica les dades d'un agent existent.
+     *
+     * @param agent l'entitat de l'agent amb les dades modificades.
+     * @param dniAgent el DNI actual de l'agent.
      */
     public void modificarAgent(Agent agent, String dniAgent) {
         if (agent.getDni().equals(dniAgent)) {
-            agentRepository.save(agent); 
+            agentRepository.save(agent);
         } else {
             agentRepository.deleteById(dniAgent);
-            agentRepository.save(agent); 
+            agentRepository.save(agent);
         }
-         // Guarda los cambios en la base de datos
-    }
-
-    public void modificarClient(Client client) {
-        clientRepository.save(client);  // Guarda los cambios en la base de datos
     }
 
     /**
-     * Elimina un agente por su nombre de usuario.
+     * Elimina un agent pel seu nom d'usuari.
+     *
+     * @param nomUsuari el nom d'usuari de l'agent a eliminar.
      */
     public void eliminarAgentPerNomUsuari(String nomUsuari) {
         List<Agent> agents = agentRepository.findByNomUsuari(nomUsuari);
         if (agents.size() > 1) {
-            throw new IllegalStateException("Más de un agente encontrado para nomUsuari: " + nomUsuari);
+            throw new IllegalStateException("Més d'un agent trobat per al nom d'usuari: " + nomUsuari);
         } else if (agents.isEmpty()) {
-            throw new EntityNotFoundException("No se encontró un agente para nomUsuari: " + nomUsuari);
+            throw new EntityNotFoundException("No s'ha trobat cap agent per al nom d'usuari: " + nomUsuari);
         }
         agentRepository.delete(agents.get(0));
     }
 
+    /**
+     * Llista tots els clients emmagatzemats a MySQL.
+     *
+     * @return una llista de clients.
+     */
+    public List<Client> llistarClient() {
+        return clientRepository.findAll();
+    }
+
+    /**
+     * Modifica les dades d'un client existent.
+     *
+     * @param client l'entitat del client amb les dades modificades.
+     */
+    public void modificarClient(Client client) {
+        clientRepository.save(client);
+    }
+
+    /**
+     * Elimina un client pel seu nom d'usuari.
+     *
+     * @param nomUsuari el nom d'usuari del client a eliminar.
+     * @return un missatge sobre el resultat de l'operació.
+     */
     public String eliminarClientPerNomUsuari(String nomUsuari) {
         Client client = clientRepository.findByNomUsuari(nomUsuari);
         try {
             if (client != null) {
                 clientRepository.delete(client);
-                return "Agent: " + client.getNom() + " amb DNI(" + client.getDni() + ") esborrat correctament!";
+                return "Client: " + client.getNom() + " amb DNI(" + client.getDni() + ") esborrat correctament!";
             } else {
-                return "Agent: nomUsuari(" + nomUsuari + ") no s'ha trobat a la BD MySQL!";
+                return "Client: nomUsuari(" + nomUsuari + ") no s'ha trobat a la BD MySQL!";
             }
         } catch (Exception e) {
-            return "Error amb Agent: nomUsuari(" + nomUsuari + "). Excepció: " + e.getMessage();
+            return "Error amb Client: nomUsuari(" + nomUsuari + "). Excepció: " + e.getMessage();
         }
     }
 }

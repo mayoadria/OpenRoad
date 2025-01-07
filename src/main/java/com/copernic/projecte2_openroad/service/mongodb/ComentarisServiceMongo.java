@@ -1,25 +1,32 @@
+/**
+ * Servei que gestiona les operacions CRUD per als comentaris emmagatzemats en una col·lecció MongoDB.
+ * Proporciona funcionalitats per crear, llistar, modificar i eliminar comentaris.
+ */
 package com.copernic.projecte2_openroad.service.mongodb;
 
-// Java
 import java.util.List;
 
-// Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// Model
 import com.copernic.projecte2_openroad.model.mongodb.Comentari;
-
-// Repository
 import com.copernic.projecte2_openroad.repository.mongodb.ComentariRepositoryMongo;
 
+/**
+ * Classe de servei per a la gestió dels comentaris a MongoDB.
+ */
 @Service
 public class ComentarisServiceMongo {
 
     @Autowired
     private ComentariRepositoryMongo comentariRepoMongo;
 
-    // Crear Comentari.
+    /**
+     * Crea un nou comentari i l'emmagatzema a MongoDB.
+     *
+     * @param comentari l'entitat del comentari a crear.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String guardarComentari(Comentari comentari) {
         try {
             comentariRepoMongo.save(comentari);
@@ -32,22 +39,41 @@ public class ComentarisServiceMongo {
         }
     }
 
-    // Llistar Comentari.
+    /**
+     * Cerca un comentari per ID.
+     *
+     * @param id l'ID del comentari a cercar.
+     * @return l'entitat del comentari si existeix.
+     */
     public Comentari llistarComentariPerId(String id) {
-        return comentariRepoMongo.findById(id).get();
+        return comentariRepoMongo.findById(id).orElse(null);
     }
 
-    // Llistar Comentari per Matricula.
+    /**
+     * Cerca una llista de comentaris associats a una matrícula específica de vehicle.
+     *
+     * @param matricula la matrícula del vehicle.
+     * @return una llista de comentaris associats a la matrícula especificada.
+     */
     public List<Comentari> llistarComentariPerMatricula(String matricula) {
         return comentariRepoMongo.findComentariByMatriculaVehicle(matricula);
     }
 
-    // Llistar tots els Comentaris.
+    /**
+     * Llista tots els comentaris emmagatzemats.
+     *
+     * @return una llista amb tots els comentaris.
+     */
     public List<Comentari> llistarComentaris() {
         return comentariRepoMongo.findAll();
     }
 
-    // Modificar Comentari.
+    /**
+     * Modifica un comentari existent.
+     *
+     * @param comentari l'entitat del comentari a modificar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String modificarComentari(Comentari comentari) {
         try {
             if (llistarComentariPerId(comentari.getIdComentari()) != null) {
@@ -56,7 +82,7 @@ public class ComentarisServiceMongo {
                         + ") modificat correctament!";
                 return msg;
             } else {
-                String msg = "Comentari: ID(" + comentari.getIdComentari() + ") no s'ha trobat a la BD MySQL!";
+                String msg = "Comentari: ID(" + comentari.getIdComentari() + ") no s'ha trobat a la BD MongoDB!";
                 return msg;
             }
         } catch (Exception e) {
@@ -65,17 +91,22 @@ public class ComentarisServiceMongo {
         }
     }
 
-    // Eliminar Comentari.
+    /**
+     * Elimina un comentari existent a partir del seu ID.
+     *
+     * @param id l'ID del comentari a eliminar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String eliminarComentariPerId(String id) {
-        Comentari Comentari = llistarComentariPerId(id);
+        Comentari comentari = llistarComentariPerId(id);
         try {
-            if (Comentari != null) {
-                comentariRepoMongo.delete(Comentari);
-                String msg = "Comentari: " + Comentari.getTitolComent() + " amb ID(" + Comentari.getTitolComent()
+            if (comentari != null) {
+                comentariRepoMongo.delete(comentari);
+                String msg = "Comentari: " + comentari.getTitolComent() + " amb ID(" + comentari.getTitolComent()
                         + ") esborrat correctament!";
                 return msg;
             } else {
-                String msg = "Comentari: ID(" + id + ") no s'ha trobat a la BD MySQL!";
+                String msg = "Comentari: ID(" + id + ") no s'ha trobat a la BD MongoDB!";
                 return msg;
             }
         } catch (Exception e) {

@@ -1,3 +1,7 @@
+/**
+ * Servei que gestiona les operacions CRUD per als vehicles emmagatzemats a una base de dades MySQL.
+ * Proporciona funcionalitats per crear, llistar, modificar i eliminar vehicles.
+ */
 package com.copernic.projecte2_openroad.service.mysql;
 
 import java.util.ArrayList;
@@ -14,12 +18,21 @@ import org.springframework.stereotype.Service;
 import com.copernic.projecte2_openroad.model.mysql.Vehicle;
 import com.copernic.projecte2_openroad.repository.mysql.VehicleRepositorySQL;
 
+/**
+ * Classe de servei per a la gestió dels vehicles a MySQL.
+ */
 @Service
 public class VehicleServiceSQL {
 
     @Autowired
     private VehicleRepositorySQL vehicleRepoSQL;
 
+    /**
+     * Guarda un nou vehicle a MySQL.
+     *
+     * @param vehicle l'entitat del vehicle a guardar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String guardarVehicle(Vehicle vehicle) {
         try {
             vehicleRepoSQL.save(vehicle);
@@ -29,22 +42,51 @@ public class VehicleServiceSQL {
         }
     }
 
-    // Listar todos los vehículos
+    /**
+     * Llista tots els vehicles emmagatzemats a MySQL.
+     *
+     * @return una llista amb tots els vehicles.
+     */
     public List<Vehicle> llistarVehicles() {
         return vehicleRepoSQL.findAll();
     }
 
+    /**
+     * Llista tots els vehicles que tenen un estat específic.
+     *
+     * @param estatVehicle l'estat dels vehicles a cercar.
+     * @return una llista de vehicles amb l'estat especificat.
+     */
     public List<Vehicle> llistarVehiclesActius(EstatVehicle estatVehicle) {
         return vehicleRepoSQL.findByEstatVehicle(estatVehicle);
     }
 
+    /**
+     * Cerca vehicles associats a una localitat específica pel seu codi postal.
+     *
+     * @param codiPostalLoc el codi postal de la localitat.
+     * @return una llista de vehicles associats a la localitat especificada.
+     */
     public List<Vehicle> getVehiclesByAgentLocalitat(String codiPostalLoc) {
         return vehicleRepoSQL.findByLocalitat_CodiPostalLoc(codiPostalLoc);
     }
+
+    /**
+     * Cerca un vehicle a MySQL per la seva matrícula.
+     *
+     * @param matricula la matrícula del vehicle a cercar.
+     * @return un {@link Optional} que conté el vehicle si existeix.
+     */
     public Optional<Vehicle> findByMatricula(String matricula) {
-        return vehicleRepoSQL.findById(matricula); // Asumiendo que la matrícula es la PK
+        return vehicleRepoSQL.findById(matricula);
     }
 
+    /**
+     * Modifica un vehicle existent a MySQL.
+     *
+     * @param vehicle l'entitat del vehicle a modificar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String modificarVehicle(Vehicle vehicle) {
         try {
             Optional<Vehicle> vehicleExistente = findByMatricula(vehicle.getMatricula());
@@ -60,7 +102,12 @@ public class VehicleServiceSQL {
         }
     }
 
-    // Eliminar Vehicle por ID
+    /**
+     * Elimina un vehicle de MySQL pel seu ID (matrícula).
+     *
+     * @param matricula la matrícula del vehicle a eliminar.
+     * @return un missatge informant sobre el resultat de l'operació.
+     */
     public String eliminarVehiclePerId(String matricula) {
         Optional<Vehicle> vehicle = findByMatricula(matricula);
         try {
@@ -75,6 +122,14 @@ public class VehicleServiceSQL {
         }
     }
 
+    /**
+     * Obté una llista d'atributs únics de vehicles.
+     *
+     * @param <T>        el tipus de l'atribut.
+     * @param getAtribut una funció que retorna l'atribut d'un vehicle.
+     * @param vehicles   la llista de vehicles.
+     * @return una llista d'atributs únics.
+     */
     public <T> List<T> getAtributsVehicle(Function<Vehicle, T> getAtribut, List<Vehicle> vehicles) {
         Set<T> filtres = new HashSet<>();
         for (Vehicle vehicle : vehicles) {
