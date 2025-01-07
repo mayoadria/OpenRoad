@@ -21,12 +21,14 @@
 
     <!-- Marca -->
     <label for="marca">Marca:</label>
-    <input type="text" id="marca" name="marca" th:value="${vehicle.marca}" required>
+    <input type="text" id="marca" name="marca" th:value="${vehicle.marca}">
+    <div class="error-message" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></div>
     <br><br>
 
     <!-- Modelo -->
     <label for="model">Modelo:</label>
-    <input type="text" id="model" name="model" th:value="${vehicle.model}" required>
+    <input type="text" id="model" name="model" th:value="${vehicle.model}">
+    <div class="error-message" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></div>
     <br><br>
 
     <!-- Precio por día -->
