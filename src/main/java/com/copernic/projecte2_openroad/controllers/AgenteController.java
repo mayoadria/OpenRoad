@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -69,7 +70,6 @@ public class AgenteController {
             agent.setCodiPostal(novaLocalitat.getCodiPostalLoc());
         } else if (localitatOption.isEmpty()) {
             agent.setLocalitat(null);
-            agent.setCodiPostal("00000");
         } else {
             Localitat localitatExist = localitatService.findByNomUsuari(localitatOption);
             agent.setLocalitat(localitatExist);
@@ -86,6 +86,49 @@ public class AgenteController {
 
         // Guardar agente
         usuariServiceSQL.guardarAgent(agent);
+
+        return "redirect:/admin/dashboard";
+    }
+
+    @PostMapping("/editAgent/{dniAgent}")
+    public String editarAgente(@PathVariable String dniAgent, @Valid @ModelAttribute("agent") Agent agent, BindingResult result,
+                              @ModelAttribute("localitatOption") String localitatOption, Model model) {
+
+        // Manejar errores de validación
+        if (result.hasErrors()) {
+            model.addAttribute("paisos", Pais.values());
+            model.addAttribute("localitats", localitatService.llistarLocalitats());
+            return "editarAgent";
+        }
+
+        // Procesar la localidad
+        if ("new".equals(localitatOption)) {
+            Localitat novaLocalitat = agent.getLocalitat();
+            if (novaLocalitat == null) {
+                novaLocalitat = new Localitat();
+                agent.setLocalitat(novaLocalitat);
+            }
+            localitatService.guardarLocalitat(novaLocalitat);
+            agent.setAdreca(novaLocalitat.getDireccio());
+            agent.setCodiPostal(novaLocalitat.getCodiPostalLoc());
+        } else if (localitatOption.isEmpty()) {
+            agent.setLocalitat(null);
+        } else {
+            Localitat localitatExist = localitatService.findByNomUsuari(localitatOption);
+            agent.setLocalitat(localitatExist);
+            agent.setAdreca(localitatExist.getDireccio());
+            agent.setCodiPostal(localitatExist.getCodiPostalLoc());
+        }
+
+        // Configurar datos adicionales del agente
+        agent.setContrasenya(passwordEncoder.encode(agent.getContrasenya()));
+        String[] partes = agent.getEmail().split("@");
+        agent.setNomUsuari(partes[0]);
+        agent.setPermisos(TipusPermis.AGENT.toString());
+        agent.setEnabled(true);
+
+        // Guardar agente
+        usuariServiceSQL.modificarAgent(agent, dniAgent);
 
         return "redirect:/admin/dashboard";
     }
