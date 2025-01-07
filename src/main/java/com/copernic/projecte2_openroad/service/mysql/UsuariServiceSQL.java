@@ -63,7 +63,7 @@ public class UsuariServiceSQL {
      */
     public void guardarClient(Client client) {
         if (existeEmail(client.getEmail())) {
-            throw new ExcepcionEmailDuplicado("El correo electrónico ya está registrado.");
+            throw new ExcepcionEmailDuplicado("El correu electronic ja està registrat.");
         }
     }
 

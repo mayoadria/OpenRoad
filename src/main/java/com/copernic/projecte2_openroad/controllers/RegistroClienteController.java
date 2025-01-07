@@ -6,7 +6,6 @@ import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.security.TipusPermis;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mongodb.DocumentServiceMongo;
-import jakarta.jws.WebParam;
 import jakarta.validation.Valid;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,47 +47,53 @@ public class RegistroClienteController {
             Model model
     ) {
         try {
-            // Verificar si el email ya existe
+            String validationError = null;
+
+            // Validación de email único
             if (clientServiceSQL.existeEmail(cli.getEmail())) {
-                result.rejectValue("email", "error.cli", "El correu electrónic ja está registrat");
+                validationError = "El correu electrònic ja està registrat.";
             }
-            // Processar i guardar dades a MySQL
+
+            // Validación de campos vacíos
+            if (cli.getNom().isEmpty() || cli.getCognom1().isEmpty() || cli.getEmail().isEmpty() || cli.getContrasenya().isEmpty() || cli.getDni().isEmpty()) {
+                validationError = "Tots els camps són obligatoris.";
+            }
+
+            // Validación de archivos subidos
+            if (dniFile.isEmpty() || carnetFile.isEmpty()) {
+                validationError = "És obligatori pujar les fotos del DNI i del carnet.";
+            }
+
+            // Enviar error al front-end si algo no está bien
+            if (validationError != null) {
+                model.addAttribute("popupError", validationError);
+                model.addAttribute("paisos", Pais.values());
+                return "Registre";
+            }
+
+            // Guardar en MySQL
             cli.setContrasenya(passwordEncoder.encode(cli.getContrasenya()));
             String[] part = cli.getEmail().split("@");
             String username = part[0];
             cli.setNomUsuari(username);
             cli.setPermisos(TipusPermis.CLIENT.toString());
             cli.setEnabled(false);
-            if (result.hasErrors()) {
-                model.addAttribute("paisos", Pais.values());
-                return "Registre";
-            }else {
-                clientServiceSQL.guardarClient(cli);
+            clientServiceSQL.guardarClient(cli);
 
-                // Processar i guardar imatges a MongoDB
-                DocumentClient document = new DocumentClient();
-                document.setIdClient(cli.getDni());
+            // Guardar en MongoDB
+            DocumentClient document = new DocumentClient();
+            document.setIdClient(cli.getDni());
+            Map<String, Binary> docMap = new HashMap<>();
+            docMap.put("dni", new Binary(dniFile.getBytes()));
+            docMap.put("carnetConduir", new Binary(carnetFile.getBytes()));
+            document.setClientDoc(docMap);
+            documentServiceMongo.guardarDocument(document);
 
-                // Crear un mapa amb noms descriptius per les imatges
-                Map<String, Binary> docMap = new HashMap<>();
-                if (!dniFile.isEmpty()) {
-                    docMap.put("dni", new Binary(dniFile.getBytes()));
-                }
-                if (!carnetFile.isEmpty()) {
-                    docMap.put("carnetConduir", new Binary(carnetFile.getBytes()));
-                }
-
-                document.setClientDoc(docMap);
-
-                // Guardar a MongoDB
-                documentServiceMongo.guardarDocument(document);
-
-                return "redirect:/login";
-            }
+            return "redirect:/login";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // Pàgina d'error si falla alguna cosa
+            return "error"; // Página de error si ocurre un problema
         }
     }
 }
