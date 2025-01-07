@@ -14,13 +14,13 @@
     <div class="compact-row">
         <label for="nom">
             <input type="text" class="input" id="nom" th:field="*{nom}" placeholder=" ">
-            <span>Nom</span>
+            <span>Nom *</span>
         </label>
         <div class="error-message" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
 
         <label for="cognom1">
             <input type="text" class="input" id="cognom1" th:field="*{cognom1}" placeholder=" ">
-            <span>Cognom</span>
+            <span>Cognom *</span>
         </label>
         <div class="error-message" th:if="${#fields.hasErrors('cognom1')}" th:errors="*{cognom1}"></div>
     </div>
@@ -28,13 +28,13 @@
     <div class="compact-row">
         <label for="email">
             <input type="email" class="input" id="email" th:field="*{email}" placeholder=" ">
-            <span>Correu</span>
+            <span>Correu *</span>
         </label>
         <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
         <label for="contrasenya">
             <input type="password" class="input" id="contrasenya" th:field="*{contrasenya}" placeholder=" ">
-            <span>Contrasenya</span>
+            <span>Contrasenya *</span>
         </label>
         <div class="error-message" th:if="${#fields.hasErrors('contrasenya')}" th:errors="*{contrasenya}"></div>
     </div>
@@ -42,7 +42,7 @@
     <div class="compact-row">
         <label for="dni">
             <input type="text" class="input" id="dni" th:field="*{dni}" placeholder=" ">
-            <span>DNI/NIE</span>
+            <span>DNI/NIE *</span>
         </label>
         <div class="error-message" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>
 
@@ -53,41 +53,117 @@
                         th:value="${pais}"
                         th:text="${pais.getValor()}"></option>
             </select>
-            <span>Nacionalitat</span>
+            <span>Nacionalitat *</span>
         </label>
     </div>
 
     <div class="compact-row">
         <label for="numContacte1">
             <input type="text" class="input" id="numContacte1" th:field="*{numContacte1}" placeholder=" ">
-            <span>Nº Telèfon</span>
+            <span>Nº Telèfon *</span>
         </label>
         <div class="error-message" th:if="${#fields.hasErrors('numContacte1')}" th:errors="*{numContacte1}"></div>
 
         <label for="codiPostal">
             <input type="text" class="input" id="codiPostal" th:field="*{codiPostal}" placeholder=" ">
-            <span>Codi Postal</span>
+            <span>Codi Postal *</span>
         </label>
         <div class="error-message" th:if="${#fields.hasErrors('codiPostal')}" th:errors="*{codiPostal}"></div>
     </div>
 
     <label for="adreca">
         <input type="text" class="input" id="adreca" th:field="*{adreca}" placeholder=" ">
-        <span>Adreça</span>
+        <span>Adreça *</span>
     </label>
     <div class="error-message" th:if="${#fields.hasErrors('adreca')}" th:errors="*{adreca}"></div>
 
     <div class="compact-row">
         <div class="file-upload">
-            <label for="dniFile">Foto DNI</label>
+            <label for="dniFile">Foto DNI *</label>
             <input type="file" id="dniFile" name="dniFile" accept="image/*">
+            <div class="error-message" th:if="${errorFiles}" th:text="${errorFiles}"></div>
         </div>
 
         <div class="file-upload">
-            <label for="carnetFile">Foto Carnet</label>
+            <label for="carnetFile">Foto Carnet *</label>
             <input type="file" id="carnetFile" name="carnetFile" accept="image/*">
+            <div class="error-message" th:if="${errorFiles}" th:text="${errorFiles}"></div>
+                <h4 class="recordatori">Els camps amb un * són obligatoris.</h4>
         </div>
     </div>
+
+
+
+    <!-- Contenedor del Pop-up -->
+    <div id="popup" class="popup" style="display: none;">
+        <h2>Validació</h2>
+        <p id="popupMessage">El missatge de validació anirà aquí.</p>
+        <button type="button" onclick="closePopup()">Ok</button>
+    </div>
+
+    <script>
+        // mostrar Pop-up
+        function showPopup(message) {
+            const popup = document.getElementById("popup");
+            document.getElementById("popupMessage").innerText = message;
+            popup.style.display = "block";
+        }
+
+        // cerrarlo
+        function closePopup() {
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+    </script>
+
+
+    <script>
+        document.querySelector(".form").addEventListener("submit", function (event) {
+            const dniFile = document.getElementById("dniFile").files.length;
+            const carnetFile = document.getElementById("carnetFile").files.length;
+
+            // missatges d'error personalitzats per cada camp
+            const fieldMessages = {
+                "nom": "El camp Nom és obligatori!",
+                "cognom1": "El camp Cognom és obligatori!",
+                "email": "El camp Correu és obligatori!",
+                "contrasenya": "El camp Contrasenya és obligatori!",
+                "dni": "El camp DNI/NIE és obligatori!",
+                "numContacte1": "El camp Nº Telèfon és obligatori!",
+                "pais": "El camp Nacionalitat és obligatori!",
+                "adreca": "El camp Adreça és obligatori!"
+            };
+
+            let isValid = true;
+
+            // validar cada camp requerit
+            Object.keys(fieldMessages).forEach((fieldId) => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    isValid = false;
+                    showPopup(fieldMessages[fieldId]); // Muestra el mensaje personalizado
+                }
+            });
+
+            // validar els arxius
+            if (dniFile === 0 || carnetFile === 0) {
+                isValid = false;
+                showPopup("És obligatori pujar les fotos del DNI i del carnet.");
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // Detén el envío del formulario si hay errores
+            }
+        });
+
+    </script>
+
+    <script th:if="${popupError}" th:inline="javascript">
+        /* Mostrar Pop-up con mensaje de error */
+        showPopup([[$,{popupError}]]);
+    </script>
+
+
 
     <button class="submit">Registra</button>
     <p class="signin">Ja estàs registrat? <a th:href="@{/login}">Inicia sessió</a></p>

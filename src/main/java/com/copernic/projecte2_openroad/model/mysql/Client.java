@@ -31,10 +31,6 @@ import java.util.List;
 @ToString(callSuper = true)
 public class Client extends Usuari {
 
-//    @Column(nullable = true)
-//    @Enumerated(EnumType.STRING)
-//    private Reputacio reputacio;
-
     // Relació OneToMany amb taula - Reserva (Bidireccional)
     @OneToMany(mappedBy = "client")
     @ToString.Exclude
