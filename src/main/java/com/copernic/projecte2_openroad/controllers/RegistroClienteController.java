@@ -6,7 +6,6 @@ import com.copernic.projecte2_openroad.model.mysql.Client;
 import com.copernic.projecte2_openroad.security.TipusPermis;
 import com.copernic.projecte2_openroad.service.mysql.UsuariServiceSQL;
 import com.copernic.projecte2_openroad.service.mongodb.DocumentServiceMongo;
-import jakarta.jws.WebParam;
 import jakarta.validation.Valid;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
