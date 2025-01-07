@@ -297,12 +297,24 @@
                 <tbody>
                     <tr th:each="incidencia : ${incidencies}">
                         <td th:text="${incidencia.idIncidencia}"></td>
-                        <td th:text="${incidencia.estatIncidencia} "></td>
-                        <td th:text="${incidencia.titolInc}"></td>
+                        <td th:text="${incidencia.estatIncidencia} + ' // ' + ${incidencia.vehicle.model}"></td>
+                        <td th:text="${incidencia.titol}"></td>
                         <td th:text="${incidencia.cost}"></td>
                         <td th:text="${incidencia.dataInici}"></td>
                         <td th:text="${incidencia.dataFinal}"></td>
-                        <td th:text="${incidencia.vehicle}"></td>
+                        <td th:text="${incidencia.vehicle.matricula}"></td>
+                        <td>
+                            <a class="btn btn-success" th:href="@{/agent/editar_incidencia/{id}(id=${incidencia.idIncidencia})}">Editar</a>
+
+                            <a class="btn btn-danger"
+                               th:href="@{/agent/incidencia/eliminar/{id}(id=${incidencia.idIncidencia})}">Borrar</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary"
+                               th:href="@{/agent/incidencia/activar/{id}(id=${incidencia.idIncidencia})}">Activar</a>
+                            <a class="btn btn-danger"
+                               th:href="@{/agent/incidencia/desactivar/{id}(id=${incidencia.idIncidencia})}">Desactivar</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
