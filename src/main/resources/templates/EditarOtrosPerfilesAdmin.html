@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>Editar Cliente</h1>
+<h1>Editar Client</h1>
 
 <!-- Formulario de edición -->
 <form th:action="@{/admin/edit}" th:object="${cliente}" method="post">
@@ -16,33 +16,33 @@
   <input type="hidden" name="nomUsuari" th:value="${cliente.nomUsuari}">
 
   <div>
-    <label for="nom">Nombre:</label>
+    <label for="nom">Nom:</label>
     <input type="text" id="nom" name="nom" th:value="${cliente.nom}" placeholder="Ingrese el nombre">
   </div>
 
   <div>
-    <label for="cognom1">Primer Apellido:</label>
+    <label for="cognom1">Primer Cognom:</label>
     <input type="text" id="cognom1" name="cognom1" th:value="${cliente.cognom1}" placeholder="Ingrese el primer apellido">
   </div>
 
 
   <div>
-    <label for="numContacte1">Número de Contacto:</label>
+    <label for="numContacte1">Número de Contacte:</label>
     <input type="text" id="numContacte1" name="numContacte1" th:value="${cliente.numContacte1}" placeholder="Ingrese el número de contacto">
   </div>
 
   <div>
-    <label for="codiPostal">Código Postal:</label>
+    <label for="codiPostal">Codi Postal:</label>
     <input type="text" id="codiPostal" name="codiPostal" th:value="${cliente.codiPostal}" placeholder="Ingrese el código postal">
   </div>
 
   <div>
-    <label for="adreca">Dirección:</label>
+    <label for="adreca">Direcció:</label>
     <input type="text" id="adreca" name="adreca" th:value="${cliente.adreca}" placeholder="Ingrese la dirección">
   </div>
 
   <div>
-    <label for="email">Correo Electrónico:</label>
+    <label for="email">Correo Electrònic:</label>
     <input type="email" id="email" name="email" th:value="${cliente.email}" placeholder="Ingrese el correo electrónico">
   </div>
 
@@ -50,7 +50,7 @@
     <button type="submit">Guardar</button>
 
   </div>
-  <a href="/admin/dashboard" class="cancel-button">Cancelar</a> <!-- Enlace para regresar -->
+  <a href="/admin/dashboard" class="cancel-button">Cancel·lar</a> <!-- Enlace para regresar -->
 
 </form>
 

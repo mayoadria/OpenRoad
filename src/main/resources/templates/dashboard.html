@@ -38,7 +38,7 @@
                 </form>
                 <button id="applyFiltersAgent" class="filt-btn">Filtrar</button>
                 <form action="/admin/newAgent" method="get">
-                    <button type="submit" class="btn btn-primary">Crear un agente</button>
+                    <button type="submit" class="btn btn-primary">Crear un agent</button>
                 </form>
             </div>
             <table class="table table-bordered">
@@ -58,7 +58,7 @@
                             <th>Nom usuari</th>
                             <th>
                                 <div class="filtre">
-                                    Correu Electronic
+                                    Correu Electrònic
                                     <div class="filt-txt">Cercar:
                                         <input type="email" class="filt-input" name="email">
                                     </div>
@@ -98,7 +98,7 @@
                                 <a class="btn btn-success"
                                     th:href="@{/admin/editarAgent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Editar</a>
                                 <a class="btn btn-danger"
-                                    th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Borrar</a>
+                                    th:href="@{/admin/delete/agent/{nomUsuari}(nomUsuari=${agent.nomUsuari})}">Esborrar</a>
                             </td>
                         </tr>
                     </tbody>
@@ -107,7 +107,7 @@
         </section>
 
         <section>
-            <h2>Lista de Clientes</h2>
+            <h2>Llista de Clients</h2>
             <div class="buttons-nav">
                 <form action="/admin/dashboard">
                     <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
@@ -129,7 +129,7 @@
                                     </div>
                                 </div>
                             </th>
-                            <th>Nombre</th>
+                            <th>Nom</th>
 
                             <th>
                                 <div class="filtre">
@@ -142,7 +142,7 @@
                             <th>Nom usuari</th>
                             <th>
                                 <div class="filtre">
-                                    Correu Electronic
+                                    Correu Electrònic
                                     <div class="filt-txt">Cercar:
                                         <input type="email" class="filt-input" name="emailClient">
                                     </div>
@@ -171,6 +171,7 @@
                                     </div>
                                 </div>
                             </th>
+                            <th>Estat</th>
                             <th>Accions</th>
                         </tr>
                     </thead>
@@ -185,11 +186,12 @@
                             <td th:text="${client.codiPostal}"></td>
                             <td th:text="${client.adreca}"></td>
                             <td th:text="${client.pais}"></td>
+                            <td th:text="${client.enabled}"></td>
                             <td>
                                 <a class="btn btn-success"
                                     th:href="@{/admin/edit/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Editar</a>
                                 <a class="btn btn-danger"
-                                    th:href="@{/admin/delete/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Borrar</a>
+                                    th:href="@{/admin/delete/client/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Esborrar</a>
                                 <a class="btn btn-edit"
                                     th:href="@{/admin/activateUser/{nomUsuari}(nomUsuari=${client.nomUsuari})}">Activar</a>
                                 <a class="btn btn-primary"
@@ -202,7 +204,7 @@
         </section>
 
         <section>
-            <h2>Lista de Reservas</h2>
+            <h2>Llista de Reserves</h2>
             <div class="buttons-nav">
                 <form action="/admin/dashboard">
                     <button type="submit" id="resetFilters" class="rst-btn">Reset</button>
@@ -238,7 +240,7 @@
                 </form>
             </table>
 
-            <h2>Lista de Localitats</h2>
+            <h2>Llista de Localitats</h2>
             <form class="button-container" action="/admin/crear_localitzacio" method="get">
                 <button type="submit" class="btn btn-primary">Crear una localitat</button>
             </form>
@@ -271,7 +273,7 @@
                                     <p class="teVehicles">Aquesta Localitat té Vehicles o està Assignada!</p>
                                 </div>
                                 <a class="btn btn-danger"
-                                        th:href="@{/admin/delete/{codiPostalLoc}(codiPostalLoc=${localitat.codiPostalLoc})}">Borrar</a>
+                                        th:href="@{/admin/delete/{codiPostalLoc}(codiPostalLoc=${localitat.codiPostalLoc})}">Esborrar</a>
 
                             </td>
                         </tr>
