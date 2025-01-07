@@ -2,6 +2,7 @@ package com.copernic.projecte2_openroad.service.mongodb;
 
 // Java
 import java.util.List;
+import java.util.Optional;
 
 // Spring
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,52 +28,34 @@ public class ReservaServiceMongo {
             return msg;
         } catch (Exception e) {
             String msg = "Error amb Reserva: ID(" + reserva.getIdReserva() + "). Excepció: " + e.getMessage();
-            return msg;     
+            return msg;
         }
     }
 
     // Llistar Reserva.
     public HistoricReserva llistarReservaPerId(String id) {
-        return reservaRepoMongo.findById(id).get();
+        Optional<HistoricReserva> reserva = reservaRepoMongo.findById(id);
+        return reserva.orElse(null);
     }
 
-    // Llistar tots els Reservas.
+    // Llistar totes les Reservas.
     public List<HistoricReserva> llistarReservas() {
         return reservaRepoMongo.findAll();
     }
 
-    // Modificar Reserva.
-    public String modificarReserva(HistoricReserva reserva) {
-        try {
-            if (llistarReservaPerId(reserva.getIdReserva()) != null) {
-                reservaRepoMongo.save(reserva);
-                String msg = "Reserva: " + reserva.getDataInici() + " amb ID(" + reserva.getIdReserva() + ") modificat correctament!";
-                return msg;
-            } else {
-                String msg = "Reserva: ID(" + reserva.getIdReserva() + ") no s'ha trobat a la BD MySQL!";
-                return msg;
-            }
-        } catch (Exception e) {
-            String msg = "Error amb Reserva: ID(" + reserva.getIdReserva() + "). Excepció: " + e.getMessage();
-            return msg;
-        }
-    }
-
     // Eliminar Reserva.
     public String eliminarReservaPerId(String id) {
-        HistoricReserva Reserva = llistarReservaPerId(id);
         try {
-            if (Reserva != null) {
-                reservaRepoMongo.delete(Reserva);
-                String msg = "Reserva: " + Reserva.getDataInici() + " amb ID(" + Reserva.getIdReserva() + ") esborrat correctament!";
+            HistoricReserva reserva = llistarReservaPerId(id);
+            if (reserva != null) {
+                reservaRepoMongo.delete(reserva);
+                String msg = "Reserva: " + reserva.getDataInici() + " amb ID(" + reserva.getIdReserva() + ") esborrat correctament!";
                 return msg;
             } else {
-                String msg = "Reserva: ID(" + id + ") no s'ha trobat a la BD MySQL!";
-                return msg;
+                return "Reserva: ID(" + id + ") no s'ha trobat a la BD MongoDB!";
             }
         } catch (Exception e) {
-            String msg = "Error amb Reserva: ID(" + id + "). Excepció: " + e.getMessage();
-            return msg;
+            return "Error amb Reserva: ID(" + id + "). Excepció: " + e.getMessage();
         }
     }
 }
