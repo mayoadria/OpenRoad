@@ -242,11 +242,60 @@ public class AgentDashboardController {
         return "redirect:/agent/dashboard";
     }
 
-    @GetMapping("/crear_incidencia")
-    public String mostrarFormularioCrearIncidencia(Model model) {
-        model.addAttribute("incidencia", new Incidencia());
+    @Controller
+    @RequestMapping("/agent")
+    public class IncidenciaController {
 
-        // Añadir los vehículos disponibles
+        @GetMapping("/crear_incidencia")
+        public String mostrarFormularioCrearIncidencia(Model model) {
+            model.addAttribute("incidencia", new Incidencia());
+
+            // Añadir los vehículos disponibles
+            Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
+            if (agentObj instanceof Agent) {
+                Agent agent = (Agent) agentObj;
+                List<Vehicle> vehicles = vehicleServiceSQL.getVehiclesByAgentLocalitat(agent.getLocalitat().getCodiPostalLoc());
+                model.addAttribute("vehicles", vehicles);
+            } else {
+                model.addAttribute("error", "No se pudo obtener el agente.");
+                return "errorPage"; // Página de error
+            }
+
+            return "Incidencia"; // Nombre del archivo Thymeleaf (Incidencia.html)
+        }
+
+        @PostMapping("/crear_incidencia")
+        public String guardarIncidencia(@ModelAttribute Incidencia incidencia, Model model) {
+            if (incidencia.getVehicle() == null || incidencia.getVehicle().getMatricula() == null || incidencia.getVehicle().getMatricula().isEmpty()) {
+                model.addAttribute("error", "Debe seleccionar un vehículo.");
+                return "Incidencia";
+            }
+
+            Optional<Vehicle> optionalVehicle = vehicleServiceSQL.findByMatricula(incidencia.getVehicle().getMatricula());
+            if (optionalVehicle.isPresent()) {
+                Vehicle vehicle = optionalVehicle.get();
+                incidencia.setVehicle(vehicle); // Asociar el vehículo a la incidencia
+                incidenciaServiceSQL.guardarIncidencia(incidencia); // Guardar incidencia
+                return "redirect:/agent/dashboard";
+            } else {
+                model.addAttribute("error", "No se encontró el vehículo especificado.");
+                return "Incidencia";
+            }
+        }
+    }
+
+
+
+    @GetMapping("/agent/editar_incidencia/{id}")
+    public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
+        // Buscar la incidencia por ID
+        Incidencia incidencia = incidenciaServiceSQL.llistarIncidenciaPerId(id);
+
+        if (incidencia == null) {
+            throw new IllegalArgumentException("No se encontró la incidencia con el ID: " + id);
+        }
+
+        // Obtener los vehículos relacionados
         Object agentObj = UserUtils.obtenirDadesUsuariModel(model);
         if (agentObj instanceof Agent) {
             Agent agent = (Agent) agentObj;
@@ -254,40 +303,20 @@ public class AgentDashboardController {
             model.addAttribute("vehicles", vehicles);
         } else {
             model.addAttribute("error", "No se pudo obtener el agente.");
-            return "errorPage"; // Muestra una página de error
+            return "errorPage"; // Página de error
         }
 
-        return "Incidencia"; // Nombre de la plantilla Thymeleaf
-    }
+        // Cargar incidencia en el modelo
+        model.addAttribute("incidencia", incidencia);
 
-
-
-    @PostMapping("/crear_incidencia")
-    public String guardarIncidencia(@ModelAttribute Incidencia incidencia,
-                                    @RequestParam("cocheId") String cocheId, Model model) {
-        if (cocheId == null || cocheId.isEmpty()) {
-            model.addAttribute("error", "Debe seleccionar un vehículo.");
-            return "Incidencia";
-        }
-
-        Optional<Vehicle> optionalVehicle = vehicleServiceSQL.findByMatricula(cocheId);
-        if (optionalVehicle.isPresent()) {
-            Vehicle vehicle = optionalVehicle.get();
-            incidencia.setVehicle(vehicle); // Asociar el vehículo a la incidencia
-            incidenciaServiceSQL.guardarIncidencia(incidencia); // Guardar incidencia
-            return "redirect:/agent/dashboard";
-        } else {
-            model.addAttribute("error", "No se encontró el vehículo especificado.");
-            return "Incidencia";
-        }
+        // Retornar la vista de edición
+        return "EditarIncidencia";
     }
 
 
 
 
-
-
-
+//vehicleServiceSQL.findByMatricula(incidencia.getVehicle().getMatricula()));
 
 
 }

@@ -1,65 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Incidencia · Vehicle</title>
+    <title>Crear Incidencia</title>
 </head>
 <body>
 <div class="container mt-5">
-    <h2>Crear Vehicle</h2>
-    <form th:action="@{/agent/crear_incidencia}" th:object="${incidencia}" method="post" enctype="multipart/form-data">
+    <h2>Crear Incidència</h2>
 
-        <!-- Títol -->
+    <!-- Formulario -->
+    <form th:action="@{/agent/crear_incidencia}" th:object="${incidencia}" method="post">
+
+        <!-- Título -->
         <div class="mb-3">
-            <label for="titol" class="form-label">Títol</label>
-            <input type="text" name="titol" id="titol" cols="22" rows="1" maxlength="20" required>
+            <label for="titol" class="form-label">Título</label>
+            <input type="text" th:field="*{titol}" class="form-control" id="titol" placeholder="Ingrese el título" required />
         </div>
 
-        <!-- Cost -->
+        <!-- Coste -->
         <div class="mb-3">
-            <label for="cost" class="form-label">Cost</label>
-            <input type="number" class="form-control" id="cost" name="cost" required>
+            <label for="cost" class="form-label">Coste</label>
+            <input type="number" th:field="*{cost}" class="form-control" id="cost" placeholder="Ingrese el coste" required />
         </div>
 
-        <!-- Data Inici -->
+        <!-- Fecha de Inicio -->
         <div class="mb-3">
-            <label for="dataInici" class="form-label">Data Inici</label>
-            <input type="date" class="form-control" id="dataInici" name="dataInici" required>
+            <label for="dataInici" class="form-label">Fecha de Inicio</label>
+            <input type="date" th:field="*{dataInici}" class="form-control" id="dataInici" required />
         </div>
 
-        <!-- Data Final -->
+        <!-- Fecha Final -->
         <div class="mb-3">
-            <label for="dataFinal" class="form-label">Data Final</label>
-            <input type="date" class="form-control" id="dataFinal" name="dataFinal">
+            <label for="dataFinal" class="form-label">Fecha Final</label>
+            <input type="date" th:field="*{dataFinal}" class="form-control" id="dataFinal" />
         </div>
 
-        <!-- Coches del Agente -->
+        <!-- Seleccionar Vehículo -->
         <div class="mb-3">
-            <label for="cochesAgente" class="form-label">Seleccionar Coche</label>
-            <select id="cochesAgente" name="cocheId" class="form-control" required>
-                <option th:each="vehicle : ${vehicles}" th:value="${vehicle.matricula}" th:text="${vehicle.marca + ' ' + vehicle.model}"></option>
+            <label for="vehicles" class="form-label">Vehículo</label>
+            <select id="vehicles" th:field="*{vehicle.matricula}" class="form-control" required>
+                <option value="" disabled selected>Seleccione un vehículo</option>
+                <option th:each="vehicle : ${vehicles}"
+                        th:value="${vehicle.matricula}"
+                        th:text="${vehicle.marca + ' ' + vehicle.model}">
+                </option>
             </select>
         </div>
 
+        <!-- Estado -->
         <div class="mb-3">
-            <label for="imagen" class="form-label">Imagen</label>
-            <input type="file" id="imagen" name="imagen" class="form-control" required>
-        </div>
-
-        <!-- Estat -->
-        <div class="mb-3">
-            <label for="estatIncidencia" class="form-label">Estat</label>
+            <label for="estatIncidencia" class="form-label">Estado</label>
             <select id="estatIncidencia" th:field="*{estatIncidencia}" class="form-control" required>
+                <option value="" disabled selected>Seleccione un estado</option>
                 <option th:each="estat : ${T(com.copernic.projecte2_openroad.model.enums.EstatIncidencia).values()}"
                         th:value="${estat}"
-                        th:text="${estat.valor}"></option>
+                        th:text="${estat.valor}">
+                </option>
             </select>
         </div>
 
-
-        <!-- Botón Submit -->
+        <!-- Botón Crear -->
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary">Crear</button>
         </div>
     </form>
 </div>
