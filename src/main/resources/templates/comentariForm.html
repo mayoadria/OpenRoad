@@ -136,6 +136,7 @@
 
     <main>
         <form th:action="@{/crearComentari}" th:object="${comentari}" method="post" >
+        <input type="hidden" name="matricula" th:value="${matricula}" />
         <div class="coment">
             <p>Afegeix un comentari:</p>
             <div class="titol-com">
