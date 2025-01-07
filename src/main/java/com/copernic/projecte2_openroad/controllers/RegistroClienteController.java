@@ -49,7 +49,10 @@ public class RegistroClienteController {
         try {
             // Verificar si el email ya existe
             if (clientServiceSQL.existeEmail(cli.getEmail())) {
-                result.rejectValue("email", "error.cli", "El correo electrónico ya está registrado");
+                result.rejectValue("email", "error.cli", "El correu electronic ya está registrat");
+            }
+            if(clientServiceSQL.existeDni(cli.getDni())) {
+                result.rejectValue("dni", "error.cli", "El dni ja está registrat");
             }
             // Processar i guardar dades a MySQL
             cli.setContrasenya(passwordEncoder.encode(cli.getContrasenya()));

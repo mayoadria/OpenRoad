@@ -1,6 +1,7 @@
 package com.copernic.projecte2_openroad.service.mysql;
 
 import com.copernic.projecte2_openroad.Excepciones.ExcepcionEmailDuplicado;
+import com.copernic.projecte2_openroad.Excepciones.ExisteDNI;
 import com.copernic.projecte2_openroad.model.mysql.Admin;
 import com.copernic.projecte2_openroad.model.mysql.Agent;
 import com.copernic.projecte2_openroad.model.mysql.Client;
@@ -65,6 +66,9 @@ public class UsuariServiceSQL {
         if (existeEmail(client.getEmail())) {
             throw new ExcepcionEmailDuplicado("El correo electrónico ya está registrado.");
         }
+        if (existeDni( client.getDni() )) {
+            throw new ExisteDNI("El dni ja està registrat:");
+        }
         clientRepository.save(client);
     }
 
@@ -108,9 +112,16 @@ public class UsuariServiceSQL {
         return agentRepository.existsByEmail(email);
     }
 
+    public boolean existeDni(String dni) {
+        return agentRepository.existsByDni(dni);
+    }
+
     public void guardarAgent(Agent agent) {
         if (existeEmail(agent.getEmail())) {
             throw new ExcepcionEmailDuplicado("El correo electrónico ya está registrado.");
+        }
+        if (existeDni( agent.getDni() )) {
+            throw new ExisteDNI("El dni ja està registrat:");
         }
         agentRepository.save(agent);
     }

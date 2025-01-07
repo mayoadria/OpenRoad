@@ -29,6 +29,10 @@ public class VehicleServiceSQL {
         }
     }
 
+    public boolean existeVehiculo(String matricula) {
+        return vehicleRepoSQL.existsByMatricula(matricula);
+    }
+
     // Listar todos los vehículos
     public List<Vehicle> llistarVehicles() {
         return vehicleRepoSQL.findAll();

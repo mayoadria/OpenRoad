@@ -13,4 +13,5 @@ import com.copernic.projecte2_openroad.model.enums.EstatVehicle;
 public interface VehicleRepositorySQL extends JpaRepository<Vehicle, String>{
     List<Vehicle> findByLocalitat_CodiPostalLoc(String codiPostalLoc);
     List<Vehicle> findByEstatVehicle(EstatVehicle estatVehicle);
+    Boolean existsByMatricula(String matricula);
 }

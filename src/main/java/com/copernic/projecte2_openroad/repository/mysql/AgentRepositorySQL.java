@@ -8,5 +8,6 @@ import java.util.List;
 public interface AgentRepositorySQL extends JpaRepository<Agent, String> {
     List<Agent> findByNomUsuari(String nomUsuari);
     boolean existsByEmail(String email);
+    boolean existsByDni(String dni);
 
 }
