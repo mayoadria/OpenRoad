@@ -65,6 +65,7 @@ public class UsuariServiceSQL {
         if (existeEmail(client.getEmail())) {
             throw new ExcepcionEmailDuplicado("El correo electrónico ya está registrado.");
         }
+        clientRepository.save(client);
     }
 
     public void activateUser(String nomUsuari) {
