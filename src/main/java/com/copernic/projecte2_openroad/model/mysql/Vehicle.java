@@ -9,6 +9,7 @@ import com.copernic.projecte2_openroad.model.enums.*;
 import jakarta.persistence.*;
 
 // Lombok
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,14 +27,22 @@ import lombok.ToString;
 public class Vehicle {
 
     // PK MATRICULA - Identificador de Vehicle.
+    @NotNull(message = "La matrícula no puede estar vacía.")
+    // Validación del formato de la matrícula
+    @Pattern(regexp = "^\\d{4}-[A-Z]{3}$",
+            message = "El formato de la matrícula debe ser 'ABC-1234' o '1234-ABC'.")
     @Id
     private String matricula;
 
+    @NotEmpty(message = "La marca no puede estar vacía.")
     // Camps Generals
     @Column(nullable = false)
     private String marca;
+    @NotEmpty(message = "El modelo no puede estar vacía.")
     @Column(nullable = false)
     private String model;
+
+
     @Column(nullable = false, name = "preu_dia")
     private Double preuDia;
     @Column(nullable = false)
